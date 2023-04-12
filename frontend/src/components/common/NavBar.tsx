@@ -12,7 +12,10 @@ const NavBar = () => {
   const navigate = useNavigate();
   const handleToggleClick = (value: string) => {
     setSelected(value);
-    if (window.location.pathname !== "/") {
+    // if (window.location.pathname !== "/") {
+    //   navigate("/");
+    // }
+    if (value !== selected) {
       navigate("/");
     }
   };
