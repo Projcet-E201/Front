@@ -1,8 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+
 const Sensor = () => {
   const navigate = useNavigate();
+  const repeat = [1, 2, 3, 4, 5, 6, 7, 8];
 
   return (
     <div>
@@ -19,7 +24,28 @@ const Sensor = () => {
         <button onClick={() => navigate("/rpm")}>RPM</button>
       </div>
       <div>
-        <h1>이건 센서 컴포넌트 입니다.</h1>
+        <h1>센서 컴포넌트 입니다.</h1>
+      </div>
+      <div
+        style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+      >
+        {repeat.map((item) => (
+          <Card
+            style={{
+              width: "22%",
+              height: "30vh",
+              margin: "1rem",
+              backgroundColor: "white",
+              boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <CardContent>
+              <Typography variant="h5" component="div">
+                차트나옵니다.
+              </Typography>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </div>
   );
