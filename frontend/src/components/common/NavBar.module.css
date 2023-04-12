@@ -1,0 +1,19 @@
+.toggle {
+  display: flex;
+}
+
+.toggleButton {
+  cursor: pointer;
+  margin-right: 10px;
+  /* padding: 5px 10px; */
+  border: 1px solid gray;
+  margin: 0
+}
+
+.active {
+  background-color: blue;
+}
+
+.inactive {
+  background-color: gray;
+}
