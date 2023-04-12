@@ -1,23 +1,24 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 import MainLayout from "../layout/MainLayout";
 
 import Sensor from "../components/Main/Sensor";
 import State from "../components/Main/State";
 
+// 토글값에 따라서 보여줄 컴포넌트 다르니까 recoil값 가져오기
+import { useRecoilValue } from "recoil";
+import { selectedAtom } from "../store/atoms";
+
 const MainPage = () => {
-  const navigate = useNavigate();
+  //selected 토글값 가져오기
+  const selected = useRecoilValue(selectedAtom);
 
   return (
     <MainLayout>
       <div>
-        <div>
-          <button onClick={() => navigate("/motor")}>모터페이지</button>
-        </div>
         <h3>여기는 메인페이지입니다.</h3>
-        <Sensor />
-        <State />
+        {selected === "Sensor" && <Sensor />}
+        {selected === "State" && <State />}
       </div>
     </MainLayout>
   );
