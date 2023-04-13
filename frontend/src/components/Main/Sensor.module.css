@@ -1,0 +1,23 @@
+.card {
+  width: 23%;
+  /* height: 25vh; */
+  margin: 1rem;
+  /* background-color: white; */
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+@media (max-width: 1400px) {
+  .card {
+    width: 48%;
+    margin: 1rem auto;
+  }
+}
+
+@media (max-width: 876px) {
+  .card {
+    width: 90%;
+    margin: 1rem auto;
+  }
+}
+

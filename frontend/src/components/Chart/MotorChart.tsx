@@ -11,6 +11,23 @@ const MotorChart = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
+      // setData((prevData) => {
+      //   const currentTime = new Date().toLocaleTimeString();
+      //   const newEntry = {
+      //     x: currentTime,
+      //     temp1: faker.datatype.number({ min: 10, max: 100 }),
+      //     temp2: faker.datatype.number({ min: 10, max: 100 }),
+      //     temp3: faker.datatype.number({ min: 10, max: 100 }),
+      //     temp4: faker.datatype.number({ min: 10, max: 100 }),
+      //   };
+      //   if (prevData.length >= 10) {
+      //     const newData = [...prevData.slice(1), newEntry];
+      //     return newData;
+      //   } else {
+      //     return [...prevData, newEntry];
+      //   }
+      //   // return [...prevData, newEntry];
+      // });
       setData((prevData) => {
         const currentTime = new Date().toLocaleTimeString();
         const newEntry = {
@@ -20,15 +37,13 @@ const MotorChart = () => {
           temp3: faker.datatype.number({ min: 10, max: 100 }),
           temp4: faker.datatype.number({ min: 10, max: 100 }),
         };
-        if (prevData.length >= 10) {
-          const newData = [...prevData.slice(1), newEntry];
-          return newData;
-        } else {
-          return [...prevData, newEntry];
-        }
-        // return [...prevData, newEntry];
+        const newData =
+          prevData.length >= 10
+            ? [...prevData.slice(1), newEntry]
+            : [...prevData, newEntry];
+        return newData;
       });
-    }, 1000);
+    }, 2000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -53,8 +68,9 @@ const MotorChart = () => {
   };
 
   return (
+    // <div style={{ height: "100%" }}>
     <div style={{ height: "500px" }}>
-      <h3>motor chart</h3>
+      {/* <h3>motor chart</h3> */}
       <ResponsiveLine
         data={[dataset1, dataset2, dataset3, dataset4]}
         margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
@@ -66,6 +82,7 @@ const MotorChart = () => {
           // max: "auto",
           max: 100,
           stacked: false,
+          // stacked: true,
           reverse: false,
         }}
         curve="cardinal"
@@ -82,9 +99,9 @@ const MotorChart = () => {
         enableSlices="x"
         enablePoints={false}
         useMesh={true}
-        animate={true}
+        animate={false}
         // isInteractive={true}
-        isInteractive={false}
+        // isInteractive={false}
         legends={[
           {
             anchor: "top-right",

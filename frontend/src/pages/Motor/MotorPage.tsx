@@ -24,7 +24,9 @@ const MotorPage = () => {
             </div>
           ))}
         </div>
-        <MotorChart />
+        <div style={{ height: "500px" }}>
+          <MotorChart />
+        </div>
       </div>
     </SensorLayout>
   );

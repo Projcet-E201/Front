@@ -1,9 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+import styles from "./Sensor.module.css";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+
+import MotorChart from "../Chart/MotorChart";
 
 const Sensor = () => {
   const navigate = useNavigate();
@@ -35,20 +38,11 @@ const Sensor = () => {
           }}
         >
           {repeat.map((item, index) => (
-            <Card
-              key={index}
-              style={{
-                width: "23%",
-                height: "25vh",
-                margin: "1rem",
-                backgroundColor: "white",
-                boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
-              }}
-            >
+            <Card key={index} className={styles.card}>
               <CardContent>
-                <Typography variant="h5" component="div">
-                  차트나옵니다.
-                </Typography>
+                <div style={{ height: "100%" }}>
+                  <MotorChart />
+                </div>
               </CardContent>
             </Card>
           ))}
