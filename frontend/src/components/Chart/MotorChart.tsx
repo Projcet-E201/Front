@@ -1,98 +1,122 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { faker } from "@faker-js/faker";
-
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  Brush,
-} from "recharts";
+import { ResponsiveLine } from "@nivo/line";
 
 const MotorChart = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState<
-    { name: string; uv1: number; uv2: number; uv3: number }[]
+    { x: string; temp1: number; temp2: number; temp3: number; temp4: number }[]
   >([]);
-  const [sValue, setSValue] = useState();
-  const [eValue, setEValue] = useState();
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       setData((prevData) => {
         const currentTime = new Date().toLocaleTimeString();
         const newEntry = {
-          name: currentTime,
-          uv1: faker.datatype.number({ min: 10, max: 100 }),
-          uv2: faker.datatype.number({ min: 10, max: 100 }),
-          uv3: faker.datatype.number({ min: 10, max: 100 }),
+          x: currentTime,
+          temp1: faker.datatype.number({ min: 10, max: 100 }),
+          temp2: faker.datatype.number({ min: 10, max: 100 }),
+          temp3: faker.datatype.number({ min: 10, max: 100 }),
+          temp4: faker.datatype.number({ min: 10, max: 100 }),
         };
-        // if (prevData.length >= 1000) {
-        //   const newData = [...prevData.slice(1), newEntry];
-        //   return newData;
-        // } else {
-        //   return [...prevData, newEntry];
-        // }
-        return [...prevData, newEntry];
+        if (prevData.length >= 10) {
+          const newData = [...prevData.slice(1), newEntry];
+          return newData;
+        } else {
+          return [...prevData, newEntry];
+        }
+        // return [...prevData, newEntry];
       });
-    }, 5000);
+    }, 1000);
 
     return () => clearInterval(intervalId);
   }, []);
 
-  const trimmedData = data.slice(-20);
+  // 추가: 실시간 차트를 위한 상태 변수와 효과 함수
 
-  const brushChange = (e: any) => {
-    console.log(e);
-    setSValue(e.startIndex);
-    setEValue(e.endIndex);
+  const dataset1 = {
+    id: "temp1",
+    data: data.map((d) => ({ x: d.x, y: d.temp1 })),
   };
+  const dataset2 = {
+    id: "temp2",
+    data: data.map((d) => ({ x: d.x, y: d.temp2 })),
+  };
+  const dataset3 = {
+    id: "temp3",
+    data: data.map((d) => ({ x: d.x, y: d.temp3 })),
+  };
+  const dataset4 = {
+    id: "temp4",
+    data: data.map((d) => ({ x: d.x, y: d.temp4 })),
+  };
+
   return (
-    <div>
-      <h3>motor chart 나올 예정</h3>
-      <div>
-        <h3>recharts</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={trimmedData}>
-            <XAxis dataKey="name" />
-            <YAxis />
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-            <Tooltip />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey="uv1"
-              stroke="#000000"
-              isAnimationActive={false}
-            />
-            {/* <Line
-            type="monotone"
-            dataKey="uv2"
-            stroke="#8884d8"
-            isAnimationActive={false}
-          />
-          <Line
-            type="monotone"
-            dataKey="uv3"
-            stroke="#777777"
-            isAnimationActive={false}
-          /> */}
-            <Brush
-              dataKey="name"
-              data={data}
-              height={30}
-              stroke="#8884d8"
-              startIndex={sValue}
-              endIndex={eValue}
-              onChange={(e) => brushChange(e)}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-      <div>다른 차트 써보기</div>
+    <div style={{ height: "500px" }}>
+      <h3>motor chart</h3>
+      <ResponsiveLine
+        data={[dataset1, dataset2, dataset3, dataset4]}
+        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+        xScale={{ type: "point" }}
+        yScale={{
+          type: "linear",
+          // min: "auto",
+          min: 0,
+          // max: "auto",
+          max: 100,
+          stacked: false,
+          reverse: false,
+        }}
+        curve="cardinal"
+        // curve="linear"
+        axisTop={null}
+        axisRight={null}
+        colors={{ scheme: "category10" }}
+        lineWidth={2} // 그래프 두께
+        pointSize={10}
+        pointColor={{ theme: "background" }}
+        pointBorderWidth={2}
+        pointBorderColor={{ from: "serieColor" }}
+        pointLabelYOffset={-12}
+        enableSlices="x"
+        enablePoints={false}
+        useMesh={true}
+        animate={true}
+        // isInteractive={true}
+        isInteractive={false}
+        legends={[
+          {
+            anchor: "top-right",
+            direction: "column",
+            justify: false,
+            translateX: 100,
+            translateY: 0,
+            itemsSpacing: 0,
+            itemDirection: "left-to-right",
+            itemWidth: 80,
+            itemHeight: 20,
+            itemOpacity: 0.75,
+            symbolSize: 12,
+            symbolShape: "circle",
+            symbolBorderColor: "rgba(0, 0, 0, .5)",
+            onClick: (data) => {
+              const id: string = data.id as string;
+              // console.log(id[id.length - 1]);
+              navigate(`/motor/${id[id.length - 1]}`);
+            },
+            effects: [
+              {
+                on: "hover",
+                style: {
+                  itemBackground: "rgba(0, 0, 0, .03)",
+                  itemOpacity: 1,
+                },
+              },
+            ],
+          },
+        ]}
+      />
     </div>
   );
 };

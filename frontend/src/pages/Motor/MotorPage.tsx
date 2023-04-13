@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import SensorLayout from "../../layout/SensorLayout";
+import MotorChart from "../../components/Chart/MotorChart";
 
 const MotorPage = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const MotorPage = () => {
       </div>
       <div>
         <h3>모터 페이지</h3>
-        <div>
+        <div style={{ display: "flex" }}>
           {motors.map((motorId) => (
             <div key={motorId}>
               <button onClick={() => navigate(`/motor/${motorId}`)}>
@@ -23,6 +24,7 @@ const MotorPage = () => {
             </div>
           ))}
         </div>
+        <MotorChart />
       </div>
     </SensorLayout>
   );
