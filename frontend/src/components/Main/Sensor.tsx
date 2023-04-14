@@ -14,7 +14,7 @@ const Sensor = () => {
 
   return (
     <div>
-      <div style={{ border: "3px solid red", width: "fit-content" }}>
+      {/* <div style={{ border: "3px solid red", width: "fit-content" }}>
         <h3>일단 쉽게 이동하려고 만든 버튼들(나중에 없애기)</h3>
         <div style={{ display: "flex" }}>
           <button onClick={() => navigate("/motor")}>Motor</button>
@@ -27,7 +27,7 @@ const Sensor = () => {
           <button onClick={() => navigate("/load")}>loadingDose</button>
           <button onClick={() => navigate("/rpm")}>RPM</button>
         </div>
-      </div>
+      </div> */}
       <div style={{ border: "2px solid yellow" }}>
         <h3>센서 컴포넌트 입니다.</h3>
         <div
@@ -38,11 +38,13 @@ const Sensor = () => {
           }}
         >
           {repeat.map((item, index) => (
-            <Card key={index} className={styles.card}>
+            <Card
+              key={index}
+              className={styles.card}
+              onClick={() => navigate("/motor")}
+            >
               <CardContent>
-                <div style={{ height: "100%" }}>
-                  <MotorChart />
-                </div>
+                <MotorChart h={"15rem"} />
               </CardContent>
             </Card>
           ))}

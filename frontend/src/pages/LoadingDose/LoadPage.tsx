@@ -10,7 +10,7 @@ const LoadPage = () => {
   return (
     <SensorLayout>
       <div>
-        <button onClick={() => navigate(-1)}>메인페이지</button>
+        {/* <button onClick={() => navigate(-1)}>메인페이지</button> */}
       </div>
       <div>
         <h3>부하량 페이지</h3>

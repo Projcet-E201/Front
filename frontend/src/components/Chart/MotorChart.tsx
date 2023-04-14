@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { faker } from "@faker-js/faker";
 import { ResponsiveLine } from "@nivo/line";
 
-const MotorChart = () => {
+const MotorChart = ({ h }: any) => {
   const navigate = useNavigate();
   const [data, setData] = useState<
     { x: string; temp1: number; temp2: number; temp3: number; temp4: number }[]
@@ -69,7 +69,7 @@ const MotorChart = () => {
 
   return (
     // <div style={{ height: "100%" }}>
-    <div style={{ height: "500px" }}>
+    <div style={{ height: h }}>
       {/* <h3>motor chart</h3> */}
       <ResponsiveLine
         data={[dataset1, dataset2, dataset3, dataset4]}

@@ -10,7 +10,7 @@ interface Props {
 const MainLayout = ({ children }: Props) => {
   return (
     <div>
-      <p>센서 레이아웃</p>
+      {/* <p>센서 레이아웃</p> */}
       <NavBar />
       <div className={styles.children}>{children}</div>
     </div>

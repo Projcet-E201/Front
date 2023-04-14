@@ -11,22 +11,22 @@ const MotorPage = () => {
   return (
     <SensorLayout>
       <div>
-        <button onClick={() => navigate(-1)}>메인페이지</button>
+        {/* <button onClick={() => navigate(-1)}>메인페이지</button> */}
       </div>
       <div>
         <h3>모터 페이지</h3>
         <div style={{ display: "flex" }}>
           {motors.map((motorId) => (
             <div key={motorId}>
-              <button onClick={() => navigate(`/motor/${motorId}`)}>
+              <button onClick={() => navigate(`/machine/motor/${motorId}`)}>
                 {motorId}
               </button>
             </div>
           ))}
         </div>
-        <div style={{ height: "500px" }}>
-          <MotorChart />
-        </div>
+        {/* <div style={{ height: "500px" }}> */}
+        <MotorChart h={"31rem"} />
+        {/* </div> */}
       </div>
     </SensorLayout>
   );

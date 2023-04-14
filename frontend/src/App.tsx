@@ -3,6 +3,7 @@ import React from "react";
 
 import { Route, Routes } from "react-router-dom";
 import MainPage from "./pages/MainPage";
+import MachinePage from "./pages/MachinePage";
 import MotorPage from "./pages/Motor/MotorPage";
 import MotorDetailPage from "./pages/Motor/MotorDetailPage";
 import VacuumPage from "./pages/Vacuum/VacuumPage";
@@ -29,42 +30,55 @@ function App() {
     <RecoilRoot>
       <Routes>
         <Route path="/" element={<MainPage />} />
+        <Route path="/:machine" element={<MachinePage />} />
         {/* MOTOR */}
-        <Route path="/motor" element={<MotorPage />} />
-        <Route path="/motor/:motorNumber" element={<MotorDetailPage />} />
-        {/* VACUUM */}
-        <Route path="/vacuum" element={<VacuumPage />} />
-        <Route path="/vacuum/:vacuumNumber" element={<VacuumDetailPage />} />
-        {/* AirIn */}
-        <Route path="/air-in" element={<AirInPage />} />
-        <Route path="/air-in/:airInNumber" element={<AirInDetailPage />} />
-        {/* AirOut1 */}
-        <Route path="/air-out1" element={<AirOut1Page />} />
+        <Route path="/:machine/motor" element={<MotorPage />} />
         <Route
-          path="/air-out1/:airOut1Number"
+          path="/:machine/motor/:motorNumber"
+          element={<MotorDetailPage />}
+        />
+        {/* VACUUM */}
+        <Route path="/:machine/vacuum" element={<VacuumPage />} />
+        <Route
+          path="/:machine/vacuum/:vacuumNumber"
+          element={<VacuumDetailPage />}
+        />
+        {/* AirIn */}
+        <Route path="/:machine/air-in" element={<AirInPage />} />
+        <Route
+          path="/:machine/air-in/:airInNumber"
+          element={<AirInDetailPage />}
+        />
+        {/* AirOut1 */}
+        <Route path="/:machine/air-out1" element={<AirOut1Page />} />
+        <Route
+          path="/:machine/air-out1/:airOut1Number"
           element={<AirOut1DetailPage />}
         />
         {/* AirOut2 */}
-        <Route path="/air-out2" element={<AirOut2Page />} />
+        <Route path="/:machine/air-out2" element={<AirOut2Page />} />
         <Route
-          path="/air-out2/:airOut2Number"
+          path="/:machine/air-out2/:airOut2Number"
           element={<AirOut2DetailPage />}
         />
         {/* Water */}
-        <Route path="/water" element={<WaterPage />} />
-        <Route path="/water/:waterNumber" element={<WaterDetailPage />} />
-        {/* 마모량 */}
-        <Route path="/abrasion" element={<AbrasionPage />} />
+        <Route path="/:machine/water" element={<WaterPage />} />
         <Route
-          path="/abrasion/:abrasionNumber"
+          path="/:machine/water/:waterNumber"
+          element={<WaterDetailPage />}
+        />
+        {/* 마모량 */}
+        <Route path="/:machine/abrasion" element={<AbrasionPage />} />
+        <Route
+          path="/:machine/abrasion/:abrasionNumber"
           element={<AbrasionDetailPage />}
         />
         {/* 부하량 */}
-        <Route path="/load" element={<LoadPage />} />
-        <Route path="/load/:loadNumber" element={<LoadDetailPage />} />
+        <Route path="/:machine/load" element={<LoadPage />} />
+        <Route path="/:machine/load/:loadNumber" element={<LoadDetailPage />} />
         {/* RPM */}
-        <Route path="/rpm" element={<RpmPage />} />
-        <Route path="/rpm/:rpmNumber" element={<RpmDetailPage />} />
+        <Route path="/:machine/rpm" element={<RpmPage />} />
+        <Route path="/:machine/rpm/:rpmNumber" element={<RpmDetailPage />} />
       </Routes>
     </RecoilRoot>
   );
