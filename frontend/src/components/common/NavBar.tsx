@@ -24,16 +24,22 @@ const NavBar = () => {
     }
   };
 
-  // console.log(machine);
-
   return (
     <div>
-      <div style={{ background: "white", height: "10vh" }}>
+      <div style={{ background: "white" }}>
         {/* <p>최상단 네브바</p> */}
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div className={styles.title} onClick={() => navigate(`/${machine}`)}>
-            <img src={logo} alt="" />
-            <h1>SEMSE</h1>
+          <div style={{ display: "flex" }}>
+            <div
+              className={styles.title}
+              onClick={() => navigate(`/${machine}`)}
+            >
+              <img src={logo} />
+              <h1>SEMSE</h1>
+            </div>
+            <div>
+              <h1>Machine{machine}</h1>
+            </div>
           </div>
           <div className={styles.rightbutton}>
             {location.pathname !== `/` && (
@@ -59,38 +65,105 @@ const NavBar = () => {
 
             {selected === "Sensor" && (
               <div className={styles.navbutton}>
-                <div
-                  style={{
-                    display: "flex",
-                  }}
-                >
-                  <button onClick={() => navigate(`/${machine}/motor`)}>
+                <div style={{ display: "flex" }}>
+                  <div
+                    onClick={() => navigate(`/${machine}/motor`)}
+                    style={{
+                      color: location.pathname.includes(`/motor`)
+                        ? "#5cc2f2"
+                        : "gray",
+                      marginRight: "10px",
+                    }}
+                  >
                     Motor
-                  </button>
-                  <button onClick={() => navigate(`/${machine}/vacuum`)}>
+                  </div>
+                  <div
+                    onClick={() => navigate(`/${machine}/vacuum`)}
+                    style={{
+                      color: location.pathname.includes(`/vacuum`)
+                        ? "#5cc2f2"
+                        : "gray",
+                      marginRight: "10px",
+                    }}
+                  >
                     Vacuum
-                  </button>
-                  <button onClick={() => navigate(`/${machine}/air-out1`)}>
+                  </div>
+                  <div
+                    onClick={() => navigate(`/${machine}/air-out1`)}
+                    style={{
+                      color: location.pathname.includes(`/air-out1`)
+                        ? "#5cc2f2"
+                        : "gray",
+                      marginRight: "10px",
+                    }}
+                  >
                     AirOut1
-                  </button>
-                  <button onClick={() => navigate(`/${machine}/air-out2`)}>
+                  </div>
+                  <div
+                    onClick={() => navigate(`/${machine}/air-out2`)}
+                    style={{
+                      color: location.pathname.includes(`/air-out2`)
+                        ? "#5cc2f2"
+                        : "gray",
+                      marginRight: "10px",
+                    }}
+                  >
                     AirOut2
-                  </button>
-                  <button onClick={() => navigate(`/${machine}/air-in`)}>
+                  </div>
+                  <div
+                    onClick={() => navigate(`/${machine}/air-in`)}
+                    style={{
+                      color: location.pathname.includes(`/air-in`)
+                        ? "#5cc2f2"
+                        : "gray",
+                      marginRight: "10px",
+                    }}
+                  >
                     AirIn
-                  </button>
-                  <button onClick={() => navigate(`/${machine}/water`)}>
+                  </div>
+                  <div
+                    onClick={() => navigate(`/${machine}/water`)}
+                    style={{
+                      color: location.pathname.includes(`/water`)
+                        ? "#5cc2f2"
+                        : "gray",
+                      marginRight: "10px",
+                    }}
+                  >
                     Water
-                  </button>
-                  <button onClick={() => navigate(`/${machine}/abrasion`)}>
+                  </div>
+                  <div
+                    onClick={() => navigate(`/${machine}/abrasion`)}
+                    style={{
+                      color: location.pathname.includes(`/abrasion`)
+                        ? "#5cc2f2"
+                        : "gray",
+                      marginRight: "10px",
+                    }}
+                  >
                     마모량
-                  </button>
-                  <button onClick={() => navigate(`/${machine}/load`)}>
+                  </div>
+                  <div
+                    onClick={() => navigate(`/${machine}/load`)}
+                    style={{
+                      color: location.pathname.includes(`/load`)
+                        ? "#5cc2f2"
+                        : "gray",
+                      marginRight: "10px",
+                    }}
+                  >
                     부하량
-                  </button>
-                  <button onClick={() => navigate(`/${machine}/rpm`)}>
+                  </div>
+                  <div
+                    onClick={() => navigate(`/${machine}/rpm`)}
+                    style={{
+                      color: location.pathname.includes(`/rpm`)
+                        ? "#5cc2f2"
+                        : "gray",
+                    }}
+                  >
                     회전속도
-                  </button>
+                  </div>
                 </div>
               </div>
             )}

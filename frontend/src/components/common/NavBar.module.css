@@ -24,11 +24,11 @@
 }
 
 .active {
-  background-color: #5CC2F2;
+  background-color: #5cc2f2;
 }
 
 .inactive {
-  background-color: rgba(0, 0, 0, 0.35 );
+  background-color: rgba(0, 0, 0, 0.35);
 }
 
 .navbutton {
@@ -49,6 +49,8 @@
   /* margin-left: 20px; */
   display: flex;
   cursor: pointer;
+  margin-right: 10vh;
+  /* width: 13%; */
 }
 
 .title img {
@@ -58,4 +60,18 @@
 
 .title h1 {
   font-weight: bold;
+}
+
+.navbutton div {
+  margin-right: 10px;
+  color: gray;
+  font-weight: bold;
+  cursor: pointer;
+}
+.navbutton div:last-child {
+  margin-right: 0;
+}
+
+.navbutton div:hover {
+  color: #5cc2f2;
 }
