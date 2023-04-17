@@ -17,6 +17,7 @@ import StarBorder from "@mui/icons-material/StarBorder";
 import SettingsIcon from "@mui/icons-material/Settings";
 import MonitorIcon from "@mui/icons-material/Monitor";
 import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
+import SettingsInputComponentIcon from "@mui/icons-material/SettingsInputComponent";
 
 // Recoil로 어떤 index인지 결정하기
 import { useRecoilState } from "recoil";
@@ -142,7 +143,7 @@ const LeftNav = () => {
             onClick={() => indexClick("Facilities")}
           >
             <ListItemIcon>
-              <SendIcon
+              <SettingsInputComponentIcon
                 sx={{
                   color: selectedIndex === "Facilities" ? "white" : undefined,
                 }}
