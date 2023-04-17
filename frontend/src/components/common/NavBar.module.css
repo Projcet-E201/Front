@@ -1,25 +1,61 @@
 .toggle {
   display: flex;
+  justify-content: end;
   /* margin-right: 100px; */
   align-items: end;
   margin-bottom: 10px;
-  margin-right: 10px;
+  /* margin-right: 10px; */
 }
 
 .toggleButton {
   cursor: pointer;
   margin-right: 10px;
   /* padding: 5px 10px; */
-  border: 1px solid gray;
+  /* border: 1px solid gray; */
   margin: 0;
-  width: 100px;
-  height: 30px;
+  width: 80px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
 .active {
-  background-color: blue;
+  background-color: #5CC2F2;
 }
 
 .inactive {
-  background-color: gray;
+  background-color: rgba(0, 0, 0, 0.35 );
+}
+
+.navbutton {
+  display: flex;
+  justify-content: end;
+  /* border-bottom: 2px solid gray; */
+  background-color: white;
+}
+
+.rightbutton {
+  flex-direction: column;
+  display: flex;
+  margin-right: 20px;
+  /* justify-content: space-around; */
+}
+
+.title {
+  /* margin-left: 20px; */
+  display: flex;
+  cursor: pointer;
+}
+
+.title img {
+  width: 90px;
+  height: auto;
+}
+
+.title h1 {
+  font-weight: bold;
 }

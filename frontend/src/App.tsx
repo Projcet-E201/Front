@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import "./App.css";
 
 import { Route, Routes } from "react-router-dom";
@@ -24,12 +24,20 @@ import RpmPage from "./pages/Rpm/RpmPage";
 import RpmDetailPage from "./pages/Rpm/RpmDetailPage";
 // recoil 사용
 import { RecoilRoot } from "recoil";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function App() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (location.pathname === "/") {
+      navigate("/1");
+    }
+  }, []);
   return (
     <RecoilRoot>
       <Routes>
-        <Route path="/" element={<MainPage />} />
+        {/* <Route path="/" element={<MainPage />} /> */}
         <Route path="/:machine" element={<MachinePage />} />
         {/* MOTOR */}
         <Route path="/:machine/motor" element={<MotorPage />} />
