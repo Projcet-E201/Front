@@ -39,7 +39,13 @@ const LeftNav = () => {
       <ListItemButton
         sx={{
           pl: 4,
-          "&:hover": { bgcolor: "#191BA9", color: "white" },
+          "&:hover": {
+            bgcolor: "#191BA9",
+            color: "white",
+            "& .MuiSvgIcon-root": {
+              color: "white",
+            },
+          },
           bgcolor:
             location.pathname.slice(-1) === `${i}` ? "#191BA9" : "inherit",
           color: location.pathname.slice(-1) === `${i}` ? "white" : "inherit",
@@ -53,7 +59,12 @@ const LeftNav = () => {
       >
         <ListItemIcon>
           {/* <StarBorder /> */}
-          <PrecisionManufacturingIcon />
+          <PrecisionManufacturingIcon
+            sx={{
+              color:
+                location.pathname.slice(-1) === `${i}` ? "white" : undefined,
+            }}
+          />
         </ListItemIcon>
         <ListItemText primary={`No.${i}`} />
       </ListItemButton>
@@ -71,6 +82,7 @@ const LeftNav = () => {
             width: "80%",
             bgcolor: "background.paper",
             justifyContent: "center",
+            marginTop: "25px",
           }}
           component="nav"
           aria-labelledby="nested-list-subheader"
@@ -82,7 +94,13 @@ const LeftNav = () => {
         >
           <ListItemButton
             sx={{
-              "&:hover": { bgcolor: "#191BA9", color: "white" },
+              "&:hover": {
+                bgcolor: "#191BA9",
+                color: "white",
+                "& .MuiSvgIcon-root": {
+                  color: "white",
+                },
+              },
               borderRadius: "10px",
               bgcolor: selectedIndex === "Monitoring" ? "#191BA9" : undefined,
               color: selectedIndex === "Monitoring" ? "white" : undefined,
@@ -113,6 +131,9 @@ const LeftNav = () => {
               "&:hover": {
                 bgcolor: "#191BA9",
                 color: "white",
+                "& .MuiSvgIcon-root": {
+                  color: "white",
+                },
               },
               borderRadius: "10px",
               bgcolor: selectedIndex === "Facilities" ? "#191BA9" : undefined,
@@ -131,7 +152,13 @@ const LeftNav = () => {
           </ListItemButton>
           <ListItemButton
             sx={{
-              "&:hover": { bgcolor: "#191BA9", color: "white" },
+              "&:hover": {
+                bgcolor: "#191BA9",
+                color: "white",
+                "& .MuiSvgIcon-root": {
+                  color: "white",
+                },
+              },
               borderRadius: "10px",
               bgcolor: selectedIndex === "Setting" ? "#191BA9" : undefined,
               color: selectedIndex === "Setting" ? "white" : undefined,
