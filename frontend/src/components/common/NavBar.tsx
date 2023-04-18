@@ -34,12 +34,12 @@ const NavBar = () => {
               className={styles.title}
               onClick={() => navigate(`/${machine}`)}
             >
-              <img src={logo} />
+              <img src={logo} alt="logo" />
               <h1>SEMSE</h1>
             </div>
-            <div>
-              <h1>Machine{machine}</h1>
-            </div>
+          </div>
+          <div>
+            <h1>Machine{machine}</h1>
           </div>
           <div className={styles.rightbutton}>
             {location.pathname !== `/` && (
