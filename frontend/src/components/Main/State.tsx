@@ -15,7 +15,7 @@ const State = () => {
             {/* <p>bool 1</p> */}
             <Card
               className={styles.card}
-              style={{ height: "15vh", minHeight: "140px" }}
+              style={{ height: "17vh", minHeight: "159.28px" }}
             >
               <CardContent>
                 <p>bool 5개</p>
@@ -26,7 +26,7 @@ const State = () => {
             {/* <p>bool 2</p> */}
             <Card
               className={styles.card}
-              style={{ height: "15vh", minHeight: "140px" }}
+              style={{ height: "17vh", minHeight: "159.28px" }}
             >
               <CardContent>
                 <p>bool 5개</p>
@@ -38,7 +38,7 @@ const State = () => {
           {/* <h3>여기는 string</h3> */}
           <Card
             className={styles.card}
-            style={{ height: "50vh", minHeight: "460px" }}
+            style={{ height: "50vh", minHeight: "468.5px" }}
           >
             <CardContent>
               <p>string type</p>
@@ -50,7 +50,7 @@ const State = () => {
         <div>
           <Card
             className={styles.card}
-            style={{ height: "40vh", minHeight: "370px" }}
+            style={{ height: "42vh", minHeight: "393.53px" }}
           >
             <CardContent>
               <p>double</p>
@@ -60,7 +60,7 @@ const State = () => {
         <div>
           <Card
             className={styles.card}
-            style={{ height: "40vh", minHeight: "370px" }}
+            style={{ height: "42vh", minHeight: "393.53px" }}
           >
             <CardContent>
               <p>int type</p>

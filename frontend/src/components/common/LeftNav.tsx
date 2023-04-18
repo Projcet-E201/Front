@@ -23,7 +23,8 @@ import SettingsInputComponentIcon from "@mui/icons-material/SettingsInputCompone
 import { useRecoilState } from "recoil";
 import { indexAtom } from "../../store/atoms";
 
-const LeftNav = () => {
+const LeftNav = ({ childrenHeight }: any) => {
+  // console.log(childrenHeight, "프롭받은 높이");
   const navigate = useNavigate();
   const location = useLocation();
   const [open, setOpen] = React.useState(false);
@@ -75,7 +76,10 @@ const LeftNav = () => {
   console.log(selectedIndex);
 
   return (
-    <div className={styles.left}>
+    <div
+      className={styles.left}
+      style={{ height: `calc(100vh - ${childrenHeight}px` }}
+    >
       {/* <span>왼쪽 네브바</span> */}
       <div style={{ display: "flex", justifyContent: "center" }}>
         <List
