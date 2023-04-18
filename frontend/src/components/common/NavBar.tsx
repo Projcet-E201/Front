@@ -70,7 +70,7 @@ const NavBar = () => {
                     onClick={() => navigate(`/${machine}/motor`)}
                     style={{
                       color: location.pathname.includes(`/motor`)
-                        ? "#5cc2f2"
+                        ? "#191BA9"
                         : "gray",
                       marginRight: "10px",
                     }}
@@ -81,7 +81,7 @@ const NavBar = () => {
                     onClick={() => navigate(`/${machine}/vacuum`)}
                     style={{
                       color: location.pathname.includes(`/vacuum`)
-                        ? "#5cc2f2"
+                        ? "#191BA9"
                         : "gray",
                       marginRight: "10px",
                     }}
@@ -92,7 +92,7 @@ const NavBar = () => {
                     onClick={() => navigate(`/${machine}/air-out1`)}
                     style={{
                       color: location.pathname.includes(`/air-out1`)
-                        ? "#5cc2f2"
+                        ? "#191BA9"
                         : "gray",
                       marginRight: "10px",
                     }}
@@ -103,7 +103,7 @@ const NavBar = () => {
                     onClick={() => navigate(`/${machine}/air-out2`)}
                     style={{
                       color: location.pathname.includes(`/air-out2`)
-                        ? "#5cc2f2"
+                        ? "#191BA9"
                         : "gray",
                       marginRight: "10px",
                     }}
@@ -114,7 +114,7 @@ const NavBar = () => {
                     onClick={() => navigate(`/${machine}/air-in`)}
                     style={{
                       color: location.pathname.includes(`/air-in`)
-                        ? "#5cc2f2"
+                        ? "#191BA9"
                         : "gray",
                       marginRight: "10px",
                     }}
@@ -125,7 +125,7 @@ const NavBar = () => {
                     onClick={() => navigate(`/${machine}/water`)}
                     style={{
                       color: location.pathname.includes(`/water`)
-                        ? "#5cc2f2"
+                        ? "#191BA9"
                         : "gray",
                       marginRight: "10px",
                     }}
@@ -136,7 +136,7 @@ const NavBar = () => {
                     onClick={() => navigate(`/${machine}/abrasion`)}
                     style={{
                       color: location.pathname.includes(`/abrasion`)
-                        ? "#5cc2f2"
+                        ? "#191BA9"
                         : "gray",
                       marginRight: "10px",
                     }}
@@ -147,7 +147,7 @@ const NavBar = () => {
                     onClick={() => navigate(`/${machine}/load`)}
                     style={{
                       color: location.pathname.includes(`/load`)
-                        ? "#5cc2f2"
+                        ? "#191BA9"
                         : "gray",
                       marginRight: "10px",
                     }}
@@ -158,7 +158,7 @@ const NavBar = () => {
                     onClick={() => navigate(`/${machine}/rpm`)}
                     style={{
                       color: location.pathname.includes(`/rpm`)
-                        ? "#5cc2f2"
+                        ? "#191BA9"
                         : "gray",
                     }}
                   >

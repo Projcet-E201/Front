@@ -11,7 +11,9 @@ interface Props {
 const MainLayout = ({ children }: Props) => {
   return (
     <div>
-      <NavBar />
+      <div>
+        <NavBar />
+      </div>
       <div style={{ display: "flex" }}>
         <div style={{ width: "13%" }}>
           <LeftNav />

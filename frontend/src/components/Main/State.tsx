@@ -1,10 +1,72 @@
 import React from "react";
 
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+
+import styles from "./State.module.css";
+
 const State = () => {
   return (
-    <div>
-      <div>
-        <h1>State 컴포넌트 입니다.</h1>
+    <div className={styles.state}>
+      <div className={styles.left}>
+        <div className={styles.boolean}>
+          {/* <h3>여기는 Bool state</h3> */}
+          <div>
+            {/* <p>bool 1</p> */}
+            <Card
+              className={styles.card}
+              style={{ height: "15vh", minHeight: "140px" }}
+            >
+              <CardContent>
+                <p>bool 5개</p>
+              </CardContent>
+            </Card>
+          </div>
+          <div>
+            {/* <p>bool 2</p> */}
+            <Card
+              className={styles.card}
+              style={{ height: "15vh", minHeight: "140px" }}
+            >
+              <CardContent>
+                <p>bool 5개</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+        <div className={styles.string}>
+          {/* <h3>여기는 string</h3> */}
+          <Card
+            className={styles.card}
+            style={{ height: "50vh", minHeight: "460px" }}
+          >
+            <CardContent>
+              <p>string type</p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+      <div className={styles.right}>
+        <div>
+          <Card
+            className={styles.card}
+            style={{ height: "40vh", minHeight: "370px" }}
+          >
+            <CardContent>
+              <p>double</p>
+            </CardContent>
+          </Card>
+        </div>
+        <div>
+          <Card
+            className={styles.card}
+            style={{ height: "40vh", minHeight: "370px" }}
+          >
+            <CardContent>
+              <p>int type</p>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );
