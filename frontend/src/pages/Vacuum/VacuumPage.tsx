@@ -13,13 +13,6 @@ const VacuumPage = () => {
   const { machine } = useParams();
   const navigate = useNavigate();
 
-  const [chartWidth, setChartWidth] = useState(null);
-  const cardRef = useRef(null);
-
-  useEffect(() => {
-    // setChartWidth(cardRef);
-  }, []);
-
   const vacuums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   return (
     <SensorLayout>
@@ -39,9 +32,9 @@ const VacuumPage = () => {
             </div>
           ))}
         </div>
-        <div ref={cardRef}>
+        <div>
           <Card className={styles.card}>
-            <CardContent>
+            <CardContent style={{ height: "40vh" }}>
               <VacuumChart />
             </CardContent>
           </Card>
