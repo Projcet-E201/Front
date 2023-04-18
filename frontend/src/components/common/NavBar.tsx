@@ -20,7 +20,7 @@ const NavBar = () => {
     //   navigate("/");
     // }
     if (value !== selected) {
-      navigate(`/${machine}`);
+      navigate(`/machine/${machine}`);
     }
   };
 
@@ -32,7 +32,7 @@ const NavBar = () => {
           <div style={{ display: "flex" }}>
             <div
               className={styles.title}
-              onClick={() => navigate(`/${machine}`)}
+              onClick={() => navigate(`/machine/${machine}`)}
             >
               <img src={logo} alt="logo" />
               <h1>SEMSE</h1>
@@ -67,7 +67,7 @@ const NavBar = () => {
               <div className={styles.navbutton}>
                 <div style={{ display: "flex" }}>
                   <div
-                    onClick={() => navigate(`/${machine}/motor`)}
+                    onClick={() => navigate(`/machine/${machine}/motor`)}
                     style={{
                       color: location.pathname.includes(`/motor`)
                         ? "#191BA9"
@@ -78,7 +78,7 @@ const NavBar = () => {
                     Motor
                   </div>
                   <div
-                    onClick={() => navigate(`/${machine}/vacuum`)}
+                    onClick={() => navigate(`/machine/${machine}/vacuum`)}
                     style={{
                       color: location.pathname.includes(`/vacuum`)
                         ? "#191BA9"
@@ -89,7 +89,7 @@ const NavBar = () => {
                     Vacuum
                   </div>
                   <div
-                    onClick={() => navigate(`/${machine}/air-out1`)}
+                    onClick={() => navigate(`/machine/${machine}/air-out1`)}
                     style={{
                       color: location.pathname.includes(`/air-out1`)
                         ? "#191BA9"
@@ -100,7 +100,7 @@ const NavBar = () => {
                     AirOut1
                   </div>
                   <div
-                    onClick={() => navigate(`/${machine}/air-out2`)}
+                    onClick={() => navigate(`/machine/${machine}/air-out2`)}
                     style={{
                       color: location.pathname.includes(`/air-out2`)
                         ? "#191BA9"
@@ -111,7 +111,7 @@ const NavBar = () => {
                     AirOut2
                   </div>
                   <div
-                    onClick={() => navigate(`/${machine}/air-in`)}
+                    onClick={() => navigate(`/machine/${machine}/air-in`)}
                     style={{
                       color: location.pathname.includes(`/air-in`)
                         ? "#191BA9"
@@ -122,7 +122,7 @@ const NavBar = () => {
                     AirIn
                   </div>
                   <div
-                    onClick={() => navigate(`/${machine}/water`)}
+                    onClick={() => navigate(`/machine/${machine}/water`)}
                     style={{
                       color: location.pathname.includes(`/water`)
                         ? "#191BA9"
@@ -133,7 +133,7 @@ const NavBar = () => {
                     Water
                   </div>
                   <div
-                    onClick={() => navigate(`/${machine}/abrasion`)}
+                    onClick={() => navigate(`/machine/${machine}/abrasion`)}
                     style={{
                       color: location.pathname.includes(`/abrasion`)
                         ? "#191BA9"
@@ -144,7 +144,7 @@ const NavBar = () => {
                     마모량
                   </div>
                   <div
-                    onClick={() => navigate(`/${machine}/load`)}
+                    onClick={() => navigate(`/machine/${machine}/load`)}
                     style={{
                       color: location.pathname.includes(`/load`)
                         ? "#191BA9"
@@ -155,7 +155,7 @@ const NavBar = () => {
                     부하량
                   </div>
                   <div
-                    onClick={() => navigate(`/${machine}/rpm`)}
+                    onClick={() => navigate(`/machine/${machine}/rpm`)}
                     style={{
                       color: location.pathname.includes(`/rpm`)
                         ? "#191BA9"

@@ -16,7 +16,7 @@ const MainLayout = ({ children }: Props) => {
     if (childrenRef.current) {
       setChildrenHeight(childrenRef.current.clientHeight);
     }
-    console.log("칠드런 높이", childrenHeight);
+    // console.log("칠드런 높이", childrenHeight);
   }, [children]);
   return (
     <div>

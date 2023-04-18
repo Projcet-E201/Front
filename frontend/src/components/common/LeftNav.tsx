@@ -48,14 +48,17 @@ const LeftNav = ({ childrenHeight }: any) => {
               color: "white",
             },
           },
-          bgcolor:
-            location.pathname.slice(-1) === `${i}` ? "#191BA9" : "inherit",
-          color: location.pathname.slice(-1) === `${i}` ? "white" : "inherit",
+          bgcolor: location.pathname.includes(`/machine/${i}`)
+            ? "#191BA9"
+            : "inherit",
+          color: location.pathname.includes(`/machine/${i}`)
+            ? "white"
+            : "inherit",
           borderRadius: "10px",
         }}
         key={`button-${i}`}
         onClick={() => {
-          navigate(`/${i}`);
+          navigate(`/machine/${i}`);
           setOpen(false);
         }}
       >
@@ -63,8 +66,9 @@ const LeftNav = ({ childrenHeight }: any) => {
           {/* <StarBorder /> */}
           <PrecisionManufacturingIcon
             sx={{
-              color:
-                location.pathname.slice(-1) === `${i}` ? "white" : undefined,
+              color: location.pathname.includes(`/machine/${i}`)
+                ? "white"
+                : undefined,
             }}
           />
         </ListItemIcon>
@@ -74,6 +78,7 @@ const LeftNav = ({ childrenHeight }: any) => {
   }
 
   console.log(selectedIndex);
+  console.log(location.pathname);
 
   return (
     <div

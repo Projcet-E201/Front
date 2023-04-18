@@ -24,7 +24,7 @@
 }
 
 .active {
-  background-color: #191BA9;
+  background-color: #191ba9;
 }
 
 .inactive {
@@ -63,7 +63,7 @@
 }
 
 .navbutton div {
-  margin-right: 10px;
+  margin-right: 15px;
   color: gray;
   font-weight: bold;
   cursor: pointer;
