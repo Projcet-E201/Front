@@ -7,10 +7,11 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
 import MotorChart from "../Chart/MotorChart";
+import VacuumChart from "../Chart/VacuumChart";
 
 const Sensor = () => {
   const navigate = useNavigate();
-  const repeat = [1, 2, 3, 4, 5, 6, 7, 8];
+  const repeat = [1, 2, 3, 4, 5, 6, 7];
 
   return (
     <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
@@ -35,6 +36,11 @@ const Sensor = () => {
               </CardContent>
             </Card>
           ))}
+          <Card className={styles.card}>
+            <CardContent>
+              <VacuumChart />
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
