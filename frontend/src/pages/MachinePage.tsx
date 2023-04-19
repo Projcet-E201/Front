@@ -18,7 +18,7 @@ const MachinePage = () => {
   return (
     <MainLayout>
       {/* <p>{location.pathname}</p> */}
-      <div style={{ marginTop: "20px" }}>
+      <div style={{ marginTop: "5px" }}>
         {selected === "Sensor" && <Sensor />}
         {selected === "State" && <State />}
       </div>
