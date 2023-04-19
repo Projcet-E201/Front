@@ -76,6 +76,18 @@ const NavBar = ({ leftNavWidth }: any) => {
                     </div>
                   )} */}
                   <div
+                    onClick={() => navigate(`/machine/${machine}`)}
+                    style={{
+                      color:
+                        location.pathname === `/machine/${machine}`
+                          ? "#191BA9"
+                          : "gray",
+                      marginRight: "10px",
+                    }}
+                  >
+                    Main
+                  </div>
+                  <div
                     onClick={() => navigate(`/machine/${machine}/motor`)}
                     style={{
                       color: location.pathname.includes(`/motor`)

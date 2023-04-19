@@ -6,8 +6,8 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-import MotorChart from "../Chart/MotorChart";
-import VacuumChart from "../Chart/VacuumChart";
+import CardMotorChart from "./CardChart/CardMotorChart";
+import CardVacuumChart from "./CardChart/CardVacuumCart";
 
 const Sensor = () => {
   const navigate = useNavigate();
@@ -37,7 +37,68 @@ const Sensor = () => {
               // onClick={() => navigate("/")}
             >
               <CardContent>
-                <MotorChart h={"23vh"} />
+                {/* {index === 0 ? (
+                  <CardMotorChart h={"23vh"} />
+                ) : (
+                  <div style={{ width: "auto", height: "23vh" }}>
+                    <h3 style={{ margin: "0" }}>Vacuum</h3>
+                    <CardVacuumChart />
+                  </div>
+                )} */}
+                {index === 0 && (
+                  <div>
+                    <h3 style={{ margin: "0" }}>Motor Toque(%)</h3>
+                    <CardMotorChart h={"23vh"} />
+                  </div>
+                )}
+                {index === 1 && (
+                  <div>
+                    <h3 style={{ margin: "0" }}>Air입력(kPa)</h3>
+                    <CardMotorChart h={"23vh"} />
+                  </div>
+                )}
+                {index === 2 && (
+                  <div style={{ width: "auto", height: "23vh" }}>
+                    <h3 style={{ margin: "0" }}>Vacuum입력(kPa)</h3>
+                    <CardVacuumChart />
+                  </div>
+                )}
+                {index === 3 && (
+                  <div style={{ width: "auto", height: "23vh" }}>
+                    <h3 style={{ margin: "0" }}>Air출력(kPa)</h3>
+                    <CardVacuumChart />
+                  </div>
+                )}
+                {index === 4 && (
+                  <div style={{ width: "auto", height: "23vh" }}>
+                    <h3 style={{ margin: "0" }}>Air출력(MPa)</h3>
+                    <CardVacuumChart />
+                  </div>
+                )}
+                {index === 5 && (
+                  <div style={{ width: "auto", height: "23vh" }}>
+                    <h3 style={{ margin: "0" }}>Water출력(L/min)</h3>
+                    <CardVacuumChart />
+                  </div>
+                )}
+                {index === 6 && (
+                  <div style={{ width: "auto", height: "23vh" }}>
+                    <h3 style={{ margin: "0" }}>기구부 마모량(mm)</h3>
+                    <CardVacuumChart />
+                  </div>
+                )}
+                {index === 7 && (
+                  <div style={{ width: "auto", height: "23vh" }}>
+                    <h3 style={{ margin: "0" }}>기구부 부하량(Ampere)</h3>
+                    <CardVacuumChart />
+                  </div>
+                )}
+                {index === 8 && (
+                  <div style={{ width: "auto", height: "23vh" }}>
+                    <h3 style={{ margin: "0" }}>기구부 회전속도(/min)</h3>
+                    <CardVacuumChart />
+                  </div>
+                )}
               </CardContent>
             </Card>
           ))}
