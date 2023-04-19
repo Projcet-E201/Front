@@ -38,9 +38,9 @@ const NavBar = ({ leftNavWidth }: any) => {
               <img src={logo} alt="logo" />
               <h1>SEMSE</h1>
             </div>
-            <div>
-              <h1>Machine{machine}</h1>
-            </div>
+          </div>
+          <div>
+            <h1>Machine{machine}</h1>
           </div>
           <div className={styles.rightbutton}>
             {location.pathname !== `/` && (

@@ -83,7 +83,11 @@ const LeftNav = ({ childrenHeight }: any) => {
   return (
     <div
       className={styles.left}
-      style={{ height: `calc(100vh - ${childrenHeight}px` }}
+      style={{
+        minHeight: `calc(100vh - ${childrenHeight}px`,
+        height: "100% -90px",
+        minWidth: "220.88px",
+      }}
     >
       {/* <span>왼쪽 네브바</span> */}
       <div style={{ display: "flex", justifyContent: "center" }}>
