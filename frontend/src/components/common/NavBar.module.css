@@ -49,7 +49,7 @@
   /* margin-left: 20px; */
   display: flex;
   cursor: pointer;
-  /* justify-content: center; */
+  justify-content: center;
   /* margin-right: 10vh; */
   /* width: 13%; */
 }

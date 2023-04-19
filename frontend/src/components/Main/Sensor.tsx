@@ -11,36 +11,36 @@ import VacuumChart from "../Chart/VacuumChart";
 
 const Sensor = () => {
   const navigate = useNavigate();
-  const repeat = [1, 2, 3, 4, 5, 6, 7];
+  const repeat = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+    <div>
       <div>
         {/* <h3>센서 컴포넌트 입니다.</h3> */}
         <div
           style={{
             display: "flex",
             flexWrap: "wrap",
-            // gap: "1rem",
-            justifyContent: "space-around",
+            justifyContent: "space-between",
           }}
         >
           {repeat.map((item, index) => (
             <Card
               key={index}
-              className={styles.card}
+              className={
+                index < 2
+                  ? styles.topcard
+                  : index >= 2 && index < 5
+                  ? styles.midcard
+                  : styles.botcard
+              }
               // onClick={() => navigate("/")}
             >
               <CardContent>
-                <MotorChart h={"15rem"} />
+                <MotorChart h={"23vh"} />
               </CardContent>
             </Card>
           ))}
-          <Card className={styles.card}>
-            <CardContent>
-              <VacuumChart />
-            </CardContent>
-          </Card>
         </div>
       </div>
     </div>
