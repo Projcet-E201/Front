@@ -32,14 +32,17 @@ const NavBar = ({ leftNavWidth }: any) => {
           <div style={{ display: "flex" }}>
             <div
               className={styles.title}
-              style={{ width: `${leftNavWidth}px` }}
+              // style={{ width: `${leftNavWidth}px` }}
               onClick={() => navigate(`/machine/${machine}`)}
             >
               <img src={logo} alt="logo" />
               <h1>SEMSE</h1>
             </div>
           </div>
-          <div>
+          <div
+            onClick={() => navigate(`/machine/${machine}`)}
+            style={{ cursor: "pointer" }}
+          >
             <h1>Machine{machine}</h1>
           </div>
           <div className={styles.rightbutton}>
@@ -67,6 +70,11 @@ const NavBar = ({ leftNavWidth }: any) => {
             {selected === "Sensor" && (
               <div className={styles.navbutton}>
                 <div style={{ display: "flex" }}>
+                  {/* {location.pathname !== `/machine/${machine}` && (
+                    <div onClick={() => navigate(`/machine/${machine}`)}>
+                      Main
+                    </div>
+                  )} */}
                   <div
                     onClick={() => navigate(`/machine/${machine}/motor`)}
                     style={{
