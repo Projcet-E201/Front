@@ -32,18 +32,18 @@ const NavBar = ({ leftNavWidth }: any) => {
           <div style={{ display: "flex" }}>
             <div
               className={styles.title}
-              // style={{ width: `${leftNavWidth}px` }}
+              style={{ width: "15vw" }}
               onClick={() => navigate(`/machine/${machine}`)}
             >
               <img src={logo} alt="logo" />
               <h1>SEMSE</h1>
             </div>
-          </div>
-          <div
-            onClick={() => navigate(`/machine/${machine}`)}
-            style={{ cursor: "pointer" }}
-          >
-            <h1>Machine{machine}</h1>
+            <div
+              onClick={() => navigate(`/machine/${machine}`)}
+              style={{ cursor: "pointer" }}
+            >
+              <h1>Machine{machine}</h1>
+            </div>
           </div>
           <div className={styles.rightbutton}>
             {location.pathname !== `/` && (

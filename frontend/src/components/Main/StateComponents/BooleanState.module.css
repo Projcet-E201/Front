@@ -1,0 +1,10 @@
+.booleanimg img {
+  width: 5vw;
+  height: auto;
+}
+
+.booleanimg h3 {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
