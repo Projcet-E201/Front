@@ -12,19 +12,30 @@ const MainLayout = ({ children }: Props) => {
   const [childrenHeight, setChildrenHeight] = useState<number>(0);
   const childrenRef = useRef<HTMLDivElement>(null);
 
+  const [leftNavWidth, setLeftNavWidth] = useState<number>(0);
+  const leftNavRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (childrenRef.current) {
       setChildrenHeight(childrenRef.current.clientHeight);
     }
     // console.log("칠드런 높이", childrenHeight);
   }, [children]);
+
+  useEffect(() => {
+    if (leftNavRef.current) {
+      setLeftNavWidth(leftNavRef.current.clientWidth);
+    }
+    console.log(leftNavWidth, "left");
+  }, [leftNavWidth]);
+
   return (
     <div>
       <div ref={childrenRef}>
-        <NavBar />
+        <NavBar leftNavWidth={leftNavWidth} />
       </div>
       <div style={{ display: "flex" }}>
-        <div style={{ width: "13%" }}>
+        <div style={{ width: "13%" }} ref={leftNavRef}>
           <LeftNav childrenHeight={childrenHeight} />
         </div>
         <div style={{ width: "100%" }}>

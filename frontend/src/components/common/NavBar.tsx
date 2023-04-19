@@ -8,7 +8,7 @@ import logo from "../../assets/semse_logo.png";
 import { useRecoilState } from "recoil";
 import { selectedAtom } from "../../store/atoms";
 
-const NavBar = () => {
+const NavBar = ({ leftNavWidth }: any) => {
   // const [selected, setSelected] = useState("Sensor");
   const location = useLocation();
   const { machine } = useParams();
@@ -32,14 +32,15 @@ const NavBar = () => {
           <div style={{ display: "flex" }}>
             <div
               className={styles.title}
+              style={{ width: `${leftNavWidth}px` }}
               onClick={() => navigate(`/machine/${machine}`)}
             >
               <img src={logo} alt="logo" />
               <h1>SEMSE</h1>
             </div>
-          </div>
-          <div>
-            <h1>Machine{machine}</h1>
+            <div>
+              <h1>Machine{machine}</h1>
+            </div>
           </div>
           <div className={styles.rightbutton}>
             {location.pathname !== `/` && (

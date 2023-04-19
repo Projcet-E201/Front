@@ -15,14 +15,16 @@ const MotorPage = () => {
         {/* <button onClick={() => navigate(-1)}>메인페이지</button> */}
       </div>
       <div>
-        <div onClick={() => navigate(`/${machine}`)}>
+        <div onClick={() => navigate(`/machine/${machine}`)}>
           <span>메인페이지</span>
         </div>
         <h3>모터 페이지</h3>
         <div style={{ display: "flex" }}>
           {motors.map((motorId) => (
             <div key={motorId}>
-              <button onClick={() => navigate(`/${machine}/motor/${motorId}`)}>
+              <button
+                onClick={() => navigate(`/machine/${machine}/motor/${motorId}`)}
+              >
                 {motorId}
               </button>
             </div>
