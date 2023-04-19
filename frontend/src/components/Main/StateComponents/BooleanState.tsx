@@ -4,7 +4,7 @@ import booleanOn from "../../../assets/state/ON_button_icon.png";
 import booleanOff from "../../../assets/state/OFF_button_icon.png";
 
 const BooleanState = ({ data }: any) => {
-  console.log(data);
+  // console.log(data);
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
