@@ -4,6 +4,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import SensorLayout from "../../layout/SensorLayout";
 import MotorChart from "../../components/Chart/MotorChart";
 
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+
+import styles from "./MotorPage.module.css";
+
 const MotorPage = () => {
   const { machine } = useParams();
   const navigate = useNavigate();
@@ -30,8 +35,12 @@ const MotorPage = () => {
             </div>
           ))}
         </div>
-        <div style={{}}>
-          <MotorChart h={"31rem"} />
+        <div>
+          <Card className={styles.card}>
+            <CardContent style={{ height: "40vh" }}>
+              <MotorChart h={"25rem"} />
+            </CardContent>
+          </Card>
         </div>
       </div>
     </SensorLayout>

@@ -4,6 +4,7 @@ import VacuumChart from "../../components/Chart/VacuumChart";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
 
 import SensorLayout from "../../layout/SensorLayout";
 
@@ -20,12 +21,17 @@ const VacuumPage = () => {
         {/* <button onClick={() => navigate(-1)}>메인페이지</button> */}
       </div>
       <div>
+        <div onClick={() => navigate(`/machine/${machine}`)}>
+          <span>메인페이지</span>
+        </div>
         <h3>Vacuum 페이지</h3>
         <div style={{ display: "flex" }}>
           {vacuums.map((vacuumId) => (
             <div key={vacuumId}>
               <button
-                onClick={() => navigate(`/${machine}/vacuum/${vacuumId}`)}
+                onClick={() =>
+                  navigate(`/machine/${machine}/vacuum/${vacuumId}`)
+                }
               >
                 {vacuumId}
               </button>

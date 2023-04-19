@@ -85,10 +85,15 @@ const LeftNav = ({ childrenHeight }: any) => {
       className={styles.left}
       style={{
         minHeight: `calc(100vh - ${childrenHeight}px`,
-        height: "100% -90px",
+        height: "100%",
         minWidth: "220.88px",
       }}
     >
+      {/* <div style={{ display: "flex", justifyContent: "center" }}>
+        <h1 style={{ marginTop: "20px" }}>
+          Machine{location.pathname.slice(9)}
+        </h1>
+      </div> */}
       {/* <span>왼쪽 네브바</span> */}
       <div style={{ display: "flex", justifyContent: "center" }}>
         <List

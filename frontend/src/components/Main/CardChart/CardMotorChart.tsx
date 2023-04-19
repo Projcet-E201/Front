@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import { faker } from "@faker-js/faker";
 import { ResponsiveLine } from "@nivo/line";
 
-const MotorChart = ({ h }: any) => {
+const CardMotorChart = ({ h }: any) => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [data, setData] = useState<
     {
@@ -41,7 +42,10 @@ const MotorChart = ({ h }: any) => {
       //   // return [...prevData, newEntry];
       // });
       setData((prevData) => {
-        const currentTime = new Date().toLocaleTimeString();
+        const currentTime = new Date().toLocaleTimeString("en-US", {
+          hour12: false,
+        });
+
         const newEntry = {
           x: currentTime,
           temp1: faker.datatype.number({ min: 10, max: 100 }),
@@ -126,8 +130,8 @@ const MotorChart = ({ h }: any) => {
           dataset9,
           dataset10,
         ]}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-        xScale={{ type: "point" }}
+        margin={{ top: 10, right: 90, bottom: 30, left: 40 }}
+        // xScale={{ type: "point" }}
         yScale={{
           type: "linear",
           // min: "auto",
@@ -138,13 +142,12 @@ const MotorChart = ({ h }: any) => {
           // stacked: true,
           reverse: false,
         }}
-        // curve="cardinal"
         curve="basis"
         // curve="linear"
         axisTop={null}
         axisRight={null}
         colors={{ scheme: "category10" }}
-        lineWidth={2} // 그래프 두께
+        lineWidth={1} // 그래프 두께
         pointSize={10}
         pointColor={{ theme: "background" }}
         pointBorderWidth={2}
@@ -152,7 +155,7 @@ const MotorChart = ({ h }: any) => {
         pointLabelYOffset={-12}
         enableSlices="x"
         enablePoints={false}
-        useMesh={true}
+        // useMesh={true}
         animate={false}
         // isInteractive={true}
         // isInteractive={false}
@@ -171,11 +174,16 @@ const MotorChart = ({ h }: any) => {
             symbolSize: 12,
             symbolShape: "circle",
             symbolBorderColor: "rgba(0, 0, 0, .5)",
-            onClick: (data) => {
-              const id: string = data.id as string;
-              // console.log(id[id.length - 1]);
-              navigate(`/motor/${id[id.length - 1]}`);
-            },
+            // onClick: (data) => {
+            //   const id: string = data.id as string;
+            //   // console.log(id[id.length - 1]);
+            //   console.log(location.pathname);
+            //   navigate(
+            //     `/machine/${location.pathname.slice(-1)}/motor/${
+            //       id[id.length - 1]
+            //     }`
+            //   );
+            // },
             effects: [
               {
                 on: "hover",
@@ -192,4 +200,4 @@ const MotorChart = ({ h }: any) => {
   );
 };
 
-export default MotorChart;
+export default CardMotorChart;
