@@ -20,12 +20,21 @@ const LoginPage = () => {
         flexDirection: "column",
       }}
     >
-      <div>
+      <div
+        style={{
+          flexDirection: "column",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         <div style={{ display: "flex", justifyContent: "center" }}>
           <img src={logo} style={{ width: "20vw" }} alt="" />
           {/* <Typography component="h1" variant="h5">
             Sign in
           </Typography> */}
+        </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <h1>SEMSE Monitoring System</h1>
         </div>
         <Container component="main" maxWidth="xs">
           <Box
@@ -67,7 +76,7 @@ const LoginPage = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, height: "50px" }}
             >
               Sign in
             </Button>

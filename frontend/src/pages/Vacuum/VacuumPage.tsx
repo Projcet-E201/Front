@@ -82,8 +82,9 @@ const VacuumPage = () => {
               height: "100%",
             }}
           >
-            {data.map((d) => (
+            {data.map((d, index) => (
               <div
+                key={index}
                 style={{
                   flexDirection: "column",
                   display: "flex",

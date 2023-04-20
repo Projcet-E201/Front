@@ -38,7 +38,7 @@ const LeftNav = ({ childrenHeight }: any) => {
   const buttonList = [];
   for (let i = 1; i <= 12; i++) {
     buttonList.push(
-      <div style={{ borderBottom: "1px solid gray" }}>
+      <div key={i} style={{ borderBottom: "1px solid gray" }}>
         <ListItemButton
           sx={{
             pl: 4,
