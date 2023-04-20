@@ -174,7 +174,7 @@ const MotorChart = ({ h }: any) => {
             onClick: (data) => {
               const id: string = data.id as string;
               // console.log(id[id.length - 1]);
-              navigate(`/motor/${id[id.length - 1]}`);
+              navigate(`motor/${id[id.length - 1]}`);
             },
             effects: [
               {

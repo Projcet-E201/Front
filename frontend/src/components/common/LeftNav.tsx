@@ -79,8 +79,8 @@ const LeftNav = ({ childrenHeight }: any) => {
     );
   }
 
-  console.log(selectedIndex);
-  console.log(location.pathname);
+  // console.log(selectedIndex);
+  // console.log(location.pathname);
 
   return (
     <div

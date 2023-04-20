@@ -4,47 +4,159 @@ import VacuumChart from "../../components/Chart/VacuumChart";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
+import { faker } from "@faker-js/faker";
 
 import SensorLayout from "../../layout/SensorLayout";
 
 import styles from "./VacuumPage.module.css";
 
+import event1 from "../../assets/event1.png";
+import event2 from "../../assets/event2.png";
+import event3 from "../../assets/event3.png";
+
+// mui icons
+import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
+
 const VacuumPage = () => {
-  const { machine } = useParams();
+  // const { machine } = useParams();
   const navigate = useNavigate();
 
-  const vacuums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  // 전체 vacuum 데이터 가져오기
+  const [data, setData] = useState(() => {
+    const data = [];
+    for (let i = 1; i <= 30; i++) {
+      const vacuum = `V${i}`;
+      const value = faker.datatype.number({ min: 0, max: 100 });
+      const color = (i - 1) % 2 === 0 ? "#C1EAF3" : "#5CC2F2";
+      data.push({ id: `${i}`, vacuum, value, color });
+    }
+    return data;
+  });
+
+  const [remainingTime, setRemainingTime] = useState(5);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const newData = data.map((d: any) => ({
+        ...d,
+        value: faker.datatype.number({ min: 10, max: 100 }),
+      }));
+      setData(newData);
+      setRemainingTime(6);
+    }, 1000);
+
+    const countdownIntervalId = setInterval(() => {
+      setRemainingTime((prev) => prev - 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId);
+      clearInterval(countdownIntervalId);
+    };
+  }, [data]);
   return (
     <SensorLayout>
-      <div>
-        {/* <button onClick={() => navigate(-1)}>메인페이지</button> */}
+      <div className={styles.topcard}>
+        <Card className={styles.card}>
+          <CardContent
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "5vh",
+            }}
+          >
+            <h1>Vacuum</h1>
+          </CardContent>
+        </Card>
+      </div>
+      <div className={styles.midcard}>
+        <Card className={styles.card} style={{ flex: "2" }}>
+          <CardContent
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
+            }}
+          >
+            {data.map((d) => (
+              <div
+                style={{
+                  flexDirection: "column",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                {d.value > 90 ? (
+                  <img
+                    src={event3}
+                    alt="event3"
+                    style={{ width: 60, margin: "5px" }}
+                  />
+                ) : d.value > 70 ? (
+                  <img
+                    src={event2}
+                    alt="event2"
+                    style={{ width: 60, margin: "5px" }}
+                  />
+                ) : (
+                  <img
+                    src={event1}
+                    alt="event1"
+                    style={{ width: 60, margin: "5px" }}
+                  />
+                )}
+                <p
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "0",
+                  }}
+                >
+                  V{d.id}
+                </p>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+        <Card className={styles.card} style={{ flex: "1" }}>
+          <CardContent
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              alignContent: "center",
+            }}
+          >
+            <div>
+              <h1 style={{ color: "#4CD964" }}>
+                {data.filter((d) => d.value <= 70).length}
+              </h1>
+              <p>Good</p>
+            </div>
+            <div>
+              <h1 style={{ color: "#FFC041" }}>
+                {data.filter((d) => d.value > 70 && d.value < 90).length}
+              </h1>
+              <p>Fair</p>
+            </div>
+            <div>
+              <h1 style={{ color: "#FF3B30" }}>
+                {data.filter((d) => d.value >= 90).length}
+              </h1>
+              <p>Pool</p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
       <div>
-        <div onClick={() => navigate(`/machine/${machine}`)}>
-          <span>메인페이지</span>
-        </div>
-        <h3>Vacuum 페이지</h3>
-        <div style={{ display: "flex" }}>
-          {vacuums.map((vacuumId) => (
-            <div key={vacuumId}>
-              <button
-                onClick={() =>
-                  navigate(`/machine/${machine}/vacuum/${vacuumId}`)
-                }
-              >
-                {vacuumId}
-              </button>
-            </div>
-          ))}
-        </div>
-        <div>
-          <Card className={styles.card}>
-            <CardContent style={{ height: "40vh" }}>
-              <VacuumChart />
-            </CardContent>
-          </Card>
-        </div>
+        <Card className={styles.card} style={{ height: "50vh" }}>
+          <CardContent style={{ height: "48vh" }}>
+            <VacuumChart data={data} />
+          </CardContent>
+        </Card>
       </div>
     </SensorLayout>
   );

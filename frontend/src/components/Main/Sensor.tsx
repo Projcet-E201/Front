@@ -38,9 +38,9 @@ const Sensor = () => {
             >
               <CardContent>
                 {/* {index === 0 ? (
-                  <CardMotorChart h={"23vh"} />
+                  <CardMotorChart h={"22.5vh"} />
                 ) : (
-                  <div style={{ width: "auto", height: "23vh" }}>
+                  <div style={{ width: "auto", height: "22.5vh" }}>
                     <h3 style={{ margin: "0" }}>Vacuum</h3>
                     <CardVacuumChart />
                   </div>
@@ -48,19 +48,19 @@ const Sensor = () => {
                 {index === 0 && (
                   <div onClick={() => navigate(`motor`)}>
                     <h3 style={{ margin: "0" }}>Motor Toque(%)</h3>
-                    <CardMotorChart h={"23vh"} />
+                    <CardMotorChart h={"22.5vh"} />
                   </div>
                 )}
                 {index === 1 && (
                   <div onClick={() => navigate(`air-in`)}>
                     <h3 style={{ margin: "0" }}>Air입력(kPa)</h3>
-                    <CardMotorChart h={"23vh"} />
+                    <CardMotorChart h={"22.5vh"} />
                   </div>
                 )}
                 {index === 2 && (
                   <div
                     onClick={() => navigate(`vacuum`)}
-                    style={{ width: "auto", height: "23vh" }}
+                    style={{ width: "auto", height: "22.5vh" }}
                   >
                     <h3 style={{ margin: "0" }}>Vacuum입력(kPa)</h3>
                     <CardVacuumChart />
@@ -69,7 +69,7 @@ const Sensor = () => {
                 {index === 3 && (
                   <div
                     onClick={() => navigate(`air-out1`)}
-                    style={{ width: "auto", height: "23vh" }}
+                    style={{ width: "auto", height: "22.5vh" }}
                   >
                     <h3 style={{ margin: "0" }}>Air출력(kPa)</h3>
                     <CardVacuumChart />
@@ -78,7 +78,7 @@ const Sensor = () => {
                 {index === 4 && (
                   <div
                     onClick={() => navigate(`air-out2`)}
-                    style={{ width: "auto", height: "23vh" }}
+                    style={{ width: "auto", height: "22.5vh" }}
                   >
                     <h3 style={{ margin: "0" }}>Air출력(MPa)</h3>
                     <CardVacuumChart />
@@ -87,7 +87,7 @@ const Sensor = () => {
                 {index === 5 && (
                   <div
                     onClick={() => navigate(`water`)}
-                    style={{ width: "auto", height: "23vh" }}
+                    style={{ width: "auto", height: "22.5vh" }}
                   >
                     <h3 style={{ margin: "0" }}>Water출력(L/min)</h3>
                     <CardVacuumChart />
@@ -96,7 +96,7 @@ const Sensor = () => {
                 {index === 6 && (
                   <div
                     onClick={() => navigate(`abrasion`)}
-                    style={{ width: "auto", height: "23vh" }}
+                    style={{ width: "auto", height: "22.5vh" }}
                   >
                     <h3 style={{ margin: "0" }}>기구부 마모량(mm)</h3>
                     <CardVacuumChart />
@@ -105,7 +105,7 @@ const Sensor = () => {
                 {index === 7 && (
                   <div
                     onClick={() => navigate(`load`)}
-                    style={{ width: "auto", height: "23vh" }}
+                    style={{ width: "auto", height: "22.5vh" }}
                   >
                     <h3 style={{ margin: "0" }}>기구부 부하량(Ampere)</h3>
                     <CardVacuumChart />
@@ -114,7 +114,7 @@ const Sensor = () => {
                 {index === 8 && (
                   <div
                     onClick={() => navigate(`rpm`)}
-                    style={{ width: "auto", height: "23vh" }}
+                    style={{ width: "auto", height: "22.5vh" }}
                   >
                     <h3 style={{ margin: "0" }}>기구부 회전속도(/min)</h3>
                     <CardVacuumChart />
