@@ -22,14 +22,14 @@ const StringState = () => {
       return setInterval(() => {
         const date = new Date();
         const time = date.toLocaleString();
-        const content = `새로운 메시지가 생성되었습니다.${id}`;
+        const content = `진짜 승한아 제발좀 나대지마라 ㅇㅋ? - 강기한 -${id}`;
         setMessages((prevMessages) => {
           const newMessages = [...prevMessages];
           const index = i % 10;
           newMessages[index] = { id, time, content };
           return newMessages;
         });
-      }, (i + 2) * 1000); // 각 id마다 주기를 다르게 설정 (1초부터 10초까지)
+      }, (i + 1) * 1000); // 각 id마다 주기를 다르게 설정 (1초부터 10초까지)
     });
     return () => {
       intervalIds.forEach(clearInterval);
@@ -48,27 +48,57 @@ const StringState = () => {
       >
         <thead>
           <tr>
-            <th style={{ padding: "0.5rem", border: "1px solid black" }}>
-              Machine ID
+            <th
+              style={{
+                padding: "0.5rem",
+                border: "1px solid black",
+                width: "14%",
+              }}
+            >
+              State ID
             </th>
-            <th style={{ padding: "0.5rem", border: "1px solid black" }}>
+            <th
+              style={{
+                padding: "0.5rem",
+                border: "1px solid black",
+                width: "25%",
+              }}
+            >
               Time
             </th>
             <th style={{ padding: "0.5rem", border: "1px solid black" }}>
-              Content
+              Issue
             </th>
           </tr>
         </thead>
         <tbody>
           {messages.map((message, index) => (
             <tr key={index}>
-              <td style={{ padding: "0.5rem", border: "1px solid black" }}>
+              <td
+                style={{
+                  padding: "0.5rem",
+                  border: "1px solid black",
+                  textAlign: "center",
+                }}
+              >
                 {message.id}
               </td>
-              <td style={{ padding: "0.5rem", border: "1px solid black" }}>
+              <td
+                style={{
+                  padding: "0.5rem",
+                  border: "1px solid black",
+                  textAlign: "center",
+                }}
+              >
                 {message.time}
               </td>
-              <td style={{ padding: "0.5rem", border: "1px solid black" }}>
+              <td
+                style={{
+                  padding: "0.5rem",
+                  border: "1px solid black",
+                  textAlign: "center",
+                }}
+              >
                 {message.content}
               </td>
             </tr>

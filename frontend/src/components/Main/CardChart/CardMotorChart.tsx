@@ -24,23 +24,6 @@ const CardMotorChart = ({ h }: any) => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      // setData((prevData) => {
-      //   const currentTime = new Date().toLocaleTimeString();
-      //   const newEntry = {
-      //     x: currentTime,
-      //     temp1: faker.datatype.number({ min: 10, max: 100 }),
-      //     temp2: faker.datatype.number({ min: 10, max: 100 }),
-      //     temp3: faker.datatype.number({ min: 10, max: 100 }),
-      //     temp4: faker.datatype.number({ min: 10, max: 100 }),
-      //   };
-      //   if (prevData.length >= 10) {
-      //     const newData = [...prevData.slice(1), newEntry];
-      //     return newData;
-      //   } else {
-      //     return [...prevData, newEntry];
-      //   }
-      //   // return [...prevData, newEntry];
-      // });
       setData((prevData) => {
         const currentTime = new Date().toLocaleTimeString("en-US", {
           hour12: false,

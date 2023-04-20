@@ -184,7 +184,10 @@ const LeftNav = ({ childrenHeight }: any) => {
               bgcolor: selectedIndex === "Setting" ? "#191BA9" : undefined,
               color: selectedIndex === "Setting" ? "white" : undefined,
             }}
-            onClick={() => indexClick("Setting")}
+            onClick={() => {
+              indexClick("Setting");
+              navigate("/login");
+            }}
           >
             <ListItemIcon>
               <SettingsIcon
