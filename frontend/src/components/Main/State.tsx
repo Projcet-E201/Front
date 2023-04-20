@@ -77,7 +77,7 @@ const State = () => {
           {/* <h3>여기는 string</h3> */}
           <Card
             className={styles.card}
-            style={{ height: "52vh", minHeight: "468.5px" }}
+            style={{ height: "30vh", minHeight: "468.5px" }}
           >
             <CardContent>
               {/* <p>string type</p> */}
@@ -92,8 +92,7 @@ const State = () => {
             className={styles.card}
             style={{ height: "43vh", minHeight: "393.53px" }}
           >
-            <CardContent>
-              {/* <p>double</p> */}
+            <CardContent style={{ height: "42vh" }}>
               <DoubleState />
             </CardContent>
           </Card>
@@ -103,7 +102,7 @@ const State = () => {
             className={styles.card}
             style={{ height: "43vh", minHeight: "393.53px" }}
           >
-            <CardContent>
+            <CardContent style={{ height: "42vh" }}>
               {/* <p>int type</p> */}
               <IntState />
             </CardContent>
