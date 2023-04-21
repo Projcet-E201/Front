@@ -27,19 +27,6 @@ const CardLoadChart = () => {
       clearInterval(intervalId);
     };
   }, []);
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      const newData = data.map((d) => ({
-        ...d,
-        value: faker.datatype.number({ min: 0, max: 16 }),
-      }));
-      setData(newData);
-    }, 1000);
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [data]);
 
   const sortedData = useMemo(() => [...data].reverse(), [data]);
 

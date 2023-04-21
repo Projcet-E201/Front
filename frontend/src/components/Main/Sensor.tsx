@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+// DnD 기능
+// import { DragDropContext } from "react-beautiful-dnd";
 
 import styles from "./Sensor.module.css";
 import Card from "@mui/material/Card";
