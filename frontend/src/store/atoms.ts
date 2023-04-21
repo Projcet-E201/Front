@@ -7,7 +7,7 @@ export const selectedAtom = atom<string>({
 
 export const indexAtom = atom<string>({
   key: "index",
-  default: "Monitoring",
+  default: "Main",
 });
 
 export const selectedMachineAtom = atom<string>({

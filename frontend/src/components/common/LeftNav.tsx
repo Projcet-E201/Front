@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import styles from "./LeftNav.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -18,6 +18,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import MonitorIcon from "@mui/icons-material/Monitor";
 import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
 import SettingsInputComponentIcon from "@mui/icons-material/SettingsInputComponent";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 
 // Recoil로 어떤 index인지 결정하기
 import { useRecoilState } from "recoil";
@@ -123,12 +124,45 @@ const LeftNav = ({ childrenHeight }: any) => {
                 },
               },
               borderRadius: "10px",
+              bgcolor: selectedIndex === "Main" ? "#191BA9" : undefined,
+              color: selectedIndex === "Main" ? "white" : undefined,
+            }}
+            onClick={() => {
+              indexClick("Main");
+              if (location.pathname !== "/") {
+                navigate("/");
+              }
+            }}
+          >
+            <ListItemIcon>
+              <DashboardIcon
+                sx={{
+                  color: selectedIndex === "Main" ? "white" : undefined,
+                }}
+              />
+            </ListItemIcon>
+            <ListItemText primary="Main" />
+          </ListItemButton>
+          <ListItemButton
+            sx={{
+              "&:hover": {
+                bgcolor: "#191BA9",
+                color: "white",
+                "& .MuiSvgIcon-root": {
+                  color: "white",
+                },
+              },
+              borderRadius: "10px",
               bgcolor: selectedIndex === "Monitoring" ? "#191BA9" : undefined,
               color: selectedIndex === "Monitoring" ? "white" : undefined,
             }}
             onClick={() => {
               setOpen(!open);
               indexClick("Monitoring");
+              if (open === true && location.pathname === "/") {
+                indexClick("Main");
+                setSelectedIndex("Main");
+              }
             }}
           >
             <ListItemIcon

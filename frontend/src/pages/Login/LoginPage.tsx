@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
 import TextField from "@mui/material/TextField";
@@ -11,6 +11,15 @@ import Container from "@mui/material/Container";
 import logo from "../../assets/semse_logo.png";
 const LoginPage = () => {
   const navigate = useNavigate();
+
+  const inputRef = useRef(null);
+
+  const handleKeyPress = (event: any) => {
+    const inputValue = event.target.value;
+    // if (!/^[0-9]+$/.test(inputValue)) {
+    //   event.preventDefault();
+    // }
+  };
   return (
     <div
       style={{
@@ -46,9 +55,12 @@ const LoginPage = () => {
             }}
           >
             <TextField
+              onKeyPress={handleKeyPress}
+              inputRef={inputRef}
               variant="standard"
               label="Employee ID"
-              type="number"
+              type="text"
+              placeholder="사번을 입력하세요"
               required
               fullWidth
               name="id"

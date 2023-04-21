@@ -31,15 +31,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
-  useEffect(() => {
-    if (location.pathname === "/") {
-      navigate("machine/1");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (location.pathname === "/") {
+  //     navigate("machine/1");
+  //   }
+  // }, []);
   return (
     <RecoilRoot>
       <Routes>
-        {/* <Route path="/" element={<MainPage />} /> */}
+        <Route path="/" element={<MainPage />} />
         <Route path="/machine/:machine" element={<MachinePage />} />
         {/* MOTOR */}
         <Route path="/machine/:machine/motor" element={<MotorPage />} />

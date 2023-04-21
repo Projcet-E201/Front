@@ -7,7 +7,8 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
 import CardMotorChart from "./CardChart/CardMotorChart";
-import CardVacuumChart from "./CardChart/CardVacuumCart";
+import CardVacuumChart from "./CardChart/CardVacuumChart";
+import CardLoadChart from "./CardChart/CardLoadChart";
 
 const Sensor = () => {
   const navigate = useNavigate();
@@ -37,14 +38,6 @@ const Sensor = () => {
               // onClick={() => navigate("/")}
             >
               <CardContent>
-                {/* {index === 0 ? (
-                  <CardMotorChart h={"22.5vh"} />
-                ) : (
-                  <div style={{ width: "auto", height: "22.5vh" }}>
-                    <h3 style={{ margin: "0" }}>Vacuum</h3>
-                    <CardVacuumChart />
-                  </div>
-                )} */}
                 {index === 0 && (
                   <div onClick={() => navigate(`motor`)}>
                     <h3 style={{ margin: "0" }}>Motor Toque(%)</h3>
@@ -95,6 +88,15 @@ const Sensor = () => {
                 )}
                 {index === 6 && (
                   <div
+                    onClick={() => navigate(`rpm`)}
+                    style={{ width: "auto", height: "22.5vh" }}
+                  >
+                    <h3 style={{ margin: "0" }}>기구부 회전속도(/min)</h3>
+                    <CardVacuumChart />
+                  </div>
+                )}
+                {index === 7 && (
+                  <div
                     onClick={() => navigate(`abrasion`)}
                     style={{ width: "auto", height: "22.5vh" }}
                   >
@@ -102,22 +104,14 @@ const Sensor = () => {
                     <CardVacuumChart />
                   </div>
                 )}
-                {index === 7 && (
+                {index === 8 && (
                   <div
                     onClick={() => navigate(`load`)}
                     style={{ width: "auto", height: "22.5vh" }}
+                    // style={{ width: "auto", height: "50.5vh" }}
                   >
                     <h3 style={{ margin: "0" }}>기구부 부하량(Ampere)</h3>
-                    <CardVacuumChart />
-                  </div>
-                )}
-                {index === 8 && (
-                  <div
-                    onClick={() => navigate(`rpm`)}
-                    style={{ width: "auto", height: "22.5vh" }}
-                  >
-                    <h3 style={{ margin: "0" }}>기구부 회전속도(/min)</h3>
-                    <CardVacuumChart />
+                    <CardLoadChart />
                   </div>
                 )}
               </CardContent>

@@ -12,7 +12,7 @@ const MainPage = () => {
         <h1>여기는 메인페이지입니다.</h1>
         {machines.map((machine) => (
           <div key={machine}>
-            <button onClick={() => navigate(`/${machine}`)}>
+            <button onClick={() => navigate(`/machine/${machine}`)}>
               머신{machine} ㄱㄱ
             </button>
           </div>

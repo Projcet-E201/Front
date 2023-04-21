@@ -22,7 +22,7 @@ const StringState = () => {
       return setInterval(() => {
         const date = new Date();
         const time = date.toLocaleString();
-        const content = `진짜 승한아 제발좀 나대지마라 ㅇㅋ? - 강기한 -${id}`;
+        const content = `새로운 String data 생성 -${id}`;
         setMessages((prevMessages) => {
           const newMessages = [...prevMessages];
           const index = i % 10;
