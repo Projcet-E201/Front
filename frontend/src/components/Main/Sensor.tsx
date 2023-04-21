@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import CardMotorChart from "./CardChart/CardMotorChart";
 import CardVacuumChart from "./CardChart/CardVacuumChart";
 import CardLoadChart from "./CardChart/CardLoadChart";
+import CardAbrasionChart from "./CardChart/CardAbrasionChart";
 
 const Sensor = () => {
   const navigate = useNavigate();
@@ -97,21 +98,21 @@ const Sensor = () => {
                 )}
                 {index === 7 && (
                   <div
-                    onClick={() => navigate(`abrasion`)}
-                    style={{ width: "auto", height: "22.5vh" }}
-                  >
-                    <h3 style={{ margin: "0" }}>기구부 마모량(mm)</h3>
-                    <CardVacuumChart />
-                  </div>
-                )}
-                {index === 8 && (
-                  <div
                     onClick={() => navigate(`load`)}
                     style={{ width: "auto", height: "22.5vh" }}
                     // style={{ width: "auto", height: "50.5vh" }}
                   >
                     <h3 style={{ margin: "0" }}>기구부 부하량(Ampere)</h3>
                     <CardLoadChart />
+                  </div>
+                )}
+                {index === 8 && (
+                  <div
+                    onClick={() => navigate(`abrasion`)}
+                    style={{ width: "auto", height: "22.5vh" }}
+                  >
+                    <h3 style={{ margin: "0" }}>기구부 마모량(mm)</h3>
+                    <CardAbrasionChart />
                   </div>
                 )}
               </CardContent>
