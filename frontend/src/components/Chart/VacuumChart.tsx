@@ -28,7 +28,7 @@ const VacuumChart = ({ data }: any) => {
         tickSize: 5, // 축의 눈금선 길이
         tickPadding: 5, // 축과 눈금선 사이의 여백
         tickRotation: 0, // 눈금선의 회전 각도
-        legend: "Vacuum", // x축에 대한 레전드(축 이름)
+        // legend: "Vacuum", // x축에 대한 레전드(축 이름)
         legendPosition: "middle", // 레전드의 위치
         legendOffset: 32, // 레전드의 오프셋
       }}
@@ -37,7 +37,7 @@ const VacuumChart = ({ data }: any) => {
         tickSize: 5, // 축의 눈금선 길이
         tickPadding: 5, // 축과 눈금선 사이의 여백
         tickRotation: 0, // 눈금선의 회전 각도
-        legend: "Value", // y축에 대한 레전드(축 이름)
+        // legend: "Value", // y축에 대한 레전드(축 이름)
         legendPosition: "middle", // 레전드의 위치
         legendOffset: -40, // 레전드의 오프셋
       }}

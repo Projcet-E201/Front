@@ -38,7 +38,7 @@ const MainLayout = ({ children }: Props) => {
         <div style={{ width: "13%" }} ref={leftNavRef}>
           <LeftNav childrenHeight={childrenHeight} />
         </div>
-        <div style={{ width: "100%" }}>
+        <div>
           <div className={styles.children}>{children}</div>
         </div>
       </div>
