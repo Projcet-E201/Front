@@ -23,6 +23,7 @@ import LoadDetailPage from "./pages/LoadingDose/LoadDetailPage";
 import RpmPage from "./pages/Rpm/RpmPage";
 import RpmDetailPage from "./pages/Rpm/RpmDetailPage";
 import LoginPage from "./pages/Login/LoginPage";
+import TestPage from "./pages/TestPage";
 
 // recoil 사용
 import { RecoilRoot } from "recoil";
@@ -96,6 +97,7 @@ function App() {
           element={<RpmDetailPage />}
         />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/test" element={<TestPage />} />
       </Routes>
     </RecoilRoot>
   );
