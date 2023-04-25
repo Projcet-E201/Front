@@ -12,5 +12,5 @@ export const indexAtom = atom<string>({
 
 export const selectedMachineAtom = atom<string>({
   key: "selectedMachineAtom",
-  default: "Machine1",
+  default: "1",
 });

@@ -114,28 +114,6 @@ const NavBar = ({ leftNavWidth }: any) => {
                     Vacuum
                   </div>
                   <div
-                    onClick={() => navigate(`/machine/${machine}/air-out1`)}
-                    style={{
-                      color: location.pathname.includes(`/air-out1`)
-                        ? "#191BA9"
-                        : "gray",
-                      marginRight: "10px",
-                    }}
-                  >
-                    AirOut1
-                  </div>
-                  <div
-                    onClick={() => navigate(`/machine/${machine}/air-out2`)}
-                    style={{
-                      color: location.pathname.includes(`/air-out2`)
-                        ? "#191BA9"
-                        : "gray",
-                      marginRight: "10px",
-                    }}
-                  >
-                    AirOut2
-                  </div>
-                  <div
                     onClick={() => navigate(`/machine/${machine}/air-in`)}
                     style={{
                       color: location.pathname.includes(`/air-in`)
@@ -146,6 +124,29 @@ const NavBar = ({ leftNavWidth }: any) => {
                   >
                     AirIn
                   </div>
+                  <div
+                    onClick={() => navigate(`/machine/${machine}/air-out1`)}
+                    style={{
+                      color: location.pathname.includes(`/air-out1`)
+                        ? "#191BA9"
+                        : "gray",
+                      marginRight: "10px",
+                    }}
+                  >
+                    Air-Out(kPa)
+                  </div>
+                  <div
+                    onClick={() => navigate(`/machine/${machine}/air-out2`)}
+                    style={{
+                      color: location.pathname.includes(`/air-out2`)
+                        ? "#191BA9"
+                        : "gray",
+                      marginRight: "10px",
+                    }}
+                  >
+                    Air-Out(MPa)
+                  </div>
+
                   <div
                     onClick={() => navigate(`/machine/${machine}/water`)}
                     style={{

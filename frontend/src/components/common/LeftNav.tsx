@@ -173,7 +173,7 @@ const LeftNav = ({ childrenHeight }: any) => {
               {/* 아이콘 수정하기 */}
               <MonitorIcon sx={{}} />
             </ListItemIcon>
-            <ListItemText primary="모니터링" />
+            <ListItemText primary="Machine" />
             {open ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
           <Collapse in={open} timeout="auto" unmountOnExit>

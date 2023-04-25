@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import VacuumChart from "../../components/Chart/VacuumChart";
 
 import Card from "@mui/material/Card";
@@ -8,6 +8,7 @@ import CardContent from "@mui/material/CardContent";
 import { faker } from "@faker-js/faker";
 
 import SensorLayout from "../../layout/SensorLayout";
+import TopCard from "../../components/common/TopCard";
 
 import styles from "./VacuumPage.module.css";
 
@@ -21,6 +22,7 @@ import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
 const VacuumPage = () => {
   // const { machine } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   // 전체 vacuum 데이터 가져오기
   const [data, setData] = useState(() => {
@@ -58,7 +60,7 @@ const VacuumPage = () => {
   return (
     <SensorLayout>
       <div className={styles.topcard}>
-        <Card className={styles.card}>
+        {/* <Card className={styles.card}>
           <CardContent
             style={{
               display: "flex",
@@ -69,7 +71,8 @@ const VacuumPage = () => {
           >
             <h1>Vacuum</h1>
           </CardContent>
-        </Card>
+        </Card> */}
+        <TopCard location={location.pathname} />
       </div>
       <div className={styles.midcard}>
         <Card className={styles.card} style={{ flex: "2" }}>

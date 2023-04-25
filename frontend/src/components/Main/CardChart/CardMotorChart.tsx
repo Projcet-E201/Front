@@ -4,116 +4,63 @@ import { faker } from "@faker-js/faker";
 import { ResponsiveLine } from "@nivo/line";
 
 const CardMotorChart = ({ h }: any) => {
+  const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
   const location = useLocation();
-  const navigate = useNavigate();
-  const [data, setData] = useState<
-    {
-      x: string;
-      temp1: number;
-      temp2: number;
-      temp3: number;
-      temp4: number;
-      temp5: number;
-      temp6: number;
-      temp7: number;
-      temp8: number;
-      temp9: number;
-      temp10: number;
-    }[]
-  >([]);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setData((prevData) => {
-        const currentTime = new Date().toLocaleTimeString("en-US", {
+    const initialData = [];
+    for (let i = 0; i < 10; i++) {
+      const dataEntry: any = {};
+      const time = new Date(Date.now() - (50000 - i * 5000)).toLocaleTimeString(
+        "ko-KR",
+        {
           hour12: false,
-        });
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        }
+      );
+      dataEntry["x"] = time;
+      for (let j = 1; j <= 10; j++) {
+        dataEntry[`Motor${j}`] = faker.datatype.number({ min: 10, max: 100 });
+      }
+      initialData.push(dataEntry);
+    }
+    setData(initialData);
 
-        const newEntry = {
-          x: currentTime,
-          temp1: faker.datatype.number({ min: 10, max: 100 }),
-          temp2: faker.datatype.number({ min: 10, max: 100 }),
-          temp3: faker.datatype.number({ min: 10, max: 100 }),
-          temp4: faker.datatype.number({ min: 10, max: 100 }),
-          temp5: faker.datatype.number({ min: 10, max: 100 }),
-          temp6: faker.datatype.number({ min: 10, max: 100 }),
-          temp7: faker.datatype.number({ min: 10, max: 100 }),
-          temp8: faker.datatype.number({ min: 10, max: 100 }),
-          temp9: faker.datatype.number({ min: 10, max: 100 }),
-          temp10: faker.datatype.number({ min: 10, max: 100 }),
-        };
-        const newData =
-          prevData.length >= 10
-            ? [...prevData.slice(1), newEntry]
-            : [...prevData, newEntry];
-        return newData;
+    const intervalId = setInterval(() => {
+      const currentTime = new Date().toLocaleTimeString("ko-KR", {
+        hour12: false,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
       });
-    }, 1000);
+      const newEntry: any = { x: currentTime };
+      for (let i = 1; i <= 10; i++) {
+        newEntry[`Motor${i}`] = faker.datatype.number({ min: 10, max: 100 });
+      }
+      setData((prevData) =>
+        prevData.length >= 10
+          ? [...prevData.slice(1), newEntry]
+          : [...prevData, newEntry]
+      );
+    }, 5000);
 
     return () => clearInterval(intervalId);
   }, []);
 
-  // 추가: 실시간 차트를 위한 상태 변수와 효과 함수
-
-  const dataset1 = {
-    id: "temp1",
-    data: data.map((d) => ({ x: d.x, y: d.temp1 })),
-  };
-  const dataset2 = {
-    id: "temp2",
-    data: data.map((d) => ({ x: d.x, y: d.temp2 })),
-  };
-  const dataset3 = {
-    id: "temp3",
-    data: data.map((d) => ({ x: d.x, y: d.temp3 })),
-  };
-  const dataset4 = {
-    id: "temp4",
-    data: data.map((d) => ({ x: d.x, y: d.temp4 })),
-  };
-  const dataset5 = {
-    id: "temp5",
-    data: data.map((d) => ({ x: d.x, y: d.temp5 })),
-  };
-  const dataset6 = {
-    id: "temp6",
-    data: data.map((d) => ({ x: d.x, y: d.temp6 })),
-  };
-  const dataset7 = {
-    id: "temp7",
-    data: data.map((d) => ({ x: d.x, y: d.temp7 })),
-  };
-  const dataset8 = {
-    id: "temp8",
-    data: data.map((d) => ({ x: d.x, y: d.temp8 })),
-  };
-  const dataset9 = {
-    id: "temp9",
-    data: data.map((d) => ({ x: d.x, y: d.temp9 })),
-  };
-  const dataset10 = {
-    id: "temp10",
-    data: data.map((d) => ({ x: d.x, y: d.temp10 })),
-  };
+  const datasets = [...Array(10)].map((_, i) => ({
+    id: `Motor${i + 1}`,
+    data: data.map((d) => ({ x: d.x, y: d[`Motor${i + 1}`] })),
+  }));
 
   return (
     // <div style={{ height: "100%" }}>
     <div style={{ height: h }}>
       {/* <h3>motor chart</h3> */}
       <ResponsiveLine
-        data={[
-          dataset1,
-          dataset2,
-          dataset3,
-          dataset4,
-          dataset5,
-          dataset6,
-          dataset7,
-          dataset8,
-          dataset9,
-          dataset10,
-        ]}
-        margin={{ top: 10, right: 90, bottom: 30, left: 40 }}
+        data={datasets}
+        margin={{ top: 10, right: 100, bottom: 30, left: 40 }}
         // xScale={{ type: "point" }}
         yScale={{
           type: "linear",
@@ -147,7 +94,7 @@ const CardMotorChart = ({ h }: any) => {
             anchor: "top-right",
             direction: "column",
             justify: false,
-            translateX: 100,
+            translateX: 110, // 차트와 legend 사이 간격 조정
             translateY: 0,
             itemsSpacing: 0,
             itemDirection: "left-to-right",

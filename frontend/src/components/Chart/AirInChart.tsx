@@ -3,6 +3,9 @@ import { useNavigate } from "react-router";
 
 import { ResponsiveLine } from "@nivo/line";
 
+import { useRecoilState } from "recoil";
+import { selectedMachineAtom } from "../../store/atoms";
+
 interface Props {
   datasets: any[];
   legend?: boolean;
@@ -14,8 +17,10 @@ const formatTime = (secondsAgo: number) => {
   return d.toLocaleTimeString();
 };
 
-const MotorChart = ({ datasets, legend }: Props) => {
+const AirInChart = ({ datasets, legend }: Props) => {
   const navigate = useNavigate();
+
+  const selectedMachine = useRecoilState(selectedMachineAtom);
 
   const legends: any = [
     {
@@ -34,7 +39,7 @@ const MotorChart = ({ datasets, legend }: Props) => {
       symbolBorderColor: "rgba(0, 0, 0, .5)",
       onClick: (data: any) => {
         const id: string = data.id as string;
-        navigate(`motor/${id[id.length - 1]}`);
+        navigate(`/machine/${selectedMachine}/air-in/${id[id.length - 1]}`);
       },
       effects: [
         {
@@ -80,4 +85,4 @@ const MotorChart = ({ datasets, legend }: Props) => {
   );
 };
 
-export default MotorChart;
+export default AirInChart;

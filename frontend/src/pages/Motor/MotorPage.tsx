@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import SensorLayout from "../../layout/SensorLayout";
 import MotorChart from "../../components/Chart/MotorChart";
 import { faker } from "@faker-js/faker";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import TopCard from "../../components/common/TopCard";
 import styles from "./MotorPage.module.css";
 
 import event1 from "../../assets/event1.png";
@@ -12,16 +14,19 @@ import event3 from "../../assets/event3.png";
 
 const MotorPage = () => {
   const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
+  const location = useLocation();
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const currentTime = new Date().toLocaleTimeString();
+      const currentTime = new Date().toLocaleTimeString("ko-KR", {
+        hour12: false,
+      });
       const newEntry: any = { x: currentTime };
       for (let i = 1; i <= 10; i++) {
         newEntry[`Motor${i}`] = faker.datatype.number({ min: 10, max: 100 });
       }
       setData((prevData) =>
-        prevData.length >= 20
+        prevData.length >= 10
           ? [...prevData.slice(1), newEntry]
           : [...prevData, newEntry]
       );
@@ -44,19 +49,7 @@ const MotorPage = () => {
   return (
     <SensorLayout>
       <div className={styles.topcard}>
-        <h1>1</h1>
-        <Card className={styles.card}>
-          <CardContent
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "5vh",
-            }}
-          >
-            <h1>Motor Toque</h1>
-          </CardContent>
-        </Card>
+        <TopCard location={location.pathname} />
       </div>
       <div className={styles.midcard}>
         <Card className={styles.card} style={{ flex: "1" }}>
@@ -130,7 +123,8 @@ const MotorPage = () => {
         }}
       >
         {datasets.map((dataset, index) => (
-          <Card className={styles.card} style={{ width: "32.3%" }}>
+          // <Card className={styles.card} style={{ width: "32.3%" }}>
+          <Card className={styles.card} style={{ width: "49%" }}>
             <CardContent style={{ height: "20vh", margin: "0" }}>
               <h4 style={{ margin: "0" }}>Motor{index + 1}</h4>
               <MotorChart datasets={[dataset]} legend={false} />
