@@ -23,7 +23,7 @@ const AirInPage = () => {
       });
       const newEntry: any = { x: currentTime };
       for (let i = 1; i <= 10; i++) {
-        newEntry[`Motor${i}`] = faker.datatype.number({ min: 10, max: 100 });
+        newEntry[`AirIn${i}`] = faker.datatype.number({ min: 10, max: 100 });
       }
       setData((prevData) =>
         prevData.length >= 10
@@ -35,8 +35,8 @@ const AirInPage = () => {
   }, []);
 
   const datasets = [...Array(10)].map((_, i) => ({
-    id: `Motor${i + 1}`,
-    data: data.map((d) => ({ x: d.x, y: d[`Motor${i + 1}`] })),
+    id: `AirIn${i + 1}`,
+    data: data.map((d) => ({ x: d.x, y: d[`AirIn${i + 1}`] })),
   }));
 
   // console.log(datasets);
@@ -44,7 +44,13 @@ const AirInPage = () => {
     (dataset) => dataset.data[dataset.data.length - 1]
   );
 
-  console.log(latestData);
+  // console.log(latestData);
+
+  const avgData = datasets.map((dataset) => {
+    const sum = dataset.data.reduce((acc, data) => acc + data.y, 0);
+    const avg = sum / dataset.data.length;
+    return { id: dataset.id, avg };
+  });
 
   return (
     <SensorLayout>
@@ -102,7 +108,7 @@ const AirInPage = () => {
                       marginTop: "0",
                     }}
                   >
-                    M{index + 1}
+                    AirIn-{index + 1}
                   </p>
                 </div>
               ))}
@@ -126,8 +132,12 @@ const AirInPage = () => {
           // <Card className={styles.card} style={{ width: "32.3%" }}>
           <Card className={styles.card} style={{ width: "49%" }}>
             <CardContent style={{ height: "20vh", margin: "0" }}>
-              <h4 style={{ margin: "0" }}>Motor{index + 1}</h4>
-              <AirInChart datasets={[dataset]} legend={false} />
+              <h4 style={{ margin: "0" }}>AirIn-{index + 1}</h4>
+              <AirInChart
+                datasets={[dataset]}
+                legend={false}
+                avgData={avgData}
+              />
             </CardContent>
           </Card>
         ))}

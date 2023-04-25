@@ -10,6 +10,7 @@ import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import logo from "../../assets/semse_logo.png";
+
 const LoginPage = () => {
   const navigate = useNavigate();
 
@@ -77,6 +78,7 @@ const LoginPage = () => {
               name="password"
               autoComplete="current-password"
               margin="normal"
+              placeholder="비밀번호를 입력하세요"
             ></TextField>
 
             <FormControlLabel

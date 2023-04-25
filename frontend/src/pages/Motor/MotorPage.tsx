@@ -30,7 +30,7 @@ const MotorPage = () => {
           ? [...prevData.slice(1), newEntry]
           : [...prevData, newEntry]
       );
-    }, 1000);
+    }, 5000);
     return () => clearInterval(intervalId);
   }, []);
 

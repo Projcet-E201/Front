@@ -12,6 +12,8 @@ import CardMotorChart from "./CardChart/CardMotorChart";
 import CardVacuumChart from "./CardChart/CardVacuumChart";
 import CardLoadChart from "./CardChart/CardLoadChart";
 import CardAbrasionChart from "./CardChart/CardAbrasionChart";
+import CardWaterChart from "./CardChart/CardWaterChart";
+import CardRpmChart from "./CardChart/CardRpmChart";
 
 const Sensor = () => {
   const navigate = useNavigate();
@@ -64,7 +66,7 @@ const Sensor = () => {
                 )}
                 {index === 3 && (
                   <div
-                    onClick={() => navigate(`air-out1`)}
+                    onClick={() => navigate(`air-out-kpa`)}
                     style={{ width: "auto", height: "22.5vh" }}
                   >
                     <h3 style={{ margin: "0" }}>Air출력(kPa)</h3>
@@ -73,7 +75,7 @@ const Sensor = () => {
                 )}
                 {index === 4 && (
                   <div
-                    onClick={() => navigate(`air-out2`)}
+                    onClick={() => navigate(`air-out-mpa`)}
                     style={{ width: "auto", height: "22.5vh" }}
                   >
                     <h3 style={{ margin: "0" }}>Air출력(MPa)</h3>
@@ -86,7 +88,7 @@ const Sensor = () => {
                     style={{ width: "auto", height: "22.5vh" }}
                   >
                     <h3 style={{ margin: "0" }}>Water출력(L/min)</h3>
-                    <CardVacuumChart />
+                    <CardWaterChart />
                   </div>
                 )}
                 {index === 6 && (
@@ -95,7 +97,7 @@ const Sensor = () => {
                     style={{ width: "auto", height: "22.5vh" }}
                   >
                     <h3 style={{ margin: "0" }}>기구부 회전속도(/min)</h3>
-                    <CardVacuumChart />
+                    <CardRpmChart />
                   </div>
                 )}
                 {index === 7 && (

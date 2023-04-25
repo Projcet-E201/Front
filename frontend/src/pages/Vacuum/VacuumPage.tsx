@@ -134,23 +134,41 @@ const VacuumPage = () => {
               alignContent: "center",
             }}
           >
-            <div>
-              <h1 style={{ color: "#4CD964" }}>
+            <div style={{ width: "20%" }}>
+              <h1
+                style={{
+                  color: "#4CD964",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
                 {data.filter((d) => d.value <= 70).length}
               </h1>
-              <p>Good</p>
+              <p style={{ display: "flex", justifyContent: "center" }}>Good</p>
             </div>
-            <div>
-              <h1 style={{ color: "#FFC041" }}>
+            <div style={{ width: "20%" }}>
+              <h1
+                style={{
+                  color: "#FFC041",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
                 {data.filter((d) => d.value > 70 && d.value < 90).length}
               </h1>
-              <p>Fair</p>
+              <p style={{ display: "flex", justifyContent: "center" }}>Fair</p>
             </div>
-            <div>
-              <h1 style={{ color: "#FF3B30" }}>
+            <div style={{ width: "20%" }}>
+              <h1
+                style={{
+                  color: "#FF3B30",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
                 {data.filter((d) => d.value >= 90).length}
               </h1>
-              <p>Pool</p>
+              <p style={{ display: "flex", justifyContent: "center" }}>Pool</p>
             </div>
           </CardContent>
         </Card>

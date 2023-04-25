@@ -125,9 +125,9 @@ const NavBar = ({ leftNavWidth }: any) => {
                     AirIn
                   </div>
                   <div
-                    onClick={() => navigate(`/machine/${machine}/air-out1`)}
+                    onClick={() => navigate(`/machine/${machine}/air-out-kpa`)}
                     style={{
-                      color: location.pathname.includes(`/air-out1`)
+                      color: location.pathname.includes(`/air-out-kpa`)
                         ? "#191BA9"
                         : "gray",
                       marginRight: "10px",
@@ -136,9 +136,9 @@ const NavBar = ({ leftNavWidth }: any) => {
                     Air-Out(kPa)
                   </div>
                   <div
-                    onClick={() => navigate(`/machine/${machine}/air-out2`)}
+                    onClick={() => navigate(`/machine/${machine}/air-out-mpa`)}
                     style={{
-                      color: location.pathname.includes(`/air-out2`)
+                      color: location.pathname.includes(`/air-out-map`)
                         ? "#191BA9"
                         : "gray",
                       marginRight: "10px",

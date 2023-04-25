@@ -28,15 +28,14 @@ import TestPage from "./pages/TestPage";
 // recoil 사용
 import { RecoilRoot } from "recoil";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { isLoggedInAtom } from "./store/atoms";
 
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (location.pathname === "/") {
-  //     navigate("machine/1");
-  //   }
-  // }, []);
+  // const isLoggedIn = useRecoilValue(isLoggedInAtom);
+
   return (
     <RecoilRoot>
       <Routes>
@@ -61,15 +60,15 @@ function App() {
           element={<AirInDetailPage />}
         />
         {/* AirOut1 */}
-        <Route path="/machine/:machine/air-out1" element={<AirOut1Page />} />
+        <Route path="/machine/:machine/air-out-kpa" element={<AirOut1Page />} />
         <Route
-          path="/machine/:machine/air-out1/:airOut1Number"
+          path="/machine/:machine/air-out-kpa/:airOut1Number"
           element={<AirOut1DetailPage />}
         />
         {/* AirOut2 */}
-        <Route path="/machine/:machine/air-out2" element={<AirOut2Page />} />
+        <Route path="/machine/:machine/air-out-mpa" element={<AirOut2Page />} />
         <Route
-          path="/machine/:machine/air-out2/:airOut2Number"
+          path="/machine/:machine/air-out-mpa/:airOut2Number"
           element={<AirOut2DetailPage />}
         />
         {/* Water */}

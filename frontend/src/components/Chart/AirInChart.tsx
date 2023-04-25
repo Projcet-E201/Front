@@ -9,6 +9,7 @@ import { selectedMachineAtom } from "../../store/atoms";
 interface Props {
   datasets: any[];
   legend?: boolean;
+  avgData?: any;
 }
 
 const formatTime = (secondsAgo: number) => {
@@ -17,7 +18,8 @@ const formatTime = (secondsAgo: number) => {
   return d.toLocaleTimeString();
 };
 
-const AirInChart = ({ datasets, legend }: Props) => {
+const AirInChart = ({ datasets, legend, avgData }: Props) => {
+  console.log(avgData);
   const navigate = useNavigate();
 
   const selectedMachine = useRecoilState(selectedMachineAtom);
@@ -81,6 +83,15 @@ const AirInChart = ({ datasets, legend }: Props) => {
       useMesh={true}
       animate={false}
       legends={legend ? legends : []}
+      markers={[
+        {
+          axis: "y",
+          value: 80,
+          lineStyle: { stroke: "red", strokeWidth: 2 },
+          legend: "danger",
+          // legendOrientation: "vertical",
+        },
+      ]}
     />
   );
 };

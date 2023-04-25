@@ -12,11 +12,11 @@ const AirOut2Page = () => {
         {/* <button onClick={() => navigate(-1)}>메인페이지</button> */}
       </div>
       <div>
-        <h3>Air-Out2 페이지</h3>
+        <h3>Air-Out(MPa) 페이지</h3>
         <div>
           {airOut2s.map((airOut2Id) => (
             <div key={airOut2Id}>
-              <button onClick={() => navigate(`/air-out2/${airOut2Id}`)}>
+              <button onClick={() => navigate(`/air-out-mpa/${airOut2Id}`)}>
                 {airOut2Id}
               </button>
             </div>

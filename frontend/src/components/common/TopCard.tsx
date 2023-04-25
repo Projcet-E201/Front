@@ -20,7 +20,7 @@ const TopCard = ({ location }: Props) => {
   const navigate = useNavigate();
   const [selectedMachine, setSelectedMachine] =
     useRecoilState(selectedMachineAtom);
-  console.log(selectedMachine);
+  // console.log(selectedMachine);
 
   let title = "";
 
@@ -32,9 +32,9 @@ const TopCard = ({ location }: Props) => {
     title = "Water";
   } else if (location.endsWith("air-in")) {
     title = "AirIn";
-  } else if (location.endsWith("air-out1")) {
+  } else if (location.endsWith("air-out-kpa")) {
     title = "AirOut(kPa)";
-  } else if (location.endsWith("air-out2")) {
+  } else if (location.endsWith("air-out-mpa")) {
     title = "AirOut(MPa)";
   } else if (location.endsWith("abrasion")) {
     title = "마모량";
@@ -53,7 +53,7 @@ const TopCard = ({ location }: Props) => {
         navigate(`/machine/${selectedMachine}/motor`);
         break;
       case "Water":
-        navigate(`/machine/${selectedMachine}/air-out2`);
+        navigate(`/machine/${selectedMachine}/air-out-mpa`);
         break;
       case "AirIn":
         navigate(`/machine/${selectedMachine}/vacuum`);
@@ -62,7 +62,7 @@ const TopCard = ({ location }: Props) => {
         navigate(`/machine/${selectedMachine}/air-in`);
         break;
       case "AirOut(MPa)":
-        navigate(`/machine/${selectedMachine}/air-out1`);
+        navigate(`/machine/${selectedMachine}/air-out-kpa`);
         break;
       case "마모량":
         navigate(`/machine/${selectedMachine}/water`);
@@ -90,10 +90,10 @@ const TopCard = ({ location }: Props) => {
         navigate(`/machine/${selectedMachine}/abrasion`);
         break;
       case "AirIn":
-        navigate(`/machine/${selectedMachine}/air-out1`);
+        navigate(`/machine/${selectedMachine}/air-out-kpa`);
         break;
       case "AirOut(kPa)":
-        navigate(`/machine/${selectedMachine}/air-out2`);
+        navigate(`/machine/${selectedMachine}/air-out-mpa`);
         break;
       case "AirOut(MPa)":
         navigate(`/machine/${selectedMachine}/water`);
@@ -126,6 +126,11 @@ const TopCard = ({ location }: Props) => {
           <IconButton
             aria-label="go-to-water-page"
             onClick={handleLeftButtonClick}
+            sx={{
+              padding: 0,
+              width: "30px",
+              "&:hover": { backgroundColor: "blue", borderRadius: "50%" },
+            }}
           >
             <ArrowBackIcon />
           </IconButton>

@@ -14,3 +14,9 @@ export const selectedMachineAtom = atom<string>({
   key: "selectedMachineAtom",
   default: "1",
 });
+
+// 로그인 유무
+export const isLoggedInAtom = atom<boolean>({
+  key: "isLoggedIn",
+  default: false,
+});
