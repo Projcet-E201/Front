@@ -72,7 +72,7 @@ const VacuumPage = () => {
         </Card>
       </div>
       <div className={styles.midcard}>
-        <Card className={styles.card} style={{ flex: "2" }}>
+        <Card className={styles.card} style={{ flex: "3" }}>
           <CardContent
             style={{
               display: "flex",
