@@ -44,6 +44,7 @@ const MotorPage = () => {
   return (
     <SensorLayout>
       <div className={styles.topcard}>
+        <h1>1</h1>
         <Card className={styles.card}>
           <CardContent
             style={{
