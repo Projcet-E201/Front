@@ -34,7 +34,7 @@ const MotorChart = ({ datasets, legend }: Props) => {
       symbolBorderColor: "rgba(0, 0, 0, .5)",
       onClick: (data: any) => {
         const id: string = data.id as string;
-        navigate(`motor/${id[id.length - 1]}`);
+        navigate(`${data.id.slice(5)}`);
       },
       effects: [
         {
