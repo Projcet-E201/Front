@@ -120,17 +120,13 @@ const TopCard = ({ location }: Props) => {
           alignItems: "center",
           justifyContent: "center",
           height: "4vh",
+          padding: "24px",
         }}
       >
-        <div style={{ display: "flex", alignContent: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
           <IconButton
             aria-label="go-to-water-page"
             onClick={handleLeftButtonClick}
-            sx={{
-              padding: 0,
-              width: "30px",
-              "&:hover": { backgroundColor: "blue", borderRadius: "50%" },
-            }}
           >
             <ArrowBackIcon />
           </IconButton>

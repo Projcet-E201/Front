@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import SensorLayout from "../../layout/SensorLayout";
-import MotorChart from "../../components/Chart/MotorChart";
+import AirOutChart from "../../components/Chart/AirOutChart";
 import { faker } from "@faker-js/faker";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -23,7 +23,10 @@ const AirOut1Page = () => {
       });
       const newEntry: any = { x: currentTime };
       for (let i = 1; i <= 10; i++) {
-        newEntry[`Motor${i}`] = faker.datatype.number({ min: 10, max: 100 });
+        newEntry[`AirOut-kpa${i}`] = faker.datatype.number({
+          min: 10,
+          max: 100,
+        });
       }
       setData((prevData) =>
         prevData.length >= 10
@@ -35,8 +38,8 @@ const AirOut1Page = () => {
   }, []);
 
   const datasets = [...Array(10)].map((_, i) => ({
-    id: `Motor${i + 1}`,
-    data: data.map((d) => ({ x: d.x, y: d[`Motor${i + 1}`] })),
+    id: `AirOut-kpa${i + 1}`,
+    data: data.map((d) => ({ x: d.x, y: d[`AirOut-kpa${i + 1}`] })),
   }));
 
   // console.log(datasets);
@@ -102,7 +105,7 @@ const AirOut1Page = () => {
                       marginTop: "0",
                     }}
                   >
-                    M{index + 1}
+                    AO(kPa){index + 1}
                   </p>
                 </div>
               ))}
@@ -111,7 +114,7 @@ const AirOut1Page = () => {
         </Card>
         <Card className={styles.card} style={{ flex: "2" }}>
           <CardContent style={{ height: "25vh" }}>
-            <MotorChart datasets={datasets} legend={true} />
+            <AirOutChart datasets={datasets} legend={true} />
           </CardContent>
         </Card>
       </div>
@@ -125,9 +128,9 @@ const AirOut1Page = () => {
         {datasets.map((dataset, index) => (
           // <Card className={styles.card} style={{ width: "32.3%" }}>
           <Card className={styles.card} style={{ width: "49%" }}>
-            <CardContent style={{ height: "20vh", margin: "0" }}>
-              <h4 style={{ margin: "0" }}>Motor{index + 1}</h4>
-              <MotorChart datasets={[dataset]} legend={false} />
+            <CardContent style={{ height: "25vh", margin: "0" }}>
+              <h4 style={{ margin: "0" }}>AirOut-kpa{index + 1}</h4>
+              <AirOutChart datasets={[dataset]} legend={false} />
             </CardContent>
           </Card>
         ))}
