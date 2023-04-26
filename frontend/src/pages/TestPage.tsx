@@ -1,125 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import Stomp from "stompjs";
 import SockJS from "sockjs-client";
-import { Client, Message } from "@stomp/stompjs";
 
-const connectUrl = "http://localhost:8080/ws";
 const TestPage = () => {
-  const [client, setClient] = useState(null);
-  const [isConnected, setIsConnected] = useState(false);
-  const [message, setMessage] = useState("");
-
   useEffect(() => {
-    const socket = new SockJS(connectUrl);
-    const stompClient = new Client({
-      webSocketFactory: () => socket,
-      debug: (str) => console.log(str),
-      reconnectDelay: 5000,
-      heartbeatIncoming: 4000,
-      heartbeatOutgoing: 4000,
-    });
+    // SockJS와 Stomp 클라이언트 객체 생성
+    const socket = new SockJS("ws://localhost:8080/ws");
+    const stompClient = Stomp.over(socket);
 
-    stompClient.onConnect = (frame) => {
-      console.log("connected");
-      setIsConnected(true);
-      stompClient.subscribe("/send/server", (message) => {
-        console.log("메세지 받음", message.body);
-        setMessage(message.body);
-      });
+    // SockJS를 사용하여 WebSocket 연결 생성
+    socket.onopen = () => {
+      console.log("WebSocket 연결 성공");
     };
 
-    stompClient.onWebSocketClose = () => {
-      console.log("disconnected");
-      setIsConnected(false);
-    };
+    // Stomp 클라이언트를 사용하여 SockJS WebSocket 연결 초기화
+    stompClient.connect(
+      {},
+      () => {
+        console.log("Stomp 연결 성공");
 
-    stompClient.activate();
-    setClient(stompClient);
-
-    return () => {
-      if (client) {
-        client.deactivate();
+        // WebSocket을 통해 메시지 수신
+        stompClient.subscribe("/client/get", (msg) => {
+          console.log("메시지 수신: ", msg.body);
+        });
+      },
+      (error) => {
+        console.log("Stomp 연결 실패: ", error);
       }
+    );
+
+    // 컴포넌트 언마운트시 연결 종료
+    return () => {
+      // stompClient.disconnect();
+      console.log("Stomp 연결 종료");
     };
   }, []);
 
-  useEffect(() => {
-    if (isConnected) {
-      const intervalId = setInterval(() => {
-        client.publish({ destination: "/send/client", body: "hello" });
-      }, 1000);
-      return () => clearInterval(intervalId);
-    }
-  }, [isConnected]);
-
   return (
     <div>
-      <h1>WebSocket Test</h1>
-      <p>{isConnected ? "Connected" : "Not connected"}</p>
-      <p>Message: {message}</p>
+      <h1>hello</h1>
     </div>
   );
 };
 
 export default TestPage;
-
-
-
-// export default TestPage;
-// import React, { useEffect, useRef, useState } from "react";
-// import SockJS from "sockjs-client";
-
-// const connectUrl = `http://localhost:8080/ws`;
-
-// const TestPage = () => {
-//   const [sockJsClient, setSockJsClient] = useState<WebSocket | null>(null);
-//   const [isConnected, setIsConnected] = useState(false);
-//   const [message, setMessage] = useState("");
-
-//   useEffect(() => {
-//     const socket = new SockJS(connectUrl);
-//     setSockJsClient(socket);
-//     socket.onopen = () => {
-//       console.log("connected");
-//       setIsConnected(true);
-//     };
-
-//     socket.onmessage = (event) => {
-//       console.log("received message", event.data);
-//       setMessage(event.data);
-//     };
-
-//     socket.onclose = () => {
-//       console.log("disconnected");
-//       setIsConnected(false);
-//     };
-
-//     return () => {
-//       if (sockJsClient) {
-//         sockJsClient.close();
-//       }
-//     };
-//   }, []);
-
-//   useEffect(() => {
-//     if (isConnected) {
-//       const intervalId = setInterval(() => {
-//         if (sockJsClient) {
-//           sockJsClient.send("hello");
-//         }
-//       }, 1000);
-//       return () => clearInterval(intervalId);
-//     }
-//   }, [isConnected, sockJsClient]);
-
-//   return (
-//     <div>
-//       <h1>WebSocket Test</h1>
-//       <p>{isConnected ? "Connected" : "Not connected"}</p>
-//       <p>Message: {message}</p>
-//     </div>
-//   );
-// };
-
-// export default TestPage;
-
-
