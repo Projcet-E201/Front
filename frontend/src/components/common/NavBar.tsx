@@ -138,7 +138,7 @@ const NavBar = ({ leftNavWidth }: any) => {
                   <div
                     onClick={() => navigate(`/machine/${machine}/air-out-mpa`)}
                     style={{
-                      color: location.pathname.includes(`/air-out-map`)
+                      color: location.pathname.includes(`/air-out-mpa`)
                         ? "#191BA9"
                         : "gray",
                       marginRight: "10px",

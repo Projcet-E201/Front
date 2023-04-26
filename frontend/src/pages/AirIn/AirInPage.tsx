@@ -108,7 +108,7 @@ const AirInPage = () => {
                       marginTop: "0",
                     }}
                   >
-                    AirIn-{index + 1}
+                    AirIn{index + 1}
                   </p>
                 </div>
               ))}
