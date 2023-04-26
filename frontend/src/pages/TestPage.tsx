@@ -39,15 +39,16 @@ const connectUrl = `ws://localhost:8080/ws`;
 const TestPage = () => {
   // const [isConnected, setIsConnected] = useState(false);
   // const [stompClient, setStompClient] = useState(null);
-
-  const socket = new SockJS(connectUrl);
-  const stompClient = Stomp.over(socket);
-  stompClient.connect({}, (frame) => {
-    console.log("연결성공");
-    stompClient.subscribe(connectUrl, (message) => {
-      console.log("메세지 받음", message.body);
+  useEffect(() => {
+    const socket = new SockJS(connectUrl);
+    const stompClient = Stomp.over(socket);
+    stompClient.connect({}, (frame) => {
+      console.log("연결성공");
+      stompClient.subscribe(connectUrl, (message) => {
+        console.log("메세지 받음", message.body);
+      });
     });
-  });
+  }, []);
   return (
     <div>
       <h1>hello</h1>
