@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from "react";
+import Stomp from "stompjs";
 
 const TestPage = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<string>("");
+
   useEffect(() => {
-    const ws = new WebSocket(`ws://localhost:8080/server1`);
-    ws.onmessage = (event: MessageEvent) => {
-      setData(JSON.parse(event.data));
-    };
+    const socket = new WebSocket("ws://localhost:8080/data-websocket");
+    const stompClient = Stomp.over(socket);
+
+    // WebSocket 연결 초기화
+    stompClient.connect({}, () => {
+      console.log("Connected to WebSocket");
+      stompClient.subscribe("/data-websocket/post", (message: Stomp.Message) => {
+        setData(message.body as string); // 데이터 수신 시 상태 업데이트
+      });
+    });
+
     return () => {
-      ws.close();
+      stompClient.disconnect(); // 컴포넌트 언마운트 시 WebSocket 닫기
     };
-  });
+  }, []);
+
   return (
     <div>
-      <h1>{data}</h1>
+      <h1>WebSocket Example</h1>
+      <p>Data received: {data}</p>
     </div>
   );
 };
