@@ -19,3 +19,38 @@
   width: 100%;
   /* margin-top: 20px; */
 }
+
+.data {
+  display: flex;
+  justify-content: space-around;
+}
+
+.max {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 80px;
+  text-align: center;
+}
+.avg {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 80px;
+  text-align: center;
+}
+.min {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 80px;
+  justify-content: center;
+  text-align: center;
+}
+
+.max h1,
+.min h1,
+.avg
+h1 {
+  color: #5CC2F2
+}

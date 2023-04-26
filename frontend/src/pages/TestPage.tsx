@@ -5,7 +5,7 @@ import SockJS from "sockjs-client";
 const TestPage = () => {
   useEffect(() => {
     // SockJS와 Stomp 클라이언트 객체 생성
-    const socket = new SockJS("ws://localhost:8080/ws");
+    const socket = new SockJS("http://localhost:8080/ws");
     const stompClient = Stomp.over(socket);
 
     // SockJS를 사용하여 WebSocket 연결 생성
@@ -31,7 +31,7 @@ const TestPage = () => {
 
     // 컴포넌트 언마운트시 연결 종료
     return () => {
-      // stompClient.disconnect();
+      stompClient.disconnect(() => "");
       console.log("Stomp 연결 종료");
     };
   }, []);

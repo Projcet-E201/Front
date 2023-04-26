@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SensorLayout from "../../layout/SensorLayout";
 import MotorChart from "../../components/Chart/MotorChart";
 import { faker } from "@faker-js/faker";
@@ -15,6 +15,7 @@ import event3 from "../../assets/event3.png";
 const MotorPage = () => {
   const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -74,7 +75,10 @@ const MotorPage = () => {
                     display: "flex",
                     alignItems: "center",
                     width: "20%",
+                    cursor: "pointer",
+                    margin: "0px",
                   }}
+                  onClick={() => navigate(`${index + 1}`)}
                 >
                   {data?.y > 90 ? (
                     <img
@@ -124,7 +128,11 @@ const MotorPage = () => {
       >
         {datasets.map((dataset, index) => (
           // <Card className={styles.card} style={{ width: "32.3%" }}>
-          <Card className={styles.card} style={{ width: "49%" }}>
+          <Card
+            className={styles.card}
+            style={{ width: "49%", cursor: "pointer" }}
+            onClick={() => navigate(`${index + 1}`)}
+          >
             <CardContent style={{ height: "20vh", margin: "0" }}>
               <h4 style={{ margin: "0" }}>Motor{index + 1}</h4>
               <MotorChart datasets={[dataset]} legend={false} />
