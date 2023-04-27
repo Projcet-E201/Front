@@ -11,8 +11,14 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import { fontWeight } from "@mui/system";
+import { useRecoilState } from "recoil";
+import { indexAtom } from "../store/atoms";
 
-const MainPage: React.FC = () => {
+const MainPage = () => {
+  const [selectedIndex, setSelectedIndex] = useRecoilState(indexAtom);
+  const indexClick = (value: string) => {
+    setSelectedIndex(value);
+  };
   const navigate = useNavigate();
   const machines = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const [sensers, setSensers] = useState<string[]>([
@@ -296,7 +302,10 @@ const MainPage: React.FC = () => {
               <div>
                 <h3
                   className={styles.maincardtitle}
-                  onClick={() => navigate(`/machine/${machine}`)}
+                  onClick={() => {
+                    navigate(`/machine/${machine}`);
+                    indexClick("Monitoring");
+                  }}
                 >
                   Machine {machine}
                 </h3>

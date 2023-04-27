@@ -48,7 +48,7 @@
 .title {
   /* margin-left: 20px; */
   display: flex;
-  cursor: pointer;
+  /* cursor: pointer; */
   justify-content: start;
   /* margin-right: 10vh; */
   /* width: 13%; */
@@ -57,10 +57,12 @@
 .title img {
   width: 90px;
   height: auto;
+  cursor: pointer;
 }
 
 .title h1 {
   font-weight: bold;
+  cursor: pointer;
 }
 
 .navbutton div {
