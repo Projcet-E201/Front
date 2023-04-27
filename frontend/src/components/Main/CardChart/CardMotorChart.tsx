@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router";
 import { faker } from "@faker-js/faker";
 import { ResponsiveLine } from "@nivo/line";
 
-const CardMotorChart = ({ h }: any) => {
+const CardMotorChart = () => {
   const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
   const location = useLocation();
 
@@ -55,78 +55,74 @@ const CardMotorChart = ({ h }: any) => {
   }));
 
   return (
-    // <div style={{ height: "100%" }}>
-    <div style={{ height: h }}>
-      {/* <h3>motor chart</h3> */}
-      <ResponsiveLine
-        data={datasets}
-        margin={{ top: 10, right: 100, bottom: 30, left: 40 }}
-        // xScale={{ type: "point" }}
-        yScale={{
-          type: "linear",
-          // min: "auto",
-          min: 0,
-          // max: "auto",
-          max: 120,
-          stacked: false,
-          // stacked: true,
-          reverse: false,
-        }}
-        curve="basis"
-        // curve="linear"
-        axisTop={null}
-        axisRight={null}
-        colors={{ scheme: "category10" }}
-        lineWidth={1} // 그래프 두께
-        pointSize={10}
-        pointColor={{ theme: "background" }}
-        pointBorderWidth={2}
-        pointBorderColor={{ from: "serieColor" }}
-        pointLabelYOffset={-12}
-        enableSlices="x"
-        enablePoints={false}
-        // useMesh={true}
-        animate={false}
-        // isInteractive={true}
-        // isInteractive={false}
-        legends={[
-          {
-            anchor: "top-right",
-            direction: "column",
-            justify: false,
-            translateX: 110, // 차트와 legend 사이 간격 조정
-            translateY: 0,
-            itemsSpacing: 0,
-            itemDirection: "left-to-right",
-            itemWidth: 80,
-            itemHeight: 20,
-            itemOpacity: 0.75,
-            symbolSize: 12,
-            symbolShape: "circle",
-            symbolBorderColor: "rgba(0, 0, 0, .5)",
-            // onClick: (data) => {
-            //   const id: string = data.id as string;
-            //   // console.log(id[id.length - 1]);
-            //   console.log(location.pathname);
-            //   navigate(
-            //     `/machine/${location.pathname.slice(-1)}/motor/${
-            //       id[id.length - 1]
-            //     }`
-            //   );
-            // },
-            effects: [
-              {
-                on: "hover",
-                style: {
-                  itemBackground: "rgba(0, 0, 0, .03)",
-                  itemOpacity: 1,
-                },
+    <ResponsiveLine
+      data={datasets}
+      margin={{ top: 10, right: 100, bottom: 30, left: 40 }}
+      // xScale={{ type: "point" }}
+      yScale={{
+        type: "linear",
+        // min: "auto",
+        min: 0,
+        // max: "auto",
+        max: 120,
+        stacked: false,
+        // stacked: true,
+        reverse: false,
+      }}
+      curve="basis"
+      // curve="linear"
+      axisTop={null}
+      axisRight={null}
+      colors={{ scheme: "category10" }}
+      lineWidth={1} // 그래프 두께
+      pointSize={10}
+      pointColor={{ theme: "background" }}
+      pointBorderWidth={2}
+      pointBorderColor={{ from: "serieColor" }}
+      pointLabelYOffset={-12}
+      enableSlices="x"
+      enablePoints={false}
+      // useMesh={true}
+      animate={false}
+      // isInteractive={true}
+      // isInteractive={false}
+      legends={[
+        {
+          anchor: "top-right",
+          direction: "column",
+          justify: false,
+          translateX: 110, // 차트와 legend 사이 간격 조정
+          translateY: 0,
+          itemsSpacing: 0,
+          itemDirection: "left-to-right",
+          itemWidth: 80,
+          itemHeight: 20,
+          itemOpacity: 0.75,
+          symbolSize: 12,
+          symbolShape: "circle",
+          symbolBorderColor: "rgba(0, 0, 0, .5)",
+          // onClick: (data) => {
+          //   const id: string = data.id as string;
+          //   // console.log(id[id.length - 1]);
+          //   console.log(location.pathname);
+          //   navigate(
+          //     `/machine/${location.pathname.slice(-1)}/motor/${
+          //       id[id.length - 1]
+          //     }`
+          //   );
+          // },
+          effects: [
+            {
+              on: "hover",
+              style: {
+                itemBackground: "rgba(0, 0, 0, .03)",
+                itemOpacity: 1,
               },
-            ],
-          },
-        ]}
-      />
-    </div>
+            },
+          ],
+        },
+      ]}
+    />
   );
 };
 

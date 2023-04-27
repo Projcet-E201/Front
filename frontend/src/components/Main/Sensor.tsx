@@ -44,15 +44,21 @@ const Sensor = () => {
             >
               <CardContent>
                 {index === 0 && (
-                  <div onClick={() => navigate(`motor`)}>
+                  <div
+                    onClick={() => navigate(`motor`)}
+                    style={{ width: "auto", height: "22.5vh" }}
+                  >
                     <h3 style={{ margin: "0" }}>Motor Toque(%)</h3>
-                    <CardMotorChart h={"22.5vh"} />
+                    <CardMotorChart />
                   </div>
                 )}
                 {index === 1 && (
-                  <div onClick={() => navigate(`air-in`)}>
+                  <div
+                    onClick={() => navigate(`air-in`)}
+                    style={{ width: "auto", height: "22.5vh" }}
+                  >
                     <h3 style={{ margin: "0" }}>Air입력(kPa)</h3>
-                    <CardMotorChart h={"22.5vh"} />
+                    <CardMotorChart />
                   </div>
                 )}
                 {index === 2 && (

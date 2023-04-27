@@ -19,6 +19,7 @@ import MonitorIcon from "@mui/icons-material/Monitor";
 import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
 import SettingsInputComponentIcon from "@mui/icons-material/SettingsInputComponent";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 
 // Recoil로 어떤 index인지 결정하기
 import { useRecoilState } from "recoil";
@@ -246,6 +247,42 @@ const LeftNav = ({ childrenHeight }: any) => {
               />
             </ListItemIcon>
             <ListItemText primary="서비스 관리" />
+          </ListItemButton>
+
+          <ListItemButton
+            sx={{
+              "&:hover": {
+                bgcolor: "#191BA9",
+                color: "white",
+                "& .MuiSvgIcon-root": {
+                  color: "white",
+                },
+              },
+              borderRadius: "10px",
+              // bgcolor: selectedIndex === "Setting" ? "#191BA9" : undefined,
+              // color: selectedIndex === "Setting" ? "white" : undefined,
+              bgcolor: location.pathname.includes("custom-build")
+                ? "#191BA9"
+                : undefined,
+              color: location.pathname.includes("custom-build")
+                ? "white"
+                : undefined,
+            }}
+            onClick={() => {
+              indexClick("Custom");
+              navigate("/custom-build");
+            }}
+          >
+            <ListItemIcon>
+              <DashboardCustomizeIcon
+                sx={{
+                  color: location.pathname.includes("custom-build")
+                    ? "white"
+                    : undefined,
+                }}
+              />
+            </ListItemIcon>
+            <ListItemText primary="Custom" />
           </ListItemButton>
         </List>
       </div>

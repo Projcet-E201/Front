@@ -132,7 +132,11 @@ const AbrasionPage = () => {
       >
         {datasets.map((dataset, index) => (
           // <Card className={styles.card} style={{ width: "32.3%" }}>
-          <Card className={styles.card} style={{ width: "49%" }}>
+          <Card
+            className={styles.card}
+            style={{ width: "49%" }}
+            onClick={() => navigate(`${index + 1}`)}
+          >
             <CardContent style={{ height: "20vh", margin: "0" }}>
               <h4 style={{ margin: "0" }}>Abrasion-{index + 1}</h4>
               <AbrasionChart
