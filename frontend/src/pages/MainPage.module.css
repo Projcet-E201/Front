@@ -44,7 +44,11 @@
   margin-bottom: 20px;
   color: #5cc2f2;
 }
-
+.sensercontainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 .sensercard {
   width: 335px;
   height: 374.5px;
