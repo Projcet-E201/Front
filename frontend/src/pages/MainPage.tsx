@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MainLayout from "../layout/MainLayout";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -13,6 +13,7 @@ import {
 import { fontWeight } from "@mui/system";
 import { useRecoilState } from "recoil";
 import { indexAtom } from "../store/atoms";
+import { faker } from "@faker-js/faker";
 
 const MainPage = () => {
   const [selectedIndex, setSelectedIndex] = useRecoilState(indexAtom);
@@ -32,7 +33,45 @@ const MainPage = () => {
     "load",
     "rpm",
   ]);
+
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [data, setData] = useState<{ [key: string]: number }>({});
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setData({
+        a: Math.floor(Math.random() * 301),
+        b: Math.floor(Math.random() * 101),
+        c: Math.floor(Math.random() * 901),
+        d: -0.1 + Math.random() * 1.1,
+        e: Math.floor(Math.random() * 901),
+        f: Math.floor(Math.random() * 5),
+        g: Math.floor(Math.random() * 41),
+        h: Math.floor(Math.random() * 17),
+        i: Math.floor(Math.random() * 50001),
+        j: Math.floor(Math.random() * 101),
+      });
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newValues: { [key: string]: number } = {};
+      newValues["motor"] = data.a;
+      newValues["압력"] = data.b;
+      newValues["유량"] = data.f;
+      setData({ ...data, ...newValues });
+    }, 100);
+    return () => clearInterval(interval);
+  }, [data]);
+
+  const machineData = machines.map((machine, index) => (
+    <div className={styles.senserdatacontent}>
+      <div>Machine {machine}</div>
+      <div className={styles.senserdatascore}>56</div>
+    </div>
+  ));
 
   const senserCards = sensers.map((senser, index) => (
     <Draggable
@@ -43,232 +82,27 @@ const MainPage = () => {
       {(provided) => (
         <Card
           className={styles.sensercard}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
           ref={provided.innerRef}
-          style={{ ...provided.draggableProps.style }}
+          {...provided.draggableProps}
         >
-          <CardContent>
+          <h3
+            className={styles.senserheader}
+            {...provided.dragHandleProps}
+            {...(index === 0 ? {} : { isDragDisabled: true })}
+          >
             {senser}
-            <hr />
-            <div>
+          </h3>
+          <CardContent>
+            {machineData.map((data, dataIndex) => (
               <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  paddingLeft: "0.8vh",
-                  paddingRight: "0.8vh",
-                }}
+                key={`senserdata-${dataIndex}`}
+                onClick={() =>
+                  navigate(`/machine/${machines[dataIndex]}/${senser}`)
+                }
               >
-                <div>Machine 1</div>
-                <div
-                  style={{
-                    color: "#5cc2f2",
-                    fontWeight: "1000px",
-                  }}
-                >
-                  56
-                </div>
+                {data}
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  paddingLeft: "0.8vh",
-                  paddingRight: "0.8vh",
-                }}
-              >
-                <div>Machine 2</div>
-                <div
-                  style={{
-                    color: "#5cc2f2",
-                    fontWeight: "1000px",
-                  }}
-                >
-                  56
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  paddingLeft: "0.8vh",
-                  paddingRight: "0.8vh",
-                }}
-              >
-                <div>Machine 3</div>
-                <div
-                  style={{
-                    color: "#5cc2f2",
-                    fontWeight: "1000px",
-                  }}
-                >
-                  56
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  paddingLeft: "0.8vh",
-                  paddingRight: "0.8vh",
-                }}
-              >
-                <div>Machine 4</div>
-                <div
-                  style={{
-                    color: "#5cc2f2",
-                    fontWeight: "1000px",
-                  }}
-                >
-                  56
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  paddingLeft: "0.8vh",
-                  paddingRight: "0.8vh",
-                }}
-              >
-                <div>Machine 5</div>
-                <div
-                  style={{
-                    color: "#5cc2f2",
-                    fontWeight: "1000px",
-                  }}
-                >
-                  56
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  paddingLeft: "0.8vh",
-                  paddingRight: "0.8vh",
-                }}
-              >
-                <div>Machine 6</div>
-                <div
-                  style={{
-                    color: "#5cc2f2",
-                    fontWeight: "1000px",
-                  }}
-                >
-                  56
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  paddingLeft: "0.8vh",
-                  paddingRight: "0.8vh",
-                }}
-              >
-                <div>Machine 7</div>
-                <div
-                  style={{
-                    color: "#5cc2f2",
-                    fontWeight: "1000px",
-                  }}
-                >
-                  56
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  paddingLeft: "0.8vh",
-                  paddingRight: "0.8vh",
-                }}
-              >
-                <div>Machine 8</div>
-                <div
-                  style={{
-                    color: "#5cc2f2",
-                    fontWeight: "1000px",
-                  }}
-                >
-                  56
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  paddingLeft: "0.8vh",
-                  paddingRight: "0.8vh",
-                }}
-              >
-                <div>Machine 9</div>
-                <div
-                  style={{
-                    color: "#5cc2f2",
-                    fontWeight: "1000px",
-                  }}
-                >
-                  56
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  paddingLeft: "0.8vh",
-                  paddingRight: "0.8vh",
-                }}
-              >
-                <div>Machine 10</div>
-                <div
-                  style={{
-                    color: "#5cc2f2",
-                    fontWeight: "1000px",
-                  }}
-                >
-                  56
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  paddingLeft: "0.8vh",
-                  paddingRight: "0.8vh",
-                }}
-              >
-                <div>Machine 11</div>
-                <div
-                  style={{
-                    color: "#5cc2f2",
-                    fontWeight: "1000px",
-                  }}
-                >
-                  56
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  paddingLeft: "0.8vh",
-                  paddingRight: "0.8vh",
-                }}
-              >
-                <div>Machine 12</div>
-                <div
-                  style={{
-                    color: "#5cc2f2",
-                    fontWeight: "1000px",
-                  }}
-                >
-                  56
-                </div>
-              </div>
-            </div>
+            ))}
           </CardContent>
         </Card>
       )}
@@ -310,21 +144,27 @@ const MainPage = () => {
                   Machine {machine}
                 </h3>
               </div>
-              <CardContent>
+              <CardContent
+                style={{
+                  lineHeight: "2.8rem",
+                }}
+              >
                 <div className={styles.maincardcontent}>
                   <div className={styles.maincardcontentname}>압력</div>
-                  <div className={styles.maincardcontentscore}>100</div>
+                  <div className={styles.maincardcontentscore}>{data.압력}</div>
                 </div>
                 <div className={styles.maincardcontent}>
                   <div className={styles.maincardcontentname}>유량</div>
-                  <div className={styles.maincardcontentscore}>200</div>
+                  <div className={styles.maincardcontentscore}>{data.유량}</div>
                 </div>
                 <div
                   className={styles.maincardcontent}
                   onClick={() => navigate(`/machine/${machine}/motor`)}
                 >
                   <div className={styles.maincardcontentname}>모터 가동</div>
-                  <div className={styles.maincardcontentscore}>300</div>
+                  <div className={styles.maincardcontentscore}>
+                    {data.motor}
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -334,23 +174,14 @@ const MainPage = () => {
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="sensers">
             {(provided) => (
-              <h3
+              <div
                 {...provided.droppableProps}
                 ref={provided.innerRef}
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  width: "45%",
-                  minHeight: "200px",
-                  marginTop: "0px",
-                  marginBottom: "0px",
-                  maxHeight: "780px",
-                  overflowY: "scroll",
-                }}
+                className={styles.senserdatastyle}
               >
                 {senserCards}
                 {provided.placeholder}
-              </h3>
+              </div>
             )}
           </Droppable>
         </DragDropContext>
