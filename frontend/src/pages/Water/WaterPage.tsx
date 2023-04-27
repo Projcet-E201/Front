@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SensorLayout from "../../layout/SensorLayout";
 import WaterChart from "../../components/Chart/WaterChart";
 import { faker } from "@faker-js/faker";
@@ -15,6 +15,7 @@ import event3 from "../../assets/event3.png";
 const WaterPage = () => {
   const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -23,14 +24,14 @@ const WaterPage = () => {
       });
       const newEntry: any = { x: currentTime };
       for (let i = 1; i <= 10; i++) {
-        newEntry[`Water${i}`] = faker.datatype.number({ min: 10, max: 100 });
+        newEntry[`Water${i}`] = faker.datatype.number({ min: 0, max: 4 });
       }
       setData((prevData) =>
         prevData.length >= 10
           ? [...prevData.slice(1), newEntry]
           : [...prevData, newEntry]
       );
-    }, 5000);
+    }, 10000);
     return () => clearInterval(intervalId);
   }, []);
 
@@ -74,15 +75,18 @@ const WaterPage = () => {
                     display: "flex",
                     alignItems: "center",
                     width: "20%",
+                    cursor: "pointer",
+                    margin: "0px",
                   }}
+                  onClick={() => navigate(`${index + 1}`)}
                 >
-                  {data?.y > 90 ? (
+                  {data?.y == 0 ? (
                     <img
                       src={event3}
                       alt="event3"
                       style={{ width: 60, margin: "5px" }}
                     />
-                  ) : data?.y > 70 ? (
+                  ) : data?.y < 1 ? (
                     <img
                       src={event2}
                       alt="event2"
@@ -124,7 +128,11 @@ const WaterPage = () => {
       >
         {datasets.map((dataset, index) => (
           // <Card className={styles.card} style={{ width: "32.3%" }}>
-          <Card className={styles.card} style={{ width: "49%" }}>
+          <Card
+            className={styles.card}
+            style={{ width: "49%", cursor: "pointer" }}
+            onClick={() => navigate(`${index + 1}`)}
+          >
             <CardContent style={{ height: "20vh", margin: "0" }}>
               <h4 style={{ margin: "0" }}>Water{index + 1}</h4>
               <WaterChart datasets={[dataset]} legend={false} />

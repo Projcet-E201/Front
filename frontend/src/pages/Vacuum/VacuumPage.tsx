@@ -42,15 +42,15 @@ const VacuumPage = () => {
     const intervalId = setInterval(() => {
       const newData = data.map((d: any) => ({
         ...d,
-        value: faker.datatype.number({ min: 10, max: 100 }),
+        value: faker.datatype.number({ min: 0, max: 100 }),
       }));
       setData(newData);
       setRemainingTime(6);
-    }, 1000);
+    }, 10000);
 
     const countdownIntervalId = setInterval(() => {
       setRemainingTime((prev) => prev - 1);
-    }, 1000);
+    }, 10000);
 
     return () => {
       clearInterval(intervalId);

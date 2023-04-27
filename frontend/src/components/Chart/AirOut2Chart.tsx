@@ -3,13 +3,9 @@ import { useNavigate } from "react-router";
 
 import { ResponsiveLine } from "@nivo/line";
 
-import { useRecoilState } from "recoil";
-import { selectedMachineAtom } from "../../store/atoms";
-
 interface Props {
   datasets: any[];
   legend?: boolean;
-  avgData?: any;
 }
 
 const formatTime = (secondsAgo: number) => {
@@ -18,11 +14,8 @@ const formatTime = (secondsAgo: number) => {
   return d.toLocaleTimeString();
 };
 
-const RpmChart = ({ datasets, legend, avgData }: Props) => {
-  console.log(avgData);
+const AirOutChart = ({ datasets, legend }: Props) => {
   const navigate = useNavigate();
-
-  const selectedMachine = useRecoilState(selectedMachineAtom);
 
   const legends: any = [
     {
@@ -41,8 +34,6 @@ const RpmChart = ({ datasets, legend, avgData }: Props) => {
       symbolBorderColor: "rgba(0, 0, 0, .5)",
       onClick: (data: any) => {
         const id: string = data.id as string;
-        // navigate(`/machine/${selectedMachine}/abra
-        // sion/${id[id.length - 1]}`);
         navigate(`${id[id.length - 1]}`);
       },
       effects: [
@@ -65,8 +56,8 @@ const RpmChart = ({ datasets, legend, avgData }: Props) => {
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
-        min: 0,
-        max: 50000,
+        min: -0.1,
+        max: 1,
         stacked: false,
         reverse: false,
       }}
@@ -85,17 +76,8 @@ const RpmChart = ({ datasets, legend, avgData }: Props) => {
       useMesh={true}
       animate={false}
       legends={legend ? legends : []}
-      markers={[
-        {
-          axis: "y",
-          value: 45000,
-          lineStyle: { stroke: "red", strokeWidth: 2 },
-          legend: "danger",
-          // legendOrientation: "vertical",
-        },
-      ]}
     />
   );
 };
 
-export default RpmChart;
+export default AirOutChart;

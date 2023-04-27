@@ -41,8 +41,7 @@ const LoadChart = ({ datasets, legend, avgData }: Props) => {
       symbolBorderColor: "rgba(0, 0, 0, .5)",
       onClick: (data: any) => {
         const id: string = data.id as string;
-        navigate(`/machine/${selectedMachine}/abra
-        sion/${id[id.length - 1]}`);
+        navigate(`${id[id.length - 1]}`);
       },
       effects: [
         {
@@ -87,7 +86,7 @@ const LoadChart = ({ datasets, legend, avgData }: Props) => {
       markers={[
         {
           axis: "y",
-          value: 80,
+          value: 35,
           lineStyle: { stroke: "red", strokeWidth: 2 },
           legend: "danger",
           // legendOrientation: "vertical",

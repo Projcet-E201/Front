@@ -34,7 +34,7 @@ const AirOutChart = ({ datasets, legend }: Props) => {
       symbolBorderColor: "rgba(0, 0, 0, .5)",
       onClick: (data: any) => {
         const id: string = data.id as string;
-        navigate(`motor/${id[id.length - 1]}`);
+        navigate(`${id[id.length - 1]}`);
       },
       effects: [
         {
@@ -57,7 +57,7 @@ const AirOutChart = ({ datasets, legend }: Props) => {
       yScale={{
         type: "linear",
         min: 0,
-        max: 120,
+        max: 900,
         stacked: false,
         reverse: false,
       }}

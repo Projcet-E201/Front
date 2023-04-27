@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SensorLayout from "../../layout/SensorLayout";
-import AirOutChart from "../../components/Chart/AirOutChart";
+import AirOut2Chart from "../../components/Chart/AirOut2Chart";
 import { faker } from "@faker-js/faker";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -15,6 +15,7 @@ import event3 from "../../assets/event3.png";
 const AirOut2Page = () => {
   const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -22,22 +23,22 @@ const AirOut2Page = () => {
         hour12: false,
       });
       const newEntry: any = { x: currentTime };
-      for (let i = 1; i <= 10; i++) {
+      for (let i = 1; i <= 5; i++) {
         newEntry[`AirOut-mpa${i}`] = faker.datatype.number({
-          min: 10,
-          max: 100,
+          min: -0.1,
+          max: 1,
         });
       }
       setData((prevData) =>
-        prevData.length >= 10
+        prevData.length >= 5
           ? [...prevData.slice(1), newEntry]
           : [...prevData, newEntry]
       );
-    }, 1000);
+    }, 10000);
     return () => clearInterval(intervalId);
   }, []);
 
-  const datasets = [...Array(10)].map((_, i) => ({
+  const datasets = [...Array(5)].map((_, i) => ({
     id: `AirOut-mpa${i + 1}`,
     data: data.map((d) => ({ x: d.x, y: d[`AirOut-mpa${i + 1}`] })),
   }));
@@ -77,15 +78,18 @@ const AirOut2Page = () => {
                     display: "flex",
                     alignItems: "center",
                     width: "20%",
+                    cursor: "pointer",
+                    margin: "0px",
                   }}
+                  onClick={() => navigate(`${index + 1}`)}
                 >
-                  {data?.y > 90 ? (
+                  {data?.y > 0.9 ? (
                     <img
                       src={event3}
                       alt="event3"
                       style={{ width: 60, margin: "5px" }}
                     />
-                  ) : data?.y > 70 ? (
+                  ) : data?.y > 0.7 ? (
                     <img
                       src={event2}
                       alt="event2"
@@ -114,7 +118,7 @@ const AirOut2Page = () => {
         </Card>
         <Card className={styles.card} style={{ flex: "2" }}>
           <CardContent style={{ height: "25vh" }}>
-            <AirOutChart datasets={datasets} legend={true} />
+            <AirOut2Chart datasets={datasets} legend={true} />
           </CardContent>
         </Card>
       </div>
@@ -127,10 +131,14 @@ const AirOut2Page = () => {
       >
         {datasets.map((dataset, index) => (
           // <Card className={styles.card} style={{ width: "32.3%" }}>
-          <Card className={styles.card} style={{ width: "49%" }}>
+          <Card
+            className={styles.card}
+            style={{ width: "49%", cursor: "pointer" }}
+            onClick={() => navigate(`${index + 1}`)}
+          >
             <CardContent style={{ height: "20vh", margin: "0" }}>
               <h4 style={{ margin: "0" }}>AirOut-mpa{index + 1}</h4>
-              <AirOutChart datasets={[dataset]} legend={false} />
+              <AirOut2Chart datasets={[dataset]} legend={false} />
             </CardContent>
           </Card>
         ))}
