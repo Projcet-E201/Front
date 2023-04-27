@@ -38,11 +38,11 @@ const NavBar = ({ leftNavWidth }: any) => {
             // onClick={() => navigate(`/machine/${machine}`)}
             // style={{ cursor: "pointer" }}
             >
-              {location.pathname === "/" ? (
-                <h1>All Machine</h1>
-              ) : (
+              {location.pathname === "/" && <h1>All Machine</h1>}
+              {location.pathname === `/machine/${machine}` && (
                 <h1>Machine {machine}</h1>
               )}
+              {location.pathname === "/custom-build" && <h1>CustomBuild</h1>}
             </div>
           </div>
           <div className={styles.rightbutton}>

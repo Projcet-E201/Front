@@ -24,6 +24,7 @@ import RpmPage from "./pages/Rpm/RpmPage";
 import RpmDetailPage from "./pages/Rpm/RpmDetailPage";
 import LoginPage from "./pages/Login/LoginPage";
 import TestPage from "./pages/TestPage";
+import CustomBuildPage from "./pages/CustomBuildPage";
 
 // recoil 사용
 import { RecoilRoot } from "recoil";
@@ -97,6 +98,7 @@ function App() {
         />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/test" element={<TestPage />} />
+        <Route path="/custom-build" element={<CustomBuildPage />} />
       </Routes>
     </RecoilRoot>
   );
