@@ -25,15 +25,15 @@ const AbrasionPage = () => {
         hour12: false,
       });
       const newEntry: any = { x: currentTime };
-      for (let i = 1; i <= 10; i++) {
-        newEntry[`Abrasion${i}`] = faker.datatype.number({ min: 10, max: 100 });
+      for (let i = 1; i <= 5; i++) {
+        newEntry[`Abrasion${i}`] = faker.datatype.number({ min: 0, max: 40 });
       }
       setData((prevData) =>
-        prevData.length >= 10
+        prevData.length >= 5
           ? [...prevData.slice(1), newEntry]
           : [...prevData, newEntry]
       );
-    }, 1000);
+    }, 60000);
     return () => clearInterval(intervalId);
   }, []);
 
@@ -82,15 +82,18 @@ const AbrasionPage = () => {
                     display: "flex",
                     alignItems: "center",
                     width: "20%",
+                    cursor: "pointer",
+                    margin: "0px",
                   }}
+                  onClick={() => navigate(`${index + 1}`)}
                 >
-                  {data?.y > 90 ? (
+                  {data?.y > 35 ? (
                     <img
                       src={event3}
                       alt="event3"
                       style={{ width: 60, margin: "5px" }}
                     />
-                  ) : data?.y > 70 ? (
+                  ) : data?.y > 30 ? (
                     <img
                       src={event2}
                       alt="event2"
@@ -134,7 +137,7 @@ const AbrasionPage = () => {
           // <Card className={styles.card} style={{ width: "32.3%" }}>
           <Card
             className={styles.card}
-            style={{ width: "49%" }}
+            style={{ width: "49%", cursor: "pointer" }}
             onClick={() => navigate(`${index + 1}`)}
           >
             <CardContent style={{ height: "20vh", margin: "0" }}>

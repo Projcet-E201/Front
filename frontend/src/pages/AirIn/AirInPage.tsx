@@ -24,7 +24,7 @@ const AirInPage = () => {
       });
       const newEntry: any = { x: currentTime };
       for (let i = 1; i <= 10; i++) {
-        newEntry[`AirIn${i}`] = faker.datatype.number({ min: 10, max: 100 });
+        newEntry[`AirIn${i}`] = faker.datatype.number({ min: 0, max: 900 });
       }
       setData((prevData) =>
         prevData.length >= 10
@@ -81,15 +81,18 @@ const AirInPage = () => {
                     display: "flex",
                     alignItems: "center",
                     width: "20%",
+                    cursor: "pointer",
+                    margin: "0px",
                   }}
+                  onClick={() => navigate(`${index + 1}`)}
                 >
-                  {data?.y > 90 ? (
+                  {data?.y > 800 ? (
                     <img
                       src={event3}
                       alt="event3"
                       style={{ width: 60, margin: "5px" }}
                     />
-                  ) : data?.y > 70 ? (
+                  ) : data?.y > 700 ? (
                     <img
                       src={event2}
                       alt="event2"

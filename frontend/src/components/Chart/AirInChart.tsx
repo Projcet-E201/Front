@@ -64,7 +64,7 @@ const AirInChart = ({ datasets, legend, avgData }: Props) => {
       yScale={{
         type: "linear",
         min: 0,
-        max: 120,
+        max: 900,
         stacked: false,
         reverse: false,
       }}
@@ -86,7 +86,7 @@ const AirInChart = ({ datasets, legend, avgData }: Props) => {
       markers={[
         {
           axis: "y",
-          value: 80,
+          value: 800,
           lineStyle: { stroke: "red", strokeWidth: 2 },
           legend: "danger",
           // legendOrientation: "vertical",

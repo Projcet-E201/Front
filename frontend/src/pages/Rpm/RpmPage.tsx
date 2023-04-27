@@ -25,11 +25,11 @@ const RpmPage = () => {
         hour12: false,
       });
       const newEntry: any = { x: currentTime };
-      for (let i = 1; i <= 10; i++) {
-        newEntry[`Rpm${i}`] = faker.datatype.number({ min: 10, max: 100 });
+      for (let i = 1; i <= 5; i++) {
+        newEntry[`Rpm${i}`] = faker.datatype.number({ min: 0, max: 50000 });
       }
       setData((prevData) =>
-        prevData.length >= 10
+        prevData.length >= 5
           ? [...prevData.slice(1), newEntry]
           : [...prevData, newEntry]
       );
@@ -82,15 +82,18 @@ const RpmPage = () => {
                     display: "flex",
                     alignItems: "center",
                     width: "20%",
+                    cursor: "pointer",
+                    margin: "0px",
                   }}
+                  onClick={() => navigate(`${index + 1}`)}
                 >
-                  {data?.y > 90 ? (
+                  {data?.y > 45000 ? (
                     <img
                       src={event3}
                       alt="event3"
                       style={{ width: 60, margin: "5px" }}
                     />
-                  ) : data?.y > 70 ? (
+                  ) : data?.y > 40000 ? (
                     <img
                       src={event2}
                       alt="event2"
@@ -134,7 +137,7 @@ const RpmPage = () => {
           // <Card className={styles.card} style={{ width: "32.3%" }}>
           <Card
             className={styles.card}
-            style={{ width: "49%" }}
+            style={{ width: "49%", cursor: "pointer" }}
             onClick={() => navigate(`${index + 1}`)}
           >
             <CardContent style={{ height: "20vh", margin: "0" }}>
