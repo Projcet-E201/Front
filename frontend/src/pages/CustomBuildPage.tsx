@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 
 import MainLayout from "../layout/MainLayout";
+import styles from "./CustomBuildPage.module.css";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -11,11 +12,45 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Grid from "@mui/material/Grid";
+
+import MotorChart from "../components/Chart/MotorChart";
+import CardMotorChart from "../components/Main/CardChart/CardMotorChart";
+
+interface chartInterFace {
+  machine: string;
+  sensor: string;
+  sensorNumber: string;
+}
 
 const CustomBuildPage = () => {
-  const [selectedmachine, setSelectedMachine] = React.useState("");
+  const [selectedMachine, setSelectedMachine] = React.useState("");
   const [selectedSensor, setSelectedSensor] = React.useState("");
   const [selectedNumber, setSelectedNumber] = React.useState("");
+  const [chartList, setChartList] = useState<chartInterFace[]>([]);
+
+  useEffect(() => {
+    const storedChartList = localStorage.getItem("chartList");
+    if (storedChartList) {
+      setChartList(JSON.parse(storedChartList));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("chartList", JSON.stringify(chartList));
+  }, [chartList]);
+
+  const addChartHandler = () => {
+    const newChart = {
+      machine: selectedMachine,
+      sensor: selectedSensor,
+      sensorNumber: selectedNumber,
+    };
+    setChartList((prevList): any => [...prevList, newChart]);
+    setSelectedMachine("");
+    setSelectedSensor("");
+    setSelectedNumber("");
+  };
 
   const machineChange = (event: SelectChangeEvent) => {
     setSelectedMachine(event.target.value as string);
@@ -62,10 +97,14 @@ const CustomBuildPage = () => {
     setSelectedNumber("");
   };
 
+  const deleteChart = (index: number) => {
+    setChartList((prevList) => prevList.filter((_, i) => i !== index));
+  };
+
   return (
     <MainLayout>
       <div>
-        <Card style={{}}>
+        <Card className={styles.card}>
           <CardContent>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <div>
@@ -82,7 +121,7 @@ const CustomBuildPage = () => {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={selectedmachine}
+                  value={selectedMachine}
                   label="Machine"
                   onChange={machineChange}
                 >
@@ -102,7 +141,7 @@ const CustomBuildPage = () => {
                   value={selectedSensor}
                   label="Sensor"
                   onChange={sensorChange}
-                  disabled={selectedmachine ? false : true}
+                  disabled={selectedMachine ? false : true}
                 >
                   <MenuItem value={"Motor"}>Motor</MenuItem>
                   <MenuItem value={"Vacuum"}>Vacuum</MenuItem>
@@ -144,23 +183,46 @@ const CustomBuildPage = () => {
                   display: "flex",
                   alignItems: "end",
                   marginRight: "20px",
+                  width: "310px",
                 }}
               >
                 <h5 style={{ margin: "0" }}>선택된 차트: &nbsp;&nbsp; </h5>
                 <h4 style={{ margin: "0" }}>
-                  {selectedmachine && <span>Machine{selectedmachine} -</span>}{" "}
+                  {selectedMachine && <span>Machine{selectedMachine} -</span>}{" "}
                   {selectedSensor && <span>{selectedSensor} -</span>}{" "}
                   {selectedNumber && <span>{selectedNumber}</span>}{" "}
                 </h4>
               </div>
-              <button style={{ height: "40px" }}>ADD CHART</button>
+              <button style={{ height: "40px" }} onClick={addChartHandler}>
+                ADD CHART
+              </button>
             </div>
           </CardContent>
         </Card>
       </div>
-      <div>{selectedmachine}</div>
-      <div>{selectedSensor}</div>
-      <div>{selectedNumber}</div>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+        }}
+      >
+        {chartList.map((chart, index) => (
+          <Card className={styles.card} style={{ width: "42vw" }}>
+            <CardContent>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <h4 style={{ marginTop: "0" }}>
+                  Machine{chart.machine} -{chart.sensor} - {chart.sensorNumber}
+                </h4>
+                <button onClick={() => deleteChart(index)}>삭제</button>
+              </div>
+              <div style={{ height: "50vh" }}>
+                {chart.sensor === "Motor" && <CardMotorChart />}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </MainLayout>
   );
 };

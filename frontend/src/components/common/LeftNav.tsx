@@ -204,6 +204,41 @@ const LeftNav = ({ childrenHeight }: any) => {
                 },
               },
               borderRadius: "10px",
+              // bgcolor: selectedIndex === "Setting" ? "#191BA9" : undefined,
+              // color: selectedIndex === "Setting" ? "white" : undefined,
+              bgcolor: location.pathname.includes("custom-build")
+                ? "#191BA9"
+                : undefined,
+              color: location.pathname.includes("custom-build")
+                ? "white"
+                : undefined,
+            }}
+            onClick={() => {
+              indexClick("Custom");
+              navigate("/custom-build");
+            }}
+          >
+            <ListItemIcon>
+              <DashboardCustomizeIcon
+                sx={{
+                  color: location.pathname.includes("custom-build")
+                    ? "white"
+                    : undefined,
+                }}
+              />
+            </ListItemIcon>
+            <ListItemText primary="Custom" />
+          </ListItemButton>
+          <ListItemButton
+            sx={{
+              "&:hover": {
+                bgcolor: "#191BA9",
+                color: "white",
+                "& .MuiSvgIcon-root": {
+                  color: "white",
+                },
+              },
+              borderRadius: "10px",
               bgcolor: selectedIndex === "Facilities" ? "#191BA9" : undefined,
               color: selectedIndex === "Facilities" ? "white" : undefined,
             }}
@@ -247,42 +282,6 @@ const LeftNav = ({ childrenHeight }: any) => {
               />
             </ListItemIcon>
             <ListItemText primary="서비스 관리" />
-          </ListItemButton>
-
-          <ListItemButton
-            sx={{
-              "&:hover": {
-                bgcolor: "#191BA9",
-                color: "white",
-                "& .MuiSvgIcon-root": {
-                  color: "white",
-                },
-              },
-              borderRadius: "10px",
-              // bgcolor: selectedIndex === "Setting" ? "#191BA9" : undefined,
-              // color: selectedIndex === "Setting" ? "white" : undefined,
-              bgcolor: location.pathname.includes("custom-build")
-                ? "#191BA9"
-                : undefined,
-              color: location.pathname.includes("custom-build")
-                ? "white"
-                : undefined,
-            }}
-            onClick={() => {
-              indexClick("Custom");
-              navigate("/custom-build");
-            }}
-          >
-            <ListItemIcon>
-              <DashboardCustomizeIcon
-                sx={{
-                  color: location.pathname.includes("custom-build")
-                    ? "white"
-                    : undefined,
-                }}
-              />
-            </ListItemIcon>
-            <ListItemText primary="Custom" />
           </ListItemButton>
         </List>
       </div>
