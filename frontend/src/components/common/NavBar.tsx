@@ -30,23 +30,19 @@ const NavBar = ({ leftNavWidth }: any) => {
         {/* <p>최상단 네브바</p> */}
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div style={{ display: "flex" }}>
-            <div
-              className={styles.title}
-              style={{ width: "15vw" }}
-              onClick={() => navigate(`/`)}
-            >
-              <img src={logo} alt="logo" />
-              <h1>SEMSE</h1>
+            <div className={styles.title} style={{ width: "15vw" }}>
+              <img src={logo} alt="logo" onClick={() => navigate(`/`)} />
+              <h1 onClick={() => navigate(`/`)}>SEMSE</h1>
             </div>
             <div
-              onClick={() => navigate(`/machine/${machine}`)}
-              style={{ cursor: "pointer" }}
+            // onClick={() => navigate(`/machine/${machine}`)}
+            // style={{ cursor: "pointer" }}
             >
-              {location.pathname === "/" ? (
-                <h1>All Machine</h1>
-              ) : (
+              {location.pathname === "/" && <h1>All Machine</h1>}
+              {location.pathname === `/machine/${machine}` && (
                 <h1>Machine {machine}</h1>
               )}
+              {location.pathname === "/custom-build" && <h1>CustomBuild</h1>}
             </div>
           </div>
           <div className={styles.rightbutton}>

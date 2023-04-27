@@ -19,6 +19,7 @@ import MonitorIcon from "@mui/icons-material/Monitor";
 import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
 import SettingsInputComponentIcon from "@mui/icons-material/SettingsInputComponent";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 
 // Recoil로 어떤 index인지 결정하기
 import { useRecoilState } from "recoil";
@@ -124,8 +125,10 @@ const LeftNav = ({ childrenHeight }: any) => {
                 },
               },
               borderRadius: "10px",
-              bgcolor: selectedIndex === "Main" ? "#191BA9" : undefined,
-              color: selectedIndex === "Main" ? "white" : undefined,
+              // bgcolor: selectedIndex === "Main" ? "#191BA9" : undefined,
+              // color: selectedIndex === "Main" ? "white" : undefined,
+              bgcolor: location.pathname === "/" ? "#191BA9" : undefined,
+              color: location.pathname === "/" ? "white" : undefined,
             }}
             onClick={() => {
               indexClick("Main");
@@ -137,7 +140,8 @@ const LeftNav = ({ childrenHeight }: any) => {
             <ListItemIcon>
               <DashboardIcon
                 sx={{
-                  color: selectedIndex === "Main" ? "white" : undefined,
+                  // color: selectedIndex === "Main" ? "white" : undefined,
+                  color: location.pathname === "/" ? "white" : undefined,
                 }}
               />
             </ListItemIcon>
@@ -153,8 +157,14 @@ const LeftNav = ({ childrenHeight }: any) => {
                 },
               },
               borderRadius: "10px",
-              bgcolor: selectedIndex === "Monitoring" ? "#191BA9" : undefined,
-              color: selectedIndex === "Monitoring" ? "white" : undefined,
+              // bgcolor: selectedIndex === "Monitoring" ? "#191BA9" : undefined,
+              // color: selectedIndex === "Monitoring" ? "white" : undefined,
+              bgcolor: location.pathname.includes("machine")
+                ? "#191BA9"
+                : undefined,
+              color: location.pathname.includes("machine")
+                ? "white"
+                : undefined,
             }}
             onClick={() => {
               setOpen(!open);
@@ -167,7 +177,10 @@ const LeftNav = ({ childrenHeight }: any) => {
           >
             <ListItemIcon
               sx={{
-                color: selectedIndex === "Monitoring" ? "white" : undefined,
+                // color: selectedIndex === "Monitoring" ? "white" : undefined,
+                color: location.pathname.includes("machine")
+                  ? "white"
+                  : undefined,
               }}
             >
               {/* 아이콘 수정하기 */}
@@ -181,6 +194,41 @@ const LeftNav = ({ childrenHeight }: any) => {
               {buttonList}
             </List>
           </Collapse>
+          <ListItemButton
+            sx={{
+              "&:hover": {
+                bgcolor: "#191BA9",
+                color: "white",
+                "& .MuiSvgIcon-root": {
+                  color: "white",
+                },
+              },
+              borderRadius: "10px",
+              // bgcolor: selectedIndex === "Setting" ? "#191BA9" : undefined,
+              // color: selectedIndex === "Setting" ? "white" : undefined,
+              bgcolor: location.pathname.includes("custom-build")
+                ? "#191BA9"
+                : undefined,
+              color: location.pathname.includes("custom-build")
+                ? "white"
+                : undefined,
+            }}
+            onClick={() => {
+              indexClick("Custom");
+              navigate("/custom-build");
+            }}
+          >
+            <ListItemIcon>
+              <DashboardCustomizeIcon
+                sx={{
+                  color: location.pathname.includes("custom-build")
+                    ? "white"
+                    : undefined,
+                }}
+              />
+            </ListItemIcon>
+            <ListItemText primary="Custom" />
+          </ListItemButton>
           <ListItemButton
             sx={{
               "&:hover": {

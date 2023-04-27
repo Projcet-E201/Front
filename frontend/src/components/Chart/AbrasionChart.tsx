@@ -3,9 +3,13 @@ import { useNavigate } from "react-router";
 
 import { ResponsiveLine } from "@nivo/line";
 
+import { useRecoilState } from "recoil";
+import { selectedMachineAtom } from "../../store/atoms";
+
 interface Props {
   datasets: any[];
   legend?: boolean;
+  avgData?: any;
 }
 
 const formatTime = (secondsAgo: number) => {
@@ -14,8 +18,11 @@ const formatTime = (secondsAgo: number) => {
   return d.toLocaleTimeString();
 };
 
-const MotorChart = ({ datasets, legend }: Props) => {
+const AbrasionChart = ({ datasets, legend, avgData }: Props) => {
+  console.log(avgData);
   const navigate = useNavigate();
+
+  const selectedMachine = useRecoilState(selectedMachineAtom);
 
   const legends: any = [
     {
@@ -34,7 +41,8 @@ const MotorChart = ({ datasets, legend }: Props) => {
       symbolBorderColor: "rgba(0, 0, 0, .5)",
       onClick: (data: any) => {
         const id: string = data.id as string;
-        navigate(`${data.id.slice(5)}`);
+        navigate(`/machine/${selectedMachine}/abra
+        sion/${id[id.length - 1]}`);
       },
       effects: [
         {
@@ -76,8 +84,17 @@ const MotorChart = ({ datasets, legend }: Props) => {
       useMesh={true}
       animate={false}
       legends={legend ? legends : []}
+      markers={[
+        {
+          axis: "y",
+          value: 80,
+          lineStyle: { stroke: "red", strokeWidth: 2 },
+          legend: "danger",
+          // legendOrientation: "vertical",
+        },
+      ]}
     />
   );
 };
 
-export default MotorChart;
+export default AbrasionChart;
