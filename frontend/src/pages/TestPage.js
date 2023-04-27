@@ -36,7 +36,7 @@ const TestPage = () => {
     return () => {
       if (stompClient) {
         stompClient.disconnect();
-        stompClient.close();
+        // stompClient.close();
       }
     };
   }, []);
