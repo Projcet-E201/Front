@@ -149,11 +149,17 @@ const MainPage = () => {
                   lineHeight: "2.8rem",
                 }}
               >
-                <div className={styles.maincardcontent}>
+                <div
+                  className={styles.maincardcontent}
+                  onClick={() => navigate(`/machine/${machine}/vacuum`)}
+                >
                   <div className={styles.maincardcontentname}>압력</div>
                   <div className={styles.maincardcontentscore}>{data.압력}</div>
                 </div>
-                <div className={styles.maincardcontent}>
+                <div
+                  className={styles.maincardcontent}
+                  onClick={() => navigate(`/machine/${machine}/water`)}
+                >
                   <div className={styles.maincardcontentname}>유량</div>
                   <div className={styles.maincardcontentscore}>{data.유량}</div>
                 </div>
