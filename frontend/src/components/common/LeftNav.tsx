@@ -124,8 +124,10 @@ const LeftNav = ({ childrenHeight }: any) => {
                 },
               },
               borderRadius: "10px",
-              bgcolor: selectedIndex === "Main" ? "#191BA9" : undefined,
-              color: selectedIndex === "Main" ? "white" : undefined,
+              // bgcolor: selectedIndex === "Main" ? "#191BA9" : undefined,
+              // color: selectedIndex === "Main" ? "white" : undefined,
+              bgcolor: location.pathname === "/" ? "#191BA9" : undefined,
+              color: location.pathname === "/" ? "white" : undefined,
             }}
             onClick={() => {
               indexClick("Main");
@@ -137,7 +139,8 @@ const LeftNav = ({ childrenHeight }: any) => {
             <ListItemIcon>
               <DashboardIcon
                 sx={{
-                  color: selectedIndex === "Main" ? "white" : undefined,
+                  // color: selectedIndex === "Main" ? "white" : undefined,
+                  color: location.pathname === "/" ? "white" : undefined,
                 }}
               />
             </ListItemIcon>
@@ -153,8 +156,14 @@ const LeftNav = ({ childrenHeight }: any) => {
                 },
               },
               borderRadius: "10px",
-              bgcolor: selectedIndex === "Monitoring" ? "#191BA9" : undefined,
-              color: selectedIndex === "Monitoring" ? "white" : undefined,
+              // bgcolor: selectedIndex === "Monitoring" ? "#191BA9" : undefined,
+              // color: selectedIndex === "Monitoring" ? "white" : undefined,
+              bgcolor: location.pathname.includes("machine")
+                ? "#191BA9"
+                : undefined,
+              color: location.pathname.includes("machine")
+                ? "white"
+                : undefined,
             }}
             onClick={() => {
               setOpen(!open);
@@ -167,7 +176,10 @@ const LeftNav = ({ childrenHeight }: any) => {
           >
             <ListItemIcon
               sx={{
-                color: selectedIndex === "Monitoring" ? "white" : undefined,
+                // color: selectedIndex === "Monitoring" ? "white" : undefined,
+                color: location.pathname.includes("machine")
+                  ? "white"
+                  : undefined,
               }}
             >
               {/* 아이콘 수정하기 */}

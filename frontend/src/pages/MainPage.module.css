@@ -5,8 +5,10 @@
 } */
 
 .maincard {
-  width: 261px;
-  height: 179px;
+  /* width: 261px; */
+  /* height: 179px; */
+  width: 10vw;
+  height: 25vh;
   margin: 0.5rem;
   float: left;
 }
