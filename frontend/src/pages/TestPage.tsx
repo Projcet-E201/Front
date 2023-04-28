@@ -4,7 +4,7 @@ import SockJS from "sockjs-client";
 
 const TestPage: React.FC = () => {
   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
-  const [message, setMessage] = useState<string>("");
+  const [message, setMessage] = useState<any>();
 
   const connectUrl = "http://localhost:8080/ws";
   const connectWebSocket = () => {
@@ -48,7 +48,8 @@ const TestPage: React.FC = () => {
       console.log("stompClient2");
       stompClient.subscribe(`/client/get`, (data) => {
         // console.log(data);
-        setMessage(data.body);
+        setMessage(JSON.parse(data.body)); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
+        // setMessage(data.body); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
       });
     }
   }, [stompClient]);
@@ -56,7 +57,7 @@ const TestPage: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       handleTitleModify();
-    }, 5000);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [handleTitleModify]);
@@ -64,9 +65,21 @@ const TestPage: React.FC = () => {
   return (
     <div className="App">
       <div>
-        <button onClick={handleTitleModify}>test</button>
-        <p>{message}</p>
-        <p>============================================</p>
+        <button>test</button>
+        {/* {typeof message} */}
+        {message &&
+          message.map((item: any, index: number) => (
+            <div key={index}>
+              <p>{index}</p>
+              <p>{item.name}</p>
+              <p>{item.time}</p>
+              <p>{item.value}</p>
+              <p>-------------------------------------------</p>
+            </div>
+          ))}
+        {/* <p></p> */}
+        {/* <p>{JSON.stringify(message)}</p> */}
+        {/* <p>============================================</p> */}
       </div>
     </div>
   );

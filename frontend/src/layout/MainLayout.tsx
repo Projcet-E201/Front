@@ -34,7 +34,7 @@ const MainLayout = ({ children }: Props) => {
       <div ref={childrenRef} style={{ display: "fixed" }}>
         <NavBar leftNavWidth={leftNavWidth} />
       </div>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", width: "100%" }}>
         <div style={{ width: "13%" }} ref={leftNavRef}>
           <LeftNav childrenHeight={childrenHeight} />
         </div>
