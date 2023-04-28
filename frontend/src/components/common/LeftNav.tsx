@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styles from "./LeftNav.module.css";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 // mui button
 import ListSubheader from "@mui/material/ListSubheader";
@@ -29,6 +29,7 @@ const LeftNav = ({ childrenHeight }: any) => {
   // console.log(childrenHeight, "프롭받은 높이");
   const navigate = useNavigate();
   const location = useLocation();
+  const { machine } = useParams();
   const [open, setOpen] = React.useState(false);
 
   // index 어떤거 선택되어 있는지
@@ -62,7 +63,7 @@ const LeftNav = ({ childrenHeight }: any) => {
           key={`button-${i}`}
           onClick={() => {
             navigate(`/machine/${i}`);
-            setOpen(false);
+            // setOpen(false);
           }}
         >
           <ListItemIcon>

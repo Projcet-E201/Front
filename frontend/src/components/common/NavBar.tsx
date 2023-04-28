@@ -34,15 +34,26 @@ const NavBar = ({ leftNavWidth }: any) => {
               <img src={logo} alt="logo" onClick={() => navigate(`/`)} />
               <h1 onClick={() => navigate(`/`)}>SEMSE</h1>
             </div>
-            <div
-            // onClick={() => navigate(`/machine/${machine}`)}
-            // style={{ cursor: "pointer" }}
-            >
-              {location.pathname === "/" && <h1>All Machine</h1>}
-              {location.pathname === `/machine/${machine}` && (
-                <h1>Machine {machine}</h1>
+            <div style={{ alignItems: "end", display: "flex" }}>
+              {location.pathname === "/" && (
+                <h3
+                  style={{
+                    marginBottom: "0",
+                  }}
+                >
+                  All Machine
+                </h3>
               )}
-              {location.pathname === "/custom-build" && <h1>CustomBuild</h1>}
+              {location.pathname === `/machine/${machine}` && (
+                <h3
+                  style={{
+                    marginBottom: "0",
+                  }}
+                >
+                  Machine {machine}
+                </h3>
+              )}
+              {location.pathname === "/custom-build" && <h2>CustomBuild</h2>}
             </div>
           </div>
           <div className={styles.rightbutton}>
