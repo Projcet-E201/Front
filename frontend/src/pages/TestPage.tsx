@@ -1,44 +1,73 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
 
-const TestPage = () => {
-  useEffect(() => {
-    // SockJS와 Stomp 클라이언트 객체 생성
-    const socket = new SockJS("http://localhost:8080/ws");
+const TestPage: React.FC = () => {
+  const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
+  const [message, setMessage] = useState<string>("");
+
+  const connectUrl = "http://localhost:8080/ws";
+  const connectWebSocket = () => {
+    console.log(connectUrl);
+    const socket = new SockJS(connectUrl);
     const stompClient = Stomp.over(socket);
-
-    // SockJS를 사용하여 WebSocket 연결 생성
-    socket.onopen = () => {
-      console.log("WebSocket 연결 성공");
-    };
-
-    // Stomp 클라이언트를 사용하여 SockJS WebSocket 연결 초기화
     stompClient.connect(
+      // 헤더
       {},
       () => {
-        console.log("Stomp 연결 성공");
-
-        // WebSocket을 통해 메시지 수신
-        stompClient.subscribe("/client/get", (msg) => {
-          console.log("메시지 수신: ", msg.body);
-        });
+        // 연결 성공시 이벤트
+        console.log("WebSocket connected");
+        setStompClient(stompClient);
       },
       (error) => {
-        console.log("Stomp 연결 실패: ", error);
+        // 연결 실패시 이벤트
+        console.error("WebSocket error: ", error);
       }
     );
+  };
 
-    // 컴포넌트 언마운트시 연결 종료
+  const handleTitleModify = useCallback(() => {
+    if (stompClient) {
+      stompClient.send(`/server/post`, {}, JSON.stringify({ data: "data" }));
+    }
+  }, [stompClient]);
+
+  useEffect(() => {
+    connectWebSocket();
     return () => {
-      stompClient.disconnect(() => "");
-      console.log("Stomp 연결 종료");
+      if (stompClient) {
+        stompClient.disconnect(() => "");
+        // stompClient.close();
+      }
     };
   }, []);
 
+  useEffect(() => {
+    // server 에서 보내는 데이터를 실시간으로 받는 코드
+    if (stompClient) {
+      console.log("stompClient2");
+      stompClient.subscribe(`/client/get`, (data) => {
+        // console.log(data);
+        setMessage(data.body);
+      });
+    }
+  }, [stompClient]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleTitleModify();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [handleTitleModify]);
+
   return (
-    <div>
-      <h1>hello</h1>
+    <div className="App">
+      <div>
+        <button onClick={handleTitleModify}>test</button>
+        <p>{message}</p>
+        <p>============================================</p>
+      </div>
     </div>
   );
 };
