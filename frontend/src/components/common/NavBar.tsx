@@ -57,7 +57,7 @@ const NavBar = ({ leftNavWidth }: any) => {
             </div>
           </div>
           <div className={styles.rightbutton}>
-            {location.pathname !== `/` && (
+            {location.pathname.includes("machine") && (
               <div className={styles.toggle}>
                 <div
                   className={`${styles.toggleButton} ${
@@ -78,7 +78,7 @@ const NavBar = ({ leftNavWidth }: any) => {
               </div>
             )}
 
-            {selected === "Sensor" && location.pathname !== "/" && (
+            {selected === "Sensor" && location.pathname.includes("machine") && (
               <div className={styles.navbutton}>
                 <div style={{ display: "flex" }}>
                   {/* {location.pathname !== `/machine/${machine}` && (
