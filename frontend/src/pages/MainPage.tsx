@@ -14,6 +14,7 @@ import { fontWeight } from "@mui/system";
 import { useRecoilState } from "recoil";
 import { indexAtom } from "../store/atoms";
 import { faker } from "@faker-js/faker";
+import MainError from "../components/MainError/MainError";
 
 const MainPage = () => {
   const [selectedIndex, setSelectedIndex] = useRecoilState(indexAtom);
@@ -51,7 +52,7 @@ const MainPage = () => {
         i: Math.floor(Math.random() * 50001),
         j: Math.floor(Math.random() * 101),
       });
-    }, 10000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
@@ -121,6 +122,8 @@ const MainPage = () => {
       <div
         style={{
           display: "flex",
+          maxHeight: "80vh",
+          // justifyContent: "space-between",
         }}
       >
         <div
@@ -128,7 +131,6 @@ const MainPage = () => {
             display: "flex",
             flexWrap: "wrap",
             width: "54%",
-            minHeight: "200px",
           }}
         >
           {machines.map((machine) => (
@@ -140,13 +142,18 @@ const MainPage = () => {
                     navigate(`/machine/${machine}`);
                     indexClick("Monitoring");
                   }}
+                  style={
+                    data.j < 30
+                      ? { backgroundColor: "red" }
+                      : { backgroundColor: "#5e5e5e" }
+                  }
                 >
                   Machine {machine}
                 </h3>
               </div>
               <CardContent
                 style={{
-                  lineHeight: "2.8rem",
+                  lineHeight: "2.8em",
                 }}
               >
                 <div
@@ -175,6 +182,15 @@ const MainPage = () => {
               </CardContent>
             </Card>
           ))}
+          <Card className={styles.errorcard}>
+            <CardContent
+              style={{
+                lineHeight: "2.8em",
+              }}
+            >
+              <MainError />
+            </CardContent>
+          </Card>
         </div>
 
         <DragDropContext onDragEnd={handleDragEnd}>
