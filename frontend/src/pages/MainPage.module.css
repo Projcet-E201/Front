@@ -7,7 +7,7 @@
 .maincard {
   /* width: 261px; */
   /* height: 179px; */
-  width: calc(23% - 0.5em);
+  width: calc(24% - 1em);
 
   height: calc(24% - 0.5em);
   margin: 0.5em;
@@ -65,6 +65,7 @@
   width: 18vw;
   height: 48%;
   margin: 0.5rem;
+  margin-left: 0.8rem;
   /* transition: transform 0.3s ease-in-out; */
   /* float: left; */
 }
@@ -119,6 +120,6 @@
 }
 .errorcard {
   margin: 0.5em;
-  width: 93.2%;
+  width: calc(96% - 1em);
   height: calc(24% - 0.5em);
 }
