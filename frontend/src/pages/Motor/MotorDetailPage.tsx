@@ -45,6 +45,17 @@ const MotorDetailPage = () => {
 
   // console.log(latestData);
 
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedTime, setSelectedTime] = useState("");
+
+  const handleDateChange = (e: any) => {
+    setSelectedDate(e.target.value);
+  };
+
+  const handleTimeChange = (e: any) => {
+    setSelectedTime(e.target.value);
+  };
+
   return (
     <SensorLayout>
       <div className={styles.topcard}>
@@ -74,10 +85,22 @@ const MotorDetailPage = () => {
         </Card>
 
         <Card className={styles.daycard}>
-          <div>여긴 어디야</div>
+          <label htmlFor="date-input">날짜 선택</label>
+          <input
+            type="date"
+            id="date-input"
+            value={selectedDate}
+            onChange={handleDateChange}
+          />
         </Card>
         <Card className={styles.timecard}>
-          <div>여긴 어디야</div>
+          <label htmlFor="time-input">시간 선택</label>
+          <input
+            type="time"
+            id="time-input"
+            value={selectedTime}
+            onChange={handleTimeChange}
+          />
         </Card>
       </div>
     </SensorLayout>

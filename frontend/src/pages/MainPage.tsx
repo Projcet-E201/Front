@@ -68,7 +68,7 @@ const MainPage = () => {
   }, [data]);
 
   const machineData = machines.map((machine, index) => (
-    <div className={styles.senserdatacontent}>
+    <div className={styles.senserdatacontent} key={index}>
       <div>Machine {machine}</div>
       <div className={styles.senserdatascore}>56</div>
     </div>
@@ -89,7 +89,7 @@ const MainPage = () => {
           <h3
             className={styles.senserheader}
             {...provided.dragHandleProps}
-            {...(index === 0 ? {} : { isDragDisabled: true })}
+            {...(index === 0 ? {} : { isdragdisabled: "true" })}
           >
             {senser}
           </h3>
@@ -133,8 +133,8 @@ const MainPage = () => {
             width: "54%",
           }}
         >
-          {machines.map((machine) => (
-            <Card className={styles.maincard}>
+          {machines.map((machine, index) => (
+            <Card className={styles.maincard} key={index}>
               <div>
                 <h3
                   className={styles.maincardtitle}
