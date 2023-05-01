@@ -63,16 +63,7 @@
   /* background-color: white; */
   float: left;
   height: 10vh;
-  width: calc(30% - 1em);
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-}
-.timecard {
-  margin: 0.5rem;
-  /* background-color: white; */
-  float: left;
-  width: calc(70% - 1em);
-  height: 10vh;
+  width: calc(100% - 1em);
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
