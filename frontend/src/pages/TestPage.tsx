@@ -28,7 +28,12 @@ const TestPage: React.FC = () => {
 
   const handleTitleModify = useCallback(() => {
     if (stompClient) {
-      stompClient.send(`/server/post`, {}, JSON.stringify({ data: "data" }));
+      // stompClient.send(`/server/post`, {}, JSON.stringify({ data: "data" }));
+      stompClient.send(
+        `/server/main/machine`,
+        {},
+        JSON.stringify({ data: "data" })
+      );
     }
   }, [stompClient]);
 
@@ -46,7 +51,7 @@ const TestPage: React.FC = () => {
     // server 에서 보내는 데이터를 실시간으로 받는 코드
     if (stompClient) {
       console.log("stompClient2");
-      stompClient.subscribe(`/client/get`, (data) => {
+      stompClient.subscribe(`/client/main/machine`, (data) => {
         // console.log(data);
         setMessage(JSON.parse(data.body)); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
         // setMessage(data.body); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
@@ -62,12 +67,14 @@ const TestPage: React.FC = () => {
     return () => clearInterval(interval);
   }, [handleTitleModify]);
 
+  // console.log(message);
+
   return (
     <div className="App">
       <div>
         <button>test</button>
-        {/* {typeof message} */}
-        {message &&
+        {typeof message}
+        {/* {message &&
           message.map((item: any, index: number) => (
             <div key={index}>
               <p>{index}</p>
@@ -76,7 +83,7 @@ const TestPage: React.FC = () => {
               <p>{item.value}</p>
               <p>-------------------------------------------</p>
             </div>
-          ))}
+          ))} */}
         {/* <p></p> */}
         {/* <p>{JSON.stringify(message)}</p> */}
         {/* <p>============================================</p> */}

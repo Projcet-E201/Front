@@ -23,7 +23,7 @@ const MainPage = () => {
   };
   const navigate = useNavigate();
   const machines = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  const [sensers, setSensers] = useState<string[]>([
+  const [sensors, setsensors] = useState<string[]>([
     "motor",
     "vacuum",
     "air-in",
@@ -68,37 +68,37 @@ const MainPage = () => {
   }, [data]);
 
   const machineData = machines.map((machine, index) => (
-    <div className={styles.senserdatacontent} key={index}>
+    <div className={styles.sensordatacontent} key={index}>
       <div>Machine {machine}</div>
-      <div className={styles.senserdatascore}>56</div>
+      <div className={styles.sensordatascore}>56</div>
     </div>
   ));
 
-  const senserCards = sensers.map((senser, index) => (
+  const sensorCards = sensors.map((sensor, index) => (
     <Draggable
-      key={`senser-${senser}`}
-      draggableId={`senser-${senser}`}
+      key={`sensor-${sensor}`}
+      draggableId={`sensor-${sensor}`}
       index={index}
     >
       {(provided) => (
         <Card
-          className={styles.sensercard}
+          className={styles.sensorcard}
           ref={provided.innerRef}
           {...provided.draggableProps}
         >
           <h3
-            className={styles.senserheader}
+            className={styles.sensorheader}
             {...provided.dragHandleProps}
             {...(index === 0 ? {} : { isdragdisabled: "true" })}
           >
-            {senser}
+            {sensor}
           </h3>
           <CardContent>
             {machineData.map((data, dataIndex) => (
               <div
-                key={`senserdata-${dataIndex}`}
+                key={`sensordata-${dataIndex}`}
                 onClick={() =>
-                  navigate(`/machine/${machines[dataIndex]}/${senser}`)
+                  navigate(`/machine/${machines[dataIndex]}/${sensor}`)
                 }
               >
                 {data}
@@ -112,10 +112,10 @@ const MainPage = () => {
 
   const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return;
-    const items = Array.from(sensers);
+    const items = Array.from(sensors);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-    setSensers(items.map((item, index) => `${item}`));
+    setsensors(items.map((item, index) => `${item}`));
   };
   return (
     <MainLayout>
@@ -194,14 +194,14 @@ const MainPage = () => {
         </div>
 
         <DragDropContext onDragEnd={handleDragEnd}>
-          <Droppable droppableId="sensers">
+          <Droppable droppableId="sensors">
             {(provided) => (
               <div
                 {...provided.droppableProps}
                 ref={provided.innerRef}
-                className={styles.senserdatastyle}
+                className={styles.sensordatastyle}
               >
-                {senserCards}
+                {sensorCards}
                 {provided.placeholder}
               </div>
             )}
