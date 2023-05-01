@@ -76,6 +76,7 @@ const TestPage: React.FC = () => {
         {message?.map((item: any, index: number) => (
           <div key={index}>
             <p>Machine{Number(item.name.slice(6))}</p>
+            <p>시간: {item.time}</p>
             {item.value.map(
               (sensor: any, sensorIndex: any) => (
                 <div key={sensorIndex}>

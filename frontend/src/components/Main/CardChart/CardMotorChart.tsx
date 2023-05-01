@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate, useLocation, useParams } from "react-router";
 import { faker } from "@faker-js/faker";
 import { ResponsiveLine } from "@nivo/line";
 
 const CardMotorChart = () => {
   const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
   const location = useLocation();
+  const { machine }: any = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const initialData = [];
@@ -101,16 +103,12 @@ const CardMotorChart = () => {
           symbolSize: 12,
           symbolShape: "circle",
           symbolBorderColor: "rgba(0, 0, 0, .5)",
-          // onClick: (data) => {
-          //   const id: string = data.id as string;
-          //   // console.log(id[id.length - 1]);
-          //   console.log(location.pathname);
-          //   navigate(
-          //     `/machine/${location.pathname.slice(-1)}/motor/${
-          //       id[id.length - 1]
-          //     }`
-          //   );
-          // },
+          onClick: (data) => {
+            const id: string = data.id as string;
+            // console.log(id[id.length - 1]);
+            console.log(id);
+            navigate(`/machine/${machine}/motor/${id.slice(6)}`);
+          },
           effects: [
             {
               on: "hover",
