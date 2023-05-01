@@ -16,7 +16,7 @@ const TestPage: React.FC = () => {
       {},
       () => {
         // 연결 성공시 이벤트
-        console.log("WebSocket connected");
+        // console.log("WebSocket connected");
         setStompClient(stompClient);
       },
       (error) => {
@@ -50,7 +50,7 @@ const TestPage: React.FC = () => {
   useEffect(() => {
     // server 에서 보내는 데이터를 실시간으로 받는 코드
     if (stompClient) {
-      console.log("stompClient2");
+      // console.log("stompClient2");
       stompClient.subscribe(`/client/main/machine`, (data) => {
         // console.log(data);
         setMessage(JSON.parse(data.body)); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
@@ -73,20 +73,35 @@ const TestPage: React.FC = () => {
     <div className="App">
       <div>
         <button>test</button>
-        {typeof message}
-        {/* {message &&
-          message.map((item: any, index: number) => (
-            <div key={index}>
-              <p>{index}</p>
-              <p>{item.name}</p>
-              <p>{item.time}</p>
-              <p>{item.value}</p>
-              <p>-------------------------------------------</p>
-            </div>
-          ))} */}
-        {/* <p></p> */}
-        {/* <p>{JSON.stringify(message)}</p> */}
-        {/* <p>============================================</p> */}
+        {message?.map((item: any, index: number) => (
+          <div key={index}>
+            <p>Machine{Number(item.name.slice(6))}</p>
+            {item.value.map(
+              (sensor: any, sensorIndex: any) => (
+                <div key={sensorIndex}>
+                  {sensor.MOTOR && <p>Motor: {sensor.MOTOR}</p>}
+                  {sensor.VACUUM && <p>Vacuum: {sensor.VACUUM}</p>}
+                  {sensor.AIR_IN_KPA && <p>AirIn: {sensor.AIR_IN_KPA}</p>}
+                  {sensor.AIR_OUT_KPA && (
+                    <p>AirOut(kPa): {sensor.AIR_OUT_KPA}</p>
+                  )}
+                  {sensor.AIR_OUT_MPA && (
+                    <p>AirOut(MPa): {sensor.AIR_OUT_MPA}</p>
+                  )}
+                  {sensor.LOAD && <p>Load: {sensor.LOAD}</p>}
+                  {sensor.WATER && <p>Water: {sensor.WATER}</p>}
+                  {sensor.VELOCITY && <p>Velocity: {sensor.VELOCITY}</p>}
+                </div>
+              )
+              // console.log(item.value, "dfdfdf")
+              // <div>
+              //   <p>MOTOR: {sensor.MOTOR}</p>
+              //   <p>Vacuum: {sensor.VACUUM}</p>
+              // </div>
+            )}
+            <p>-----------------</p>
+          </div>
+        ))}
       </div>
     </div>
   );
