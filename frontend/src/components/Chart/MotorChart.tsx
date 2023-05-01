@@ -76,6 +76,15 @@ const MotorChart = ({ datasets, legend }: Props) => {
       useMesh={true}
       animate={false}
       legends={legend ? legends : []}
+      // markers={[
+      //   {
+      //     axis: "y",
+      //     value: 100,
+      //     lineStyle: { stroke: "red", strokeWidth: 2 },
+      //     legend: "danger",
+      //     // legendOrientation: "vertical",
+      //   },
+      // ]}
     />
   );
 };
