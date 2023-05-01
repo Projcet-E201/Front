@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router";
 import { faker } from "@faker-js/faker";
 import { ResponsiveLine } from "@nivo/line";
 
-const CardMotorChart = () => {
+const CardAirInChart = () => {
   const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
   const location = useLocation();
 
@@ -22,7 +22,7 @@ const CardMotorChart = () => {
       );
       dataEntry["x"] = time;
       for (let j = 1; j <= 10; j++) {
-        dataEntry[`Motor${j}`] = faker.datatype.number({ min: 10, max: 100 });
+        dataEntry[`AirIn${j}`] = faker.datatype.number({ min: 10, max: 100 });
       }
       initialData.push(dataEntry);
     }
@@ -37,7 +37,7 @@ const CardMotorChart = () => {
       });
       const newEntry: any = { x: currentTime };
       for (let i = 1; i <= 10; i++) {
-        newEntry[`Motor${i}`] = faker.datatype.number({ min: 10, max: 100 });
+        newEntry[`AirIn${i}`] = faker.datatype.number({ min: 10, max: 100 });
       }
       setData((prevData) =>
         prevData.length >= 10
@@ -50,8 +50,8 @@ const CardMotorChart = () => {
   }, []);
 
   const datasets = [...Array(10)].map((_, i) => ({
-    id: `Motor${i + 1}`,
-    data: data.map((d) => ({ x: d.x, y: d[`Motor${i + 1}`] })),
+    id: `AirIn${i + 1}`,
+    data: data.map((d) => ({ x: d.x, y: d[`AirIn${i + 1}`] })),
   }));
 
   return (
@@ -106,7 +106,7 @@ const CardMotorChart = () => {
           //   // console.log(id[id.length - 1]);
           //   console.log(location.pathname);
           //   navigate(
-          //     `/machine/${location.pathname.slice(-1)}/motor/${
+          //     `/machine/${location.pathname.slice(-1)}/AirIn/${
           //       id[id.length - 1]
           //     }`
           //   );
@@ -126,4 +126,4 @@ const CardMotorChart = () => {
   );
 };
 
-export default CardMotorChart;
+export default CardAirInChart;

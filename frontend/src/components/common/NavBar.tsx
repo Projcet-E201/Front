@@ -1,5 +1,6 @@
 // import React, { useState } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./NavBar.module.css";
 
 import logo from "../../assets/semse_logo.png";
@@ -34,24 +35,37 @@ const NavBar = ({ leftNavWidth }: any) => {
               <img src={logo} alt="logo" onClick={() => navigate(`/`)} />
               <h1 onClick={() => navigate(`/`)}>SEMSE</h1>
             </div>
+            {/* 경로 부분 */}
             <div style={{ alignItems: "end", display: "flex" }}>
               {location.pathname === "/" && (
-                <h3
-                  style={{
-                    marginBottom: "0",
-                  }}
-                >
-                  All Machine
-                </h3>
+                <h3 style={{ marginBottom: "0" }}>Main</h3>
               )}
-              {location.pathname === `/machine/${machine}` && (
-                <h3
-                  style={{
-                    marginBottom: "0",
-                  }}
-                >
-                  Machine {machine}
-                </h3>
+              {location.pathname.startsWith("/machine/") && (
+                <>
+                  <Link
+                    to={`/machine/${machine}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <h3 style={{ marginBottom: "0" }}>Machine {machine}</h3>
+                  </Link>
+                  {location.pathname
+                    .split("/")
+                    .slice(3)
+                    .map((path, index) => (
+                      <Link
+                        style={{ textDecoration: "none", color: "inherit" }}
+                        key={index}
+                        to={`/machine/${machine}/${location.pathname
+                          .split("/")
+                          .slice(3, index + 4)
+                          .join("/")}`}
+                      >
+                        <h3 style={{ marginBottom: "0" }}>
+                          &gt; {path.charAt(0).toUpperCase() + path.slice(1)}
+                        </h3>
+                      </Link>
+                    ))}
+                </>
               )}
               {location.pathname === "/custom-build" && <h2>CustomBuild</h2>}
             </div>
