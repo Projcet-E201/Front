@@ -72,6 +72,13 @@ const MotorDetailPage = () => {
             </div>
           </CardContent>
         </Card>
+
+        <Card className={styles.daycard}>
+          <div>여긴 어디야</div>
+        </Card>
+        <Card className={styles.timecard}>
+          <div>여긴 어디야</div>
+        </Card>
       </div>
     </SensorLayout>
   );

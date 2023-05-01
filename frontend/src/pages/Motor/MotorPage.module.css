@@ -50,7 +50,29 @@
 
 .max h1,
 .min h1,
-.avg
-h1 {
-  color: #5CC2F2
+.avg h1 {
+  color: #5cc2f2;
+}
+.bottomcard {
+  margin: 0.5rem;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.daycard {
+  margin: 0.5rem;
+  /* background-color: white; */
+  float: left;
+  height: 10vh;
+  width: calc(30% - 1em);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.timecard {
+  margin: 0.5rem;
+  /* background-color: white; */
+  float: left;
+  width: calc(70% - 1em);
+  height: 10vh;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
