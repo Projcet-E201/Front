@@ -31,6 +31,7 @@ import { RecoilRoot } from "recoil";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { isLoggedInAtom } from "./store/atoms";
+import EquipmentSettingPage from "./pages/Equipment/EquipmentSettingPage";
 
 function App() {
   const location = useLocation();
@@ -99,6 +100,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/test" element={<TestPage />} />
         <Route path="/custom-build" element={<CustomBuildPage />} />
+        <Route path="equipment-setting" element={<EquipmentSettingPage />} />
       </Routes>
     </RecoilRoot>
   );

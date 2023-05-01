@@ -14,6 +14,7 @@ import CardLoadChart from "./CardChart/CardLoadChart";
 import CardAbrasionChart from "./CardChart/CardAbrasionChart";
 import CardWaterChart from "./CardChart/CardWaterChart";
 import CardRpmChart from "./CardChart/CardRpmChart";
+import CardAirInChart from "./CardChart/CardAirInChart";
 
 const Sensor = () => {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ const Sensor = () => {
                     style={{ width: "auto", height: "22.5vh" }}
                   >
                     <h3 style={{ margin: "0" }}>Air입력(kPa)</h3>
-                    <CardMotorChart />
+                    <CardAirInChart />
                   </div>
                 )}
                 {index === 2 && (

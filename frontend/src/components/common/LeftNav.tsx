@@ -187,7 +187,13 @@ const LeftNav = ({ childrenHeight }: any) => {
               {/* 아이콘 수정하기 */}
               <MonitorIcon sx={{}} />
             </ListItemIcon>
-            <ListItemText primary="Machine" />
+            <ListItemText
+              primary="Machine"
+              secondary={machine ? `No. ${machine}` : ""}
+              secondaryTypographyProps={{
+                color: "white",
+              }}
+            />
             {open ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
           <Collapse in={open} timeout="auto" unmountOnExit>
@@ -255,8 +261,46 @@ const LeftNav = ({ childrenHeight }: any) => {
                 }}
               />
             </ListItemIcon>
+            <ListItemText primary="Test" />
+          </ListItemButton>
+
+          <ListItemButton
+            sx={{
+              "&:hover": {
+                bgcolor: "#191BA9",
+                color: "white",
+                "& .MuiSvgIcon-root": {
+                  color: "white",
+                },
+              },
+              borderRadius: "10px",
+              // bgcolor: selectedIndex === "Facilities" ? "#191BA9" : undefined,
+              // color: selectedIndex === "Facilities" ? "white" : undefined,
+              bgcolor: location.pathname.includes("equipment-setting")
+                ? "#191BA9"
+                : undefined,
+              color: location.pathname.includes("equipment-setting")
+                ? "white"
+                : undefined,
+            }}
+            onClick={() => {
+              navigate(`/equipment-setting`);
+              indexClick("Facilities");
+            }}
+          >
+            <ListItemIcon>
+              <SettingsInputComponentIcon
+                sx={{
+                  // color: selectedIndex === "Facilities" ? "white" : undefined,
+                  color: location.pathname.includes("equipment-setting")
+                    ? "white"
+                    : undefined,
+                }}
+              />
+            </ListItemIcon>
             <ListItemText primary="설비 관리" />
           </ListItemButton>
+
           <ListItemButton
             sx={{
               "&:hover": {
