@@ -18,7 +18,7 @@ FROM nginx:stable-alpine as runner
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy built files
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/build /usr/share/nginx/html
 
 # Copy the nginx configuration file
 COPY nginx.conf /etc/nginx/conf.d/default.conf
