@@ -12,10 +12,11 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Grid from "@mui/material/Grid";
 
-import MotorChart from "../components/Chart/MotorChart";
+// import MotorChart from "../components/Chart/MotorChart";
 import CardMotorChart from "../components/Main/CardChart/CardMotorChart";
+
+import line_1 from "../../src/assets/1line.png";
 
 interface chartInterFace {
   machine: string;
@@ -26,8 +27,30 @@ interface chartInterFace {
 const CustomBuildPage = () => {
   const [selectedMachine, setSelectedMachine] = React.useState("");
   const [selectedSensor, setSelectedSensor] = React.useState("");
+  // const [selectedNumber, setSelectedNumber] = React.useState<string[]>([]);
   const [selectedNumber, setSelectedNumber] = React.useState("");
   const [chartList, setChartList] = useState<chartInterFace[]>([]);
+
+  //height 추가
+
+  // const changeSelectedNumber = (event:SelectChangeEvent<typeof selectedNumber>) => {
+  //   const {
+  //     target: {value},
+  //   } = event;
+  //   // autofill
+  //   typeof value === 'string' ? value.split()
+  // }
+
+  // 한줄에 1개 볼 지 2개볼 지
+  const [isSingleRow, setIsSingleRow] = useState(true);
+
+  const handleSingleRowClick = () => {
+    setIsSingleRow(true);
+  };
+
+  const handleDoubleRowClick = () => {
+    setIsSingleRow(false);
+  };
 
   useEffect(() => {
     const storedChartList = localStorage.getItem("chartList");
@@ -104,7 +127,7 @@ const CustomBuildPage = () => {
 
   return (
     <MainLayout>
-      <Card className={styles.card}>
+      <Card className={styles.card} sx={{ paddingBottom: "0" }}>
         <CardContent>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div>
@@ -174,28 +197,36 @@ const CustomBuildPage = () => {
           <div
             style={{
               display: "flex",
-              justifyContent: "end",
+              justifyContent: "space-between",
               marginTop: "10px",
+              alignItems: "end",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "end",
-                marginRight: "20px",
-                width: "310px",
-              }}
-            >
-              <h5 style={{ margin: "0" }}>선택된 차트: &nbsp;&nbsp; </h5>
-              <h4 style={{ margin: "0" }}>
-                {selectedMachine && <span>Machine{selectedMachine} -</span>}{" "}
-                {selectedSensor && <span>{selectedSensor} -</span>}{" "}
-                {selectedNumber && <span>{selectedNumber}</span>}{" "}
-              </h4>
+            <div style={{ alignItems: "end" }}>
+              <button onClick={handleSingleRowClick}>1줄에 1개</button>
+              {/* <img src={line_1} alt="" /> */}
+              <button onClick={handleDoubleRowClick}>1줄에 2개</button>
             </div>
-            <button style={{ height: "40px" }} onClick={addChartHandler}>
-              ADD CHART
-            </button>
+            <div style={{ display: "flex" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "end",
+                  marginRight: "20px",
+                  width: "310px",
+                }}
+              >
+                <h5 style={{ margin: "0" }}>선택된 차트: &nbsp;&nbsp; </h5>
+                <h4 style={{ margin: "0" }}>
+                  {selectedMachine && <span>Machine{selectedMachine} -</span>}{" "}
+                  {selectedSensor && <span>{selectedSensor} -</span>}{" "}
+                  {selectedNumber && <span>{selectedNumber}</span>}{" "}
+                </h4>
+              </div>
+              <button style={{ height: "40px" }} onClick={addChartHandler}>
+                ADD CHART
+              </button>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -209,9 +240,12 @@ const CustomBuildPage = () => {
       >
         {chartList.map((chart, index) => (
           <Card
+            key={index}
             className={styles.card}
             style={{
-              width: chartList.length > 1 ? "49%" : "100%",
+              // width: chartList.length > 1 ? "49%" : "100%",
+              width:
+                isSingleRow === true || chartList.length === 1 ? "100%" : "49%",
             }}
           >
             <CardContent>
@@ -221,7 +255,12 @@ const CustomBuildPage = () => {
                 </h4>
                 <button onClick={() => deleteChart(index)}>삭제</button>
               </div>
-              <div style={{ height: chartList.length > 2 ? "23vh" : "55vh" }}>
+              {/* <div style={{ height: chartList.length > 2 ? "23vh" : "55vh" }}> */}
+              <div
+                style={{
+                  height: chartList.length < 3 ? "50vh" : "35vh",
+                }}
+              >
                 {chart.sensor === "Motor" && <CardMotorChart />}
               </div>
             </CardContent>

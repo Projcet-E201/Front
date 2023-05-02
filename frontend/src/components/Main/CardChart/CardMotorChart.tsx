@@ -55,6 +55,7 @@ const CardMotorChart = () => {
     id: `Motor${i + 1}`,
     data: data.map((d) => ({ x: d.x, y: d[`Motor${i + 1}`] })),
   }));
+  console.log(datasets);
 
   return (
     <ResponsiveLine

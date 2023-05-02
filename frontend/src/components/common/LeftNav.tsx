@@ -87,252 +87,241 @@ const LeftNav = ({ childrenHeight }: any) => {
 
   return (
     <div
-    // className={styles.left}
-    // style={{
-    // minHeight: `calc(100vh - ${childrenHeight}px`,
-    // height: "100%",
-    // minWidth: "220.88px",
-    // }}
+      className={styles.left}
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        minHeight: `calc(100vh - ${childrenHeight}px`,
+        height: "100%",
+        minWidth: "220.88px",
+      }}
     >
-      <div
-        className={styles.left}
-        style={{
-          display: "flex",
+      <List
+        sx={{
+          width: "80%",
+          bgcolor: "background.paper",
           justifyContent: "center",
-          minHeight: `calc(100vh - ${childrenHeight}px`,
-          height: "100%",
-          minWidth: "220.88px",
+          marginTop: "25px",
         }}
+        component="nav"
+        aria-labelledby="nested-list-subheader"
+        // subheader={
+        //   <ListSubheader component="div" id="nested-list-subheader">
+        //     INDEX
+        //   </ListSubheader>
+        // }
       >
-        <List
+        <ListItemButton
           sx={{
-            width: "80%",
-            bgcolor: "background.paper",
-            justifyContent: "center",
-            marginTop: "25px",
+            "&:hover": {
+              bgcolor: "#191BA9",
+              color: "white",
+              "& .MuiSvgIcon-root": {
+                color: "white",
+              },
+            },
+            borderRadius: "10px",
+            // bgcolor: selectedIndex === "Main" ? "#191BA9" : undefined,
+            // color: selectedIndex === "Main" ? "white" : undefined,
+            bgcolor: location.pathname === "/" ? "#191BA9" : undefined,
+            color: location.pathname === "/" ? "white" : undefined,
           }}
-          component="nav"
-          aria-labelledby="nested-list-subheader"
-          // subheader={
-          //   <ListSubheader component="div" id="nested-list-subheader">
-          //     INDEX
-          //   </ListSubheader>
-          // }
+          onClick={() => {
+            indexClick("Main");
+            if (location.pathname !== "/") {
+              navigate("/");
+            }
+          }}
         >
-          <ListItemButton
-            sx={{
-              "&:hover": {
-                bgcolor: "#191BA9",
+          <ListItemIcon>
+            <DashboardIcon
+              sx={{
+                // color: selectedIndex === "Main" ? "white" : undefined,
+                color: location.pathname === "/" ? "white" : undefined,
+              }}
+            />
+          </ListItemIcon>
+          <ListItemText primary="Main" />
+        </ListItemButton>
+        <ListItemButton
+          sx={{
+            "&:hover": {
+              bgcolor: "#191BA9",
+              color: "white",
+              "& .MuiSvgIcon-root": {
                 color: "white",
-                "& .MuiSvgIcon-root": {
-                  color: "white",
-                },
               },
-              borderRadius: "10px",
-              // bgcolor: selectedIndex === "Main" ? "#191BA9" : undefined,
-              // color: selectedIndex === "Main" ? "white" : undefined,
-              bgcolor: location.pathname === "/" ? "#191BA9" : undefined,
-              color: location.pathname === "/" ? "white" : undefined,
-            }}
-            onClick={() => {
+            },
+            borderRadius: "10px",
+            // bgcolor: selectedIndex === "Monitoring" ? "#191BA9" : undefined,
+            // color: selectedIndex === "Monitoring" ? "white" : undefined,
+            bgcolor: location.pathname.includes("machine")
+              ? "#191BA9"
+              : undefined,
+            color: location.pathname.includes("machine") ? "white" : undefined,
+          }}
+          onClick={() => {
+            setOpen(!open);
+            indexClick("Monitoring");
+            if (open === true && location.pathname === "/") {
               indexClick("Main");
-              if (location.pathname !== "/") {
-                navigate("/");
-              }
-            }}
-          >
-            <ListItemIcon>
-              <DashboardIcon
-                sx={{
-                  // color: selectedIndex === "Main" ? "white" : undefined,
-                  color: location.pathname === "/" ? "white" : undefined,
-                }}
-              />
-            </ListItemIcon>
-            <ListItemText primary="Main" />
-          </ListItemButton>
-          <ListItemButton
+              setSelectedIndex("Main");
+            }
+          }}
+        >
+          <ListItemIcon
             sx={{
-              "&:hover": {
-                bgcolor: "#191BA9",
-                color: "white",
-                "& .MuiSvgIcon-root": {
-                  color: "white",
-                },
-              },
-              borderRadius: "10px",
-              // bgcolor: selectedIndex === "Monitoring" ? "#191BA9" : undefined,
               // color: selectedIndex === "Monitoring" ? "white" : undefined,
-              bgcolor: location.pathname.includes("machine")
-                ? "#191BA9"
-                : undefined,
               color: location.pathname.includes("machine")
                 ? "white"
                 : undefined,
             }}
-            onClick={() => {
-              setOpen(!open);
-              indexClick("Monitoring");
-              if (open === true && location.pathname === "/") {
-                indexClick("Main");
-                setSelectedIndex("Main");
-              }
-            }}
           >
-            <ListItemIcon
+            {/* 아이콘 수정하기 */}
+            <MonitorIcon sx={{}} />
+          </ListItemIcon>
+          <ListItemText
+            primary="Machine"
+            secondary={machine ? `No. ${machine}` : ""}
+            secondaryTypographyProps={{
+              color: "white",
+            }}
+          />
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            {buttonList}
+          </List>
+        </Collapse>
+        <ListItemButton
+          sx={{
+            "&:hover": {
+              bgcolor: "#191BA9",
+              color: "white",
+              "& .MuiSvgIcon-root": {
+                color: "white",
+              },
+            },
+            borderRadius: "10px",
+            // bgcolor: selectedIndex === "Setting" ? "#191BA9" : undefined,
+            // color: selectedIndex === "Setting" ? "white" : undefined,
+            bgcolor: location.pathname.includes("custom-build")
+              ? "#191BA9"
+              : undefined,
+            color: location.pathname.includes("custom-build")
+              ? "white"
+              : undefined,
+          }}
+          onClick={() => {
+            indexClick("Custom");
+            navigate("/custom-build");
+          }}
+        >
+          <ListItemIcon>
+            <DashboardCustomizeIcon
               sx={{
-                // color: selectedIndex === "Monitoring" ? "white" : undefined,
-                color: location.pathname.includes("machine")
+                color: location.pathname.includes("custom-build")
                   ? "white"
                   : undefined,
               }}
-            >
-              {/* 아이콘 수정하기 */}
-              <MonitorIcon sx={{}} />
-            </ListItemIcon>
-            <ListItemText
-              primary="Machine"
-              secondary={machine ? `No. ${machine}` : ""}
-              secondaryTypographyProps={{
+            />
+          </ListItemIcon>
+          <ListItemText primary="Custom" />
+        </ListItemButton>
+        <ListItemButton
+          sx={{
+            "&:hover": {
+              bgcolor: "#191BA9",
+              color: "white",
+              "& .MuiSvgIcon-root": {
                 color: "white",
+              },
+            },
+            borderRadius: "10px",
+            bgcolor: selectedIndex === "Facilities" ? "#191BA9" : undefined,
+            color: selectedIndex === "Facilities" ? "white" : undefined,
+          }}
+          onClick={() => {
+            navigate(`/test`);
+            indexClick("Facilities");
+          }}
+        >
+          <ListItemIcon>
+            <SettingsInputComponentIcon
+              sx={{
+                color: selectedIndex === "Facilities" ? "white" : undefined,
               }}
             />
-            {open ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              {buttonList}
-            </List>
-          </Collapse>
-          <ListItemButton
-            sx={{
-              "&:hover": {
-                bgcolor: "#191BA9",
-                color: "white",
-                "& .MuiSvgIcon-root": {
-                  color: "white",
-                },
-              },
-              borderRadius: "10px",
-              // bgcolor: selectedIndex === "Setting" ? "#191BA9" : undefined,
-              // color: selectedIndex === "Setting" ? "white" : undefined,
-              bgcolor: location.pathname.includes("custom-build")
-                ? "#191BA9"
-                : undefined,
-              color: location.pathname.includes("custom-build")
-                ? "white"
-                : undefined,
-            }}
-            onClick={() => {
-              indexClick("Custom");
-              navigate("/custom-build");
-            }}
-          >
-            <ListItemIcon>
-              <DashboardCustomizeIcon
-                sx={{
-                  color: location.pathname.includes("custom-build")
-                    ? "white"
-                    : undefined,
-                }}
-              />
-            </ListItemIcon>
-            <ListItemText primary="Custom" />
-          </ListItemButton>
-          <ListItemButton
-            sx={{
-              "&:hover": {
-                bgcolor: "#191BA9",
-                color: "white",
-                "& .MuiSvgIcon-root": {
-                  color: "white",
-                },
-              },
-              borderRadius: "10px",
-              bgcolor: selectedIndex === "Facilities" ? "#191BA9" : undefined,
-              color: selectedIndex === "Facilities" ? "white" : undefined,
-            }}
-            onClick={() => {
-              navigate(`/test`);
-              indexClick("Facilities");
-            }}
-          >
-            <ListItemIcon>
-              <SettingsInputComponentIcon
-                sx={{
-                  color: selectedIndex === "Facilities" ? "white" : undefined,
-                }}
-              />
-            </ListItemIcon>
-            <ListItemText primary="Test" />
-          </ListItemButton>
+          </ListItemIcon>
+          <ListItemText primary="Test" />
+        </ListItemButton>
 
-          <ListItemButton
-            sx={{
-              "&:hover": {
-                bgcolor: "#191BA9",
+        <ListItemButton
+          sx={{
+            "&:hover": {
+              bgcolor: "#191BA9",
+              color: "white",
+              "& .MuiSvgIcon-root": {
                 color: "white",
-                "& .MuiSvgIcon-root": {
-                  color: "white",
-                },
               },
-              borderRadius: "10px",
-              // bgcolor: selectedIndex === "Facilities" ? "#191BA9" : undefined,
-              // color: selectedIndex === "Facilities" ? "white" : undefined,
-              bgcolor: location.pathname.includes("equipment-setting")
-                ? "#191BA9"
-                : undefined,
-              color: location.pathname.includes("equipment-setting")
-                ? "white"
-                : undefined,
-            }}
-            onClick={() => {
-              navigate(`/equipment-setting`);
-              indexClick("Facilities");
-            }}
-          >
-            <ListItemIcon>
-              <SettingsInputComponentIcon
-                sx={{
-                  // color: selectedIndex === "Facilities" ? "white" : undefined,
-                  color: location.pathname.includes("equipment-setting")
-                    ? "white"
-                    : undefined,
-                }}
-              />
-            </ListItemIcon>
-            <ListItemText primary="설비 관리" />
-          </ListItemButton>
+            },
+            borderRadius: "10px",
+            // bgcolor: selectedIndex === "Facilities" ? "#191BA9" : undefined,
+            // color: selectedIndex === "Facilities" ? "white" : undefined,
+            bgcolor: location.pathname.includes("equipment-setting")
+              ? "#191BA9"
+              : undefined,
+            color: location.pathname.includes("equipment-setting")
+              ? "white"
+              : undefined,
+          }}
+          onClick={() => {
+            navigate(`/equipment-setting`);
+            indexClick("Facilities");
+          }}
+        >
+          <ListItemIcon>
+            <SettingsInputComponentIcon
+              sx={{
+                // color: selectedIndex === "Facilities" ? "white" : undefined,
+                color: location.pathname.includes("equipment-setting")
+                  ? "white"
+                  : undefined,
+              }}
+            />
+          </ListItemIcon>
+          <ListItemText primary="설비 관리" />
+        </ListItemButton>
 
-          <ListItemButton
-            sx={{
-              "&:hover": {
-                bgcolor: "#191BA9",
+        <ListItemButton
+          sx={{
+            "&:hover": {
+              bgcolor: "#191BA9",
+              color: "white",
+              "& .MuiSvgIcon-root": {
                 color: "white",
-                "& .MuiSvgIcon-root": {
-                  color: "white",
-                },
               },
-              borderRadius: "10px",
-              bgcolor: selectedIndex === "Setting" ? "#191BA9" : undefined,
-              color: selectedIndex === "Setting" ? "white" : undefined,
-            }}
-            onClick={() => {
-              indexClick("Setting");
-              navigate("/login");
-            }}
-          >
-            <ListItemIcon>
-              <SettingsIcon
-                sx={{
-                  color: selectedIndex === "Setting" ? "white" : undefined,
-                }}
-              />
-            </ListItemIcon>
-            <ListItemText primary="서비스 관리" />
-          </ListItemButton>
-        </List>
-      </div>
+            },
+            borderRadius: "10px",
+            bgcolor: selectedIndex === "Setting" ? "#191BA9" : undefined,
+            color: selectedIndex === "Setting" ? "white" : undefined,
+          }}
+          onClick={() => {
+            indexClick("Setting");
+            navigate("/login");
+          }}
+        >
+          <ListItemIcon>
+            <SettingsIcon
+              sx={{
+                color: selectedIndex === "Setting" ? "white" : undefined,
+              }}
+            />
+          </ListItemIcon>
+          <ListItemText primary="서비스 관리" />
+        </ListItemButton>
+      </List>
     </div>
   );
 };

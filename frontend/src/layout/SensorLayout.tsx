@@ -26,7 +26,7 @@ const SensorLayout = ({ children }: Props) => {
   //   if (leftNavRef.current) {
   //     setLeftNavWidth(leftNavRef.current.clientWidth);
   //   }
-  //   console.log(leftNavWidth, "left");
+  //   // console.log(leftNavWidth, "left");
   // }, [leftNavWidth]);
 
   return (
@@ -35,9 +35,9 @@ const SensorLayout = ({ children }: Props) => {
         <NavBar leftNavWidth={leftNavWidth} />
       </div>
       <div style={{ display: "flex", width: "100%" }}>
-        {/* <div ref={leftNavRef}> */}
-        <LeftNav childrenHeight={childrenHeight} />
-        {/* </div> */}
+        <div>
+          <LeftNav childrenHeight={childrenHeight} />
+        </div>
         <div style={{ width: "100%" }}>
           <div className={styles.children}>{children}</div>
         </div>
