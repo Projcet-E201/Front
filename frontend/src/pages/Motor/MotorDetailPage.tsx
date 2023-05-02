@@ -7,7 +7,7 @@ import DetailTopCard from "../../components/common/DetailTopCard";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import SensorLayout from "../../layout/SensorLayout";
-import MotorChart from "../../components/Chart/MotorChart";
+import MotorDetailChart from "../../components/Chart/DetailChart/MotorDetailChart";
 import styles from "./MotorPage.module.css";
 
 const MotorDetailPage = () => {
@@ -68,7 +68,7 @@ const MotorDetailPage = () => {
               </div>
             </div>
             <div style={{ height: "45vh" }}>
-              <MotorChart datasets={datasets} legend={false} />
+              <MotorDetailChart datasets={datasets} legend={false} />
             </div>
           </CardContent>
         </Card>
