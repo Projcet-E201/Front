@@ -22,7 +22,7 @@ const MotorChart = ({ datasets, legend }: Props) => {
     const markersFromLocalStorage = JSON.parse(
       localStorage.getItem("motorChartMarkers") || "[]"
     );
-    setMarkers(markersFromLocalStorage);
+    setMarkers(markersFromLocalStorage.filter((marker: any) => marker.checked));
   }, []);
 
   const legends: any = [

@@ -229,33 +229,6 @@ const LeftNav = ({ childrenHeight }: any) => {
           </ListItemIcon>
           <ListItemText primary="Custom" />
         </ListItemButton>
-        <ListItemButton
-          sx={{
-            "&:hover": {
-              bgcolor: "#191BA9",
-              color: "white",
-              "& .MuiSvgIcon-root": {
-                color: "white",
-              },
-            },
-            borderRadius: "10px",
-            bgcolor: selectedIndex === "Facilities" ? "#191BA9" : undefined,
-            color: selectedIndex === "Facilities" ? "white" : undefined,
-          }}
-          onClick={() => {
-            navigate(`/test`);
-            indexClick("Facilities");
-          }}
-        >
-          <ListItemIcon>
-            <SettingsInputComponentIcon
-              sx={{
-                color: selectedIndex === "Facilities" ? "white" : undefined,
-              }}
-            />
-          </ListItemIcon>
-          <ListItemText primary="Test" />
-        </ListItemButton>
 
         <ListItemButton
           sx={{
@@ -278,7 +251,7 @@ const LeftNav = ({ childrenHeight }: any) => {
           }}
           onClick={() => {
             navigate(`/equipment-setting`);
-            indexClick("Facilities");
+            indexClick("EquipmentSetting");
           }}
         >
           <ListItemIcon>
@@ -304,8 +277,12 @@ const LeftNav = ({ childrenHeight }: any) => {
               },
             },
             borderRadius: "10px",
-            bgcolor: selectedIndex === "Setting" ? "#191BA9" : undefined,
-            color: selectedIndex === "Setting" ? "white" : undefined,
+            // bgcolor: selectedIndex === "Setting" ? "#191BA9" : undefined,
+            // color: selectedIndex === "Setting" ? "white" : undefined,
+            bgcolor: location.pathname.includes("login")
+              ? "#191BA9"
+              : undefined,
+            color: location.pathname.includes("login") ? "white" : undefined,
           }}
           onClick={() => {
             indexClick("Setting");
@@ -315,12 +292,44 @@ const LeftNav = ({ childrenHeight }: any) => {
           <ListItemIcon>
             <SettingsIcon
               sx={{
-                color: selectedIndex === "Setting" ? "white" : undefined,
+                // color: selectedIndex === "Setting" ? "white" : undefined,
+                color: location.pathname.includes("login")
+                  ? "white"
+                  : undefined,
               }}
             />
           </ListItemIcon>
           <ListItemText primary="서비스 관리" />
         </ListItemButton>
+
+        <ListItemButton
+          sx={{
+            "&:hover": {
+              bgcolor: "#191BA9",
+              color: "white",
+              "& .MuiSvgIcon-root": {
+                color: "white",
+              },
+            },
+            borderRadius: "10px",
+            bgcolor: selectedIndex === "Facilities" ? "#191BA9" : undefined,
+            color: selectedIndex === "Facilities" ? "white" : undefined,
+          }}
+          onClick={() => {
+            navigate(`/test`);
+            indexClick("Test1");
+          }}
+        >
+          <ListItemIcon>
+            <SettingsInputComponentIcon
+              sx={{
+                color: selectedIndex === "Facilities" ? "white" : undefined,
+              }}
+            />
+          </ListItemIcon>
+          <ListItemText primary="Test" />
+        </ListItemButton>
+
         <ListItemButton
           sx={{
             "&:hover": {
@@ -336,7 +345,7 @@ const LeftNav = ({ childrenHeight }: any) => {
           }}
           onClick={() => {
             navigate(`/test2`);
-            indexClick("Facilities");
+            indexClick("Test2");
           }}
         >
           <ListItemIcon>

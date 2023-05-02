@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { useNavigate } from "react-router-dom";
 
@@ -11,6 +12,14 @@ const VacuumChart = ({ data }: any) => {
     // console.log(`${data.value}`, `value`);
     navigate(`${data.indexValue.slice(1)}`);
   };
+
+  const [markers, setMarkers] = useState([]);
+  useEffect(() => {
+    const markersFromLocalStorage = JSON.parse(
+      localStorage.getItem("VacuumChartMarkers") || "[]"
+    );
+    setMarkers(markersFromLocalStorage.filter((marker: any) => marker.checked));
+  }, []);
   return (
     <ResponsiveBar
       onClick={handleBarClick}
@@ -43,15 +52,7 @@ const VacuumChart = ({ data }: any) => {
       }}
       maxValue={100}
       colors={(bar: any) => bar.data.color}
-      markers={[
-        {
-          axis: "y",
-          value: 80,
-          lineStyle: { stroke: "red", strokeWidth: 2 },
-          legend: "danger",
-          // legendOrientation: "vertical",
-        },
-      ]}
+      markers={markers}
     />
   );
 };

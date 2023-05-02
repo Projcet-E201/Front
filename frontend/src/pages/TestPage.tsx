@@ -62,7 +62,7 @@ const TestPage: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       handleTitleModify();
-    }, 1000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [handleTitleModify]);
