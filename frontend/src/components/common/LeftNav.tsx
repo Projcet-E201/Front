@@ -321,6 +321,33 @@ const LeftNav = ({ childrenHeight }: any) => {
           </ListItemIcon>
           <ListItemText primary="서비스 관리" />
         </ListItemButton>
+        <ListItemButton
+          sx={{
+            "&:hover": {
+              bgcolor: "#191BA9",
+              color: "white",
+              "& .MuiSvgIcon-root": {
+                color: "white",
+              },
+            },
+            borderRadius: "10px",
+            bgcolor: selectedIndex === "Facilities" ? "#191BA9" : undefined,
+            color: selectedIndex === "Facilities" ? "white" : undefined,
+          }}
+          onClick={() => {
+            navigate(`/test2`);
+            indexClick("Facilities");
+          }}
+        >
+          <ListItemIcon>
+            <SettingsInputComponentIcon
+              sx={{
+                color: selectedIndex === "Facilities" ? "white" : undefined,
+              }}
+            />
+          </ListItemIcon>
+          <ListItemText primary="Test2" />
+        </ListItemButton>
       </List>
     </div>
   );
