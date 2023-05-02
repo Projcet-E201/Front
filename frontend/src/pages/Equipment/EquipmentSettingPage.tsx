@@ -1,10 +1,11 @@
 import React from "react";
 import MainLayout from "../../layout/MainLayout";
-
+import MotorChartMarkers from "./Markers/MotorChartMarkers";
 const EquipmentSettingPage = () => {
   return (
     <MainLayout>
-      <h1>설비관리 페이지</h1>
+      <h1>환경설정</h1>
+      <MotorChartMarkers />
     </MainLayout>
   );
 };
