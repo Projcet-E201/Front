@@ -25,13 +25,14 @@ import RpmDetailPage from "./pages/Rpm/RpmDetailPage";
 import LoginPage from "./pages/Login/LoginPage";
 import TestPage from "./pages/TestPage";
 import CustomBuildPage from "./pages/CustomBuildPage";
+import EquipmentSettingPage from "./pages/Equipment/EquipmentSettingPage";
+import Test2Page from "./pages/Test2Page";
 
 // recoil 사용
 import { RecoilRoot } from "recoil";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { isLoggedInAtom } from "./store/atoms";
-import EquipmentSettingPage from "./pages/Equipment/EquipmentSettingPage";
 
 function App() {
   const location = useLocation();
@@ -100,7 +101,10 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/test" element={<TestPage />} />
         <Route path="/custom-build" element={<CustomBuildPage />} />
-        <Route path="equipment-setting" element={<EquipmentSettingPage />} />
+        <Route path="/equipment-setting" element={<EquipmentSettingPage />} />
+
+        {/* 테스트 페이지 */}
+        <Route path="/test2" element={<Test2Page />} />
       </Routes>
     </RecoilRoot>
   );

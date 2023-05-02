@@ -46,7 +46,9 @@ const NavBar = ({ leftNavWidth }: any) => {
                     to={`/machine/${machine}`}
                     style={{ textDecoration: "none", color: "inherit" }}
                   >
-                    <h3 style={{ marginBottom: "0" }}>Machine {machine}</h3>
+                    <h3 style={{ marginBottom: "0" }}>
+                      Machine {machine} &nbsp;
+                    </h3>
                   </Link>
                   {location.pathname
                     .split("/")
@@ -62,6 +64,7 @@ const NavBar = ({ leftNavWidth }: any) => {
                       >
                         <h3 style={{ marginBottom: "0" }}>
                           &gt; {path.charAt(0).toUpperCase() + path.slice(1)}
+                          &nbsp;
                         </h3>
                       </Link>
                     ))}

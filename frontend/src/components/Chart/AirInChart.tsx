@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 import { ResponsiveLine } from "@nivo/line";
+import { useParams } from "react-router";
 
-import { useRecoilState } from "recoil";
-import { selectedMachineAtom } from "../../store/atoms";
+// import { useRecoilState } from "recoil";
+// import { selectedMachineAtom } from "../../store/atoms";
 
 interface Props {
   datasets: any[];
@@ -21,8 +22,15 @@ const formatTime = (secondsAgo: number) => {
 const AirInChart = ({ datasets, legend, avgData }: Props) => {
   console.log(avgData);
   const navigate = useNavigate();
+  const [markers, setMarkers] = useState([]);
+  const { machine } = useParams();
 
-  const selectedMachine = useRecoilState(selectedMachineAtom);
+  useEffect(() => {
+    const markersFromLocalStorage = JSON.parse(
+      localStorage.getItem("motorChartMarkers") || "[]"
+    );
+    setMarkers(markersFromLocalStorage.filter((marker: any) => marker.checked));
+  }, []);
 
   const legends: any = [
     {
@@ -41,7 +49,7 @@ const AirInChart = ({ datasets, legend, avgData }: Props) => {
       symbolBorderColor: "rgba(0, 0, 0, .5)",
       onClick: (data: any) => {
         const id: string = data.id as string;
-        navigate(`/machine/${selectedMachine}/air-in/${id[id.length - 1]}`);
+        navigate(`/machine/${machine}/air-in/${id[id.length - 1]}`);
       },
       effects: [
         {
@@ -83,15 +91,7 @@ const AirInChart = ({ datasets, legend, avgData }: Props) => {
       useMesh={true}
       animate={false}
       legends={legend ? legends : []}
-      markers={[
-        {
-          axis: "y",
-          value: 800,
-          lineStyle: { stroke: "red", strokeWidth: 2 },
-          legend: "danger",
-          // legendOrientation: "vertical",
-        },
-      ]}
+      markers={markers}
     />
   );
 };

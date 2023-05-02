@@ -22,12 +22,12 @@ const MainLayout = ({ children }: Props) => {
     // console.log("칠드런 높이", childrenHeight);
   }, [children]);
 
-  useEffect(() => {
-    if (leftNavRef.current) {
-      setLeftNavWidth(leftNavRef.current.clientWidth);
-    }
-    console.log(leftNavWidth, "left");
-  }, [leftNavWidth]);
+  // useEffect(() => {
+  //   if (leftNavRef.current) {
+  //     setLeftNavWidth(leftNavRef.current.clientWidth);
+  //   }
+  //   // console.log(leftNavWidth, "left");
+  // }, [leftNavWidth]);
 
   return (
     <div>
@@ -35,7 +35,7 @@ const MainLayout = ({ children }: Props) => {
         <NavBar leftNavWidth={leftNavWidth} />
       </div>
       <div style={{ display: "flex", width: "100%" }}>
-        <div style={{ width: "13%" }} ref={leftNavRef}>
+        <div>
           <LeftNav childrenHeight={childrenHeight} />
         </div>
         <div style={{ width: "100%" }}>

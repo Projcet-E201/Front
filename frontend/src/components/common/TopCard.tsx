@@ -12,6 +12,8 @@ import { useNavigate } from "react-router";
 
 import styles from "./TopCard.module.css";
 
+import TuneIcon from "@mui/icons-material/Tune";
+
 interface Props {
   location: string;
 }
@@ -117,6 +119,7 @@ const TopCard = ({ location }: Props) => {
       <CardContent
         style={{
           display: "flex",
+          position: "relative",
           alignItems: "center",
           justifyContent: "center",
           height: "4vh",
@@ -140,6 +143,11 @@ const TopCard = ({ location }: Props) => {
             onClick={handleRightButtonClick}
           >
             <ArrowForwardIcon />
+          </IconButton>
+        </div>
+        <div style={{ position: "absolute", right: "1rem", cursor: "pointer" }}>
+          <IconButton>
+            <TuneIcon />
           </IconButton>
         </div>
       </CardContent>

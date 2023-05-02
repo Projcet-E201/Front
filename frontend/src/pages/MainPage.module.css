@@ -56,12 +56,12 @@
   /* margin-bottom: 20px; */
   color: #5cc2f2;
 }
-.sensercontainer {
+.sensorcontainer {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
-.sensercard {
+.sensorcard {
   width: 18vw;
   height: 48%;
   margin: 0.5rem;
@@ -69,7 +69,7 @@
   /* transition: transform 0.3s ease-in-out; */
   /* float: left; */
 }
-.senserheader {
+.sensorheader {
   margin: 0.5em;
   margin-left: 1em;
   margin: 0 auto;
@@ -78,15 +78,15 @@
   font-size: 1.2em;
   line-height: 1.5em;
 }
-.senserheader:hover {
+.sensorheader:hover {
   background-color: #191ba9;
   color: white;
 }
-.senserheader:active {
+.sensorheader:active {
   background-color: #191ba9;
   color: white;
 }
-.senserdatacontent {
+.sensordatacontent {
   display: flex;
   justify-content: space-between;
   padding-top: 0px;
@@ -97,11 +97,11 @@
   margin-left: 0.5em;
   margin-right: 0.5em;
 }
-.senserdatascore {
+.sensordatascore {
   color: #5cc2f2;
   font-weight: 1000;
 }
-.senserdatastyle {
+.sensordatastyle {
   display: flex;
   flex-wrap: wrap;
   width: 45%;
@@ -114,7 +114,7 @@
   line-height: 1.55rem;
 }
 
-.senserdatacontent:hover {
+.sensordatacontent:hover {
   cursor: pointer;
   transform: scale(1.02);
 }

@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
+import MainLayout from "../layout/MainLayout";
 
-const TestPage: React.FC = () => {
+const Test2Page: React.FC = () => {
   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
   const [message, setMessage] = useState<any>();
 
@@ -62,7 +63,7 @@ const TestPage: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       handleTitleModify();
-    }, 5000);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [handleTitleModify]);
@@ -70,8 +71,9 @@ const TestPage: React.FC = () => {
   // console.log(message);
 
   return (
-    <div className="App">
+    <MainLayout>
       <div>
+        <p>test2페이지</p>
         <button>test</button>
         {message?.map((item: any, index: number) => (
           <div key={index}>
@@ -93,8 +95,8 @@ const TestPage: React.FC = () => {
           </div>
         ))}
       </div>
-    </div>
+    </MainLayout>
   );
 };
 
-export default TestPage;
+export default Test2Page;

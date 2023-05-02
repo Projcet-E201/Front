@@ -46,7 +46,7 @@ const Sensor = () => {
               <CardContent>
                 {index === 0 && (
                   <div
-                    onClick={() => navigate(`motor`)}
+                    // onClick={() => navigate(`motor`)}
                     style={{ width: "auto", height: "22.5vh" }}
                   >
                     <h3 style={{ margin: "0" }}>Motor Toque(%)</h3>
