@@ -77,29 +77,18 @@ const TestPage: React.FC = () => {
           <div key={index}>
             <p>Machine{Number(item.name.slice(6))}</p>
             <p>시간: {item.time}</p>
-            {item.value.map(
-              (sensor: any, sensorIndex: any) => (
-                <div key={sensorIndex}>
-                  {sensor.MOTOR && <p>Motor: {sensor.MOTOR}</p>}
-                  {sensor.VACUUM && <p>Vacuum: {sensor.VACUUM}</p>}
-                  {sensor.AIR_IN_KPA && <p>AirIn: {sensor.AIR_IN_KPA}</p>}
-                  {sensor.AIR_OUT_KPA && (
-                    <p>AirOut(kPa): {sensor.AIR_OUT_KPA}</p>
-                  )}
-                  {sensor.AIR_OUT_MPA && (
-                    <p>AirOut(MPa): {sensor.AIR_OUT_MPA}</p>
-                  )}
-                  {sensor.LOAD && <p>Load: {sensor.LOAD}</p>}
-                  {sensor.WATER && <p>Water: {sensor.WATER}</p>}
-                  {sensor.VELOCITY && <p>Velocity: {sensor.VELOCITY}</p>}
-                </div>
-              )
-              // console.log(item.value, "dfdfdf")
-              // <div>
-              //   <p>MOTOR: {sensor.MOTOR}</p>
-              //   <p>Vacuum: {sensor.VACUUM}</p>
-              // </div>
-            )}
+            {item.value.map((sensor: any, sensorIndex: any) => (
+              <div key={sensorIndex}>
+                {sensor.MOTOR && <p>Motor: {sensor.MOTOR}</p>}
+                {sensor.VACUUM && <p>Vacuum: {sensor.VACUUM}</p>}
+                {sensor.AIR_IN_KPA && <p>AirIn: {sensor.AIR_IN_KPA}</p>}
+                {sensor.AIR_OUT_KPA && <p>AirOut(kPa): {sensor.AIR_OUT_KPA}</p>}
+                {sensor.AIR_OUT_MPA && <p>AirOut(MPa): {sensor.AIR_OUT_MPA}</p>}
+                {sensor.LOAD && <p>Load: {sensor.LOAD}</p>}
+                {sensor.WATER && <p>Water: {sensor.WATER}</p>}
+                {sensor.VELOCITY && <p>Velocity: {sensor.VELOCITY}</p>}
+              </div>
+            ))}
             <p>-----------------</p>
           </div>
         ))}

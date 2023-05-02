@@ -66,7 +66,7 @@ const LoginPage = () => {
               required
               fullWidth
               name="id"
-              autoFocus
+              // autoFocus
               margin="normal"
             ></TextField>
             <TextField
