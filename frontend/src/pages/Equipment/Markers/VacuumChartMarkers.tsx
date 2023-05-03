@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Switch from "@mui/material/Switch";
+import ColorPicker from "../../../components/common/ColorPicker";
+
+interface LineStyle {
+  stroke: string;
+  strokeWidth: string;
+}
 
 interface Marker {
   axis: string;
   value: number;
   legend: string;
-  lineStyle: any;
+  lineStyle: LineStyle;
   checked: boolean;
 }
 
@@ -15,6 +21,8 @@ const VacuumChartMarkers = () => {
   const [newVacuumMarkerWidth, setNewVacuumMarkerWidth] = useState<number>(2);
   const [newVacuumMarkerLegend, setNewVacuumMarkerLegend] =
     useState<string>("");
+
+  const [color, setColor] = useState<string>("#000000");
 
   // localStorage에서 markers 가져오기
   useEffect(() => {
@@ -36,7 +44,8 @@ const VacuumChartMarkers = () => {
   };
 
   const handleVacuumMarker = () => {
-    const strokeColor = markerType === "warning" ? "#FF3B30" : "#FFC041";
+    // const strokeColor = markerType === "warning" ? "#FF3B30" : "#FFC041";
+    const strokeColor = color;
     const legend =
       newVacuumMarkerLegend.trim() !== ""
         ? newVacuumMarkerLegend
@@ -92,6 +101,11 @@ const VacuumChartMarkers = () => {
     localStorage.setItem("VacuumChartMarkers", JSON.stringify(VacuumMarkers));
   };
 
+  const handleColorChange = (color: string) => {
+    // console.log(color);
+    setColor(color);
+  };
+
   return (
     <div style={{ display: "flex" }}>
       <div style={{ marginRight: "100px" }}>
@@ -115,7 +129,7 @@ const VacuumChartMarkers = () => {
             placeholder="비어있을 시 Value값이 됩니다."
           />
         </div>
-        <div>
+        {/* <div>
           <label>
             <input
               type="radio"
@@ -134,7 +148,7 @@ const VacuumChartMarkers = () => {
             />
             주의
           </label>
-        </div>
+        </div> */}
         <div>
           <label htmlFor="newVacuumMarkerWidth">두께: </label>
           <input
@@ -143,12 +157,16 @@ const VacuumChartMarkers = () => {
             value={newVacuumMarkerWidth}
             onChange={handleNewMarkerWidthChange}
             min={0}
-            max={100}
-            defaultValue={2}
+            max={10}
+            // defaultValue={2}
             // value={newVacuumMarkerStrokeWidth}
             // onChange={handleNewVacuumMarkerStrokeWidth}
           />
         </div>
+        <div>
+          <ColorPicker onColorChange={handleColorChange} />
+        </div>
+
         <button onClick={handleVacuumMarker}>Add VacuumMarker</button>
       </div>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
@@ -160,15 +178,18 @@ const VacuumChartMarkers = () => {
             />
             <p>legend: {VacuumMarker.legend}</p>
             <p>value: {VacuumMarker.value}</p>
-            {/* <p>색상: {VacuumMarker.lineStyle.stroke}</p> */}
-            {VacuumMarker.lineStyle.stroke === "#FFC041" ? (
-              <p>주의</p>
-            ) : (
-              <p>경고</p>
-            )}
-            <p>두께: {VacuumMarker.lineStyle.strokeWidth}</p>
+
+            <div
+              style={{
+                display: "inline-block",
+                width: "100px",
+                height: `${VacuumMarker.lineStyle.strokeWidth}px`,
+                marginRight: "5px",
+                backgroundColor: VacuumMarker.lineStyle.stroke,
+                border: "1px solid #ddd",
+              }}
+            />
             <button onClick={() => deleteHandler(index)}>삭제</button>
-            <p>--------------------------</p>
           </div>
         ))}
       </div>

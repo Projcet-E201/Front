@@ -6,7 +6,7 @@ const TestPage: React.FC = () => {
   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
   const [message, setMessage] = useState<any>();
 
-  const connectUrl = "http://localhost:8091/ws";
+  const connectUrl = "http://api:8091/ws";
   const connectWebSocket = () => {
     console.log(connectUrl);
     const socket = new SockJS(connectUrl);
@@ -77,7 +77,7 @@ const TestPage: React.FC = () => {
           <div key={index}>
             <p>Machine{Number(item.name.slice(6))}</p>
             <p>시간: {item.time}</p>
-            {item.value.map((sensor: any, sensorIndex: any) => (
+            {item?.value?.map((sensor: any, sensorIndex: any) => (
               <div key={sensorIndex}>
                 {sensor.MOTOR && <p>Motor: {sensor.MOTOR}</p>}
                 {sensor.VACUUM && <p>Vacuum: {sensor.VACUUM}</p>}

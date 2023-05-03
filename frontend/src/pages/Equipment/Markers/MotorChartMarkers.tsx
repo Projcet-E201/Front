@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Switch from "@mui/material/Switch";
+import ColorPicker from "../../../components/common/ColorPicker";
+
+interface LineStyle {
+  stroke: string;
+  strokeWidth: string;
+}
 
 interface Marker {
   axis: string;
   value: number;
   legend: string;
-  lineStyle: any;
+  lineStyle: LineStyle;
   checked: boolean;
 }
 
@@ -14,6 +20,8 @@ const MotorChartMarkers = () => {
   const [newMotorMarkerValue, setNewMotorMarkerValue] = useState<number>(0);
   const [newMotorMarkerWidth, setNewMotorMarkerWidth] = useState<number>(2);
   const [newMotorMarkerLegend, setNewMotorMarkerLegend] = useState<string>("");
+
+  const [color, setColor] = useState<string>("#000000");
 
   // localStorage에서 markers 가져오기
   useEffect(() => {
@@ -35,7 +43,8 @@ const MotorChartMarkers = () => {
   };
 
   const handleMotorMarker = () => {
-    const strokeColor = markerType === "warning" ? "#FF3B30" : "#FFC041";
+    // const strokeColor = markerType === "warning" ? "#FF3B30" : "#FFC041";
+    const strokeColor = color;
     const legend =
       newMotorMarkerLegend.trim() !== ""
         ? newMotorMarkerLegend
@@ -86,6 +95,11 @@ const MotorChartMarkers = () => {
     });
 
     localStorage.setItem("motorChartMarkers", JSON.stringify(motorMarkers));
+  };
+
+  const handleColorChange = (color: string) => {
+    // console.log(color);
+    setColor(color);
   };
 
   return (
@@ -140,11 +154,15 @@ const MotorChartMarkers = () => {
             onChange={handleNewMarkerWidthChange}
             min={0}
             max={10}
-            defaultValue={2}
+            // defaultValue={2}
             // value={newMotorMarkerStrokeWidth}
             // onChange={handleNewMotorMarkerStrokeWidth}
           />
         </div>
+        <div>
+          <ColorPicker onColorChange={handleColorChange} />
+        </div>
+
         <button onClick={handleMotorMarker}>Add MotorMarker</button>
       </div>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
@@ -156,15 +174,17 @@ const MotorChartMarkers = () => {
             />
             <p>legend: {motorMarker.legend}</p>
             <p>value: {motorMarker.value}</p>
-            {/* <p>색상: {motorMarker.lineStyle.stroke}</p> */}
-            {motorMarker.lineStyle.stroke === "#FFC041" ? (
-              <p>주의</p>
-            ) : (
-              <p>경고</p>
-            )}
-            <p>두께: {motorMarker.lineStyle.strokeWidth}</p>
+            <div
+              style={{
+                display: "inline-block",
+                width: "100px",
+                height: `${motorMarker.lineStyle.strokeWidth}px`,
+                marginRight: "5px",
+                backgroundColor: motorMarker.lineStyle.stroke,
+                border: "1px solid #ddd",
+              }}
+            />
             <button onClick={() => deleteHandler(index)}>삭제</button>
-            <p>-----------------------</p>
           </div>
         ))}
       </div>
