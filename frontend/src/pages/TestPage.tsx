@@ -73,7 +73,8 @@ const TestPage: React.FC = () => {
     <div className="App">
       <div>
         <button>test</button>
-        {message?.map((item: any, index: number) => (
+        <p>{JSON.stringify(message)}</p>
+        {/* {message?.map((item: any, index: number) => (
           <div key={index}>
             <p>Machine{Number(item.name.slice(6))}</p>
             <p>시간: {item.time}</p>
@@ -91,7 +92,7 @@ const TestPage: React.FC = () => {
             ))}
             <p>-----------------</p>
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   );
