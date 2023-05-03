@@ -15,7 +15,7 @@ const EquipmentSettingPage = () => {
       <div style={{}}>
         <MotorChartMarkers />
         <hr />
-        {/* <AirInChartMarkers />
+        <AirInChartMarkers />
         <hr />
         <VacuumChartMarkers />
         <hr />
@@ -29,7 +29,7 @@ const EquipmentSettingPage = () => {
         <hr />
         <LoadChartMarkers />
         <hr />
-        <AbrasionChartMarkers /> */}
+        <AbrasionChartMarkers />
       </div>
     </MainLayout>
   );
