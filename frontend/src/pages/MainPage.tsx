@@ -24,15 +24,15 @@ const MainPage = () => {
   const navigate = useNavigate();
   const machines = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const [sensors, setsensors] = useState<string[]>([
-    "motor",
-    "vacuum",
-    "air-in",
-    "air-out-kpa",
-    "air-out-mpa",
-    "water",
-    "abrasion",
-    "load",
-    "rpm",
+    "MOTOR",
+    "VACUUM",
+    "AIR_IN_KPA",
+    "AIR_OUT_KPA",
+    "AIR_OUT_MPA",
+    "WATER",
+    "ABRASION",
+    "LOAD",
+    "VELOCITY",
   ]);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -41,16 +41,16 @@ const MainPage = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setData({
-        a: Math.floor(Math.random() * 301),
-        b: Math.floor(Math.random() * 101),
-        c: Math.floor(Math.random() * 901),
-        d: -0.1 + Math.random() * 1.1,
-        e: Math.floor(Math.random() * 901),
-        f: Math.floor(Math.random() * 5),
-        g: Math.floor(Math.random() * 41),
-        h: Math.floor(Math.random() * 17),
-        i: Math.floor(Math.random() * 50001),
-        j: Math.floor(Math.random() * 101),
+        MOTOR: Math.floor(Math.random() * 301),
+        VACUUM: Math.floor(Math.random() * 101),
+        AIR_IN_KPA: Math.floor(Math.random() * 901),
+        AIR_OUT_KPA: -0.1 + Math.random() * 1.1,
+        AIR_OUT_MPA: Math.floor(Math.random() * 901),
+        WATER: Math.floor(Math.random() * 5),
+        ABRASION: Math.floor(Math.random() * 41),
+        LOAD: Math.floor(Math.random() * 17),
+        VELOCITY: Math.floor(Math.random() * 50001),
+        SCORE: Math.floor(Math.random() * 101),
       });
     }, 5000);
     return () => clearInterval(interval);
@@ -59,9 +59,9 @@ const MainPage = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       const newValues: { [key: string]: number } = {};
-      newValues["motor"] = data.a;
-      newValues["압력"] = data.b;
-      newValues["유량"] = data.f;
+      newValues["motor"] = data.MOTOR;
+      newValues["압력"] = data.VACUUM;
+      newValues["유량"] = data.WATER;
       setData({ ...data, ...newValues });
     }, 100);
     return () => clearInterval(interval);
