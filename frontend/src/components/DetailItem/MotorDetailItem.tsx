@@ -7,34 +7,20 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import MotorDetailChart from "../Chart/DetailChart/MotorDetailChart";
 import styles from "./MotorDetailItem.module.css";
+import { DatePicker, Space, Button } from "antd";
+
+const { RangePicker } = DatePicker;
 
 const MotorDetailItem = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
-  const [startDate, setStartDate] = useState<string>(
-    new Date().toISOString().slice(0, 10)
-  );
-  const [endDate, setEndDate] = useState<string>(
-    new Date().toISOString().slice(0, 10)
-  );
-  const [startTime, setStartTime] = useState<string>("00:00:01");
-  const [endTime, setEndTime] = useState<string>("23:59:59");
   const [intervalSeconds, setIntervalSeconds] = useState<number>(5);
-  const maxDate = new Date().toISOString().slice(0, 10);
-  const minDate = new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
-    .toISOString()
-    .slice(0, 10);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      // 선택된 날짜에 해당하는 데이터를 가져옵니다.
-      const response = await fetch(`/api/motor-data?date=${startDate}`);
-      const jsonData = await response.json();
-      setData(jsonData);
-    };
-    fetchData();
-  }, [startDate]);
+  const datasets = [...Array(1)].map((_, i) => ({
+    id: `Motor${i + 1}`,
+    data: data.map((d) => ({ x: d.x, y: d[`Motor${i + 1}`] })),
+  }));
+  const [ws, setWs] = useState<WebSocket | null>(null);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -54,44 +40,25 @@ const MotorDetailItem = () => {
     return () => clearInterval(intervalId);
   }, [location, intervalSeconds]);
 
-  const datasets = [...Array(1)].map((_, i) => ({
-    id: `Motor${i + 1}`,
-    data: data.map((d) => ({ x: d.x, y: d[`Motor${i + 1}`] })),
-  }));
+  useEffect(() => {
+    setWs(new WebSocket("ws://localhost:8000")); // WebSocket 생성
+    return () => {
+      if (ws) {
+        ws.close(); // WebSocket 연결 종료
+      }
+    };
+  }, []);
 
-  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedDate = event.target.value;
-    if (selectedDate <= maxDate && selectedDate >= minDate) {
-      setStartDate(selectedDate);
-    } else {
-      // 범위를 벗어나는 경우 처리
-      alert("일주일 이내의 날짜를 선택해주세요.");
+  const handleDateChange = (dates: any, dateStrings: [string, string]) => {
+    if (ws) {
+      ws.send(JSON.stringify({ dates: dateStrings }));
     }
   };
 
-  const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedDate = event.target.value;
-    if (selectedDate <= maxDate && selectedDate >= minDate) {
-      setEndDate(selectedDate);
-    } else {
-      // 범위를 벗어나는 경우 처리
-      alert("일주일 이내의 날짜를 선택해주세요.");
+  const handlehistoryButtonClick = () => {
+    if (ws) {
+      ws.send(JSON.stringify({ realTime: true }));
     }
-  };
-  const handleStartTimeChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setStartTime(event.target.value);
-  };
-
-  const handleEndTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEndTime(event.target.value);
-  };
-
-  const handleIntervalChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setIntervalSeconds(Number(event.target.value));
   };
 
   return (
@@ -121,56 +88,27 @@ const MotorDetailItem = () => {
               </div>
             </div>
             <br />
-            <div style={{ marginLeft: "2vw" }}>
-              날짜:{"  "}
-              <input
-                type="date"
-                value={startDate}
-                onChange={handleDateChange}
-              />{" "}
-              ~{" "}
-              <input
-                type="date"
-                value={endDate}
-                onChange={handleEndDateChange}
-              />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Space direction="vertical" size={12} style={{ width: "80%" }}>
+                <RangePicker showTime onChange={handleDateChange} />
+              </Space>
             </div>
             <br />
-            <div style={{ marginLeft: "2vw" }}>
-              시간:{"  "}
-              <input
-                type="time"
-                value={startTime}
-                onChange={handleStartTimeChange}
-              />{" "}
-              ~{" "}
-              <input
-                type="time"
-                value={endTime}
-                onChange={handleEndTimeChange}
-              />
-            </div>
             <br />
-            <div style={{ marginLeft: "2vw" }}>
-              간격:{"  "}
-              <select
-                id="interval"
-                name="interval"
-                value={intervalSeconds}
-                onChange={handleIntervalChange}
-              >
-                <option value={1}>1초</option>
-                <option value={5}>5초</option>
-                <option value={10}>10초</option>
-                <option value={60}>1분</option>
-                <option value={600}>10분</option>
-                <option value={3600}>1시간</option>
-              </select>
-            </div>
-            <br />
-            <div className={styles.data}>
-              <div style={{ float: "left" }}>검색</div>
-              <div style={{ float: "left" }}>실시간</div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Space direction="vertical" style={{ width: "80%" }}>
+                <Button block onClick={handlehistoryButtonClick}>
+                  검색하기
+                </Button>
+                <Button type="text" block>
+                  실시간 보기
+                </Button>
+              </Space>
             </div>
           </div>
         </CardContent>
