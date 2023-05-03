@@ -24,7 +24,7 @@ const AirOutMpaChartMarkers = () => {
   const [newAirOutMpaMarkerLegend, setNewAirOutMpaMarkerLegend] =
     useState<string>("");
 
-  const [color, setColor] = useState<string>("#000000");
+  const [color, setColor] = useState<string>("#FF3B30");
 
   // localStorage에서 markers 가져오기
   useEffect(() => {

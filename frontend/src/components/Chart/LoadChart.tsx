@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 import { ResponsiveLine } from "@nivo/line";
@@ -21,6 +21,14 @@ const formatTime = (secondsAgo: number) => {
 const LoadChart = ({ datasets, legend, avgData }: Props) => {
   console.log(avgData);
   const navigate = useNavigate();
+
+  const [markers, setMarkers] = useState([]);
+  useEffect(() => {
+    const markersFromLocalStorage = JSON.parse(
+      localStorage.getItem("LoadChartMarkers") || "[]"
+    );
+    setMarkers(markersFromLocalStorage.filter((marker: any) => marker.checked));
+  }, []);
 
   const selectedMachine = useRecoilState(selectedMachineAtom);
 
@@ -83,15 +91,7 @@ const LoadChart = ({ datasets, legend, avgData }: Props) => {
       useMesh={true}
       animate={false}
       legends={legend ? legends : []}
-      markers={[
-        {
-          axis: "y",
-          value: 35,
-          lineStyle: { stroke: "red", strokeWidth: 2 },
-          legend: "danger",
-          // legendOrientation: "vertical",
-        },
-      ]}
+      markers={markers}
     />
   );
 };

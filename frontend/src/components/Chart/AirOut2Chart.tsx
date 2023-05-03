@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 import { ResponsiveLine } from "@nivo/line";
@@ -14,8 +14,15 @@ const formatTime = (secondsAgo: number) => {
   return d.toLocaleTimeString();
 };
 
-const AirOutChart = ({ datasets, legend }: Props) => {
+const AirOut2Chart = ({ datasets, legend }: Props) => {
   const navigate = useNavigate();
+  const [markers, setMarkers] = useState([]);
+  useEffect(() => {
+    const markersFromLocalStorage = JSON.parse(
+      localStorage.getItem("AirOutMpaChartMarkers") || "[]"
+    );
+    setMarkers(markersFromLocalStorage.filter((marker: any) => marker.checked));
+  }, []);
 
   const legends: any = [
     {
@@ -76,8 +83,9 @@ const AirOutChart = ({ datasets, legend }: Props) => {
       useMesh={true}
       animate={false}
       legends={legend ? legends : []}
+      markers={markers}
     />
   );
 };
 
-export default AirOutChart;
+export default AirOut2Chart;

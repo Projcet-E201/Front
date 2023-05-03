@@ -21,7 +21,7 @@ const MotorChartMarkers = () => {
   const [newMotorMarkerWidth, setNewMotorMarkerWidth] = useState<number>(2);
   const [newMotorMarkerLegend, setNewMotorMarkerLegend] = useState<string>("");
 
-  const [color, setColor] = useState<string>("#000000");
+  const [color, setColor] = useState<string>("#FF3B30");
 
   // localStorage에서 markers 가져오기
   useEffect(() => {
@@ -36,14 +36,7 @@ const MotorChartMarkers = () => {
     localStorage.setItem("motorChartMarkers", JSON.stringify(motorMarkers));
   }, [motorMarkers]);
 
-  const [markerType, setMarkerType] = useState<string>("warning");
-
-  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMarkerType(event.target.value);
-  };
-
   const handleMotorMarker = () => {
-    // const strokeColor = markerType === "warning" ? "#FF3B30" : "#FFC041";
     const strokeColor = color;
     const legend =
       newMotorMarkerLegend.trim() !== ""
@@ -125,26 +118,7 @@ const MotorChartMarkers = () => {
             placeholder="비어있을 시 Value값이 됩니다."
           />
         </div>
-        <div>
-          <label>
-            <input
-              type="radio"
-              value="warning"
-              checked={markerType === "warning"}
-              onChange={handleRadioChange}
-            />
-            경고
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="caution"
-              checked={markerType === "caution"}
-              onChange={handleRadioChange}
-            />
-            주의
-          </label>
-        </div>
+
         <div>
           <label htmlFor="newMotorMarkerWidth">두께: </label>
           <input
@@ -160,7 +134,14 @@ const MotorChartMarkers = () => {
           />
         </div>
         <div>
-          <ColorPicker onColorChange={handleColorChange} />
+          <div>
+            {/* <button onClick={() => setShowColorPicker(!showColorPicker)}>
+              {showColorPicker ? "Close" : "open"}
+            </button> */}
+          </div>
+          <div>
+            <ColorPicker onColorChange={handleColorChange} />
+          </div>
         </div>
 
         <button onClick={handleMotorMarker}>Add MotorMarker</button>
@@ -172,9 +153,10 @@ const MotorChartMarkers = () => {
               checked={motorMarker.checked}
               onChange={(event) => handleMarkerToggle(index)}
             />
-            <p>legend: {motorMarker.legend}</p>
+            {/* <p>legend: {motorMarker.legend}</p> */}
             <p>value: {motorMarker.value}</p>
             <div
+              id="colorline"
               style={{
                 display: "inline-block",
                 width: "100px",
