@@ -15,26 +15,34 @@ interface Marker {
   checked: boolean;
 }
 
-const AirInChartMarkers = () => {
-  const [AirInMarkers, setAirInMarkers] = useState<Marker[]>([]);
-  const [newAirInMarkerValue, setNewAirInMarkerValue] = useState<number>(0);
-  const [newAirInMarkerWidth, setNewAirInMarkerWidth] = useState<number>(2);
-  const [newAirInMarkerLegend, setNewAirInMarkerLegend] = useState<string>("");
+const AirOutMpaChartMarkers = () => {
+  const [AirOutMpaMarkers, setAirOutMpaMarkers] = useState<Marker[]>([]);
+  const [newAirOutMpaMarkerValue, setNewAirOutMpaMarkerValue] =
+    useState<number>(0);
+  const [newAirOutMpaMarkerWidth, setNewAirOutMpaMarkerWidth] =
+    useState<number>(2);
+  const [newAirOutMpaMarkerLegend, setNewAirOutMpaMarkerLegend] =
+    useState<string>("");
 
   const [color, setColor] = useState<string>("#000000");
 
   // localStorage에서 markers 가져오기
   useEffect(() => {
-    const storedAirInMarkers = localStorage.getItem("AirInChartMarkers");
-    if (storedAirInMarkers) {
-      setAirInMarkers(JSON.parse(storedAirInMarkers));
+    const storedAirOutMpaMarkers = localStorage.getItem(
+      "AirOutMpaChartMarkers"
+    );
+    if (storedAirOutMpaMarkers) {
+      setAirOutMpaMarkers(JSON.parse(storedAirOutMpaMarkers));
     }
   }, []);
 
   // localStorage에 markers 저장하기
   useEffect(() => {
-    localStorage.setItem("AirInChartMarkers", JSON.stringify(AirInMarkers));
-  }, [AirInMarkers]);
+    localStorage.setItem(
+      "AirOutMpaChartMarkers",
+      JSON.stringify(AirOutMpaMarkers)
+    );
+  }, [AirOutMpaMarkers]);
 
   const [markerType, setMarkerType] = useState<string>("warning");
 
@@ -42,45 +50,48 @@ const AirInChartMarkers = () => {
     setMarkerType(event.target.value);
   };
 
-  const handleAirInMarker = () => {
+  const handleAirOutMpaMarker = () => {
     // const strokeColor = markerType === "warning" ? "#FF3B30" : "#FFC041";
     const strokeColor = color;
     const legend =
-      newAirInMarkerLegend.trim() !== ""
-        ? newAirInMarkerLegend
-        : `Value: ${newAirInMarkerValue}`;
-    const newAirInMarker: Marker = {
+      newAirOutMpaMarkerLegend.trim() !== ""
+        ? newAirOutMpaMarkerLegend
+        : `Value: ${newAirOutMpaMarkerValue}`;
+    const newAirOutMpaMarker: Marker = {
       axis: "y",
-      value: newAirInMarkerValue,
+      value: newAirOutMpaMarkerValue,
       legend,
-      lineStyle: { stroke: strokeColor, strokeWidth: `${newAirInMarkerWidth}` },
+      lineStyle: {
+        stroke: strokeColor,
+        strokeWidth: `${newAirOutMpaMarkerWidth}`,
+      },
 
       // 처음 생성 시 무조건 true
       checked: true,
     };
-    setAirInMarkers([...AirInMarkers, newAirInMarker]);
+    setAirOutMpaMarkers([...AirOutMpaMarkers, newAirOutMpaMarker]);
   };
 
   const handleNewMarkerValueChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setNewAirInMarkerValue(Number(event.target.value));
+    setNewAirOutMpaMarkerValue(Number(event.target.value));
   };
 
   const handleNewMarkerWidthChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setNewAirInMarkerWidth(Number(event.target.value));
+    setNewAirOutMpaMarkerWidth(Number(event.target.value));
   };
 
   const handleNewMarkerLegendChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setNewAirInMarkerLegend(event.target.value);
+    setNewAirOutMpaMarkerLegend(event.target.value);
   };
 
   const deleteHandler = (index: number) => {
-    setAirInMarkers((prevMarkers) => {
+    setAirOutMpaMarkers((prevMarkers) => {
       const newMarkers = [...prevMarkers];
       newMarkers.splice(index, 1);
       return newMarkers;
@@ -88,13 +99,16 @@ const AirInChartMarkers = () => {
   };
 
   const handleMarkerToggle = (index: number) => {
-    setAirInMarkers((prevMarkers) => {
+    setAirOutMpaMarkers((prevMarkers) => {
       const newMarkers = [...prevMarkers];
       newMarkers[index].checked = !newMarkers[index].checked;
       return newMarkers;
     });
 
-    localStorage.setItem("AirInChartMarkers", JSON.stringify(AirInMarkers));
+    localStorage.setItem(
+      "AirOutMpaChartMarkers",
+      JSON.stringify(AirOutMpaMarkers)
+    );
   };
 
   const handleColorChange = (color: string) => {
@@ -105,22 +119,22 @@ const AirInChartMarkers = () => {
   return (
     <div style={{ display: "flex" }}>
       <div style={{ marginRight: "100px" }}>
-        <h1>AirIn Marker</h1>
+        <h1>AirOutMpa Marker</h1>
         <div>
-          <label htmlFor="newAirInMarkerValue">Value:</label>
+          <label htmlFor="newAirOutMpaMarkerValue">Value:</label>
           <input
-            id="newAirInMarkerValue"
+            id="newAirOutMpaMarkerValue"
             type="number"
-            value={newAirInMarkerValue}
+            value={newAirOutMpaMarkerValue}
             onChange={handleNewMarkerValueChange}
           />
         </div>
         <div>
-          <label htmlFor="newAirInMarkerLegend">Legend:</label>
+          <label htmlFor="newAirOutMpaMarkerLegend">Legend:</label>
           <input
-            id="newAirInMarkerLegend"
+            id="newAirOutMpaMarkerLegend"
             type="text"
-            value={newAirInMarkerLegend}
+            value={newAirOutMpaMarkerLegend}
             onChange={handleNewMarkerLegendChange}
             placeholder="비어있을 시 Value값이 됩니다."
           />
@@ -146,41 +160,41 @@ const AirInChartMarkers = () => {
           </label>
         </div>
         <div>
-          <label htmlFor="newAirInMarkerWidth">두께: </label>
+          <label htmlFor="newAirOutMpaMarkerWidth">두께: </label>
           <input
-            id="newAirInMarkerWidth"
+            id="newAirOutMpaMarkerWidth"
             type="number"
-            value={newAirInMarkerWidth}
+            value={newAirOutMpaMarkerWidth}
             onChange={handleNewMarkerWidthChange}
             min={0}
             max={10}
             // defaultValue={2}
-            // value={newAirInMarkerStrokeWidth}
-            // onChange={handleNewAirInMarkerStrokeWidth}
+            // value={newAirOutMpaMarkerStrokeWidth}
+            // onChange={handleNewAirOutMpaMarkerStrokeWidth}
           />
         </div>
         <div>
           <ColorPicker onColorChange={handleColorChange} />
         </div>
 
-        <button onClick={handleAirInMarker}>Add AirInMarker</button>
+        <button onClick={handleAirOutMpaMarker}>Add AirOutMpaMarker</button>
       </div>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {AirInMarkers.map((AirInMarker, index) => (
+        {AirOutMpaMarkers.map((AirOutMpaMarker, index) => (
           <div key={index} style={{ width: "10vw" }}>
             <Switch
-              checked={AirInMarker.checked}
+              checked={AirOutMpaMarker.checked}
               onChange={(event) => handleMarkerToggle(index)}
             />
-            <p>legend: {AirInMarker.legend}</p>
-            <p>value: {AirInMarker.value}</p>
+            <p>legend: {AirOutMpaMarker.legend}</p>
+            <p>value: {AirOutMpaMarker.value}</p>
             <div
               style={{
                 display: "inline-block",
                 width: "100px",
-                height: `${AirInMarker.lineStyle.strokeWidth}px`,
+                height: `${AirOutMpaMarker.lineStyle.strokeWidth}px`,
                 marginRight: "5px",
-                backgroundColor: AirInMarker.lineStyle.stroke,
+                backgroundColor: AirOutMpaMarker.lineStyle.stroke,
                 border: "1px solid #ddd",
               }}
             />
@@ -192,4 +206,4 @@ const AirInChartMarkers = () => {
   );
 };
 
-export default AirInChartMarkers;
+export default AirOutMpaChartMarkers;

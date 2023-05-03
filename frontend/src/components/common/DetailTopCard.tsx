@@ -40,9 +40,9 @@ const DetailTopCard = ({ location }: Props) => {
   } else if (location.includes("air-in")) {
     title = `AirIn ${airInNumber}`;
   } else if (location.includes("air-out-kpa")) {
-    title = `AO(kPa) ${airOut1Number}`;
+    title = `AirOut(kPa) ${airOut1Number}`;
   } else if (location.includes("air-out-mpa")) {
-    title = `AO(MPa) ${airOut2Number}`;
+    title = `AirOut(MPa) ${airOut2Number}`;
   } else if (location.includes("water")) {
     title = `Water ${waterNumber}`;
   } else if (location.includes("abrasion")) {
