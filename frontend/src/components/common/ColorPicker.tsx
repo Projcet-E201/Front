@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SketchPicker } from "react-color";
+import { SketchPicker } from "react-color";  
 
 interface Props {
   onColorChange: (color: string) => void;

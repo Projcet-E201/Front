@@ -34,11 +34,10 @@
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap": "^2.7.4",
-<<<<<<< HEAD
+
     "react-datepicker": "^4.11.0",
-=======
+
     "react-color": "^2.19.3",
->>>>>>> ae94f0529330e88edc8a5f35b1c210440e67a8ca
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-redux": "^8.0.5",
