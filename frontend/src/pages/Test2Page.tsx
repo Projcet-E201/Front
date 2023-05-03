@@ -7,7 +7,7 @@ const Test2Page: React.FC = () => {
   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
   const [message, setMessage] = useState<any>();
 
-  const connectUrl = "http://api:8091/ws";
+  const connectUrl = "https://api:8091/ws";
   const connectWebSocket = () => {
     console.log(connectUrl);
     const socket = new SockJS(connectUrl);
