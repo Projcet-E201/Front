@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SketchPicker } from "react-color";
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 
 const ColorPicker: React.FC<Props> = ({ onColorChange }) => {
   // const ColorPicker: React.FC = () => {
-  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [showColorPicker, setShowColorPicker] = useState(true);
   const [color, setColor] = useState("#FF3B30");
 
   const handleColorChange = (newColor: any) => {
@@ -19,14 +19,29 @@ const ColorPicker: React.FC<Props> = ({ onColorChange }) => {
 
   return (
     <div>
-      <button onClick={() => setShowColorPicker(!showColorPicker)}>
+      {/* <button onClick={() => setShowColorPicker(!showColorPicker)}>
         {showColorPicker ? "Close color picker" : "Pick a color"}
-      </button>
+      </button> */}
+      {/* <div
+        onClick={() => setShowColorPicker(!showColorPicker)}
+        style={{
+          display: "inline-block",
+          width: "100px",
+          height: "20px",
+          marginRight: "5px",
+          backgroundColor: color,
+          border: "1px solid #ddd",
+        }}
+      ></div> */}
       {showColorPicker && (
         <SketchPicker
           color={color}
           onChange={handleColorChange}
-          presetColors={["#FF0000", "#FFFF00", "#0000FF"]}
+          presetColors={[
+            { color: "#FF3B30", title: "경고" },
+            { color: "#FFC041", title: "주의" },
+            { color: "#4CD964", title: "안전" },
+          ]}
         />
       )}
     </div>

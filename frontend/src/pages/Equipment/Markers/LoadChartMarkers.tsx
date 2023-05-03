@@ -15,26 +15,26 @@ interface Marker {
   checked: boolean;
 }
 
-const AirInChartMarkers = () => {
-  const [AirInMarkers, setAirInMarkers] = useState<Marker[]>([]);
-  const [newAirInMarkerValue, setNewAirInMarkerValue] = useState<number>(0);
-  const [newAirInMarkerWidth, setNewAirInMarkerWidth] = useState<number>(2);
-  const [newAirInMarkerLegend, setNewAirInMarkerLegend] = useState<string>("");
+const LoadChartMarkers = () => {
+  const [LoadMarkers, setLoadMarkers] = useState<Marker[]>([]);
+  const [newLoadMarkerValue, setNewLoadMarkerValue] = useState<number>(0);
+  const [newLoadMarkerWidth, setNewLoadMarkerWidth] = useState<number>(2);
+  const [newLoadMarkerLegend, setNewLoadMarkerLegend] = useState<string>("");
 
   const [color, setColor] = useState<string>("#FF3B30");
 
   // localStorage에서 markers 가져오기
   useEffect(() => {
-    const storedAirInMarkers = localStorage.getItem("AirInChartMarkers");
-    if (storedAirInMarkers) {
-      setAirInMarkers(JSON.parse(storedAirInMarkers));
+    const storedLoadMarkers = localStorage.getItem("LoadChartMarkers");
+    if (storedLoadMarkers) {
+      setLoadMarkers(JSON.parse(storedLoadMarkers));
     }
   }, []);
 
   // localStorage에 markers 저장하기
   useEffect(() => {
-    localStorage.setItem("AirInChartMarkers", JSON.stringify(AirInMarkers));
-  }, [AirInMarkers]);
+    localStorage.setItem("LoadChartMarkers", JSON.stringify(LoadMarkers));
+  }, [LoadMarkers]);
 
   const [markerType, setMarkerType] = useState<string>("warning");
 
@@ -42,45 +42,48 @@ const AirInChartMarkers = () => {
     setMarkerType(event.target.value);
   };
 
-  const handleAirInMarker = () => {
+  const handleLoadMarker = () => {
     // const strokeColor = markerType === "warning" ? "#FF3B30" : "#FFC041";
     const strokeColor = color;
     const legend =
-      newAirInMarkerLegend.trim() !== ""
-        ? newAirInMarkerLegend
-        : `Value: ${newAirInMarkerValue}`;
-    const newAirInMarker: Marker = {
+      newLoadMarkerLegend.trim() !== ""
+        ? newLoadMarkerLegend
+        : `Value: ${newLoadMarkerValue}`;
+    const newLoadMarker: Marker = {
       axis: "y",
-      value: newAirInMarkerValue,
+      value: newLoadMarkerValue,
       legend,
-      lineStyle: { stroke: strokeColor, strokeWidth: `${newAirInMarkerWidth}` },
+      lineStyle: {
+        stroke: strokeColor,
+        strokeWidth: `${newLoadMarkerWidth}`,
+      },
 
       // 처음 생성 시 무조건 true
       checked: true,
     };
-    setAirInMarkers([...AirInMarkers, newAirInMarker]);
+    setLoadMarkers([...LoadMarkers, newLoadMarker]);
   };
 
   const handleNewMarkerValueChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setNewAirInMarkerValue(Number(event.target.value));
+    setNewLoadMarkerValue(Number(event.target.value));
   };
 
   const handleNewMarkerWidthChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setNewAirInMarkerWidth(Number(event.target.value));
+    setNewLoadMarkerWidth(Number(event.target.value));
   };
 
   const handleNewMarkerLegendChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setNewAirInMarkerLegend(event.target.value);
+    setNewLoadMarkerLegend(event.target.value);
   };
 
   const deleteHandler = (index: number) => {
-    setAirInMarkers((prevMarkers) => {
+    setLoadMarkers((prevMarkers) => {
       const newMarkers = [...prevMarkers];
       newMarkers.splice(index, 1);
       return newMarkers;
@@ -88,13 +91,13 @@ const AirInChartMarkers = () => {
   };
 
   const handleMarkerToggle = (index: number) => {
-    setAirInMarkers((prevMarkers) => {
+    setLoadMarkers((prevMarkers) => {
       const newMarkers = [...prevMarkers];
       newMarkers[index].checked = !newMarkers[index].checked;
       return newMarkers;
     });
 
-    localStorage.setItem("AirInChartMarkers", JSON.stringify(AirInMarkers));
+    localStorage.setItem("LoadChartMarkers", JSON.stringify(LoadMarkers));
   };
 
   const handleColorChange = (color: string) => {
@@ -105,22 +108,22 @@ const AirInChartMarkers = () => {
   return (
     <div style={{ display: "flex" }}>
       <div style={{ marginRight: "100px" }}>
-        <h1>AirIn Marker</h1>
+        <h1>Load Marker</h1>
         <div>
-          <label htmlFor="newAirInMarkerValue">Value:</label>
+          <label htmlFor="newLoadMarkerValue">Value:</label>
           <input
-            id="newAirInMarkerValue"
+            id="newLoadMarkerValue"
             type="number"
-            value={newAirInMarkerValue}
+            value={newLoadMarkerValue}
             onChange={handleNewMarkerValueChange}
           />
         </div>
         <div>
-          <label htmlFor="newAirInMarkerLegend">Legend:</label>
+          <label htmlFor="newLoadMarkerLegend">Legend:</label>
           <input
-            id="newAirInMarkerLegend"
+            id="newLoadMarkerLegend"
             type="text"
-            value={newAirInMarkerLegend}
+            value={newLoadMarkerLegend}
             onChange={handleNewMarkerLegendChange}
             placeholder="비어있을 시 Value값이 됩니다."
           />
@@ -146,41 +149,41 @@ const AirInChartMarkers = () => {
           </label>
         </div>
         <div>
-          <label htmlFor="newAirInMarkerWidth">두께: </label>
+          <label htmlFor="newLoadMarkerWidth">두께: </label>
           <input
-            id="newAirInMarkerWidth"
+            id="newLoadMarkerWidth"
             type="number"
-            value={newAirInMarkerWidth}
+            value={newLoadMarkerWidth}
             onChange={handleNewMarkerWidthChange}
             min={0}
             max={10}
             // defaultValue={2}
-            // value={newAirInMarkerStrokeWidth}
-            // onChange={handleNewAirInMarkerStrokeWidth}
+            // value={newLoadMarkerStrokeWidth}
+            // onChange={handleNewLoadMarkerStrokeWidth}
           />
         </div>
         <div>
           <ColorPicker onColorChange={handleColorChange} />
         </div>
 
-        <button onClick={handleAirInMarker}>Add AirInMarker</button>
+        <button onClick={handleLoadMarker}>Add LoadMarker</button>
       </div>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {AirInMarkers.map((AirInMarker, index) => (
+        {LoadMarkers.map((LoadMarker, index) => (
           <div key={index} style={{ width: "10vw" }}>
             <Switch
-              checked={AirInMarker.checked}
+              checked={LoadMarker.checked}
               onChange={(event) => handleMarkerToggle(index)}
             />
-            <p>legend: {AirInMarker.legend}</p>
-            <p>value: {AirInMarker.value}</p>
+            <p>legend: {LoadMarker.legend}</p>
+            <p>value: {LoadMarker.value}</p>
             <div
               style={{
                 display: "inline-block",
                 width: "100px",
-                height: `${AirInMarker.lineStyle.strokeWidth}px`,
+                height: `${LoadMarker.lineStyle.strokeWidth}px`,
                 marginRight: "5px",
-                backgroundColor: AirInMarker.lineStyle.stroke,
+                backgroundColor: LoadMarker.lineStyle.stroke,
                 border: "1px solid #ddd",
               }}
             />
@@ -192,4 +195,4 @@ const AirInChartMarkers = () => {
   );
 };
 
-export default AirInChartMarkers;
+export default LoadChartMarkers;

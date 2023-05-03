@@ -15,26 +15,26 @@ interface Marker {
   checked: boolean;
 }
 
-const AirInChartMarkers = () => {
-  const [AirInMarkers, setAirInMarkers] = useState<Marker[]>([]);
-  const [newAirInMarkerValue, setNewAirInMarkerValue] = useState<number>(0);
-  const [newAirInMarkerWidth, setNewAirInMarkerWidth] = useState<number>(2);
-  const [newAirInMarkerLegend, setNewAirInMarkerLegend] = useState<string>("");
+const WaterChartMarkers = () => {
+  const [WaterMarkers, setWaterMarkers] = useState<Marker[]>([]);
+  const [newWaterMarkerValue, setNewWaterMarkerValue] = useState<number>(0);
+  const [newWaterMarkerWidth, setNewWaterMarkerWidth] = useState<number>(2);
+  const [newWaterMarkerLegend, setNewWaterMarkerLegend] = useState<string>("");
 
   const [color, setColor] = useState<string>("#FF3B30");
 
   // localStorage에서 markers 가져오기
   useEffect(() => {
-    const storedAirInMarkers = localStorage.getItem("AirInChartMarkers");
-    if (storedAirInMarkers) {
-      setAirInMarkers(JSON.parse(storedAirInMarkers));
+    const storedWaterMarkers = localStorage.getItem("WaterChartMarkers");
+    if (storedWaterMarkers) {
+      setWaterMarkers(JSON.parse(storedWaterMarkers));
     }
   }, []);
 
   // localStorage에 markers 저장하기
   useEffect(() => {
-    localStorage.setItem("AirInChartMarkers", JSON.stringify(AirInMarkers));
-  }, [AirInMarkers]);
+    localStorage.setItem("WaterChartMarkers", JSON.stringify(WaterMarkers));
+  }, [WaterMarkers]);
 
   const [markerType, setMarkerType] = useState<string>("warning");
 
@@ -42,45 +42,48 @@ const AirInChartMarkers = () => {
     setMarkerType(event.target.value);
   };
 
-  const handleAirInMarker = () => {
+  const handleWaterMarker = () => {
     // const strokeColor = markerType === "warning" ? "#FF3B30" : "#FFC041";
     const strokeColor = color;
     const legend =
-      newAirInMarkerLegend.trim() !== ""
-        ? newAirInMarkerLegend
-        : `Value: ${newAirInMarkerValue}`;
-    const newAirInMarker: Marker = {
+      newWaterMarkerLegend.trim() !== ""
+        ? newWaterMarkerLegend
+        : `Value: ${newWaterMarkerValue}`;
+    const newWaterMarker: Marker = {
       axis: "y",
-      value: newAirInMarkerValue,
+      value: newWaterMarkerValue,
       legend,
-      lineStyle: { stroke: strokeColor, strokeWidth: `${newAirInMarkerWidth}` },
+      lineStyle: {
+        stroke: strokeColor,
+        strokeWidth: `${newWaterMarkerWidth}`,
+      },
 
       // 처음 생성 시 무조건 true
       checked: true,
     };
-    setAirInMarkers([...AirInMarkers, newAirInMarker]);
+    setWaterMarkers([...WaterMarkers, newWaterMarker]);
   };
 
   const handleNewMarkerValueChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setNewAirInMarkerValue(Number(event.target.value));
+    setNewWaterMarkerValue(Number(event.target.value));
   };
 
   const handleNewMarkerWidthChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setNewAirInMarkerWidth(Number(event.target.value));
+    setNewWaterMarkerWidth(Number(event.target.value));
   };
 
   const handleNewMarkerLegendChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setNewAirInMarkerLegend(event.target.value);
+    setNewWaterMarkerLegend(event.target.value);
   };
 
   const deleteHandler = (index: number) => {
-    setAirInMarkers((prevMarkers) => {
+    setWaterMarkers((prevMarkers) => {
       const newMarkers = [...prevMarkers];
       newMarkers.splice(index, 1);
       return newMarkers;
@@ -88,13 +91,13 @@ const AirInChartMarkers = () => {
   };
 
   const handleMarkerToggle = (index: number) => {
-    setAirInMarkers((prevMarkers) => {
+    setWaterMarkers((prevMarkers) => {
       const newMarkers = [...prevMarkers];
       newMarkers[index].checked = !newMarkers[index].checked;
       return newMarkers;
     });
 
-    localStorage.setItem("AirInChartMarkers", JSON.stringify(AirInMarkers));
+    localStorage.setItem("WaterChartMarkers", JSON.stringify(WaterMarkers));
   };
 
   const handleColorChange = (color: string) => {
@@ -105,22 +108,22 @@ const AirInChartMarkers = () => {
   return (
     <div style={{ display: "flex" }}>
       <div style={{ marginRight: "100px" }}>
-        <h1>AirIn Marker</h1>
+        <h1>Water Marker</h1>
         <div>
-          <label htmlFor="newAirInMarkerValue">Value:</label>
+          <label htmlFor="newWaterMarkerValue">Value:</label>
           <input
-            id="newAirInMarkerValue"
+            id="newWaterMarkerValue"
             type="number"
-            value={newAirInMarkerValue}
+            value={newWaterMarkerValue}
             onChange={handleNewMarkerValueChange}
           />
         </div>
         <div>
-          <label htmlFor="newAirInMarkerLegend">Legend:</label>
+          <label htmlFor="newWaterMarkerLegend">Legend:</label>
           <input
-            id="newAirInMarkerLegend"
+            id="newWaterMarkerLegend"
             type="text"
-            value={newAirInMarkerLegend}
+            value={newWaterMarkerLegend}
             onChange={handleNewMarkerLegendChange}
             placeholder="비어있을 시 Value값이 됩니다."
           />
@@ -146,41 +149,41 @@ const AirInChartMarkers = () => {
           </label>
         </div>
         <div>
-          <label htmlFor="newAirInMarkerWidth">두께: </label>
+          <label htmlFor="newWaterMarkerWidth">두께: </label>
           <input
-            id="newAirInMarkerWidth"
+            id="newWaterMarkerWidth"
             type="number"
-            value={newAirInMarkerWidth}
+            value={newWaterMarkerWidth}
             onChange={handleNewMarkerWidthChange}
             min={0}
             max={10}
             // defaultValue={2}
-            // value={newAirInMarkerStrokeWidth}
-            // onChange={handleNewAirInMarkerStrokeWidth}
+            // value={newWaterMarkerStrokeWidth}
+            // onChange={handleNewWaterMarkerStrokeWidth}
           />
         </div>
         <div>
           <ColorPicker onColorChange={handleColorChange} />
         </div>
 
-        <button onClick={handleAirInMarker}>Add AirInMarker</button>
+        <button onClick={handleWaterMarker}>Add WaterMarker</button>
       </div>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {AirInMarkers.map((AirInMarker, index) => (
+        {WaterMarkers.map((WaterMarker, index) => (
           <div key={index} style={{ width: "10vw" }}>
             <Switch
-              checked={AirInMarker.checked}
+              checked={WaterMarker.checked}
               onChange={(event) => handleMarkerToggle(index)}
             />
-            <p>legend: {AirInMarker.legend}</p>
-            <p>value: {AirInMarker.value}</p>
+            <p>legend: {WaterMarker.legend}</p>
+            <p>value: {WaterMarker.value}</p>
             <div
               style={{
                 display: "inline-block",
                 width: "100px",
-                height: `${AirInMarker.lineStyle.strokeWidth}px`,
+                height: `${WaterMarker.lineStyle.strokeWidth}px`,
                 marginRight: "5px",
-                backgroundColor: AirInMarker.lineStyle.stroke,
+                backgroundColor: WaterMarker.lineStyle.stroke,
                 border: "1px solid #ddd",
               }}
             />
@@ -192,4 +195,4 @@ const AirInChartMarkers = () => {
   );
 };
 
-export default AirInChartMarkers;
+export default WaterChartMarkers;

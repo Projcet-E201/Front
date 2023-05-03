@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 import { ResponsiveLine } from "@nivo/line";
@@ -16,6 +16,13 @@ const formatTime = (secondsAgo: number) => {
 
 const WaterChart = ({ datasets, legend }: Props) => {
   const navigate = useNavigate();
+  const [markers, setMarkers] = useState([]);
+  useEffect(() => {
+    const markersFromLocalStorage = JSON.parse(
+      localStorage.getItem("WaterChartMarkers") || "[]"
+    );
+    setMarkers(markersFromLocalStorage.filter((marker: any) => marker.checked));
+  }, []);
 
   const legends: any = [
     {
@@ -76,6 +83,7 @@ const WaterChart = ({ datasets, legend }: Props) => {
       useMesh={true}
       animate={false}
       legends={legend ? legends : []}
+      markers={markers}
     />
   );
 };
