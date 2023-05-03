@@ -134,7 +134,7 @@ const MotorChartMarkers = () => {
         </div>
 
         <div>
-          <label htmlFor="newMotorMarkerWidth">두께: </label>
+          {/* <label htmlFor="newMotorMarkerWidth">두께: </label> */}
           <Select
             value={newMotorMarkerWidth}
             onChange={(e) => setNewMotorMarkerWidth(Number(e.target.value))}

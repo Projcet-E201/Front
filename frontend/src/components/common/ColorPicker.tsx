@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { SketchPicker } from "react-color";  
+import {
+  SketchPicker,
+  TwitterPicker,
+  CirclePicker,
+  SwatchesPicker,
+  SliderPicker,
+} from "react-color";
 
 interface Props {
   onColorChange: (color: string) => void;
@@ -34,15 +40,19 @@ const ColorPicker: React.FC<Props> = ({ onColorChange }) => {
         }}
       ></div> */}
       {showColorPicker && (
-        <SketchPicker
-          color={color}
-          onChange={handleColorChange}
-          presetColors={[
-            { color: "#FF3B30", title: "경고" },
-            { color: "#FFC041", title: "주의" },
-            { color: "#4CD964", title: "안전" },
-          ]}
-        />
+        <div>
+          <SketchPicker
+            color={color}
+            onChange={handleColorChange}
+            presetColors={[
+              { color: "#FF3B30", title: "경고" },
+              { color: "#FFC041", title: "주의" },
+              { color: "#4CD964", title: "안전" },
+            ]}
+          />
+          <br />
+          {/* <TwitterPicker color={color} onChange={handleColorChange} /> */}
+        </div>
       )}
     </div>
   );
