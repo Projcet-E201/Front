@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from "react";
 import Switch from "@mui/material/Switch";
 import ColorPicker from "../../../components/common/ColorPicker";
-import { Select, MenuItem } from "@mui/material";
+import ChangeColorPicker from "../../../components/common/ChangeColorPicker";
+import {
+  Select,
+  MenuItem,
+  Slider,
+  Input,
+  Grid,
+  Box,
+  Typography,
+  TextField,
+  // InputLabel,
+} from "@mui/material";
 
-import { SketchPicker } from "react-color";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
+import InputAdornment from "@mui/material/InputAdornment";
+import TitleIcon from "@mui/icons-material/Title";
 
 interface LineStyle {
   stroke: string;
@@ -20,13 +33,17 @@ interface Marker {
 
 const MotorChartMarkers = () => {
   const [motorMarkers, setMotorMarkers] = useState<Marker[]>([]);
-  const [newMotorMarkerValue, setNewMotorMarkerValue] = useState<number>(0);
+  // const [newMotorMarkerValue, setNewMotorMarkerValue] = useState<number>(0);
+  const [newMotorMarkerValue, setNewMotorMarkerValue] = React.useState<any>(30);
   const [newMotorMarkerWidth, setNewMotorMarkerWidth] = useState<number>(2);
   const [newMotorMarkerLegend, setNewMotorMarkerLegend] = useState<string>("");
 
   const [color, setColor] = useState<string>("#FF3B30");
 
-  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [isChangeColorPickerOpen, setIsChangeColorPickerOpen] =
+    useState<number>(0);
+  const [isPickerOpen, setIsPickerOpen] = useState<boolean>(false);
+  const [editColor, setEditColor] = useState("");
 
   // localStorage에서 markers 가져오기
   useEffect(() => {
@@ -75,11 +92,11 @@ const MotorChartMarkers = () => {
     setMotorMarkers([...motorMarkers, newMotorMarker]);
   };
 
-  const handleNewMarkerValueChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setNewMotorMarkerValue(Number(event.target.value));
-  };
+  // const handleNewMarkerValueChange = (
+  //   event: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   setNewMotorMarkerValue(Number(event.target.value));
+  // };
 
   const handleNewMarkerLegendChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -107,37 +124,116 @@ const MotorChartMarkers = () => {
 
   const handleColorChange = (color: string) => {
     setColor(color);
+    console.log(color);
   };
 
+  const handleEditColor = (color: string) => {
+    setEditColor(color);
+    console.log(editColor, "@@@@@@@@@@@@@@@@");
+    setMotorMarkers((prevMarkers) => {
+      const newMarkers = [...prevMarkers];
+      newMarkers[isChangeColorPickerOpen].lineStyle.stroke = color;
+      return newMarkers;
+    });
+  };
+
+  // const changeColorHandler = (index: number) => {
+  //   setMotorMarkers((prevMarkers) => {
+  //     const newMarkers = [...prevMarkers];
+  //     newMarkers[index].lineStyle.stroke = editColor;
+  //     return newMarkers;
+  //   });
+  // };
+
+  const handleSliderChange = (event: Event, newValue: number | number[]) => {
+    setNewMotorMarkerValue(newValue);
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewMotorMarkerValue(
+      event.target.value === "" ? "" : Number(event.target.value)
+    );
+  };
+
+  const handleBlur = () => {
+    if (newMotorMarkerValue < 0) {
+      setNewMotorMarkerValue(0);
+    } else if (newMotorMarkerValue > 300) {
+      setNewMotorMarkerValue(300);
+    }
+  };
   return (
     <div style={{ display: "flex" }}>
       <div style={{ marginRight: "100px" }}>
         <h1>Motor Marker</h1>
         <div>
-          <label htmlFor="newMotorMarkerValue">Value:</label>
-          <input
-            id="newMotorMarkerValue"
-            type="number"
-            value={newMotorMarkerValue}
-            onChange={handleNewMarkerValueChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="newMotorMarkerLegend">Legend:</label>
-          <input
-            id="newMotorMarkerLegend"
-            type="text"
-            value={newMotorMarkerLegend}
-            onChange={handleNewMarkerLegendChange}
-            placeholder="비어있을 시 Value값이 됩니다."
-          />
+          <Box sx={{ width: 400 }}>
+            <Typography>Value</Typography>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item>
+                <BorderColorIcon />
+              </Grid>
+              <Grid item xs>
+                <Slider
+                  valueLabelDisplay="auto"
+                  value={
+                    typeof newMotorMarkerValue === "number"
+                      ? newMotorMarkerValue
+                      : 0
+                  }
+                  onChange={handleSliderChange}
+                  aria-labelledby="input-slider"
+                  min={0}
+                  max={300}
+                />
+              </Grid>
+              <Grid item>
+                <Input
+                  value={newMotorMarkerValue}
+                  size="small"
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  inputProps={{
+                    step: 10,
+                    min: 0,
+                    max: 300,
+                    type: "number",
+                    "aria-labelledby": "input-slider",
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Box>
         </div>
 
         <div>
-          {/* <label htmlFor="newMotorMarkerWidth">두께: </label> */}
+          <TextField
+            id="input-with-icon-textfield"
+            label="Marker Name"
+            placeholder={`Value: ${newMotorMarkerValue}`}
+            onChange={handleNewMarkerLegendChange}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <TitleIcon />
+                </InputAdornment>
+              ),
+            }}
+            variant="standard"
+          />
+        </div>
+        <div>
+          <ColorPicker onColorChange={handleColorChange} />
+        </div>
+        <div>
           <Select
             value={newMotorMarkerWidth}
             onChange={(e) => setNewMotorMarkerWidth(Number(e.target.value))}
+            sx={
+              {
+                // backgroundColor: "yellow",
+              }
+            }
           >
             {Array.from({ length: 10 }, (_, i) => i + 1).map((width) => (
               <MenuItem key={width} value={width}>
@@ -152,15 +248,10 @@ const MotorChartMarkers = () => {
                     backgroundColor: color,
                   }}
                 ></div>
+                {/* <p>{width}px</p> */}
               </MenuItem>
             ))}
           </Select>
-        </div>
-
-        <div>
-          <div>
-            <ColorPicker onColorChange={handleColorChange} />
-          </div>
         </div>
 
         <button onClick={handleMotorMarker}>Add MotorMarker</button>
@@ -200,15 +291,13 @@ const MotorChartMarkers = () => {
                 backgroundColor: motorMarker.lineStyle.stroke,
                 border: "1px solid #ddd",
               }}
-              onClick={() => setShowColorPicker(!showColorPicker)}
+              onClick={() => {
+                setIsChangeColorPickerOpen(index);
+                setIsPickerOpen((prev) => !prev);
+              }}
             ></div>
-            {showColorPicker && (
-              <div style={{ position: "absolute", zIndex: 2 }}>
-                <SketchPicker
-                  color={color}
-                  onChange={(c) => handleColorChange(c.hex)}
-                />
-              </div>
+            {isPickerOpen && isChangeColorPickerOpen === index && (
+              <ChangeColorPicker onColorChange={handleEditColor} />
             )}
             <div>
               <button onClick={() => deleteHandler(index)}>삭제</button>
