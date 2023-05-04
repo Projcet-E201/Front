@@ -15,31 +15,46 @@ import CardContent from "@mui/material/CardContent";
 
 import styles from "./EquipmentSettingPage.module.css";
 const EquipmentSettingPage = () => {
+  const equipmentList = [
+    "Motor Toque Marker",
+    "Air In Marker",
+    "Vacuum Marker",
+    "Air Out(kPa) Marker",
+    "Air Out(MPa) Marker",
+    "Water Marker",
+    "Rpm Marker",
+    "Load Marker",
+    "Abrasion Marker",
+  ];
+
+  const componentList = [
+    <MotorChartMarkers />,
+    <AirInChartMarkers />,
+    <VacuumChartMarkers />,
+    <AirOutKpaChartMarkers />,
+    <AirOutMpaChartMarkers />,
+    <WaterChartMarkers />,
+    <RpmChartMarkers />,
+    <LoadChartMarkers />,
+    <AbrasionChartMarkers />,
+  ];
   return (
     <MainLayout>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <Card className={styles.card} style={{ width: "100%" }}>
-          <CardContent>
-            <MotorChartMarkers />
-          </CardContent>
-        </Card>
-      </div>
-      <hr />
-      <AirInChartMarkers />
-      <hr />
-      <VacuumChartMarkers />
-      <hr />
-      <AirOutKpaChartMarkers />
-      <hr />
-      <AirOutMpaChartMarkers />
-      <hr />
-      <WaterChartMarkers />
-      <hr />
-      <RpmChartMarkers />
-      <hr />
-      <LoadChartMarkers />
-      <hr />
-      <AbrasionChartMarkers />
+      {componentList.map((component: any, index: number) => (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Card className={styles.card} style={{ width: "100%" }}>
+            <CardContent>
+              <h1 style={{ margin: "0" }}>{equipmentList[index]}</h1>
+              <div style={{ display: "flex" }}>
+                <div style={{ flex: "3" }}>{component}</div>
+                <div style={{ flex: "2" }}>
+                  <h1>hello</h1>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      ))}
     </MainLayout>
   );
 };

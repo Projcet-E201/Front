@@ -11,10 +11,13 @@ import {
   Box,
   Typography,
   TextField,
+  Button,
+  IconButton,
   // InputLabel,
 } from "@mui/material";
 
 import BorderColorIcon from "@mui/icons-material/BorderColor";
+import DeleteIcon from "@mui/icons-material/Delete";
 import InputAdornment from "@mui/material/InputAdornment";
 import TitleIcon from "@mui/icons-material/Title";
 
@@ -172,11 +175,32 @@ const MotorChartMarkers = () => {
   console.log(isPickerOpen);
   return (
     <div style={{ display: "flex" }}>
-      <div style={{ marginRight: "100px" }}>
-        <h1>Motor Marker</h1>
-        <div>
-          <Box sx={{ width: 400 }}>
-            <Typography>Value</Typography>
+      <div
+        style={{
+          marginRight: "50px",
+          flex: "1",
+        }}
+      >
+        <div style={{ marginTop: "30px" }}>
+          <TextField
+            sx={{ width: "100%" }}
+            id="input-with-icon-textfield"
+            label="Marker Name"
+            placeholder={`Value: ${newMotorMarkerValue}`}
+            onChange={handleNewMarkerLegendChange}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  {/* <TitleIcon /> */}
+                </InputAdornment>
+              ),
+            }}
+            variant="standard"
+          />
+        </div>
+        <div style={{ marginTop: " 30px" }}>
+          <Box sx={{ width: "100%" }}>
+            <Typography>Setting Value</Typography>
             <Grid container spacing={2} alignItems="center">
               <Grid item>
                 <BorderColorIcon />
@@ -195,7 +219,7 @@ const MotorChartMarkers = () => {
                   max={300}
                 />
               </Grid>
-              <Grid item>
+              <Grid item xs={2.5}>
                 <Input
                   value={newMotorMarkerValue}
                   size="small"
@@ -213,37 +237,27 @@ const MotorChartMarkers = () => {
             </Grid>
           </Box>
         </div>
-
-        <div>
-          <TextField
-            id="input-with-icon-textfield"
-            label="Marker Name"
-            placeholder={`Value: ${newMotorMarkerValue}`}
-            onChange={handleNewMarkerLegendChange}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <TitleIcon />
-                </InputAdornment>
-              ),
-            }}
-            variant="standard"
-          />
-        </div>
-        <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "30px",
+          }}
+        >
           <ColorPicker onColorChange={handleColorChange} />
         </div>
-        <div>
+        <div style={{ marginTop: "10px" }}>
           <Select
             value={newMotorMarkerWidth}
             onChange={(e) => setNewMotorMarkerWidth(Number(e.target.value))}
+            sx={{ width: "100%" }}
           >
             {Array.from({ length: 10 }, (_, i) => i + 1).map((width) => (
               <MenuItem key={width} value={width}>
                 <div
                   style={{
                     display: "inline-block",
-                    width: "100px",
+                    width: "100%",
                     height: `${width}px`,
                     marginRight: "5px",
                     border: "1px solid #ddd",
@@ -257,52 +271,54 @@ const MotorChartMarkers = () => {
           </Select>
         </div>
 
-        <button onClick={handleMotorMarker}>Add MotorMarker</button>
+        {/* <button onClick={handleMotorMarker}>Add MotorMarker</button> */}
+        <Button
+          onClick={handleMotorMarker}
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2, height: "50px" }}
+        >
+          생성하기
+        </Button>
       </div>
       <div
         style={{
           display: "flex",
+          position: "relative",
           flexWrap: "wrap",
+          height: "380px",
+          // width: ,
+          overflowY: "scroll",
+          flex: "2",
           // justifyContent: "space-between",
+          overflowX: "hidden",
         }}
       >
         {motorMarkers.map((motorMarker, index) => (
-          <div key={index} style={{ width: "10vw" }}>
+          <div
+            key={index}
+            style={{ width: "30%", marginBottom: "30px", marginRight: "18px" }}
+          >
             <div
               style={{
                 display: "flex",
-                alignItems: "end",
-                justifyContent: "space-around",
+                alignItems: "center",
+                justifyContent: "space-between",
               }}
             >
               <Switch
                 checked={motorMarker.checked}
                 onChange={() => handleMarkerToggle(index)}
               />
-              <div>
-                <button onClick={() => deleteHandler(index)}>삭제</button>
-              </div>
+              <IconButton onClick={() => deleteHandler(index)}>
+                <DeleteIcon />
+              </IconButton>
             </div>
-            <TextField
-              id="input-with-icon-textfield"
-              label="Value"
-              type="number"
-              value={motorMarker.value}
-              onChange={(event) =>
-                handleMarkerValueChange(index, Number(event.target.value))
-              }
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <TitleIcon />
-                  </InputAdornment>
-                ),
-              }}
-              variant="standard"
-            />
 
             <div>
               <TextField
+                sx={{ width: "100%" }}
                 id="input-with-icon-textfield"
                 label="Marker Name"
                 value={motorMarker.legend}
@@ -319,6 +335,24 @@ const MotorChartMarkers = () => {
                 variant="standard"
               />
             </div>
+            <TextField
+              sx={{ width: "100%" }}
+              id="input-with-icon-textfield"
+              label="Value"
+              type="number"
+              value={motorMarker.value}
+              onChange={(event) =>
+                handleMarkerValueChange(index, Number(event.target.value))
+              }
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    {/* <TitleIcon /> */}
+                  </InputAdornment>
+                ),
+              }}
+              variant="standard"
+            />
 
             <div
               id="colorBar"
@@ -339,9 +373,18 @@ const MotorChartMarkers = () => {
               }}
             ></div>
             {isPickerOpen && isChangeColorPickerOpen === index && (
-              <div>
+              <div
+                style={
+                  (index + 1) % 3 === 0
+                    ? { position: "absolute", zIndex: "2", right: "0px" }
+                    : { position: "absolute", zIndex: "2" }
+                }
+              >
                 <ChangeColorPicker onColorChange={handleEditColor} />
                 <Select
+                  sx={{
+                    backgroundColor: "white",
+                  }}
                   value={motorMarker.lineStyle.strokeWidth}
                   onChange={(e) =>
                     handleMarkerWidthChange(index, e.target.value)
