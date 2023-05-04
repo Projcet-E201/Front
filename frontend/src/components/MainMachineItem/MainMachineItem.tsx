@@ -5,6 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import { useRecoilState } from "recoil";
 import { indexAtom } from "../../store/atoms";
 import styles from "./MainMachineItem.module.css";
+import { Select } from "antd";
 
 export type MachinePropsType = {
   name: string;
@@ -21,8 +22,12 @@ export type MachinePropsType = {
     SCORE: number;
   };
 };
+type MainMachineItemProps = {
+  client: MachinePropsType;
+  index: number;
+};
 
-const MainMachineItem = (client: MachinePropsType, index: number) => {
+const MainMachineItem = (props: MainMachineItemProps) => {
   const [selectedIndex, setSelectedIndex] = useRecoilState(indexAtom);
   const indexClick = (value: string) => {
     setSelectedIndex(value);
@@ -42,19 +47,13 @@ const MainMachineItem = (client: MachinePropsType, index: number) => {
   }, [data]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        width: "54%",
-      }}
-    >
-      <Card className={styles.maincard}>
-        <div>
+    <div>
+      <Card>
+        <div style={{}}>
           <h3
-            className={styles.maincardtitle}
+            className={styles.mainmachinecardtitle}
             onClick={() => {
-              navigate(`/machine/${index}`);
+              navigate(`/machine/${props.index}`);
               indexClick("Monitoring");
             }}
             style={
@@ -63,7 +62,7 @@ const MainMachineItem = (client: MachinePropsType, index: number) => {
                 : { backgroundColor: "#5e5e5e" }
             }
           >
-            {client.name}
+            {props.client.name}
           </h3>
         </div>
         <CardContent
@@ -72,25 +71,31 @@ const MainMachineItem = (client: MachinePropsType, index: number) => {
           }}
         >
           <div
-            className={styles.maincardcontent}
-            onClick={() => navigate(`/machine/${index}/vacuum`)}
+            className={styles.mainmachinecardcontent}
+            onClick={() => navigate(`/machine/${props.index}/vacuum`)}
           >
-            <div className={styles.maincardcontentname}>압력</div>
-            <div className={styles.maincardcontentscore}>{data.air_in_kpa}</div>
+            <div className={styles.mainmachinecardcontentname}>압력</div>
+            <div className={styles.mainmachinecardcontentscore}>
+              {props.client.value.VACUUM}
+            </div>
           </div>
           <div
-            className={styles.maincardcontent}
-            onClick={() => navigate(`/machine/${index}/water`)}
+            className={styles.mainmachinecardcontent}
+            onClick={() => navigate(`/machine/${props.index}/water`)}
           >
-            <div className={styles.maincardcontentname}>유량</div>
-            <div className={styles.maincardcontentscore}>{data.water}</div>
+            <div className={styles.mainmachinecardcontentname}>유량</div>
+            <div className={styles.mainmachinecardcontentscore}>
+              {props.client.value.WATER}
+            </div>
           </div>
           <div
-            className={styles.maincardcontent}
-            onClick={() => navigate(`/machine/${index}/motor`)}
+            className={styles.mainmachinecardcontent}
+            onClick={() => navigate(`/machine/${props.index}/motor`)}
           >
-            <div className={styles.maincardcontentname}>모터 가동</div>
-            <div className={styles.maincardcontentscore}>{data.motor}</div>
+            <div className={styles.mainmachinecardcontentname}>모터 가동</div>
+            <div className={styles.mainmachinecardcontentscore}>
+              {props.client.value.MOTOR}
+            </div>
           </div>
         </CardContent>
       </Card>
