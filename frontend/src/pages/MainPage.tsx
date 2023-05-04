@@ -15,6 +15,7 @@ import { useRecoilState } from "recoil";
 import { indexAtom } from "../store/atoms";
 import { faker } from "@faker-js/faker";
 import MainError from "../components/MainError/MainError";
+import MainMachineItem from "../components/MainMachineItem/MainMachineItem";
 
 const MainPage = () => {
   const [selectedIndex, setSelectedIndex] = useRecoilState(indexAtom);
@@ -23,6 +24,189 @@ const MainPage = () => {
   };
   const navigate = useNavigate();
   const machines = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+  const [clientData, setClientData] = useState<any>([
+    {
+      name: "CLIENT1",
+      value: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 0.8,
+        AIR_OUT_MPA: 500,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+    },
+    {
+      name: "CLIENT2",
+      value: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 0.8,
+        AIR_OUT_MPA: 500,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+    },
+    {
+      name: "CLIENT3",
+      value: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 0.8,
+        AIR_OUT_MPA: 500,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+    },
+    {
+      name: "CLIENT4",
+      value: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 0.8,
+        AIR_OUT_MPA: 500,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+    },
+    {
+      name: "CLIENT5",
+      value: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 0.8,
+        AIR_OUT_MPA: 500,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+    },
+    {
+      name: "CLIENT6",
+      value: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 0.8,
+        AIR_OUT_MPA: 500,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+    },
+    {
+      name: "CLIENT7",
+      value: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 0.8,
+        AIR_OUT_MPA: 500,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+    },
+    {
+      name: "CLIENT8",
+      value: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 0.8,
+        AIR_OUT_MPA: 500,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+    },
+    {
+      name: "CLIENT9",
+      value: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 0.8,
+        AIR_OUT_MPA: 500,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+    },
+    {
+      name: "CLIENT10",
+      value: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 0.8,
+        AIR_OUT_MPA: 500,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+    },
+    {
+      name: "CLIENT11",
+      value: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 0.8,
+        AIR_OUT_MPA: 500,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+    },
+    {
+      name: "CLIENT12",
+      value: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 0.8,
+        AIR_OUT_MPA: 500,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+    },
+  ]);
   const [sensors, setsensors] = useState<string[]>([
     "MOTOR",
     "VACUUM",
@@ -67,9 +251,9 @@ const MainPage = () => {
     return () => clearInterval(interval);
   }, [data]);
 
-  const machineData = machines.map((machine, index) => (
+  const machineData = clientData.map((client: any, index: number) => (
     <div className={styles.sensordatacontent} key={index}>
-      <div>Machine {machine}</div>
+      <div>{client.name}</div>
       <div className={styles.sensordatascore}>56</div>
     </div>
   ));
@@ -94,14 +278,18 @@ const MainPage = () => {
             {sensor}
           </h3>
           <CardContent>
-            {machineData.map((data, dataIndex) => (
+            {clientData.map((data: any, dataIndex: any) => (
               <div
+                className={styles.sensordatacontent}
                 key={`sensordata-${dataIndex}`}
                 onClick={() =>
                   navigate(`/machine/${machines[dataIndex]}/${sensor}`)
                 }
               >
-                {data}
+                <div>{data.name}</div>
+                <div className={styles.sensordatascore}>
+                  {data.value[sensor]}
+                </div>
               </div>
             ))}
           </CardContent>
@@ -123,7 +311,6 @@ const MainPage = () => {
         style={{
           display: "flex",
           maxHeight: "80vh",
-          // justifyContent: "space-between",
         }}
       >
         <div
@@ -131,56 +318,13 @@ const MainPage = () => {
             display: "flex",
             flexWrap: "wrap",
             width: "54%",
+            // height: "100%",
           }}
         >
-          {machines.map((machine, index) => (
-            <Card className={styles.maincard} key={index}>
-              <div>
-                <h3
-                  className={styles.maincardtitle}
-                  onClick={() => {
-                    navigate(`/machine/${machine}`);
-                    indexClick("Monitoring");
-                  }}
-                  style={
-                    data.j < 30
-                      ? { backgroundColor: "red" }
-                      : { backgroundColor: "#5e5e5e" }
-                  }
-                >
-                  Machine {machine}
-                </h3>
-              </div>
-              <CardContent
-                style={{
-                  lineHeight: "2.8em",
-                }}
-              >
-                <div
-                  className={styles.maincardcontent}
-                  onClick={() => navigate(`/machine/${machine}/vacuum`)}
-                >
-                  <div className={styles.maincardcontentname}>압력</div>
-                  <div className={styles.maincardcontentscore}>{data.압력}</div>
-                </div>
-                <div
-                  className={styles.maincardcontent}
-                  onClick={() => navigate(`/machine/${machine}/water`)}
-                >
-                  <div className={styles.maincardcontentname}>유량</div>
-                  <div className={styles.maincardcontentscore}>{data.유량}</div>
-                </div>
-                <div
-                  className={styles.maincardcontent}
-                  onClick={() => navigate(`/machine/${machine}/motor`)}
-                >
-                  <div className={styles.maincardcontentname}>모터 가동</div>
-                  <div className={styles.maincardcontentscore}>
-                    {data.motor}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+          {clientData.map((client: any, index: number) => (
+            <div className={styles.maincard} key={index}>
+              <MainMachineItem client={client} index={index} />
+            </div>
           ))}
           <Card className={styles.errorcard}>
             <CardContent
@@ -213,3 +357,298 @@ const MainPage = () => {
 };
 
 export default MainPage;
+
+// import { useNavigate } from "react-router-dom";
+// import React, { useState, useEffect } from "react";
+// import MainLayout from "../layout/MainLayout";
+// import Card from "@mui/material/Card";
+// import CardContent from "@mui/material/CardContent";
+// import styles from "./MainPage.module.css";
+// import {
+//   DragDropContext,
+//   Droppable,
+//   Draggable,
+//   DropResult,
+// } from "react-beautiful-dnd";
+// import { fontWeight } from "@mui/system";
+// import { useRecoilState } from "recoil";
+// import { indexAtom } from "../store/atoms";
+// import { faker } from "@faker-js/faker";
+// import MainError from "../components/MainError/MainError";
+// import MainMachineItem from "../components/MainMachineItem/MainMachineItem";
+
+// const MainPage = () => {
+//   const [selectedIndex, setSelectedIndex] = useRecoilState(indexAtom);
+//   const indexClick = (value: string) => {
+//     setSelectedIndex(value);
+//   };
+//   const navigate = useNavigate();
+//   const machines = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+//   const [clientData, setClientData] = useState<any>({
+//     CLIENT1: {
+//       MOTOR: 100,
+//       VACUUM: 50,
+//       AIR_IN_KPA: 400,
+//       AIR_OUT_KPA: 0.8,
+//       AIR_OUT_MPA: 500,
+//       WATER: 3,
+//       ABRASION: 16,
+//       LOAD: 8,
+//       VELOCITY: 30000,
+//       SCORE: 80,
+//     },
+
+//     CLIENT2: {
+//       MOTOR: 100,
+//       VACUUM: 50,
+//       AIR_IN_KPA: 400,
+//       AIR_OUT_KPA: 0.8,
+//       AIR_OUT_MPA: 500,
+//       WATER: 3,
+//       ABRASION: 16,
+//       LOAD: 8,
+//       VELOCITY: 30000,
+//       SCORE: 80,
+//     },
+
+//     CLIENT3: {
+//       MOTOR: 100,
+//       VACUUM: 50,
+//       AIR_IN_KPA: 400,
+//       AIR_OUT_KPA: 0.8,
+//       AIR_OUT_MPA: 500,
+//       WATER: 3,
+//       ABRASION: 16,
+//       LOAD: 8,
+//       VELOCITY: 30000,
+//       SCORE: 80,
+//     },
+
+//     CLIENT4: {
+//       MOTOR: 100,
+//       VACUUM: 50,
+//       AIR_IN_KPA: 400,
+//       AIR_OUT_KPA: 0.8,
+//       AIR_OUT_MPA: 500,
+//       WATER: 3,
+//       ABRASION: 16,
+//       LOAD: 8,
+//       VELOCITY: 30000,
+//       SCORE: 80,
+//     },
+
+//     CLIENT5: {
+//       MOTOR: 100,
+//       VACUUM: 50,
+//       AIR_IN_KPA: 400,
+//       AIR_OUT_KPA: 0.8,
+//       AIR_OUT_MPA: 500,
+//       WATER: 3,
+//       ABRASION: 16,
+//       LOAD: 8,
+//       VELOCITY: 30000,
+//       SCORE: 80,
+//     },
+
+//     CLIENT6: {
+//       MOTOR: 100,
+//       VACUUM: 50,
+//       AIR_IN_KPA: 400,
+//       AIR_OUT_KPA: 0.8,
+//       AIR_OUT_MPA: 500,
+//       WATER: 3,
+//       ABRASION: 16,
+//       LOAD: 8,
+//       VELOCITY: 30000,
+//       SCORE: 80,
+//     },
+
+//     CLIENT7: {
+//       MOTOR: 100,
+//       VACUUM: 50,
+//       AIR_IN_KPA: 400,
+//       AIR_OUT_KPA: 0.8,
+//       AIR_OUT_MPA: 500,
+//       WATER: 3,
+//       ABRASION: 16,
+//       LOAD: 8,
+//       VELOCITY: 30000,
+//       SCORE: 80,
+//     },
+
+//     CLIENT8: {
+//       MOTOR: 100,
+//       VACUUM: 50,
+//       AIR_IN_KPA: 400,
+//       AIR_OUT_KPA: 0.8,
+//       AIR_OUT_MPA: 500,
+//       WATER: 3,
+//       ABRASION: 16,
+//       LOAD: 8,
+//       VELOCITY: 30000,
+//       SCORE: 80,
+//     },
+
+//     CLIENT9: {
+//       MOTOR: 100,
+//       VACUUM: 50,
+//       AIR_IN_KPA: 400,
+//       AIR_OUT_KPA: 0.8,
+//       AIR_OUT_MPA: 500,
+//       WATER: 3,
+//       ABRASION: 16,
+//       LOAD: 8,
+//       VELOCITY: 30000,
+//       SCORE: 80,
+//     },
+
+//     CLIENT10: {
+//       MOTOR: 100,
+//       VACUUM: 50,
+//       AIR_IN_KPA: 400,
+//       AIR_OUT_KPA: 0.8,
+//       AIR_OUT_MPA: 500,
+//       WATER: 3,
+//       ABRASION: 16,
+//       LOAD: 8,
+//       VELOCITY: 30000,
+//       SCORE: 80,
+//     },
+
+//     CLIENT11: {
+//       MOTOR: 100,
+//       VACUUM: 50,
+//       AIR_IN_KPA: 400,
+//       AIR_OUT_KPA: 0.8,
+//       AIR_OUT_MPA: 500,
+//       WATER: 3,
+//       ABRASION: 16,
+//       LOAD: 8,
+//       VELOCITY: 30000,
+//       SCORE: 80,
+//     },
+
+//     CLIENT12: {
+//       MOTOR: 100,
+//       VACUUM: 50,
+//       AIR_IN_KPA: 400,
+//       AIR_OUT_KPA: 0.8,
+//       AIR_OUT_MPA: 500,
+//       WATER: 3,
+//       ABRASION: 16,
+//       LOAD: 8,
+//       VELOCITY: 30000,
+//       SCORE: 80,
+//     },
+//   });
+
+//   const [sensors, setsensors] = useState<string[]>([
+//     "MOTOR",
+//     "VACUUM",
+//     "AIR_IN_KPA",
+//     "AIR_OUT_KPA",
+//     "AIR_OUT_MPA",
+//     "WATER",
+//     "ABRASION",
+//     "LOAD",
+//     "VELOCITY",
+//   ]);
+
+//   const sensorCards = sensors.map((sensor, index) => (
+//     <Draggable
+//       key={`sensor-${sensor}`}
+//       draggableId={`sensor-${sensor}`}
+//       index={index}
+//     >
+//       {(provided) => (
+//         <Card
+//           className={styles.sensorcard}
+//           ref={provided.innerRef}
+//           {...provided.draggableProps}
+//         >
+//           <h3
+//             className={styles.sensorheader}
+//             {...provided.dragHandleProps}
+//             {...(index === 0 ? {} : { isdragdisabled: "true" })}
+//           >
+//             {sensor}
+//           </h3>
+//           <CardContent>
+//             {clientData.map((data: any, dataIndex: any) => (
+//               <div
+//                 className={styles.sensordatacontent}
+//                 key={`sensordata-${dataIndex}`}
+//                 onClick={() =>
+//                   navigate(`/machine/${machines[dataIndex]}/${sensor}`)
+//                 }
+//               >
+//                 <div>{Object.keys(data)[dataIndex]}</div>
+//                 {/* <div className={styles.sensordatascore}>{data[sensor]}</div> */}
+//               </div>
+//             ))}
+//           </CardContent>
+//         </Card>
+//       )}
+//     </Draggable>
+//   ));
+
+//   const handleDragEnd = (result: DropResult) => {
+//     if (!result.destination) return;
+//     const items = Array.from(sensors);
+//     const [reorderedItem] = items.splice(result.source.index, 1);
+//     items.splice(result.destination.index, 0, reorderedItem);
+//     setsensors(items.map((item, index) => `${item}`));
+//   };
+//   return (
+//     <MainLayout>
+//       <div
+//         style={{
+//           display: "flex",
+//           maxHeight: "80vh",
+//         }}
+//       >
+//         <div
+//           style={{
+//             display: "flex",
+//             flexWrap: "wrap",
+//             width: "54%",
+//             // height: "100%",
+//           }}
+//         >
+//           {/* {clientData.map((client: any, index: number) => (
+//             <div className={styles.maincard} key={index}>
+//               <MainMachineItem client={client} index={index} />
+//             </div>
+//           ))} */}
+//           <Card className={styles.errorcard}>
+//             <CardContent
+//               style={{
+//                 lineHeight: "2.8em",
+//               }}
+//             >
+//               <MainError />
+//             </CardContent>
+//           </Card>
+//         </div>
+
+//         <DragDropContext onDragEnd={handleDragEnd}>
+//           <Droppable droppableId="sensors">
+//             {(provided) => (
+//               <div
+//                 {...provided.droppableProps}
+//                 ref={provided.innerRef}
+//                 className={styles.sensordatastyle}
+//               >
+//                 {sensorCards}
+//                 {provided.placeholder}
+//               </div>
+//             )}
+//           </Droppable>
+//         </DragDropContext>
+//       </div>
+//     </MainLayout>
+//   );
+// };
+
+// export default MainPage;
