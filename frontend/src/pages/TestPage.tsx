@@ -6,7 +6,8 @@ const TestPage: React.FC = () => {
   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
   const [message, setMessage] = useState<any>();
 
-  const connectUrl = "https://api:8091/ws";
+  // const connectUrl = "http://api:8091/ws";
+  const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
   const connectWebSocket = () => {
     console.log(connectUrl);
     const socket = new SockJS(connectUrl);
@@ -29,11 +30,7 @@ const TestPage: React.FC = () => {
   const handleTitleModify = useCallback(() => {
     if (stompClient) {
       // stompClient.send(`/server/post`, {}, JSON.stringify({ data: "data" }));
-      stompClient.send(
-        `/server/main/machine`,
-        {},
-        JSON.stringify({ data: "data" })
-      );
+      stompClient.send(`/server/machine/motor`, {}, JSON.stringify(1));
     }
   }, [stompClient]);
 
@@ -51,7 +48,7 @@ const TestPage: React.FC = () => {
     // server 에서 보내는 데이터를 실시간으로 받는 코드
     if (stompClient) {
       // console.log("stompClient2");
-      stompClient.subscribe(`/client/main/machine`, (data) => {
+      stompClient.subscribe(`/client/machine/motor`, (data) => {
         // console.log(data);
         setMessage(JSON.parse(data.body)); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
         // setMessage(data.body); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
@@ -62,7 +59,7 @@ const TestPage: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       handleTitleModify();
-    }, 5000);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [handleTitleModify]);
