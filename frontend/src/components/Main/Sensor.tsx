@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Sensor.module.css";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
 
 import CardMotorChart from "./CardChart/CardMotorChart";
 import CardVacuumChart from "./CardChart/CardVacuumChart";
