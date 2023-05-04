@@ -129,7 +129,7 @@ const MotorChartMarkers = () => {
 
   const handleEditColor = (color: string) => {
     setEditColor(color);
-    console.log(editColor, "@@@@@@@@@@@@@@@@");
+    // console.log(editColor, "@@@@@@@@@@@@@@@@");
     setMotorMarkers((prevMarkers) => {
       const newMarkers = [...prevMarkers];
       newMarkers[isChangeColorPickerOpen].lineStyle.stroke = color;
