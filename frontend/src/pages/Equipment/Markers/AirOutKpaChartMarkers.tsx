@@ -62,7 +62,7 @@ const AirOutKpaChartMarkers = () => {
     if (storedAirOutKpaMarkers) {
       setAirOutKpaMarkers(JSON.parse(storedAirOutKpaMarkers));
     }
-  }, []);
+  }, [localStorage]);
 
   const handleMarkerValueChange = (index: number, value: number) => {
     setAirOutKpaMarkers((prevMarkers) => {
@@ -141,6 +141,30 @@ const AirOutKpaChartMarkers = () => {
       }
     }
     setAirOutKpaMarkers([...AirOutKpaMarkers, newAirOutKpaMarker]);
+    setNewAirOutKpaMarkerLegend("");
+    setColor("#FF3B30");
+    setNewAirOutKpaMarkerValue(30);
+    setNewAirOutKpaMarkerWidth(2);
+  };
+
+  const handleDefaultMarker = () => {
+    const defaultMarker = [
+      {
+        axis: "y",
+        value: 70,
+        legend: "경고",
+        lineStyle: { stroke: "#FFC041", strokeWidth: "2" },
+        checked: true,
+      },
+      {
+        axis: "y",
+        value: 90,
+        legend: "위험",
+        lineStyle: { stroke: "#FF3B30", strokeWidth: "2" },
+        checked: true,
+      },
+    ];
+    setAirOutKpaMarkers(defaultMarker);
   };
 
   const handleNewMarkerLegendChange = (
@@ -184,14 +208,6 @@ const AirOutKpaChartMarkers = () => {
     });
   };
 
-  // const changeColorHandler = (index: number) => {
-  //   setAirOutKpaMarkers((prevMarkers) => {
-  //     const newMarkers = [...prevMarkers];
-  //     newMarkers[index].lineStyle.stroke = editColor;
-  //     return newMarkers;
-  //   });
-  // };
-
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     setNewAirOutKpaMarkerValue(newValue);
   };
@@ -210,8 +226,6 @@ const AirOutKpaChartMarkers = () => {
     }
   };
 
-  console.log(isChangeColorPickerOpen);
-  console.log(isPickerOpen);
   return (
     <div style={{ display: "flex" }}>
       <Toaster />
@@ -280,8 +294,8 @@ const AirOutKpaChartMarkers = () => {
         </div>
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
+            // display: "flex",
+            // justifyContent: "center",
             marginTop: "30px",
           }}
         >
@@ -298,7 +312,7 @@ const AirOutKpaChartMarkers = () => {
                 <div
                   style={{
                     display: "inline-block",
-                    width: "100%",
+                    width: "90%",
                     height: `${width}px`,
 
                     marginRight: "5px",
@@ -327,19 +341,35 @@ const AirOutKpaChartMarkers = () => {
       <div
         style={{
           width: "66%",
-          display: "flex",
-          justifyContent: "center",
         }}
       >
+        {AirOutKpaMarkers.length === 0 && (
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              height: "100%",
+              justifyContent: "center",
+              alignItems: "center",
+              alignContent: "center",
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <p style={{ color: "gray" }}>Marker가 존재하지 않습니다.</p>
+              <Button onClick={handleDefaultMarker}>Default Marker 생성</Button>
+            </div>
+          </div>
+        )}
         <div
           style={{
             position: "relative",
             display: "flex",
             width: "100%",
+            height: "100%",
             // justifyContent: "center",
             flexWrap: "wrap",
             maxHeight: "380px",
-            overflowY: "scroll",
+            overflowY: AirOutKpaMarkers.length === 0 ? "hidden" : "scroll",
             overflowX: "hidden",
           }}
         >
@@ -347,8 +377,9 @@ const AirOutKpaChartMarkers = () => {
             <div
               key={index}
               style={{
-                // width: "30%",
+                width: "30%",
                 minWidth: "150px",
+                height: "45%",
                 marginBottom: "30px",
                 marginRight: "5px",
                 padding: "5px",
@@ -411,28 +442,35 @@ const AirOutKpaChartMarkers = () => {
                 variant="standard"
               />
               {/* <p style={{ margin: "0" }}>Marker 수정</p> */}
-
               <div
-                id="colorBar"
                 style={{
-                  display: "inline-block",
-                  width: "100%",
-                  height: `${AirOutKpaMarker.lineStyle.strokeWidth}px`,
-                  marginRight: "5px",
-                  // backgroundColor: AirOutKpaMarker.lineStyle.stroke,
-                  backgroundColor: AirOutKpaMarker.checked
-                    ? AirOutKpaMarker.lineStyle.stroke
-                    : "gray",
-                  border: "1px solid #ddd",
-                  cursor: "pointer",
+                  display: "flex",
+                  justifyContent: "center",
+                  marginTop: "10px",
                 }}
-                onClick={() => {
-                  if (isChangeColorPickerOpen !== index) {
-                    setIsChangeColorPickerOpen(index);
-                  }
-                  setIsPickerOpen(!isPickerOpen);
-                }}
-              ></div>
+              >
+                <div
+                  id="colorBar"
+                  style={{
+                    display: "inline-block",
+                    width: "90%",
+                    height: `${AirOutKpaMarker.lineStyle.strokeWidth}px`,
+                    marginRight: "5px",
+                    // backgroundColor: AirOutKpaMarker.lineStyle.stroke,
+                    backgroundColor: AirOutKpaMarker.checked
+                      ? AirOutKpaMarker.lineStyle.stroke
+                      : "gray",
+                    border: "1px solid #ddd",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    if (isChangeColorPickerOpen !== index) {
+                      setIsChangeColorPickerOpen(index);
+                    }
+                    setIsPickerOpen(!isPickerOpen);
+                  }}
+                ></div>
+              </div>
               {isPickerOpen && isChangeColorPickerOpen === index && (
                 <div style={{ marginTop: "10px" }}>
                   <div
@@ -446,41 +484,57 @@ const AirOutKpaChartMarkers = () => {
                         : { position: "absolute", zIndex: "2" }
                     }
                   >
-                    <ChangeColorPicker onColorChange={handleEditColor} />
-                    <Select
-                      sx={{
-                        backgroundColor: "white",
-                        marginTop: "10px",
-                      }}
-                      value={AirOutKpaMarker.lineStyle.strokeWidth}
-                      onChange={(e) =>
-                        handleMarkerWidthChange(index, e.target.value)
-                      }
-                    >
-                      {Array.from({ length: 10 }, (_, i) => i + 1).map(
-                        (width) => (
-                          <MenuItem key={width} value={width}>
-                            <div
-                              style={{
-                                display: "inline-block",
-                                width: "100px",
-                                height: `${width}px`,
-                                marginRight: "5px",
-                                border: "1px solid #ddd",
-
-                                backgroundColor:
-                                  AirOutKpaMarker.lineStyle.stroke,
-                              }}
-                            ></div>
-                            {/* <p>{width}px</p> */}
-                          </MenuItem>
-                        )
-                      )}
-                    </Select>
                     <div>
-                      <button style={{}} onClick={() => setIsPickerOpen(false)}>
-                        닫기
-                      </button>
+                      <ChangeColorPicker onColorChange={handleEditColor} />
+                    </div>
+                    <div style={{ display: "flex", marginTop: "10px" }}>
+                      <Select
+                        sx={{
+                          backgroundColor: "white",
+                          // marginTop: "10px",
+                          width: "100%",
+                        }}
+                        value={AirOutKpaMarker.lineStyle.strokeWidth}
+                        onChange={(e) =>
+                          handleMarkerWidthChange(index, e.target.value)
+                        }
+                      >
+                        {Array.from({ length: 10 }, (_, i) => i + 1).map(
+                          (width) => (
+                            <MenuItem key={width} value={width}>
+                              <div
+                                style={{
+                                  display: "inline-block",
+                                  width: "90%",
+                                  height: `${width}px`,
+                                  marginRight: "5px",
+                                  border: "1px solid #ddd",
+
+                                  backgroundColor:
+                                    AirOutKpaMarker.lineStyle.stroke,
+                                }}
+                              ></div>
+                              {/* <p>{width}px</p> */}
+                            </MenuItem>
+                          )
+                        )}
+                      </Select>
+                      <div
+                        style={{
+                          marginLeft: "10px",
+                          display: "flex",
+                          alignItems: "end",
+                        }}
+                      >
+                        <Button
+                          variant="outlined"
+                          color="error"
+                          onClick={() => setIsPickerOpen(false)}
+                          sx={{ height: "30px" }}
+                        >
+                          닫기
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>

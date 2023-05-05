@@ -5,16 +5,17 @@ import { ResponsiveLine } from "@nivo/line";
 
 const data = [
   {
-    id: "motor1",
-    data: [
-      { x: "2022-01-01", y: 10 },
-      { x: "2022-01-02", y: 20 },
-      { x: "2022-01-03", y: 30 },
-      { x: "2022-01-04", y: 40 },
-      { x: "2022-01-05", y: 50 },
-    ],
+    id: "motor",
+    data: Array.from({ length: 20 }, (_, i) => ({
+      x: new Date(Date.UTC(2022, 0, 1 + i)).toLocaleDateString("ko-KR", {
+        month: "2-digit",
+        day: "2-digit",
+      }),
+      y: Math.sin((i / 5) * Math.PI) * 50 + 50,
+    })),
   },
 ];
+
 const MotorMarkerChart = () => {
   const navigate = useNavigate();
   const [markers, setMarkers] = useState([]);
@@ -45,15 +46,15 @@ const MotorMarkerChart = () => {
         const id: string = data.id as string;
         navigate(`${data.id.slice(5)}`);
       },
-      effects: [
-        {
-          on: "hover",
-          style: {
-            itemBackground: "rgba(0, 0, 0, .03)",
-            itemOpacity: 1,
-          },
-        },
-      ],
+      // effects: [
+      //   {
+      //     on: "hover",
+      //     style: {
+      //       itemBackground: "rgba(0, 0, 0, .03)",
+      //       itemOpacity: 1,
+      //     },
+      //   },
+      // ],
     },
   ];
 
@@ -83,9 +84,10 @@ const MotorMarkerChart = () => {
       enableSlices="x"
       enablePoints={false}
       useMesh={true}
-      animate={false}
+      animate={true}
       // legends={legend ? legends : []}
       markers={markers}
+      isInteractive={false} // 마우스 움직이면 tooltip 막 뜨는거
     />
   );
 };

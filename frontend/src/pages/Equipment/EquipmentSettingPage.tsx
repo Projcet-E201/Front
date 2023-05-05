@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import MainLayout from "../../layout/MainLayout";
+import SensorLayout from "../../layout/SensorLayout";
 import MotorChartMarkers from "./Markers/MotorChartMarkers";
 import AirInChartMarkers from "./Markers/AirInChartMarkers";
 import VacuumChartMarkers from "./Markers/VacuumChartMarkers";
@@ -14,8 +15,12 @@ import MotorMarkerChart from "./MarkerChart/MotorMarkerChart";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import styles from "./EquipmentSettingPage.module.css";
+
 const EquipmentSettingPage = () => {
   const equipmentList = [
     "Motor Toque Marker",
@@ -40,26 +45,62 @@ const EquipmentSettingPage = () => {
     <LoadChartMarkers />,
     <AbrasionChartMarkers />,
   ];
+
+  const [expanded, setExpanded] = useState<number | false>(0);
+
+  const handleChange = (panel: number) => (event: any, isExpanded: boolean) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
   return (
-    <MainLayout>
-      {componentList.map((component: any, index: number) => (
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Card className={styles.card} style={{ width: "100%" }}>
+    <SensorLayout>
+      <div>
+        {componentList.map((component: any, index: number) => (
+          <div
+            style={{ display: "flex", justifyContent: "center" }}
+            key={index}
+          >
+            {/* <Card className={styles.card} style={{ width: "100%" }}>
             <CardContent>
-              <h1 style={{ margin: "0" }}>{equipmentList[index]}</h1>
-              <div style={{ display: "flex", width: "100%" }}>
-                <div style={{ width: "60%" }}>{component}</div>
-                <div
-                  style={{ width: "40%", marginLeft: "40px", height: "350px" }}
-                >
-                  <MotorMarkerChart />
+              <Typography variant="h5" component="h2" style={{ margin: 0 }}>
+                {equipmentList[index]}
+              </Typography> */}
+            <Accordion
+              className={styles.card}
+              expanded={expanded === index}
+              onChange={handleChange(index)}
+              sx={{
+                width: "100%",
+              }}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls={`panel${index}-content`}
+                id={`panel${index}-header`}
+              >
+                <Typography variant="h5">{equipmentList[index]}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <div style={{ display: "flex", width: "100%" }}>
+                  <div style={{ width: "60%" }}>{component}</div>
+                  <div
+                    style={{
+                      width: "40%",
+                      marginLeft: "40px",
+                      height: "350px",
+                    }}
+                  >
+                    <MotorMarkerChart />
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      ))}
-    </MainLayout>
+              </AccordionDetails>
+            </Accordion>
+            {/* </CardContent>
+          </Card> */}
+          </div>
+        ))}
+      </div>
+    </SensorLayout>
   );
 };
 

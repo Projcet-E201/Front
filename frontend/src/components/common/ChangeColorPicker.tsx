@@ -6,7 +6,6 @@ interface Props {
 }
 
 const ChangeColorPicker: React.FC<Props> = ({ onColorChange }) => {
-  // const ChangeColorPicker: React.FC = () => {
   const [color, setColor] = useState("#FF3B30");
 
   const handleColorChange = (newColor: any) => {
@@ -17,7 +16,7 @@ const ChangeColorPicker: React.FC<Props> = ({ onColorChange }) => {
 
   return (
     <CirclePicker
-      color={color}
+      // color={color}
       onChange={handleColorChange}
       colors={[
         "#FF3B30",
