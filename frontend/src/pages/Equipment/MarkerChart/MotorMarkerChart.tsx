@@ -3,18 +3,19 @@ import { useNavigate } from "react-router";
 
 import { ResponsiveLine } from "@nivo/line";
 
-interface Props {
-  datasets: any[];
-  legend?: boolean;
-}
-
-const formatTime = (secondsAgo: number) => {
-  const d = new Date();
-  d.setSeconds(d.getSeconds() - secondsAgo);
-  return d.toLocaleTimeString();
-};
-
-const MotorChart = ({ datasets, legend }: Props) => {
+const data = [
+  {
+    id: "motor1",
+    data: [
+      { x: "2022-01-01", y: 10 },
+      { x: "2022-01-02", y: 20 },
+      { x: "2022-01-03", y: 30 },
+      { x: "2022-01-04", y: 40 },
+      { x: "2022-01-05", y: 50 },
+    ],
+  },
+];
+const MotorMarkerChart = () => {
   const navigate = useNavigate();
   const [markers, setMarkers] = useState([]);
 
@@ -58,9 +59,9 @@ const MotorChart = ({ datasets, legend }: Props) => {
 
   return (
     <ResponsiveLine
-      data={datasets}
-      margin={{ top: 10, right: legend ? 110 : 35, bottom: 30, left: 40 }}
-      xFormat={(value: any) => formatTime(new Date().getTime() / 1000 - value)}
+      data={data}
+      margin={{ top: 10, right: 35, bottom: 30, left: 40 }}
+      // xFormat={(value: any) => formatTime(new Date().getTime() / 1000 - value)}
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
@@ -83,10 +84,10 @@ const MotorChart = ({ datasets, legend }: Props) => {
       enablePoints={false}
       useMesh={true}
       animate={false}
-      legends={legend ? legends : []}
+      // legends={legend ? legends : []}
       markers={markers}
     />
   );
 };
 
-export default MotorChart;
+export default MotorMarkerChart;

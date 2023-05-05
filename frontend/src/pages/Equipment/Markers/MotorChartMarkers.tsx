@@ -16,6 +16,8 @@ import {
   // InputLabel,
 } from "@mui/material";
 
+import toast, { Toaster } from "react-hot-toast";
+
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -41,6 +43,8 @@ const MotorChartMarkers = () => {
   const [newMotorMarkerWidth, setNewMotorMarkerWidth] = useState<number>(2);
   const [newMotorMarkerLegend, setNewMotorMarkerLegend] = useState<string>("");
 
+  const [showAlert, setShowAlert] = useState(false);
+
   const [color, setColor] = useState<string>("#FF3B30");
 
   const [isChangeColorPickerOpen, setIsChangeColorPickerOpen] =
@@ -58,7 +62,19 @@ const MotorChartMarkers = () => {
   const handleMarkerValueChange = (index: number, value: number) => {
     setMotorMarkers((prevMarkers) => {
       const newMarkers = [...prevMarkers];
-      newMarkers[index].value = value;
+
+      // max값 설정하기.
+      if (value > 300) {
+        toast.error("Motor Marker의 최대값은 300입니다.");
+        value = 300;
+      } else if (value < 0) {
+        toast.error("Motor Marker의 최소값은 0입니다.");
+        value = 0;
+      }
+      newMarkers[index].value = value || 0;
+      if (newMarkers[index].legend.startsWith("Value:")) {
+        newMarkers[index].legend = `Value: ${value}`;
+      }
       return newMarkers;
     });
   };
@@ -99,14 +115,22 @@ const MotorChartMarkers = () => {
       // 처음 생성 시 무조건 true
       checked: true,
     };
+    for (let i = 0; i < motorMarkers.length; i++) {
+      if (motorMarkers[i].value === newMotorMarkerValue) {
+        toast.error("이미 존재하는 value 입니다. Value를 수정해주세요", {
+          duration: 2000,
+          position: "top-center",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
+        return;
+      }
+    }
     setMotorMarkers([...motorMarkers, newMotorMarker]);
   };
-
-  // const handleNewMarkerValueChange = (
-  //   event: React.ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   setNewMotorMarkerValue(Number(event.target.value));
-  // };
 
   const handleNewMarkerLegendChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -118,6 +142,7 @@ const MotorChartMarkers = () => {
     setMotorMarkers((prevMarkers) => {
       const newMarkers = [...prevMarkers];
       newMarkers.splice(index, 1);
+      toast.success("삭제가 완료되었습니다.");
       return newMarkers;
     });
   };
@@ -175,10 +200,12 @@ const MotorChartMarkers = () => {
   console.log(isPickerOpen);
   return (
     <div style={{ display: "flex" }}>
+      <Toaster />
       <div
         style={{
           marginRight: "50px",
-          flex: "1",
+          // flex: "1",
+          width: "33%",
         }}
       >
         <div style={{ marginTop: "30px" }}>
@@ -239,8 +266,8 @@ const MotorChartMarkers = () => {
         </div>
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
+            // display: "flex",
+            // justifyContent: "center",
             marginTop: "30px",
           }}
         >
@@ -253,12 +280,13 @@ const MotorChartMarkers = () => {
             sx={{ width: "100%" }}
           >
             {Array.from({ length: 10 }, (_, i) => i + 1).map((width) => (
-              <MenuItem key={width} value={width}>
+              <MenuItem key={width} value={width} sx={{ height: "20px" }}>
                 <div
                   style={{
                     display: "inline-block",
                     width: "100%",
                     height: `${width}px`,
+
                     marginRight: "5px",
                     border: "1px solid #ddd",
                     // backgroundColor: "black",
@@ -284,134 +312,180 @@ const MotorChartMarkers = () => {
       </div>
       <div
         style={{
-          display: "flex",
-          position: "relative",
-          flexWrap: "wrap",
-          height: "380px",
-          // width: ,
-          overflowY: "scroll",
-          flex: "2",
-          // justifyContent: "space-between",
-          overflowX: "hidden",
+          width: "66%",
         }}
       >
-        {motorMarkers.map((motorMarker, index) => (
+        {motorMarkers.length === 0 && (
           <div
-            key={index}
-            style={{ width: "30%", marginBottom: "30px", marginRight: "18px" }}
+            style={{
+              display: "flex",
+              width: "100%",
+              height: "100%",
+              justifyContent: "center",
+              alignItems: "center",
+              alignContent: "center",
+            }}
           >
+            <p style={{ color: "gray" }}>Marker가 존재하지 않습니다.</p>
+          </div>
+        )}
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            width: "100%",
+            height: "100%",
+            // justifyContent: "center",
+            flexWrap: "wrap",
+            maxHeight: "380px",
+            overflowY: motorMarkers.length === 0 ? "hidden" : "scroll",
+            overflowX: "hidden",
+          }}
+        >
+          {motorMarkers.map((motorMarker, index) => (
             <div
+              key={index}
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
+                width: "30%",
+                minWidth: "150px",
+                marginBottom: "30px",
+                marginRight: "5px",
+                padding: "5px",
+                backgroundColor: motorMarker.checked ? "" : "gray",
+                // border: motorMarker.checked ? "2px solid blue" : "gray",
+                // textAlign: "left",
               }}
             >
-              <Switch
-                checked={motorMarker.checked}
-                onChange={() => handleMarkerToggle(index)}
-              />
-              <IconButton onClick={() => deleteHandler(index)}>
-                <DeleteIcon />
-              </IconButton>
-            </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Switch
+                  checked={motorMarker.checked}
+                  onChange={() => handleMarkerToggle(index)}
+                />
+                <IconButton onClick={() => deleteHandler(index)}>
+                  <DeleteIcon />
+                </IconButton>
+              </div>
 
-            <div>
+              <div>
+                <TextField
+                  sx={{ width: "100%" }}
+                  id="input-with-icon-textfield"
+                  label="Marker Name"
+                  value={motorMarker.legend}
+                  onChange={(event) =>
+                    handleMarkerLegendChange(index, String(event.target.value))
+                  }
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <TitleIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                  variant="standard"
+                />
+              </div>
               <TextField
-                sx={{ width: "100%" }}
+                sx={{ width: "100%", marginTop: "10px" }}
                 id="input-with-icon-textfield"
-                label="Marker Name"
-                value={motorMarker.legend}
+                label="Value"
+                type="number"
+                value={motorMarker.value}
                 onChange={(event) =>
-                  handleMarkerLegendChange(index, String(event.target.value))
+                  handleMarkerValueChange(index, Number(event.target.value))
                 }
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <TitleIcon />
+                      {/* <TitleIcon /> */}
                     </InputAdornment>
                   ),
                 }}
                 variant="standard"
               />
-            </div>
-            <TextField
-              sx={{ width: "100%" }}
-              id="input-with-icon-textfield"
-              label="Value"
-              type="number"
-              value={motorMarker.value}
-              onChange={(event) =>
-                handleMarkerValueChange(index, Number(event.target.value))
-              }
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    {/* <TitleIcon /> */}
-                  </InputAdornment>
-                ),
-              }}
-              variant="standard"
-            />
+              {/* <p style={{ margin: "0" }}>Marker 수정</p> */}
 
-            <div
-              id="colorBar"
-              style={{
-                display: "inline-block",
-                width: "100%",
-                height: `${motorMarker.lineStyle.strokeWidth}px`,
-                marginRight: "5px",
-                backgroundColor: motorMarker.lineStyle.stroke,
-                border: "1px solid #ddd",
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                if (isChangeColorPickerOpen !== index) {
-                  setIsChangeColorPickerOpen(index);
-                }
-                setIsPickerOpen(!isPickerOpen);
-              }}
-            ></div>
-            {isPickerOpen && isChangeColorPickerOpen === index && (
               <div
-                style={
-                  (index + 1) % 3 === 0
-                    ? { position: "absolute", zIndex: "2", right: "0px" }
-                    : { position: "absolute", zIndex: "2" }
-                }
-              >
-                <ChangeColorPicker onColorChange={handleEditColor} />
-                <Select
-                  sx={{
-                    backgroundColor: "white",
-                  }}
-                  value={motorMarker.lineStyle.strokeWidth}
-                  onChange={(e) =>
-                    handleMarkerWidthChange(index, e.target.value)
+                id="colorBar"
+                style={{
+                  display: "inline-block",
+                  width: "100%",
+                  height: `${motorMarker.lineStyle.strokeWidth}px`,
+                  marginRight: "5px",
+                  // backgroundColor: motorMarker.lineStyle.stroke,
+                  backgroundColor: motorMarker.checked
+                    ? motorMarker.lineStyle.stroke
+                    : "gray",
+                  border: "1px solid #ddd",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  if (isChangeColorPickerOpen !== index) {
+                    setIsChangeColorPickerOpen(index);
                   }
-                >
-                  {Array.from({ length: 10 }, (_, i) => i + 1).map((width) => (
-                    <MenuItem key={width} value={width}>
-                      <div
-                        style={{
-                          display: "inline-block",
-                          width: "100px",
-                          height: `${width}px`,
-                          marginRight: "5px",
-                          border: "1px solid #ddd",
-                          // backgroundColor: "black",
-                          backgroundColor: motorMarker.lineStyle.stroke,
-                        }}
-                      ></div>
-                      {/* <p>{width}px</p> */}
-                    </MenuItem>
-                  ))}
-                </Select>
-                <button onClick={() => setIsPickerOpen(false)}>닫기</button>
-              </div>
-            )}
-          </div>
-        ))}
+                  setIsPickerOpen(!isPickerOpen);
+                }}
+              ></div>
+              {isPickerOpen && isChangeColorPickerOpen === index && (
+                <div style={{ marginTop: "10px" }}>
+                  <div
+                    style={
+                      (index + 1) % 3 === 0
+                        ? {
+                            position: "absolute",
+                            zIndex: "2",
+                            right: "0px",
+                          }
+                        : { position: "absolute", zIndex: "2" }
+                    }
+                  >
+                    <ChangeColorPicker onColorChange={handleEditColor} />
+                    <Select
+                      sx={{
+                        backgroundColor: "white",
+                        marginTop: "10px",
+                      }}
+                      value={motorMarker.lineStyle.strokeWidth}
+                      onChange={(e) =>
+                        handleMarkerWidthChange(index, e.target.value)
+                      }
+                    >
+                      {Array.from({ length: 10 }, (_, i) => i + 1).map(
+                        (width) => (
+                          <MenuItem key={width} value={width}>
+                            <div
+                              style={{
+                                display: "inline-block",
+                                width: "100px",
+                                height: `${width}px`,
+                                marginRight: "5px",
+                                border: "1px solid #ddd",
+
+                                backgroundColor: motorMarker.lineStyle.stroke,
+                              }}
+                            ></div>
+                            {/* <p>{width}px</p> */}
+                          </MenuItem>
+                        )
+                      )}
+                    </Select>
+                    <div>
+                      <button style={{}} onClick={() => setIsPickerOpen(false)}>
+                        닫기
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

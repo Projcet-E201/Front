@@ -10,6 +10,8 @@ import RpmChartMarkers from "./Markers/RpmChartMarkers";
 import LoadChartMarkers from "./Markers/LoadChartMarkers";
 import AbrasionChartMarkers from "./Markers/AbrasionChartMarkers";
 
+import MotorMarkerChart from "./MarkerChart/MotorMarkerChart";
+
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 
@@ -45,10 +47,12 @@ const EquipmentSettingPage = () => {
           <Card className={styles.card} style={{ width: "100%" }}>
             <CardContent>
               <h1 style={{ margin: "0" }}>{equipmentList[index]}</h1>
-              <div style={{ display: "flex" }}>
-                <div style={{ flex: "3" }}>{component}</div>
-                <div style={{ flex: "2" }}>
-                  <h1>hello</h1>
+              <div style={{ display: "flex", width: "100%" }}>
+                <div style={{ width: "60%" }}>{component}</div>
+                <div
+                  style={{ width: "40%", marginLeft: "40px", height: "350px" }}
+                >
+                  <MotorMarkerChart />
                 </div>
               </div>
             </CardContent>

@@ -1,6 +1,27 @@
 import React, { useState, useEffect } from "react";
 import Switch from "@mui/material/Switch";
 import ColorPicker from "../../../components/common/ColorPicker";
+import ChangeColorPicker from "../../../components/common/ChangeColorPicker";
+import {
+  Select,
+  MenuItem,
+  Slider,
+  Input,
+  Grid,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  IconButton,
+  // InputLabel,
+} from "@mui/material";
+
+import toast, { Toaster } from "react-hot-toast";
+
+import BorderColorIcon from "@mui/icons-material/BorderColor";
+import DeleteIcon from "@mui/icons-material/Delete";
+import InputAdornment from "@mui/material/InputAdornment";
+import TitleIcon from "@mui/icons-material/Title";
 
 interface LineStyle {
   stroke: string;
@@ -17,12 +38,20 @@ interface Marker {
 
 const VacuumChartMarkers = () => {
   const [VacuumMarkers, setVacuumMarkers] = useState<Marker[]>([]);
-  const [newVacuumMarkerValue, setNewVacuumMarkerValue] = useState<number>(0);
+  // const [newVacuumMarkerValue, setNewVacuumMarkerValue] = useState<number>(0);
+  const [newVacuumMarkerValue, setNewVacuumMarkerValue] =
+    React.useState<any>(30);
   const [newVacuumMarkerWidth, setNewVacuumMarkerWidth] = useState<number>(2);
   const [newVacuumMarkerLegend, setNewVacuumMarkerLegend] =
     useState<string>("");
 
+  const [showAlert, setShowAlert] = useState(false);
+
   const [color, setColor] = useState<string>("#FF3B30");
+
+  const [isChangeColorPickerOpen, setIsChangeColorPickerOpen] =
+    useState<number>(0);
+  const [isPickerOpen, setIsPickerOpen] = useState<boolean>(false);
 
   // localStorage에서 markers 가져오기
   useEffect(() => {
@@ -32,19 +61,48 @@ const VacuumChartMarkers = () => {
     }
   }, []);
 
+  const handleMarkerValueChange = (index: number, value: number) => {
+    setVacuumMarkers((prevMarkers) => {
+      const newMarkers = [...prevMarkers];
+
+      // max값 설정하기.
+      if (value > 300) {
+        toast.error("Vacuum Marker의 최대값은 300입니다.");
+        value = 300;
+      } else if (value < 0) {
+        toast.error("Vacuum Marker의 최소값은 0입니다.");
+        value = 0;
+      }
+      newMarkers[index].value = value || 0;
+      if (newMarkers[index].legend.startsWith("Value:")) {
+        newMarkers[index].legend = `Value: ${value}`;
+      }
+      return newMarkers;
+    });
+  };
+
+  const handleMarkerLegendChange = (index: number, legend: any) => {
+    setVacuumMarkers((prevMarkers) => {
+      const newMarkers = [...prevMarkers];
+      newMarkers[index].legend = legend;
+      return newMarkers;
+    });
+  };
+
+  const handleMarkerWidthChange = (index: number, width: any) => {
+    setVacuumMarkers((prevMarkers) => {
+      const newMarkers = [...prevMarkers];
+      newMarkers[index].lineStyle.strokeWidth = width;
+      return newMarkers;
+    });
+  };
+
   // localStorage에 markers 저장하기
   useEffect(() => {
     localStorage.setItem("VacuumChartMarkers", JSON.stringify(VacuumMarkers));
   }, [VacuumMarkers]);
 
-  const [markerType, setMarkerType] = useState<string>("warning");
-
-  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMarkerType(event.target.value);
-  };
-
   const handleVacuumMarker = () => {
-    // const strokeColor = markerType === "warning" ? "#FF3B30" : "#FFC041";
     const strokeColor = color;
     const legend =
       newVacuumMarkerLegend.trim() !== ""
@@ -62,19 +120,21 @@ const VacuumChartMarkers = () => {
       // 처음 생성 시 무조건 true
       checked: true,
     };
+    for (let i = 0; i < VacuumMarkers.length; i++) {
+      if (VacuumMarkers[i].value === newVacuumMarkerValue) {
+        toast.error("이미 존재하는 value 입니다. Value를 수정해주세요", {
+          duration: 2000,
+          position: "top-center",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
+        return;
+      }
+    }
     setVacuumMarkers([...VacuumMarkers, newVacuumMarker]);
-  };
-
-  const handleNewMarkerValueChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setNewVacuumMarkerValue(Number(event.target.value));
-  };
-
-  const handleNewMarkerWidthChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setNewVacuumMarkerWidth(Number(event.target.value));
   };
 
   const handleNewMarkerLegendChange = (
@@ -87,6 +147,7 @@ const VacuumChartMarkers = () => {
     setVacuumMarkers((prevMarkers) => {
       const newMarkers = [...prevMarkers];
       newMarkers.splice(index, 1);
+      toast.success("삭제가 완료되었습니다.");
       return newMarkers;
     });
   };
@@ -102,99 +163,323 @@ const VacuumChartMarkers = () => {
   };
 
   const handleColorChange = (color: string) => {
-    // console.log(color);
     setColor(color);
+    console.log(color);
   };
 
+  const handleEditColor = (color: string) => {
+    setVacuumMarkers((prevMarkers) => {
+      const newMarkers = [...prevMarkers];
+      newMarkers[isChangeColorPickerOpen].lineStyle.stroke = color;
+      return newMarkers;
+    });
+  };
+
+  // const changeColorHandler = (index: number) => {
+  //   setVacuumMarkers((prevMarkers) => {
+  //     const newMarkers = [...prevMarkers];
+  //     newMarkers[index].lineStyle.stroke = editColor;
+  //     return newMarkers;
+  //   });
+  // };
+
+  const handleSliderChange = (event: Event, newValue: number | number[]) => {
+    setNewVacuumMarkerValue(newValue);
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewVacuumMarkerValue(
+      event.target.value === "" ? "" : Number(event.target.value)
+    );
+  };
+
+  const handleBlur = () => {
+    if (newVacuumMarkerValue < 0) {
+      setNewVacuumMarkerValue(0);
+    } else if (newVacuumMarkerValue > 300) {
+      setNewVacuumMarkerValue(300);
+    }
+  };
+
+  console.log(isChangeColorPickerOpen);
+  console.log(isPickerOpen);
   return (
     <div style={{ display: "flex" }}>
-      <div style={{ marginRight: "100px" }}>
-        <h1>Vacuum Marker</h1>
-        <div>
-          <label htmlFor="newVacuumMarkerValue">Value:</label>
-          <input
-            id="newVacuumMarkerValue"
-            type="number"
-            value={newVacuumMarkerValue}
-            onChange={handleNewMarkerValueChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="newVacuumMarkerLegend">Legend:</label>
-          <input
-            id="newVacuumMarkerLegend"
-            type="text"
-            value={newVacuumMarkerLegend}
+      <Toaster />
+      <div
+        style={{
+          marginRight: "50px",
+          // flex: "1",
+          width: "33%",
+        }}
+      >
+        <div style={{ marginTop: "30px" }}>
+          <TextField
+            sx={{ width: "100%" }}
+            id="input-with-icon-textfield"
+            label="Marker Name"
+            placeholder={`Value: ${newVacuumMarkerValue}`}
             onChange={handleNewMarkerLegendChange}
-            placeholder="비어있을 시 Value값이 됩니다."
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  {/* <TitleIcon /> */}
+                </InputAdornment>
+              ),
+            }}
+            variant="standard"
           />
         </div>
-        {/* <div>
-          <label>
-            <input
-              type="radio"
-              value="warning"
-              checked={markerType === "warning"}
-              onChange={handleRadioChange}
-            />
-            경고
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="caution"
-              checked={markerType === "caution"}
-              onChange={handleRadioChange}
-            />
-            주의
-          </label>
-        </div> */}
-        <div>
-          <label htmlFor="newVacuumMarkerWidth">두께: </label>
-          <input
-            id="newVacuumMarkerWidth"
-            type="number"
-            value={newVacuumMarkerWidth}
-            onChange={handleNewMarkerWidthChange}
-            min={0}
-            max={10}
-            // defaultValue={2}
-            // value={newVacuumMarkerStrokeWidth}
-            // onChange={handleNewVacuumMarkerStrokeWidth}
-          />
+        <div style={{ marginTop: " 30px" }}>
+          <Box sx={{ width: "100%" }}>
+            <Typography>Setting Value</Typography>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item>
+                <BorderColorIcon />
+              </Grid>
+              <Grid item xs>
+                <Slider
+                  valueLabelDisplay="auto"
+                  value={
+                    typeof newVacuumMarkerValue === "number"
+                      ? newVacuumMarkerValue
+                      : 0
+                  }
+                  onChange={handleSliderChange}
+                  aria-labelledby="input-slider"
+                  min={0}
+                  max={300}
+                />
+              </Grid>
+              <Grid item xs={2.5}>
+                <Input
+                  value={newVacuumMarkerValue}
+                  size="small"
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  inputProps={{
+                    step: 10,
+                    min: 0,
+                    max: 300,
+                    type: "number",
+                    "aria-labelledby": "input-slider",
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Box>
         </div>
-        <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "30px",
+          }}
+        >
           <ColorPicker onColorChange={handleColorChange} />
         </div>
+        <div style={{ marginTop: "10px" }}>
+          <Select
+            value={newVacuumMarkerWidth}
+            onChange={(e) => setNewVacuumMarkerWidth(Number(e.target.value))}
+            sx={{ width: "100%" }}
+          >
+            {Array.from({ length: 10 }, (_, i) => i + 1).map((width) => (
+              <MenuItem key={width} value={width} sx={{ height: "20px" }}>
+                <div
+                  style={{
+                    display: "inline-block",
+                    width: "100%",
+                    height: `${width}px`,
 
-        <button onClick={handleVacuumMarker}>Add VacuumMarker</button>
+                    marginRight: "5px",
+                    border: "1px solid #ddd",
+                    // backgroundColor: "black",
+                    backgroundColor: color,
+                  }}
+                ></div>
+                {/* <p>{width}px</p> */}
+              </MenuItem>
+            ))}
+          </Select>
+        </div>
+
+        {/* <button onClick={handleVacuumMarker}>Add VacuumMarker</button> */}
+        <Button
+          onClick={handleVacuumMarker}
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2, height: "50px" }}
+        >
+          생성하기
+        </Button>
       </div>
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {VacuumMarkers.map((VacuumMarker, index) => (
-          <div key={index} style={{ width: "10vw" }}>
-            <Switch
-              checked={VacuumMarker.checked}
-              onChange={(event) => handleMarkerToggle(index)}
-            />
-            <p>legend: {VacuumMarker.legend}</p>
-            <p>value: {VacuumMarker.value}</p>
-
+      <div
+        style={{
+          width: "66%",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            width: "100%",
+            // justifyContent: "center",
+            flexWrap: "wrap",
+            maxHeight: "380px",
+            overflowY: "scroll",
+            overflowX: "hidden",
+          }}
+        >
+          {VacuumMarkers.map((VacuumMarker, index) => (
             <div
+              key={index}
               style={{
-                display: "inline-block",
-                width: "100px",
-                height: `${VacuumMarker.lineStyle.strokeWidth}px`,
+                // width: "30%",
+                minWidth: "150px",
+                marginBottom: "30px",
                 marginRight: "5px",
-                backgroundColor: VacuumMarker.lineStyle.stroke,
-                border: "1px solid #ddd",
+                padding: "5px",
+                backgroundColor: VacuumMarker.checked ? "" : "gray",
+                // border: VacuumMarker.checked ? "2px solid blue" : "gray",
+                // textAlign: "left",
               }}
-            />
-            <button onClick={() => deleteHandler(index)}>삭제</button>
-          </div>
-        ))}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Switch
+                  checked={VacuumMarker.checked}
+                  onChange={() => handleMarkerToggle(index)}
+                />
+                <IconButton onClick={() => deleteHandler(index)}>
+                  <DeleteIcon />
+                </IconButton>
+              </div>
+
+              <div>
+                <TextField
+                  sx={{ width: "100%" }}
+                  id="input-with-icon-textfield"
+                  label="Marker Name"
+                  value={VacuumMarker.legend}
+                  onChange={(event) =>
+                    handleMarkerLegendChange(index, String(event.target.value))
+                  }
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <TitleIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                  variant="standard"
+                />
+              </div>
+              <TextField
+                sx={{ width: "100%", marginTop: "10px" }}
+                id="input-with-icon-textfield"
+                label="Value"
+                type="number"
+                value={VacuumMarker.value}
+                onChange={(event) =>
+                  handleMarkerValueChange(index, Number(event.target.value))
+                }
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      {/* <TitleIcon /> */}
+                    </InputAdornment>
+                  ),
+                }}
+                variant="standard"
+              />
+              {/* <p style={{ margin: "0" }}>Marker 수정</p> */}
+
+              <div
+                id="colorBar"
+                style={{
+                  display: "inline-block",
+                  width: "100%",
+                  height: `${VacuumMarker.lineStyle.strokeWidth}px`,
+                  marginRight: "5px",
+                  // backgroundColor: VacuumMarker.lineStyle.stroke,
+                  backgroundColor: VacuumMarker.checked
+                    ? VacuumMarker.lineStyle.stroke
+                    : "gray",
+                  border: "1px solid #ddd",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  if (isChangeColorPickerOpen !== index) {
+                    setIsChangeColorPickerOpen(index);
+                  }
+                  setIsPickerOpen(!isPickerOpen);
+                }}
+              ></div>
+              {isPickerOpen && isChangeColorPickerOpen === index && (
+                <div style={{ marginTop: "10px" }}>
+                  <div
+                    style={
+                      (index + 1) % 3 === 0
+                        ? {
+                            position: "absolute",
+                            zIndex: "2",
+                            right: "0px",
+                          }
+                        : { position: "absolute", zIndex: "2" }
+                    }
+                  >
+                    <ChangeColorPicker onColorChange={handleEditColor} />
+                    <Select
+                      sx={{
+                        backgroundColor: "white",
+                        marginTop: "10px",
+                      }}
+                      value={VacuumMarker.lineStyle.strokeWidth}
+                      onChange={(e) =>
+                        handleMarkerWidthChange(index, e.target.value)
+                      }
+                    >
+                      {Array.from({ length: 10 }, (_, i) => i + 1).map(
+                        (width) => (
+                          <MenuItem key={width} value={width}>
+                            <div
+                              style={{
+                                display: "inline-block",
+                                width: "100px",
+                                height: `${width}px`,
+                                marginRight: "5px",
+                                border: "1px solid #ddd",
+
+                                backgroundColor: VacuumMarker.lineStyle.stroke,
+                              }}
+                            ></div>
+                            {/* <p>{width}px</p> */}
+                          </MenuItem>
+                        )
+                      )}
+                    </Select>
+                    <div>
+                      <button style={{}} onClick={() => setIsPickerOpen(false)}>
+                        닫기
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
-
 export default VacuumChartMarkers;
