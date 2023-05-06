@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router";
 
 import { ResponsiveLine } from "@nivo/line";
@@ -25,7 +25,7 @@ const MotorMarkerChart = () => {
       localStorage.getItem("motorChartMarkers") || "[]"
     );
     setMarkers(markersFromLocalStorage.filter((marker: any) => marker.checked));
-  }, [markers]);
+  }, [localStorage]);
 
   const legends: any = [
     {

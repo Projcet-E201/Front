@@ -45,7 +45,7 @@ const MotorPage = () => {
     (dataset) => dataset.data[dataset.data.length - 1]
   );
 
-  console.log(latestData);
+  // console.log(latestData);
 
   return (
     <SensorLayout>

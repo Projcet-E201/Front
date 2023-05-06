@@ -82,8 +82,8 @@ const EquipmentSettingPage = () => {
               </AccordionSummary>
               <AccordionDetails>
                 <div style={{ display: "flex", width: "100%" }}>
-                  <div style={{ width: "60%" }}>{component}</div>
-                  <div
+                  <div style={{ width: "100%" }}>{component}</div>
+                  {/* <div
                     style={{
                       width: "40%",
                       marginLeft: "40px",
@@ -91,7 +91,7 @@ const EquipmentSettingPage = () => {
                     }}
                   >
                     <MotorMarkerChart />
-                  </div>
+                  </div> */}
                 </div>
               </AccordionDetails>
             </Accordion>

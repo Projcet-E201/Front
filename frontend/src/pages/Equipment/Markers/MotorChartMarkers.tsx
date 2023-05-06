@@ -57,7 +57,7 @@ const MotorChartMarkers = () => {
     if (storedMotorMarkers) {
       setMotorMarkers(JSON.parse(storedMotorMarkers));
     }
-  }, [localStorage]);
+  }, []);
 
   const handleMarkerValueChange = (index: number, value: number) => {
     setMotorMarkers((prevMarkers) => {
@@ -219,7 +219,7 @@ const MotorChartMarkers = () => {
         style={{
           marginRight: "50px",
           // flex: "1",
-          width: "33%",
+          width: "20%",
         }}
       >
         <div style={{ marginTop: "30px" }}>
@@ -326,7 +326,7 @@ const MotorChartMarkers = () => {
       </div>
       <div
         style={{
-          width: "66%",
+          width: "40%",
         }}
       >
         {motorMarkers.length === 0 && (
@@ -527,6 +527,9 @@ const MotorChartMarkers = () => {
             </div>
           ))}
         </div>
+      </div>
+      <div style={{ width: "40%" }}>
+        <h1>dfdfdf</h1>
       </div>
     </div>
   );
