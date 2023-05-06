@@ -71,6 +71,7 @@ const NavBar = ({ leftNavWidth }: any) => {
                 </>
               )}
               {location.pathname === "/custom-build" && <h2>CustomBuild</h2>}
+              {location.pathname === "/equipment-setting" && <h2>설비 관리</h2>}
             </div>
           </div>
           <div className={styles.rightbutton}>

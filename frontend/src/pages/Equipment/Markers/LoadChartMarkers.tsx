@@ -23,6 +23,18 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import InputAdornment from "@mui/material/InputAdornment";
 import TitleIcon from "@mui/icons-material/Title";
 
+import { ResponsiveLine } from "@nivo/line";
+
+const data = [
+  {
+    id: "Load",
+    data: Array.from({ length: 20 }, (_, i) => ({
+      x: i + 1,
+      y: Math.sin((i / 5) * Math.PI) * 50 + 50,
+    })),
+  },
+];
+
 interface LineStyle {
   stroke: string;
   strokeWidth: string;
@@ -37,7 +49,7 @@ interface Marker {
 }
 
 const LoadChartMarkers = () => {
-  const [LoadMarkers, setLoadMarkers] = useState<Marker[]>([]);
+  const [LoadMarkers, setLoadMarkers] = useState<any>([]);
   // const [newLoadMarkerValue, setNewLoadMarkerValue] = useState<number>(0);
   const [newLoadMarkerValue, setNewLoadMarkerValue] = React.useState<any>(30);
   const [newLoadMarkerWidth, setNewLoadMarkerWidth] = useState<number>(2);
@@ -57,10 +69,10 @@ const LoadChartMarkers = () => {
     if (storedLoadMarkers) {
       setLoadMarkers(JSON.parse(storedLoadMarkers));
     }
-  }, [localStorage]);
+  }, []);
 
   const handleMarkerValueChange = (index: number, value: number) => {
-    setLoadMarkers((prevMarkers) => {
+    setLoadMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
 
       // max값 설정하기.
@@ -80,17 +92,23 @@ const LoadChartMarkers = () => {
   };
 
   const handleMarkerLegendChange = (index: number, legend: any) => {
-    setLoadMarkers((prevMarkers) => {
+    setLoadMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
       newMarkers[index].legend = legend;
       return newMarkers;
     });
   };
 
-  const handleMarkerWidthChange = (index: number, width: any) => {
-    setLoadMarkers((prevMarkers) => {
+  const handleMarkerWidthChange = (index: number, width: number) => {
+    setLoadMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
-      newMarkers[index].lineStyle.strokeWidth = width;
+      newMarkers[index] = {
+        ...newMarkers[index],
+        lineStyle: {
+          ...newMarkers[index].lineStyle,
+          strokeWidth: width,
+        },
+      };
       return newMarkers;
     });
   };
@@ -110,7 +128,10 @@ const LoadChartMarkers = () => {
       axis: "y",
       value: newLoadMarkerValue,
       legend,
-      lineStyle: { stroke: strokeColor, strokeWidth: `${newLoadMarkerWidth}` },
+      lineStyle: {
+        stroke: strokeColor,
+        strokeWidth: `${newLoadMarkerWidth}`,
+      },
 
       // 처음 생성 시 무조건 true
       checked: true,
@@ -163,7 +184,7 @@ const LoadChartMarkers = () => {
   };
 
   const deleteHandler = (index: number) => {
-    setLoadMarkers((prevMarkers) => {
+    setLoadMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
       newMarkers.splice(index, 1);
       toast.success("삭제가 완료되었습니다.");
@@ -172,7 +193,7 @@ const LoadChartMarkers = () => {
   };
 
   const handleMarkerToggle = (index: number) => {
-    setLoadMarkers((prevMarkers) => {
+    setLoadMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
       newMarkers[index].checked = !newMarkers[index].checked;
       return newMarkers;
@@ -187,9 +208,11 @@ const LoadChartMarkers = () => {
   };
 
   const handleEditColor = (color: string) => {
-    setLoadMarkers((prevMarkers) => {
+    setLoadMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
-      newMarkers[isChangeColorPickerOpen].lineStyle.stroke = color;
+      const newLineStyle = { ...newMarkers[isChangeColorPickerOpen].lineStyle };
+      newLineStyle.stroke = color;
+      newMarkers[isChangeColorPickerOpen].lineStyle = newLineStyle;
       return newMarkers;
     });
   };
@@ -219,7 +242,7 @@ const LoadChartMarkers = () => {
         style={{
           marginRight: "50px",
           // flex: "1",
-          width: "33%",
+          width: "20%",
         }}
       >
         <div style={{ marginTop: "30px" }}>
@@ -326,10 +349,10 @@ const LoadChartMarkers = () => {
       </div>
       <div
         style={{
-          width: "66%",
+          width: "40%",
         }}
       >
-        {LoadMarkers.length === 0 && (
+        {LoadMarkers.length === 0 ? (
           <div
             style={{
               display: "flex",
@@ -345,188 +368,225 @@ const LoadChartMarkers = () => {
               <Button onClick={handleDefaultMarker}>Default Marker 생성</Button>
             </div>
           </div>
-        )}
-        <div
-          style={{
-            position: "relative",
-            display: "flex",
-            width: "100%",
-            height: "100%",
-            // justifyContent: "center",
-            flexWrap: "wrap",
-            maxHeight: "380px",
-            overflowY: LoadMarkers.length === 0 ? "hidden" : "scroll",
-            overflowX: "hidden",
-          }}
-        >
-          {LoadMarkers.map((LoadMarker, index) => (
-            <div
-              key={index}
-              style={{
-                width: "30%",
-                minWidth: "150px",
-                height: "45%",
-                marginBottom: "30px",
-                marginRight: "5px",
-                padding: "5px",
-                backgroundColor: LoadMarker.checked ? "" : "gray",
-                // border: LoadMarker.checked ? "2px solid blue" : "gray",
-                // textAlign: "left",
-              }}
-            >
+        ) : (
+          <div
+            style={{
+              position: "relative",
+              display: "flex",
+              width: "100%",
+              height: "100%",
+              // justifyContent: "center",
+              flexWrap: "wrap",
+              maxHeight: "380px",
+              overflowY: LoadMarkers.length === 0 ? "hidden" : "scroll",
+              overflowX: "hidden",
+            }}
+          >
+            {LoadMarkers.map((LoadMarker: any, index: number) => (
               <div
+                key={index}
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
+                  width: "30%",
+                  minWidth: "150px",
+                  height: "45%",
+                  marginBottom: "30px",
+                  marginRight: "5px",
+                  padding: "5px",
+                  backgroundColor: LoadMarker.checked ? "" : "gray",
+                  // border: LoadMarker.checked ? "2px solid blue" : "gray",
+                  // textAlign: "left",
                 }}
               >
-                <Switch
-                  checked={LoadMarker.checked}
-                  onChange={() => handleMarkerToggle(index)}
-                />
-                <IconButton onClick={() => deleteHandler(index)}>
-                  <DeleteIcon />
-                </IconButton>
-              </div>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Switch
+                    checked={LoadMarker.checked}
+                    onChange={() => handleMarkerToggle(index)}
+                  />
+                  <IconButton onClick={() => deleteHandler(index)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </div>
 
-              <div>
+                <div>
+                  <TextField
+                    sx={{ width: "100%" }}
+                    id="input-with-icon-textfield"
+                    label="Marker Name"
+                    value={LoadMarker.legend}
+                    onChange={(event) =>
+                      handleMarkerLegendChange(
+                        index,
+                        String(event.target.value)
+                      )
+                    }
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <TitleIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                    variant="standard"
+                  />
+                </div>
                 <TextField
-                  sx={{ width: "100%" }}
+                  sx={{ width: "100%", marginTop: "10px" }}
                   id="input-with-icon-textfield"
-                  label="Marker Name"
-                  value={LoadMarker.legend}
+                  label="Value"
+                  type="number"
+                  value={LoadMarker.value}
                   onChange={(event) =>
-                    handleMarkerLegendChange(index, String(event.target.value))
+                    handleMarkerValueChange(index, Number(event.target.value))
                   }
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <TitleIcon />
+                        {/* <TitleIcon /> */}
                       </InputAdornment>
                     ),
                   }}
                   variant="standard"
                 />
-              </div>
-              <TextField
-                sx={{ width: "100%", marginTop: "10px" }}
-                id="input-with-icon-textfield"
-                label="Value"
-                type="number"
-                value={LoadMarker.value}
-                onChange={(event) =>
-                  handleMarkerValueChange(index, Number(event.target.value))
-                }
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      {/* <TitleIcon /> */}
-                    </InputAdornment>
-                  ),
-                }}
-                variant="standard"
-              />
-              {/* <p style={{ margin: "0" }}>Marker 수정</p> */}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginTop: "10px",
-                }}
-              >
+                {/* <p style={{ margin: "0" }}>Marker 수정</p> */}
                 <div
-                  id="colorBar"
                   style={{
-                    display: "inline-block",
-                    width: "90%",
-                    height: `${LoadMarker.lineStyle.strokeWidth}px`,
-                    marginRight: "5px",
-                    // backgroundColor: LoadMarker.lineStyle.stroke,
-                    backgroundColor: LoadMarker.checked
-                      ? LoadMarker.lineStyle.stroke
-                      : "gray",
-                    border: "1px solid #ddd",
-                    cursor: "pointer",
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "10px",
                   }}
-                  onClick={() => {
-                    if (isChangeColorPickerOpen !== index) {
-                      setIsChangeColorPickerOpen(index);
-                    }
-                    setIsPickerOpen(!isPickerOpen);
-                  }}
-                ></div>
-              </div>
-              {isPickerOpen && isChangeColorPickerOpen === index && (
-                <div style={{ marginTop: "10px" }}>
+                >
                   <div
-                    style={
-                      (index + 1) % 3 === 0
-                        ? {
-                            position: "absolute",
-                            zIndex: "2",
-                            right: "0px",
+                    id="colorBar"
+                    style={{
+                      display: "inline-block",
+                      width: "90%",
+                      height: `${LoadMarker.lineStyle.strokeWidth}px`,
+                      marginRight: "5px",
+                      // backgroundColor: LoadMarker.lineStyle.stroke,
+                      backgroundColor: LoadMarker.checked
+                        ? LoadMarker.lineStyle.stroke
+                        : "gray",
+                      border: "1px solid #ddd",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      if (isChangeColorPickerOpen !== index) {
+                        setIsChangeColorPickerOpen(index);
+                      }
+                      setIsPickerOpen(!isPickerOpen);
+                    }}
+                  ></div>
+                </div>
+                {isPickerOpen && isChangeColorPickerOpen === index && (
+                  <div style={{ marginTop: "10px" }}>
+                    <div
+                      style={
+                        (index + 1) % 3 === 0
+                          ? {
+                              position: "absolute",
+                              zIndex: "2",
+                              right: "0px",
+                            }
+                          : { position: "absolute", zIndex: "2" }
+                      }
+                    >
+                      <div>
+                        <ChangeColorPicker onColorChange={handleEditColor} />
+                      </div>
+                      <div style={{ display: "flex", marginTop: "10px" }}>
+                        <Select
+                          sx={{
+                            backgroundColor: "white",
+                            // marginTop: "10px",
+                            width: "100%",
+                          }}
+                          value={LoadMarker.lineStyle.strokeWidth}
+                          onChange={(e) =>
+                            handleMarkerWidthChange(index, e.target.value)
                           }
-                        : { position: "absolute", zIndex: "2" }
-                    }
-                  >
-                    <div>
-                      <ChangeColorPicker onColorChange={handleEditColor} />
-                    </div>
-                    <div style={{ display: "flex", marginTop: "10px" }}>
-                      <Select
-                        sx={{
-                          backgroundColor: "white",
-                          // marginTop: "10px",
-                          width: "100%",
-                        }}
-                        value={LoadMarker.lineStyle.strokeWidth}
-                        onChange={(e) =>
-                          handleMarkerWidthChange(index, e.target.value)
-                        }
-                      >
-                        {Array.from({ length: 10 }, (_, i) => i + 1).map(
-                          (width) => (
-                            <MenuItem key={width} value={width}>
-                              <div
-                                style={{
-                                  display: "inline-block",
-                                  width: "90%",
-                                  height: `${width}px`,
-                                  marginRight: "5px",
-                                  border: "1px solid #ddd",
-
-                                  backgroundColor: LoadMarker.lineStyle.stroke,
-                                }}
-                              ></div>
-                              {/* <p>{width}px</p> */}
-                            </MenuItem>
-                          )
-                        )}
-                      </Select>
-                      <div
-                        style={{
-                          marginLeft: "10px",
-                          display: "flex",
-                          alignItems: "end",
-                        }}
-                      >
-                        <Button
-                          variant="outlined"
-                          color="error"
-                          onClick={() => setIsPickerOpen(false)}
-                          sx={{ height: "30px" }}
                         >
-                          닫기
-                        </Button>
+                          {Array.from({ length: 10 }, (_, i) => i + 1).map(
+                            (width) => (
+                              <MenuItem key={width} value={width}>
+                                <div
+                                  style={{
+                                    display: "inline-block",
+                                    width: "90%",
+                                    height: `${width}px`,
+                                    marginRight: "5px",
+                                    border: "1px solid #ddd",
+
+                                    backgroundColor:
+                                      LoadMarker.lineStyle.stroke,
+                                  }}
+                                ></div>
+                                {/* <p>{width}px</p> */}
+                              </MenuItem>
+                            )
+                          )}
+                        </Select>
+                        <div
+                          style={{
+                            marginLeft: "10px",
+                            display: "flex",
+                            alignItems: "end",
+                          }}
+                        >
+                          <Button
+                            variant="outlined"
+                            color="error"
+                            onClick={() => setIsPickerOpen(false)}
+                            sx={{ height: "30px" }}
+                          >
+                            닫기
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      <div style={{ width: "40%", height: "380px" }}>
+        <ResponsiveLine
+          data={data}
+          margin={{ top: 10, right: 35, bottom: 30, left: 40 }}
+          // xFormat={(value: any) => formatTime(new Date().getTime() / 1000 - value)}
+          xScale={{ type: "point" }}
+          yScale={{
+            type: "linear",
+            min: 0,
+            max: 120,
+            stacked: false,
+            reverse: false,
+          }}
+          curve="basis"
+          axisTop={null}
+          axisRight={null}
+          colors={{ scheme: "category10" }}
+          lineWidth={2}
+          pointSize={10}
+          pointColor={{ theme: "background" }}
+          pointBorderWidth={2}
+          pointBorderColor={{ from: "serieColor" }}
+          pointLabelYOffset={-12}
+          enableSlices="x"
+          enablePoints={false}
+          useMesh={true}
+          animate={true}
+          // legends={legend ? legends : []}
+          markers={LoadMarkers.filter((marker: any) => marker.checked)}
+          isInteractive={false} // 마우스 움직이면 tooltip 막 뜨는거
+        />
       </div>
     </div>
   );

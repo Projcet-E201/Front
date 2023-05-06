@@ -23,6 +23,18 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import InputAdornment from "@mui/material/InputAdornment";
 import TitleIcon from "@mui/icons-material/Title";
 
+import { ResponsiveLine } from "@nivo/line";
+
+const data = [
+  {
+    id: "Water",
+    data: Array.from({ length: 20 }, (_, i) => ({
+      x: i + 1,
+      y: Math.sin((i / 5) * Math.PI) * 50 + 50,
+    })),
+  },
+];
+
 interface LineStyle {
   stroke: string;
   strokeWidth: string;
@@ -37,7 +49,7 @@ interface Marker {
 }
 
 const WaterChartMarkers = () => {
-  const [WaterMarkers, setWaterMarkers] = useState<Marker[]>([]);
+  const [WaterMarkers, setWaterMarkers] = useState<any>([]);
   // const [newWaterMarkerValue, setNewWaterMarkerValue] = useState<number>(0);
   const [newWaterMarkerValue, setNewWaterMarkerValue] = React.useState<any>(30);
   const [newWaterMarkerWidth, setNewWaterMarkerWidth] = useState<number>(2);
@@ -57,10 +69,10 @@ const WaterChartMarkers = () => {
     if (storedWaterMarkers) {
       setWaterMarkers(JSON.parse(storedWaterMarkers));
     }
-  }, [localStorage]);
+  }, []);
 
   const handleMarkerValueChange = (index: number, value: number) => {
-    setWaterMarkers((prevMarkers) => {
+    setWaterMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
 
       // max값 설정하기.
@@ -80,17 +92,23 @@ const WaterChartMarkers = () => {
   };
 
   const handleMarkerLegendChange = (index: number, legend: any) => {
-    setWaterMarkers((prevMarkers) => {
+    setWaterMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
       newMarkers[index].legend = legend;
       return newMarkers;
     });
   };
 
-  const handleMarkerWidthChange = (index: number, width: any) => {
-    setWaterMarkers((prevMarkers) => {
+  const handleMarkerWidthChange = (index: number, width: number) => {
+    setWaterMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
-      newMarkers[index].lineStyle.strokeWidth = width;
+      newMarkers[index] = {
+        ...newMarkers[index],
+        lineStyle: {
+          ...newMarkers[index].lineStyle,
+          strokeWidth: width,
+        },
+      };
       return newMarkers;
     });
   };
@@ -163,7 +181,7 @@ const WaterChartMarkers = () => {
   };
 
   const deleteHandler = (index: number) => {
-    setWaterMarkers((prevMarkers) => {
+    setWaterMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
       newMarkers.splice(index, 1);
       toast.success("삭제가 완료되었습니다.");
@@ -172,7 +190,7 @@ const WaterChartMarkers = () => {
   };
 
   const handleMarkerToggle = (index: number) => {
-    setWaterMarkers((prevMarkers) => {
+    setWaterMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
       newMarkers[index].checked = !newMarkers[index].checked;
       return newMarkers;
@@ -187,9 +205,11 @@ const WaterChartMarkers = () => {
   };
 
   const handleEditColor = (color: string) => {
-    setWaterMarkers((prevMarkers) => {
+    setWaterMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
-      newMarkers[isChangeColorPickerOpen].lineStyle.stroke = color;
+      const newLineStyle = { ...newMarkers[isChangeColorPickerOpen].lineStyle };
+      newLineStyle.stroke = color;
+      newMarkers[isChangeColorPickerOpen].lineStyle = newLineStyle;
       return newMarkers;
     });
   };
@@ -219,7 +239,7 @@ const WaterChartMarkers = () => {
         style={{
           marginRight: "50px",
           // flex: "1",
-          width: "33%",
+          width: "20%",
         }}
       >
         <div style={{ marginTop: "30px" }}>
@@ -326,7 +346,7 @@ const WaterChartMarkers = () => {
       </div>
       <div
         style={{
-          width: "66%",
+          width: "40%",
         }}
       >
         {WaterMarkers.length === 0 && (
@@ -359,7 +379,7 @@ const WaterChartMarkers = () => {
             overflowX: "hidden",
           }}
         >
-          {WaterMarkers.map((WaterMarker, index) => (
+          {WaterMarkers.map((WaterMarker: any, index: number) => (
             <div
               key={index}
               style={{
@@ -527,6 +547,38 @@ const WaterChartMarkers = () => {
             </div>
           ))}
         </div>
+      </div>
+      <div style={{ width: "40%", height: "380px" }}>
+        <ResponsiveLine
+          data={data}
+          margin={{ top: 10, right: 35, bottom: 30, left: 40 }}
+          // xFormat={(value: any) => formatTime(new Date().getTime() / 1000 - value)}
+          xScale={{ type: "point" }}
+          yScale={{
+            type: "linear",
+            min: 0,
+            max: 120,
+            stacked: false,
+            reverse: false,
+          }}
+          curve="basis"
+          axisTop={null}
+          axisRight={null}
+          colors={{ scheme: "category10" }}
+          lineWidth={2}
+          pointSize={10}
+          pointColor={{ theme: "background" }}
+          pointBorderWidth={2}
+          pointBorderColor={{ from: "serieColor" }}
+          pointLabelYOffset={-12}
+          enableSlices="x"
+          enablePoints={false}
+          useMesh={true}
+          animate={true}
+          // legends={legend ? legends : []}
+          markers={WaterMarkers.filter((marker: any) => marker.checked)}
+          isInteractive={false} // 마우스 움직이면 tooltip 막 뜨는거
+        />
       </div>
     </div>
   );

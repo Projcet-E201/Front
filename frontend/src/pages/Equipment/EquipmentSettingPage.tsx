@@ -57,14 +57,10 @@ const EquipmentSettingPage = () => {
       <div>
         {componentList.map((component: any, index: number) => (
           <div
-            style={{ display: "flex", justifyContent: "center" }}
+            style={{ display: "flex", justifyContent: "center", height:'100%' }}
             key={index}
           >
-            {/* <Card className={styles.card} style={{ width: "100%" }}>
-            <CardContent>
-              <Typography variant="h5" component="h2" style={{ margin: 0 }}>
-                {equipmentList[index]}
-              </Typography> */}
+
             <Accordion
               className={styles.card}
               expanded={expanded === index}
