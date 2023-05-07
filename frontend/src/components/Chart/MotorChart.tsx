@@ -16,14 +16,16 @@ const formatTime = (secondsAgo: number) => {
 
 const MotorChart = ({ datasets, legend }: Props) => {
   const navigate = useNavigate();
-  const [markers, setMarkers] = useState([]);
+  const [markers, setMarkers] = useState<any>([]);
 
   useEffect(() => {
     const markersFromLocalStorage = JSON.parse(
-      localStorage.getItem("motorChartMarkers") || "[]"
+      localStorage.getItem("MotorChartMarkers") || "[]"
     );
     setMarkers(markersFromLocalStorage.filter((marker: any) => marker.checked));
     console.log(markers);
+    // markers에 의존하면  markers의 변경에 의해 자신이 다시 실행되면서 엄청 많이 실행되고 있음 주의할 것.
+    // 성능 이슈 발생하면 버려야 할 듯
   }, []);
 
   const legends: any = [
@@ -85,7 +87,10 @@ const MotorChart = ({ datasets, legend }: Props) => {
       useMesh={true}
       animate={false}
       legends={legend ? legends : []}
-      markers={markers}
+      // 이렇게 하면 차트가 업데이트 될 때마다 markers를 가져와서 업데이트 주기마다 나타난다. 그러면 데이터를 실시간으로 받아오니까 괜찮지 않을까?
+      markers={JSON.parse(
+        localStorage.getItem("MotorChartMarkers") || "[]"
+      ).filter((marker: any) => marker.checked)}
     />
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import IconButton from "@mui/material/IconButton";
@@ -14,6 +14,15 @@ import styles from "./TopCard.module.css";
 
 import TuneIcon from "@mui/icons-material/Tune";
 
+import {
+  Drawer,
+  List,
+  ListItem,
+  Checkbox,
+  Box,
+  FormControlLabel,
+} from "@mui/material";
+
 interface Props {
   location: string;
 }
@@ -23,6 +32,9 @@ const TopCard = ({ location }: Props) => {
   const [selectedMachine, setSelectedMachine] =
     useRecoilState(selectedMachineAtom);
   // console.log(selectedMachine);
+
+  // marker Drawer
+  const [open, setOpen] = React.useState(false);
 
   let title = "";
 
@@ -114,44 +126,111 @@ const TopCard = ({ location }: Props) => {
     }
   };
 
+  const [markers, setMarkers] = useState<any>([]);
+
+  useEffect(() => {
+    if (location.includes("motor")) {
+      const storedMarkers = JSON.parse(
+        localStorage.getItem("MotorChartMarkers") || "[]"
+      );
+
+      setMarkers(storedMarkers);
+      console.log(markers);
+    }
+  }, []);
+
+  const handleMarkerCheckedChange = (index: number) => () => {
+    setMarkers((markers: any[]) => {
+      const updatedMarkers = [...markers];
+      updatedMarkers[index] = {
+        ...updatedMarkers[index],
+        checked: !updatedMarkers[index].checked,
+      };
+      localStorage.setItem("MotorChartMarkers", JSON.stringify(updatedMarkers));
+      return updatedMarkers;
+    });
+  };
+
+  const markerList = (anchor: "right") => (
+    <Box sx={{ width: 250 }} role="presentation">
+      <h1>MarkerList</h1>
+      <List>
+        {markers.map((marker: any, index: number) => {
+          const isChecked = marker.checked;
+          return (
+            <ListItem key={index}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={marker.checked}
+                    onChange={handleMarkerCheckedChange(index)}
+                  />
+                }
+                label={marker.legend}
+              />
+            </ListItem>
+          );
+        })}
+      </List>
+    </Box>
+  );
+
   return (
-    <Card className={styles.card}>
-      <CardContent
-        style={{
-          display: "flex",
-          position: "relative",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "4vh",
-          padding: "24px",
-        }}
+    <div>
+      <Card className={styles.card}>
+        <CardContent
+          style={{
+            display: "flex",
+            position: "relative",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "4vh",
+            padding: "24px",
+          }}
+        >
+          <div
+            style={{ display: "flex", alignItems: "center", height: "100%" }}
+          >
+            <IconButton
+              aria-label="go-to-water-page"
+              onClick={handleLeftButtonClick}
+            >
+              <ArrowBackIcon />
+            </IconButton>
+            <h1
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "30vh",
+              }}
+            >
+              <span>{title}</span>
+            </h1>
+            <IconButton
+              aria-label="go-to-vacuum-page"
+              onClick={handleRightButtonClick}
+            >
+              <ArrowForwardIcon />
+            </IconButton>
+          </div>
+          <div
+            style={{ position: "absolute", right: "1rem", cursor: "pointer" }}
+          >
+            <IconButton onClick={() => setOpen(true)}>
+              <TuneIcon />
+            </IconButton>
+          </div>
+        </CardContent>
+      </Card>
+      <Drawer
+        anchor="right"
+        open={open}
+        onClose={() => setOpen(false)}
+        sx={{ zIndex: "10" }}
       >
-        <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
-          <IconButton
-            aria-label="go-to-water-page"
-            onClick={handleLeftButtonClick}
-          >
-            <ArrowBackIcon />
-          </IconButton>
-          <h1
-            style={{ display: "flex", justifyContent: "center", width: "30vh" }}
-          >
-            <span>{title}</span>
-          </h1>
-          <IconButton
-            aria-label="go-to-vacuum-page"
-            onClick={handleRightButtonClick}
-          >
-            <ArrowForwardIcon />
-          </IconButton>
-        </div>
-        <div style={{ position: "absolute", right: "1rem", cursor: "pointer" }}>
-          <IconButton>
-            <TuneIcon />
-          </IconButton>
-        </div>
-      </CardContent>
-    </Card>
+        {markerList("right")}
+      </Drawer>
+    </div>
   );
 };
 
