@@ -21,7 +21,7 @@ const StringState = () => {
       }  에러 발생했습니다.`;
       setMessages((prevMessages) => [
         { id: `S${count}`, time, content },
-        ...prevMessages.slice(0, 4),
+        ...prevMessages.slice(0, 3),
       ]);
       count = (count + 1) % 5;
     }, 2000);
