@@ -3,6 +3,9 @@ import { useNavigate } from "react-router";
 
 import { ResponsiveLine } from "@nivo/line";
 
+import { useRecoilState } from "recoil";
+import { AirOutMpaMarkersAtom } from "../../store/atoms";
+
 interface Props {
   datasets: any[];
   legend?: boolean;
@@ -16,12 +19,19 @@ const formatTime = (secondsAgo: number) => {
 
 const AirOut2Chart = ({ datasets, legend }: Props) => {
   const navigate = useNavigate();
+
   const [markers, setMarkers] = useState([]);
+  const [recoilMarkers, setRecoilMarkers] =
+    useRecoilState(AirOutMpaMarkersAtom);
+
   useEffect(() => {
     const markersFromLocalStorage = JSON.parse(
       localStorage.getItem("AirOutMpaChartMarkers") || "[]"
     );
     setMarkers(markersFromLocalStorage.filter((marker: any) => marker.checked));
+    setRecoilMarkers(
+      markersFromLocalStorage.filter((marker: any) => marker.checked)
+    );
   }, []);
 
   const legends: any = [
@@ -63,8 +73,8 @@ const AirOut2Chart = ({ datasets, legend }: Props) => {
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
-        min: -0.1,
-        max: 1,
+        min: 0,
+        max: 900,
         stacked: false,
         reverse: false,
       }}
@@ -83,7 +93,7 @@ const AirOut2Chart = ({ datasets, legend }: Props) => {
       useMesh={true}
       animate={false}
       legends={legend ? legends : []}
-      markers={markers}
+      markers={recoilMarkers.filter((marker: any) => marker.checked)}
     />
   );
 };

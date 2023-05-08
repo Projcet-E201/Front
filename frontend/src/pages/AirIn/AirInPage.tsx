@@ -120,7 +120,7 @@ const AirInPage = () => {
           </CardContent>
         </Card>
         <Card className={styles.card} style={{ flex: "2" }}>
-          <CardContent style={{ height: "25vh" }}>
+          <CardContent style={{ height: "13rem" }}>
             <AirInChart datasets={datasets} legend={true} />
           </CardContent>
         </Card>

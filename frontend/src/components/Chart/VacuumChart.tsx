@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { VacuumMarkersAtom } from "../../store/atoms";
 
 const VacuumChart = ({ data }: any) => {
   const navigate = useNavigate();
+
   const handleBarClick = (data: any, event: any) => {
-    // console.log(
-    //   `Clicked bar with x value of "${data.indexValue}" and y value of "${data.value}"`
-    // );
-    // console.log(`${data.indexValue.slice(1)}`);
-    // console.log(`${data.value}`, `value`);
     navigate(`${data.indexValue.slice(1)}`);
   };
 
   const [markers, setMarkers] = useState([]);
+  const [recoilMarkers, setRecoilMarkers] = useRecoilState(VacuumMarkersAtom);
   useEffect(() => {
     const markersFromLocalStorage = JSON.parse(
       localStorage.getItem("VacuumChartMarkers") || "[]"
     );
     setMarkers(markersFromLocalStorage.filter((marker: any) => marker.checked));
+    setRecoilMarkers(
+      markersFromLocalStorage.filter((marker: any) => marker.checked)
+    );
   }, []);
   return (
     <ResponsiveBar
@@ -52,7 +54,7 @@ const VacuumChart = ({ data }: any) => {
       }}
       maxValue={100}
       colors={(bar: any) => bar.data.color}
-      markers={markers}
+      markers={recoilMarkers.filter((marker: any) => marker.checked)}
     />
   );
 };

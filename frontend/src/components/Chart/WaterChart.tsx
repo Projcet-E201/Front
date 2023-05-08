@@ -3,6 +3,10 @@ import { useNavigate } from "react-router";
 
 import { ResponsiveLine } from "@nivo/line";
 
+// import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
+import { WaterMarkersAtom } from "../../store/atoms";
+
 interface Props {
   datasets: any[];
   legend?: boolean;
@@ -16,12 +20,21 @@ const formatTime = (secondsAgo: number) => {
 
 const WaterChart = ({ datasets, legend }: Props) => {
   const navigate = useNavigate();
-  const [markers, setMarkers] = useState([]);
+  const [markers, setMarkers] = useState<any>([]);
+  const [recoilMarkers, setRecoilMarkers] = useRecoilState(WaterMarkersAtom);
+
   useEffect(() => {
     const markersFromLocalStorage = JSON.parse(
       localStorage.getItem("WaterChartMarkers") || "[]"
     );
     setMarkers(markersFromLocalStorage.filter((marker: any) => marker.checked));
+    // 일단 Recoil에서도 관리해보자.
+    setRecoilMarkers(
+      markersFromLocalStorage.filter((marker: any) => marker.checked)
+    );
+    console.log(markers);
+    // markers에 의존하면  markers의 변경에 의해 자신이 다시 실행되면서 엄청 많이 실행되고 있음 주의할 것.
+    // 성능 이슈 발생하면 버려야 할 듯
   }, []);
 
   const legends: any = [
@@ -41,7 +54,7 @@ const WaterChart = ({ datasets, legend }: Props) => {
       symbolBorderColor: "rgba(0, 0, 0, .5)",
       onClick: (data: any) => {
         const id: string = data.id as string;
-        navigate(`${id[id.length - 1]}`);
+        navigate(`${data.id.slice(5)}`);
       },
       effects: [
         {
@@ -64,7 +77,7 @@ const WaterChart = ({ datasets, legend }: Props) => {
       yScale={{
         type: "linear",
         min: 0,
-        max: 4,
+        max: 120,
         stacked: false,
         reverse: false,
       }}
@@ -83,7 +96,12 @@ const WaterChart = ({ datasets, legend }: Props) => {
       useMesh={true}
       animate={false}
       legends={legend ? legends : []}
-      markers={markers}
+      // 이렇게 하면 차트가 업데이트 될 때마다 markers를 가져와서 업데이트 주기마다 나타난다. 그러면 데이터를 실시간으로 받아오니까 괜찮지 않을까?
+      // markers={JSON.parse(
+      //   localStorage.getItem("WaterChartMarkers") || "[]"
+      // ).filter((marker: any) => marker.checked)}
+      // markers={markers}
+      markers={recoilMarkers.filter((marker: any) => marker.checked)}
     />
   );
 };

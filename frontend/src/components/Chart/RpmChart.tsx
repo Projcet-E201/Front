@@ -5,6 +5,7 @@ import { ResponsiveLine } from "@nivo/line";
 
 import { useRecoilState } from "recoil";
 import { selectedMachineAtom } from "../../store/atoms";
+import { RpmMarkersAtom } from "../../store/atoms";
 
 interface Props {
   datasets: any[];
@@ -23,11 +24,16 @@ const RpmChart = ({ datasets, legend, avgData }: Props) => {
   const navigate = useNavigate();
 
   const [markers, setMarkers] = useState([]);
+  const [recoilMarkers, setRecoilMarkers] = useRecoilState(RpmMarkersAtom);
+
   useEffect(() => {
     const markersFromLocalStorage = JSON.parse(
       localStorage.getItem("RpmChartMarkers") || "[]"
     );
     setMarkers(markersFromLocalStorage.filter((marker: any) => marker.checked));
+    setRecoilMarkers(
+      markersFromLocalStorage.filter((marker: any) => marker.checked)
+    );
   }, []);
 
   const selectedMachine = useRecoilState(selectedMachineAtom);
@@ -93,7 +99,7 @@ const RpmChart = ({ datasets, legend, avgData }: Props) => {
       useMesh={true}
       animate={false}
       legends={legend ? legends : []}
-      markers={markers}
+      markers={recoilMarkers.filter((marker: any) => marker.checked)}
     />
   );
 };

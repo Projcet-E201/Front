@@ -4,8 +4,8 @@ import { useNavigate } from "react-router";
 import { ResponsiveLine } from "@nivo/line";
 import { useParams } from "react-router";
 
-// import { useRecoilState } from "recoil";
-// import { selectedMachineAtom } from "../../store/atoms";
+import { useRecoilState } from "recoil";
+import { AirInMarkersAtom } from "../../store/atoms";
 
 interface Props {
   datasets: any[];
@@ -20,16 +20,20 @@ const formatTime = (secondsAgo: number) => {
 };
 
 const AirInChart = ({ datasets, legend, avgData }: Props) => {
-  console.log(avgData);
+  // console.log(avgData);
   const navigate = useNavigate();
   const [markers, setMarkers] = useState([]);
+  const [recoilMarkers, setRecoilMarkers] = useRecoilState(AirInMarkersAtom);
   const { machine } = useParams();
 
   useEffect(() => {
     const markersFromLocalStorage = JSON.parse(
-      localStorage.getItem("motorChartMarkers") || "[]"
+      localStorage.getItem("AirInChartMarkers") || "[]"
     );
     setMarkers(markersFromLocalStorage.filter((marker: any) => marker.checked));
+    setRecoilMarkers(
+      markersFromLocalStorage.filter((marker: any) => marker.checked)
+    );
   }, []);
 
   const legends: any = [
@@ -37,7 +41,7 @@ const AirInChart = ({ datasets, legend, avgData }: Props) => {
       anchor: "top-right",
       direction: "column",
       justify: false,
-      translateX: 100,
+      translateX: 120,
       translateY: 0,
       itemsSpacing: 0,
       itemDirection: "left-to-right",
@@ -91,7 +95,8 @@ const AirInChart = ({ datasets, legend, avgData }: Props) => {
       useMesh={true}
       animate={false}
       legends={legend ? legends : []}
-      markers={markers}
+      // markers={markers}
+      markers={recoilMarkers.filter((marker: any) => marker.checked)}
     />
   );
 };

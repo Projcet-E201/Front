@@ -5,6 +5,7 @@ import { ResponsiveLine } from "@nivo/line";
 
 import { useRecoilState } from "recoil";
 import { selectedMachineAtom } from "../../store/atoms";
+import { AbrasionMarkersAtom } from "../../store/atoms";
 
 interface Props {
   datasets: any[];
@@ -21,14 +22,17 @@ const AbrasionChart = ({ datasets, legend, avgData }: Props) => {
   console.log(avgData);
   const navigate = useNavigate();
   const [markers, setMarkers] = useState([]);
+  const [recoilMarkers, setRecoilMarkers] = useRecoilState(AbrasionMarkersAtom);
+
   useEffect(() => {
     const markersFromLocalStorage = JSON.parse(
       localStorage.getItem("AbrasionChartMarkers") || "[]"
     );
     setMarkers(markersFromLocalStorage.filter((marker: any) => marker.checked));
+    setRecoilMarkers(
+      markersFromLocalStorage.filter((marker: any) => marker.checked)
+    );
   }, []);
-
-  const selectedMachine = useRecoilState(selectedMachineAtom);
 
   const legends: any = [
     {
@@ -89,15 +93,7 @@ const AbrasionChart = ({ datasets, legend, avgData }: Props) => {
       useMesh={true}
       animate={false}
       legends={legend ? legends : []}
-      markers={[
-        {
-          axis: "y",
-          value: 35,
-          lineStyle: { stroke: "red", strokeWidth: 2 },
-          legend: "danger",
-          // legendOrientation: "vertical",
-        },
-      ]}
+      markers={recoilMarkers.filter((marker: any) => marker.checked)}
     />
   );
 };

@@ -7,6 +7,17 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 import { useRecoilState } from "recoil";
 import { selectedMachineAtom } from "../../store/atoms";
+import {
+  MotorMarkersAtom,
+  VacuumMarkersAtom,
+  AirInMarkersAtom,
+  AirOutKpaMarkersAtom,
+  AirOutMpaMarkersAtom,
+  WaterMarkersAtom,
+  LoadMarkersAtom,
+  RpmMarkersAtom,
+  AbrasionMarkersAtom,
+} from "../../store/atoms";
 
 import { useNavigate } from "react-router";
 
@@ -127,15 +138,89 @@ const TopCard = ({ location }: Props) => {
   };
 
   const [markers, setMarkers] = useState<any>([]);
+  const [MotorRecoilMarkers, setMotorRecoilMarkers] =
+    useRecoilState(MotorMarkersAtom);
+  const [VacuumRecoilMarkers, setVacuumRecoilMarkers] =
+    useRecoilState(VacuumMarkersAtom);
+  const [AirInRecoilMarkers, setAirInRecoilMarkers] =
+    useRecoilState(AirInMarkersAtom);
+  const [AirOutKpaRecoilMarkers, setAirOutKpaRecoilMarkers] =
+    useRecoilState(AirOutKpaMarkersAtom);
+  const [AirOutMpaRecoilMarkers, setAirOutMpaRecoilMarkers] =
+    useRecoilState(AirOutMpaMarkersAtom);
+  const [WaterRecoilMarkers, setWaterRecoilMarkers] =
+    useRecoilState(WaterMarkersAtom);
+  const [LoadRecoilMarkers, setLoadRecoilMarkers] =
+    useRecoilState(LoadMarkersAtom);
+  const [RpmRecoilMarkers, setRpmRecoilMarkers] =
+    useRecoilState(RpmMarkersAtom);
+  const [AbrasionRecoilMarkers, setAbrasionRecoilMarkers] =
+    useRecoilState(AbrasionMarkersAtom);
 
   useEffect(() => {
     if (location.includes("motor")) {
       const storedMarkers = JSON.parse(
         localStorage.getItem("MotorChartMarkers") || "[]"
       );
-
       setMarkers(storedMarkers);
-      console.log(markers);
+      setMotorRecoilMarkers(storedMarkers);
+      // console.log(markers);
+    } else if (location.includes("vacuum")) {
+      const storedMarkers = JSON.parse(
+        localStorage.getItem("VacuumChartMarkers") || "[]"
+      );
+      setMarkers(storedMarkers);
+      setVacuumRecoilMarkers(storedMarkers);
+      // console.log(markers);
+    } else if (location.includes("air-in")) {
+      const storedMarkers = JSON.parse(
+        localStorage.getItem("AirInChartMarkers") || "[]"
+      );
+      setMarkers(storedMarkers);
+      setAirInRecoilMarkers(storedMarkers);
+      // console.log(markers);
+    } else if (location.includes("air-out-kpa")) {
+      const storedMarkers = JSON.parse(
+        localStorage.getItem("AirOutKpaChartMarkers") || "[]"
+      );
+      setMarkers(storedMarkers);
+      setAirOutKpaRecoilMarkers(storedMarkers);
+      // console.log(markers);
+    } else if (location.includes("air-out-mpa")) {
+      const storedMarkers = JSON.parse(
+        localStorage.getItem("AirOutMpaChartMarkers") || "[]"
+      );
+      setMarkers(storedMarkers);
+      setAirOutMpaRecoilMarkers(storedMarkers);
+      // console.log(markers);
+    } else if (location.includes("water")) {
+      const storedMarkers = JSON.parse(
+        localStorage.getItem("WaterChartMarkers") || "[]"
+      );
+      setMarkers(storedMarkers);
+      setWaterRecoilMarkers(storedMarkers);
+      // console.log(markers);
+    } else if (location.includes("load")) {
+      const storedMarkers = JSON.parse(
+        localStorage.getItem("LoadChartMarkers") || "[]"
+      );
+      setMarkers(storedMarkers);
+      setLoadRecoilMarkers(storedMarkers);
+      // console.log(markers);
+    } else if (location.includes("rpm")) {
+      const storedMarkers = JSON.parse(
+        localStorage.getItem("RpmChartMarkers") || "[]"
+      );
+      setMarkers(storedMarkers);
+      setRpmRecoilMarkers(storedMarkers);
+      // console.log(markers);
+    } else if (location.includes("abrasion")) {
+      const storedMarkers = JSON.parse(
+        localStorage.getItem("AbrasionChartMarkers") || "[]"
+      );
+      setMarkers(storedMarkers);
+      setAbrasionRecoilMarkers(storedMarkers);
+      // console.log(markers);
     }
   }, []);
 
@@ -146,7 +231,58 @@ const TopCard = ({ location }: Props) => {
         ...updatedMarkers[index],
         checked: !updatedMarkers[index].checked,
       };
-      localStorage.setItem("MotorChartMarkers", JSON.stringify(updatedMarkers));
+      if (location.includes("motor")) {
+        localStorage.setItem(
+          "MotorChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setMotorRecoilMarkers(updatedMarkers);
+      } else if (location.includes("vacuum")) {
+        localStorage.setItem(
+          "VacuumChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setVacuumRecoilMarkers(updatedMarkers);
+      } else if (location.includes("air-in")) {
+        localStorage.setItem(
+          "AirInChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAirInRecoilMarkers(updatedMarkers);
+      } else if (location.includes("air-out-kpa")) {
+        localStorage.setItem(
+          "AirOutKpaChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAirOutKpaRecoilMarkers(updatedMarkers);
+      } else if (location.includes("air-out-mpa")) {
+        localStorage.setItem(
+          "AirOutMpaChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAirOutMpaRecoilMarkers(updatedMarkers);
+      } else if (location.includes("water")) {
+        localStorage.setItem(
+          "WaterChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setWaterRecoilMarkers(updatedMarkers);
+      } else if (location.includes("load")) {
+        localStorage.setItem(
+          "LoadChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setLoadRecoilMarkers(updatedMarkers);
+      } else if (location.includes("rpm")) {
+        localStorage.setItem("RpmChartMarkers", JSON.stringify(updatedMarkers));
+        setRpmRecoilMarkers(updatedMarkers);
+      } else if (location.includes("abrasion")) {
+        localStorage.setItem(
+          "AbrasionChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAbrasionRecoilMarkers(updatedMarkers);
+      }
       return updatedMarkers;
     });
   };
