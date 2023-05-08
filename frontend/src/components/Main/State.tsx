@@ -27,7 +27,7 @@ const State = () => {
   const [doubleData, setDoubleData] = useState<any[]>([]);
 
   // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
-  const connectUrl = "http://api:8091/ws";
+  const connectUrl = "https://api:8091/ws";
   const connectWebsocket = () => {
     const socket = new SockJS(connectUrl);
     const stompClient = Stomp.over(socket);
