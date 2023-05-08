@@ -8,6 +8,7 @@ const TestPage: React.FC = () => {
 
   // const connectUrl = "http://api:8091/ws";
   const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  // const connectUrl = "http://localhost:8091/ws";
   const connectWebSocket = () => {
     console.log(connectUrl);
     const socket = new SockJS(connectUrl);
@@ -30,7 +31,7 @@ const TestPage: React.FC = () => {
   const handleTitleModify = useCallback(() => {
     if (stompClient) {
       // stompClient.send(`/server/post`, {}, JSON.stringify({ data: "data" }));
-      stompClient.send(`/server/machine/motor`, {}, JSON.stringify(1));
+      stompClient.send(`/server/machine/state`, {}, JSON.stringify(1));
     }
   }, [stompClient]);
 
@@ -48,7 +49,7 @@ const TestPage: React.FC = () => {
     // server 에서 보내는 데이터를 실시간으로 받는 코드
     if (stompClient) {
       // console.log("stompClient2");
-      stompClient.subscribe(`/client/machine/motor`, (data) => {
+      stompClient.subscribe(`/client/machine/state`, (data) => {
         // console.log(data);
         setMessage(JSON.parse(data.body)); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
         // setMessage(data.body); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
