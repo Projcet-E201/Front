@@ -153,12 +153,12 @@ const MainMachineItem = (props: MainMachineItemProps) => {
 
   return (
     <div>
-      <Card>
-        <div style={{}}>
+      <Card className={styles.cardall}>
+        <div>
           <h3
             className={styles.mainmachinecardtitle}
             onClick={() => {
-              navigate(`/machine/${props.index}`);
+              navigate(`/machine/${props.index + 1}`);
               indexClick("Monitoring");
             }}
             style={
@@ -177,7 +177,7 @@ const MainMachineItem = (props: MainMachineItemProps) => {
         >
           <div
             className={styles.mainmachinecardcontent}
-            onClick={() => navigate(`/machine/${props.index}/vacuum`)}
+            onClick={() => navigate(`/machine/${props.index + 1}/vacuum`)}
           >
             <div className={styles.mainmachinecardcontentname}>압력</div>
             <div className={styles.mainmachinecardcontentscore}>
@@ -186,7 +186,7 @@ const MainMachineItem = (props: MainMachineItemProps) => {
           </div>
           <div
             className={styles.mainmachinecardcontent}
-            onClick={() => navigate(`/machine/${props.index}/water`)}
+            onClick={() => navigate(`/machine/${props.index + 1}/water`)}
           >
             <div className={styles.mainmachinecardcontentname}>유량</div>
             <div className={styles.mainmachinecardcontentscore}>
@@ -195,7 +195,7 @@ const MainMachineItem = (props: MainMachineItemProps) => {
           </div>
           <div
             className={styles.mainmachinecardcontent}
-            onClick={() => navigate(`/machine/${props.index}/motor`)}
+            onClick={() => navigate(`/machine/${props.index + 1}/motor`)}
           >
             <div className={styles.mainmachinecardcontentname}>모터 가동</div>
             <div className={styles.mainmachinecardcontentscore}>

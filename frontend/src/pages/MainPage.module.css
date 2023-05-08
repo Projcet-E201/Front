@@ -1,3 +1,13 @@
+.main1 {
+  display: flex;
+  max-height: 80vh;
+}
+.main2 {
+  display: flex;
+  flex-wrap: wrap;
+  width: 52vw;
+}
+
 .maincard {
   width: calc(24% - 1em);
   height: calc(24% - 0.5em);
@@ -9,10 +19,13 @@
   gap: 10px;
 }
 .sensorcard {
-  width: 18vw;
+  width: 16vw;
   height: 48%;
   margin: 0.5rem;
   margin-left: 0.8rem;
+
+  /* transition: transform 0.3s ease-in-out; */
+  /* float: left; */
 }
 .sensorheader {
   margin: 0.5em;
@@ -67,4 +80,7 @@
   margin: 0.5em;
   width: calc(96% - 1em);
   height: calc(24% - 0.5em);
+}
+.errorcardcomponent {
+  line-height: 2.8em;
 }
