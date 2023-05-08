@@ -1,46 +1,18 @@
+.main1 {
+  display: flex;
+  max-height: 80vh;
+}
+.main2 {
+  display: flex;
+  flex-wrap: wrap;
+  width: 52vw;
+}
+
 .maincard {
   width: calc(24% - 1em);
   height: calc(24% - 0.5em);
   margin: 0.5em;
 }
-/* .maincardtitle {
-  width: 100%;
-  background-color: #5e5e5e;
-  color: white;
-  margin: 0.5em;
-  margin-left: 1em;
-  margin: 0 auto;
-  padding: 0.3em;
-  padding-left: 0.5em;
-  font-size: 1.2em;
-  line-height: 1.5em;
-}
-.maincardtitle:hover {
-  cursor: pointer;
-}
-.maincardcontent {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding-top: 0.2em;
-  font-size: 1.1em;
-  line-height: 0.9em;
-  margin-left: 0.5em;
-  margin-right: 0.5em;
-}
-.maincardcontent:hover {
-  cursor: pointer;
-  transform: scale(1.02);
-}
-.maincardcontentname {
-  font-weight: 1000;
-  margin-bottom: 20px;
-}
-.maincardcontentscore {
-  font-weight: 1000;
-
-  color: #5cc2f2;
-} */
 .sensorcontainer {
   display: flex;
   flex-wrap: wrap;
@@ -51,6 +23,7 @@
   height: 48%;
   margin: 0.5rem;
   margin-left: 0.8rem;
+
   /* transition: transform 0.3s ease-in-out; */
   /* float: left; */
 }
@@ -107,4 +80,7 @@
   margin: 0.5em;
   width: calc(96% - 1em);
   height: calc(24% - 0.5em);
+}
+.errorcardcomponent {
+  line-height: 2.8em;
 }
