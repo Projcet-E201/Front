@@ -4,92 +4,7 @@ import { ResponsiveBar } from "@nivo/bar";
 import { faker } from "@faker-js/faker";
 
 // import CircularProgress from "@mui/material/CircularProgress";
-const DoubleState = () => {
-  const [data, setData] = useState([
-    {
-      id: "db1",
-      vacuum: "D1",
-      value: faker.datatype.float({ min: -10, max: 300 }),
-      color: "#FF5722",
-    },
-    {
-      id: "db2",
-      vacuum: "D2",
-      value: faker.datatype.float({ min: -10, max: 300 }),
-      color: "#FFC107",
-    },
-    {
-      id: "db3",
-      vacuum: "D3",
-      value: faker.datatype.float({ min: -10, max: 300 }),
-      color: "#4CAF50",
-    },
-    {
-      id: "db4",
-      vacuum: "D4",
-      value: faker.datatype.float({ min: -10, max: 300 }),
-      color: "#2196F3",
-    },
-    {
-      id: "db5",
-      vacuum: "D5",
-      value: faker.datatype.float({ min: -10, max: 300 }),
-      color: "#9C27B0",
-    },
-    {
-      id: "db6",
-      vacuum: "D6",
-      value: faker.datatype.float({ min: -10, max: 300 }),
-      color: "#FF9800",
-    },
-    {
-      id: "db7",
-      vacuum: "D7",
-      value: faker.datatype.float({ min: -10, max: 300 }),
-      color: "#795548",
-    },
-    {
-      id: "db8",
-      vacuum: "D8",
-      value: faker.datatype.float({ min: -10, max: 300 }),
-      color: "#00BCD4",
-    },
-    {
-      id: "db9",
-      vacuum: "D9",
-      value: faker.datatype.float({ min: -10, max: 300 }),
-      color: "#E91E63",
-    },
-    {
-      id: "db10",
-      vacuum: "D10",
-      value: faker.datatype.float({ min: -10, max: 300 }),
-      color: "#00ffff",
-    },
-  ]);
-
-  const [remainingTime, setRemainingTime] = useState(5);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      const newData = data.map((d) => ({
-        ...d,
-        value: faker.datatype.float({ min: -10, max: 300 }),
-      }));
-      setData(newData);
-      setRemainingTime(6);
-    }, 5000);
-
-    const countdownIntervalId = setInterval(() => {
-      setRemainingTime((prev) => prev - 1);
-    }, 1000);
-
-    return () => {
-      clearInterval(intervalId);
-      clearInterval(countdownIntervalId);
-    };
-  }, [data]);
-
+const DoubleState = ({ data }: any) => {
   return (
     <ResponsiveBar
       // width={1000} // 차트의 가로 길이
@@ -97,7 +12,7 @@ const DoubleState = () => {
       // height={500} // 차트의 세로 길이
       data={data} // 차트에 표시될 데이터 배열
       keys={["value"]} // 표시될 데이터에서 y축 값에 해당하는 키 값
-      indexBy="vacuum" // 표시될 데이터에서 x축 값에 해당하는 키 값
+      indexBy="name" // 표시될 데이터에서 x축 값에 해당하는 키 값
       margin={{ top: 10, right: 10, bottom: 40, left: 40 }} // 차트와 경계선 사이의 여백
       padding={0.2} // 바 사이의 여백
       labelTextColor={{ from: "color", modifiers: [["darker", 1.6]] }} // 라벨의 색상과 스타일 지정
@@ -122,30 +37,7 @@ const DoubleState = () => {
       }}
       maxValue={300}
       minValue={-50}
-      colors={(bar) => bar.data.color}
-      markers={[
-        {
-          axis: "y",
-          value: 30,
-          lineStyle: { stroke: "red", strokeWidth: 2 },
-          legend: "위험 구간",
-          legendOrientation: "vertical",
-        },
-        {
-          axis: "y",
-          value: 70,
-          lineStyle: { stroke: "red", strokeWidth: 2 },
-          legend: "",
-          legendOrientation: "vertical",
-        },
-        {
-          axis: "y",
-          value: 0,
-          lineStyle: { stroke: "gray", strokeWidth: 2 },
-          legend: "",
-          legendOrientation: "vertical",
-        },
-      ]}
+      colors={(bar: any) => bar.data.color}
     />
   );
 };

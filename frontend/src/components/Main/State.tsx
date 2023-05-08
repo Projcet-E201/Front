@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import { useParams } from "react-router-dom";
 
 import styles from "./State.module.css";
 
@@ -11,38 +12,118 @@ import StringState from "./StateComponents/StringState";
 import DoubleState from "./StateComponents/DoubleState";
 import IntState from "./StateComponents/IntState";
 
+// socket 통신
+import Stomp from "stompjs";
+import SockJS from "sockjs-client";
+
 const State = () => {
-  const [booleanData, setBooleanData] = useState([
-    { id: 1, value: true },
-    { id: 2, value: false },
-    { id: 3, value: false },
-    { id: 4, value: true },
-    { id: 5, value: false },
-    { id: 6, value: true },
-    { id: 7, value: false },
-    { id: 8, value: true },
-    { id: 9, value: true },
-    { id: 10, value: false },
-  ]);
+  const { machine = "" } = useParams();
+  const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
+  const [message, setMessage] = useState<any>();
+
+  const [booleanData, setBooleanData] = useState<any[]>([]);
+  const [stringData, setStringData] = useState<any[]>([]);
+  const [intData, setIntData] = useState<any[]>([]);
+  const [doubleData, setDoubleData] = useState<any[]>([]);
+
+  // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  const connectUrl = "http://api:8091/ws";
+  const connectWebsocket = () => {
+    const socket = new SockJS(connectUrl);
+    const stompClient = Stomp.over(socket);
+    stompClient.connect(
+      {},
+      () => {
+        setStompClient(stompClient);
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
+  };
+
+  const handleGetState = useCallback(() => {
+    if (stompClient) {
+      stompClient.send(
+        `/server/machine/state`,
+        {},
+        JSON.stringify(parseInt(machine))
+      );
+    }
+  }, [stompClient, machine]);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setBooleanData(
-        booleanData.map((data) => ({
-          id: data.id,
-          value: Math.random() >= 0.5,
-        }))
-      );
-    }, 5000);
-
-    return () => clearInterval(intervalId);
+    connectWebsocket();
+    return () => {
+      if (stompClient) {
+        stompClient.disconnect(() => "");
+      }
+    };
   }, []);
+
+  useEffect(() => {
+    console.log(booleanData, "zzzzzzzzzzzzzzzzzzzz");
+    if (stompClient) {
+      stompClient.subscribe(`/client/machine/state`, (data) => {
+        const parsedData = JSON.parse(data.body);
+        setMessage(parsedData);
+
+        const booleanDataArray = new Array(10).fill(null);
+        for (const [key, value] of Object.entries(parsedData[0])) {
+          if (key.startsWith("boolean")) {
+            const id = parseInt(key.slice(7));
+            booleanDataArray[id - 1] = { id: id, value: value };
+          }
+        }
+        setBooleanData(booleanDataArray);
+
+        const intDataArray = new Array(10).fill(null);
+        for (const [key, value] of Object.entries(parsedData[2])) {
+          if (key.startsWith("int")) {
+            const id = parseInt(key.slice(3));
+            intDataArray[id - 1] = {
+              id: key,
+              name: `I${id}`,
+              value: value,
+              color: "#000000",
+            };
+          }
+        }
+        setIntData(intDataArray);
+
+        const doubleDataArray = new Array(10).fill(null);
+        for (const [key, value] of Object.entries(parsedData[1])) {
+          if (key.startsWith("double")) {
+            const id = parseInt(key.slice(6));
+            doubleDataArray[id - 1] = {
+              id: key,
+              name: `D${id}`,
+              value: value,
+              color: "#000000",
+            };
+          }
+        }
+        setDoubleData(doubleDataArray);
+      });
+    }
+  }, [stompClient]);
+
+  // 주소 바뀌면 새로 가져오깅
+  useEffect(() => {
+    setBooleanData([]);
+    setIntData([]);
+    setDoubleData([]);
+  }, [machine]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleGetState();
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [handleGetState]);
 
   const firstHalf = booleanData.slice(0, 5);
   const secondHalf = booleanData.slice(5, 10);
-
-  // console.log(firstHalf);
-  // console.log(secondHalf);
 
   return (
     <div className={styles.state}>
@@ -57,6 +138,7 @@ const State = () => {
             >
               <CardContent>
                 {/* <p>bool 5개</p> */}
+                {/* {JSON.stringify(booleanData)} */}
                 <BooleanState data={firstHalf} />
               </CardContent>
             </Card>
@@ -94,7 +176,7 @@ const State = () => {
           >
             <CardContent style={{ height: "40vh" }}>
               {/* <p>double</p> */}
-              <DoubleState />
+              <DoubleState data={doubleData} />
             </CardContent>
           </Card>
         </div>
@@ -105,7 +187,7 @@ const State = () => {
           >
             <CardContent style={{ height: "40vh" }}>
               {/* <p>int type</p> */}
-              <IntState />
+              <IntState data={intData} />
             </CardContent>
           </Card>
         </div>
