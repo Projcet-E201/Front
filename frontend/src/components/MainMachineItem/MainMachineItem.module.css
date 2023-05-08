@@ -10,8 +10,8 @@
   margin: 0 auto;
   padding: 0.3em;
   padding-left: 0.5em;
-  font-size: 1.2em;
-  line-height: 1.5em;
+  font-size: 2vh;
+  line-height: 3vh;
 }
 .mainmachinecardtitle:hover {
   cursor: pointer;
@@ -21,10 +21,10 @@
   flex-wrap: wrap;
   justify-content: space-between;
   padding-top: 0.2em;
-  font-size: 1.1em;
-  line-height: 0.9em;
-  margin-left: 0.5em;
-  margin-right: 0.5em;
+  font-size: 2vh;
+  line-height: 3vh;
+  margin-left: 0.3vw;
+  margin-right: 0.3vw;
 }
 .mainmachinecardcontent:hover {
   cursor: pointer;
@@ -33,7 +33,7 @@
 .mainmachinecardcontentname {
   /* font-size: large; */
   font-weight: 1000;
-  margin-bottom: 11px;
+  /* margin-bottom: 11px; */
 }
 .mainmachinecardcontentscore {
   /* font-size: large; */
