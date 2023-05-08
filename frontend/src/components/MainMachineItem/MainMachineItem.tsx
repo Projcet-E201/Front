@@ -153,8 +153,8 @@ const MainMachineItem = (props: MainMachineItemProps) => {
 
   return (
     <div>
-      <Card>
-        <div style={{}}>
+      <Card className={styles.cardall}>
+        <div>
           <h3
             className={styles.mainmachinecardtitle}
             onClick={() => {

@@ -646,7 +646,7 @@ const MainPage = () => {
           style={{
             display: "flex",
             flexWrap: "wrap",
-            width: "54%",
+            width: "52vw",
             // height: "100%",
           }}
         >
