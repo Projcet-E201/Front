@@ -391,11 +391,26 @@ import {
 import MainError from "../components/MainError/MainError";
 import MainMachineItem from "../components/MainMachineItem/MainMachineItem";
 
+type ClientData = {
+  [key: string]: {
+    MOTOR: number;
+    VACUUM: number;
+    AIR_IN_KPA: number;
+    AIR_OUT_KPA: number;
+    AIR_OUT_MPA: number;
+    WATER: number;
+    ABRASION: number;
+    LOAD: number;
+    VELOCITY: number;
+    SCORE: number;
+  };
+};
+
 const MainPage = () => {
   const navigate = useNavigate();
   const machines = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-  const [clientData, setClientData] = useState({
+  const [clientData, setClientData] = useState<ClientData>({
     CLIENT1: {
       MOTOR: 100,
       VACUUM: 50,
@@ -601,7 +616,9 @@ const MainPage = () => {
                 }
               >
                 <div>{key}</div>
-                <div className={styles.sensordatascore}>{data.MOTOR}</div>
+                <div className={styles.sensordatascore}>
+                  {data[sensor as keyof typeof data]}
+                </div>
               </div>
             ))}
           </CardContent>
