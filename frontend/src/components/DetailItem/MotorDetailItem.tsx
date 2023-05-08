@@ -169,7 +169,8 @@ const MotorDetailItem: React.FC = () => {
 
   //웹소켓 코드 시작
 
-  const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  const connectUrl = "https://api:8091/ws";
   // const connectUrl = "http://localhost:8091/ws";
 
   useEffect(() => {
