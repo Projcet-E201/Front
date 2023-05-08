@@ -290,45 +290,57 @@ const TopCard = ({ location }: Props) => {
 
   const markerList = (anchor: "right") => (
     <Box sx={{ width: 250, height: "100%" }} role="presentation">
-      <div style={{ textAlign: "center" }}>
+      <div style={{ textAlign: "center", height: "10vh" }}>
         <h1>MarkerList</h1>
         <div style={{ display: "flex", justifyContent: "end" }}>
           <Link href="/equipment-setting">수정하러가기</Link>
         </div>
       </div>
-
-      <List style={{ marginBottom: "20px" }}>
-        {markers.map((marker: any, index: number) => (
-          <ListItem key={index}>
-            <div style={{ width: "100%" }}>
-              <FormControlLabel
-                sx={{ width: "70%" }}
-                control={
-                  <Checkbox
-                    checked={marker.checked}
-                    onChange={handleMarkerCheckedChange(index)}
-                  />
-                }
-                label={marker.legend}
-              />
+      {markers.length === 0 ? (
+        <div
+          style={{
+            height: "90vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <h3>Marker가 없습니다.</h3>
+        </div>
+      ) : (
+        <List>
+          {markers.map((marker: any, index: number) => (
+            <ListItem key={index}>
               <div style={{ width: "100%" }}>
-                <p style={{ margin: "0" }}>value: {marker.value}</p>
-                {/* <p>{marker.lineStyle.stroke}</p> */}
-                <div
-                  style={{
-                    display: "inline-block",
-                    width: "90%",
-                    height: `${marker.lineStyle.strokeWidth}px`,
-                    marginRight: "5px",
-                    backgroundColor: marker.lineStyle.stroke,
-                    border: "1px solid #ddd",
-                  }}
-                ></div>
+                <FormControlLabel
+                  sx={{ width: "70%" }}
+                  control={
+                    <Checkbox
+                      checked={marker.checked}
+                      onChange={handleMarkerCheckedChange(index)}
+                    />
+                  }
+                  label={marker.legend}
+                />
+                <div style={{ width: "100%" }}>
+                  <p style={{ margin: "0" }}>value: {marker.value}</p>
+                  {/* <p>{marker.lineStyle.stroke}</p> */}
+                  <div
+                    style={{
+                      display: "inline-block",
+                      width: "90%",
+                      height: `${marker.lineStyle.strokeWidth}px`,
+                      marginRight: "5px",
+                      backgroundColor: marker.lineStyle.stroke,
+                      border: "1px solid #ddd",
+                    }}
+                  ></div>
+                </div>
               </div>
-            </div>
-          </ListItem>
-        ))}
-      </List>
+            </ListItem>
+          ))}
+        </List>
+      )}
     </Box>
   );
 
