@@ -48,6 +48,12 @@ const MotorDetailItem = () => {
       }
     };
   }, []);
+  const handleRealTimeButtonClick = () => {
+    if (ws) {
+      ws.send(JSON.stringify({ realTime: true }));
+    }
+    window.location.reload();
+  };
 
   const handleDateChange = (dates: any, dateStrings: [string, string]) => {
     if (ws) {
@@ -105,7 +111,7 @@ const MotorDetailItem = () => {
                 <Button block onClick={handlehistoryButtonClick}>
                   검색하기
                 </Button>
-                <Button type="text" block>
+                <Button type="text" block onClick={handleRealTimeButtonClick}>
                   실시간 보기
                 </Button>
               </Space>
