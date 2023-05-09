@@ -427,15 +427,15 @@ const TopCard = ({ location }: Props) => {
     });
   };
 
-  const handleMarkerWidthChange = (index: number, width: number) => () => {
+  const handleMarkerWidthChange = (index: number, inputwidth: any) => {
+    console.log(inputwidth);
     setMarkers((markers: any[]) => {
       const updatedMarkers = [...markers];
-      console.log(width);
       updatedMarkers[index] = {
         ...updatedMarkers[index],
         lineStyle: {
           ...updatedMarkers[index].lineStyle,
-          strokeWidth: width,
+          strokeWidth: inputwidth,
         },
       };
       if (location.includes("motor")) {
@@ -501,9 +501,11 @@ const TopCard = ({ location }: Props) => {
     console.log(color);
     setMarkers((markers: any[]) => {
       const updatedMarkers = [...markers];
-      const newLineStyle = {
-        ...updatedMarkers[isChangeColorPickerOpen].lineStyle,
-      };
+      const markerToUpdate = { ...updatedMarkers[isChangeColorPickerOpen] };
+      const newLineStyle = { ...markerToUpdate.lineStyle };
+      newLineStyle.stroke = color;
+      markerToUpdate.lineStyle = newLineStyle;
+      updatedMarkers[isChangeColorPickerOpen] = markerToUpdate;
       newLineStyle.stroke = color;
       updatedMarkers[isChangeColorPickerOpen].lineStyle = newLineStyle;
       if (location.includes("motor")) {
@@ -563,7 +565,7 @@ const TopCard = ({ location }: Props) => {
   };
 
   const markerList = (anchor: "right") => (
-    <Box sx={{ width: 250, height: "100%" }} role="presentation">
+    <Box sx={{ width: 300, height: "100%" }} role="presentation">
       <div style={{ textAlign: "center", height: "10vh" }}>
         <h1>MarkerList</h1>
         <div style={{ display: "flex", justifyContent: "end" }}>
@@ -676,7 +678,7 @@ const TopCard = ({ location }: Props) => {
                             : { position: "absolute", zIndex: "2" }
                         }
                       >
-                        <div>
+                        <div style={{ background: "white" }}>
                           <ChangeColorPicker onColorChange={handleEditColor} />
                         </div>
                         <div style={{ display: "flex", marginTop: "10px" }}>
@@ -687,9 +689,10 @@ const TopCard = ({ location }: Props) => {
                               width: "100%",
                             }}
                             value={marker.lineStyle.strokeWidth}
-                            onChange={(e) =>
-                              handleMarkerWidthChange(index, e.target.value)
-                            }
+                            onChange={(e) => {
+                              handleMarkerWidthChange(index, e.target.value);
+                              console.log(e.target.value);
+                            }}
                           >
                             {Array.from({ length: 10 }, (_, i) => i + 1).map(
                               (width) => (
