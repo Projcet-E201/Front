@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // DnD 기능
 // import { DragDropContext } from "react-beautiful-dnd";
 
@@ -8,15 +8,20 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 
 import CardMotorChart from "./CardChart/CardMotorChart";
+import CardAirInChart from "./CardChart/CardAirInChart";
 import CardVacuumChart from "./CardChart/CardVacuumChart";
-import CardLoadChart from "./CardChart/CardLoadChart";
-import CardAbrasionChart from "./CardChart/CardAbrasionChart";
+//air 출력 2개
+import CardAirOutKpaChart from "./CardChart/CardAirOutKpaChart";
+import CardAirOutMpaChart from "./CardChart/CardAirOutMpaChart";
+
 import CardWaterChart from "./CardChart/CardWaterChart";
 import CardRpmChart from "./CardChart/CardRpmChart";
-import CardAirInChart from "./CardChart/CardAirInChart";
+import CardLoadChart from "./CardChart/CardLoadChart";
+import CardAbrasionChart from "./CardChart/CardAbrasionChart";
 
 const Sensor = () => {
   const navigate = useNavigate();
+  const { machine }: any = useParams();
   const repeat = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   return (
@@ -45,8 +50,8 @@ const Sensor = () => {
               <CardContent>
                 {index === 0 && (
                   <div
-                    // onClick={() => navigate(`motor`)}
-                    style={{ width: "auto", height: "22.5vh" }}
+                    onClick={() => navigate(`/machine/${machine}/motor`)}
+                    style={{ width: "auto", height: "23vh" }}
                   >
                     <h3 style={{ margin: "0" }}>Motor Toque(%)</h3>
                     <CardMotorChart />
@@ -55,7 +60,7 @@ const Sensor = () => {
                 {index === 1 && (
                   <div
                     onClick={() => navigate(`air-in`)}
-                    style={{ width: "auto", height: "22.5vh" }}
+                    style={{ width: "auto", height: "23vh" }}
                   >
                     <h3 style={{ margin: "0" }}>Air입력(kPa)</h3>
                     <CardAirInChart />
@@ -63,8 +68,8 @@ const Sensor = () => {
                 )}
                 {index === 2 && (
                   <div
-                    onClick={() => navigate(`vacuum`)}
-                    style={{ width: "auto", height: "22.5vh" }}
+                    onClick={() => navigate(`/machine/${machine}/vacuum`)}
+                    style={{ width: "auto", height: "23vh" }}
                   >
                     <h3 style={{ margin: "0" }}>Vacuum입력(kPa)</h3>
                     <CardVacuumChart />
@@ -73,25 +78,25 @@ const Sensor = () => {
                 {index === 3 && (
                   <div
                     onClick={() => navigate(`air-out-kpa`)}
-                    style={{ width: "auto", height: "22.5vh" }}
+                    style={{ width: "auto", height: "23vh" }}
                   >
                     <h3 style={{ margin: "0" }}>Air출력(kPa)</h3>
-                    <CardVacuumChart />
+                    <CardAirOutKpaChart />
                   </div>
                 )}
                 {index === 4 && (
                   <div
                     onClick={() => navigate(`air-out-mpa`)}
-                    style={{ width: "auto", height: "22.5vh" }}
+                    style={{ width: "auto", height: "23vh" }}
                   >
                     <h3 style={{ margin: "0" }}>Air출력(MPa)</h3>
-                    <CardVacuumChart />
+                    <CardAirOutMpaChart />
                   </div>
                 )}
                 {index === 5 && (
                   <div
                     onClick={() => navigate(`water`)}
-                    style={{ width: "auto", height: "22.5vh" }}
+                    style={{ width: "auto", height: "23vh" }}
                   >
                     <h3 style={{ margin: "0" }}>Water출력(L/min)</h3>
                     <CardWaterChart />
@@ -100,7 +105,7 @@ const Sensor = () => {
                 {index === 6 && (
                   <div
                     onClick={() => navigate(`rpm`)}
-                    style={{ width: "auto", height: "22.5vh" }}
+                    style={{ width: "auto", height: "23vh" }}
                   >
                     <h3 style={{ margin: "0" }}>기구부 회전속도(/min)</h3>
                     <CardRpmChart />
@@ -109,7 +114,7 @@ const Sensor = () => {
                 {index === 7 && (
                   <div
                     onClick={() => navigate(`load`)}
-                    style={{ width: "auto", height: "22.5vh" }}
+                    style={{ width: "auto", height: "23vh" }}
                     // style={{ width: "auto", height: "50.5vh" }}
                   >
                     <h3 style={{ margin: "0" }}>기구부 부하량(Ampere)</h3>
@@ -119,7 +124,7 @@ const Sensor = () => {
                 {index === 8 && (
                   <div
                     onClick={() => navigate(`abrasion`)}
-                    style={{ width: "auto", height: "22.5vh" }}
+                    style={{ width: "auto", height: "23vh" }}
                   >
                     <h3 style={{ margin: "0" }}>기구부 마모량(mm)</h3>
                     <CardAbrasionChart />
