@@ -1,15 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 import { ResponsiveLine } from "@nivo/line";
 
-import { useRecoilState } from "recoil";
-import { selectedMachineAtom } from "../../../store/atoms";
-
 interface Props {
   datasets: any[];
   legend?: boolean;
-  avgData?: any;
 }
 
 const formatTime = (secondsAgo: number) => {
@@ -18,11 +14,8 @@ const formatTime = (secondsAgo: number) => {
   return d.toLocaleTimeString();
 };
 
-const RpmDetailChart = ({ datasets, legend, avgData }: Props) => {
-  console.log(avgData);
+const DetailChart = ({ datasets, legend }: Props) => {
   const navigate = useNavigate();
-
-  const selectedMachine = useRecoilState(selectedMachineAtom);
 
   const legends: any = [
     {
@@ -39,12 +32,6 @@ const RpmDetailChart = ({ datasets, legend, avgData }: Props) => {
       symbolSize: 12,
       symbolShape: "circle",
       symbolBorderColor: "rgba(0, 0, 0, .5)",
-      onClick: (data: any) => {
-        const id: string = data.id as string;
-        // navigate(`/machine/${selectedMachine}/abra
-        // sion/${id[id.length - 1]}`);
-        navigate(`${id[id.length - 1]}`);
-      },
       effects: [
         {
           on: "hover",
@@ -56,6 +43,40 @@ const RpmDetailChart = ({ datasets, legend, avgData }: Props) => {
       ],
     },
   ];
+  const [maxvalue, setMaxvalue] = useState(0);
+  const [minvalue, setMinvalue] = useState(0);
+
+  useEffect(() => {
+    if (datasets[0].name == "motor") {
+      setMaxvalue(300);
+      setMinvalue(0);
+    } else if (datasets[0].name == "water") {
+      setMaxvalue(4);
+      setMinvalue(0);
+    } else if (datasets[0].name == "vacuum") {
+      setMaxvalue(30);
+      setMinvalue(0);
+    } else if (datasets[0].name == "air-in") {
+      setMaxvalue(900);
+      setMinvalue(0);
+    } else if (datasets[0].name == "air-out-kpa") {
+      setMaxvalue(900);
+      setMinvalue(0);
+    } else if (datasets[0].name == "air-out-mpa") {
+      setMaxvalue(1);
+      setMinvalue(-0.1);
+    } else if (datasets[0].name == "abrasion") {
+      setMaxvalue(40);
+      setMinvalue(0);
+    } else if (datasets[0].name == "load") {
+      setMaxvalue(16);
+      setMinvalue(0);
+    } else if (datasets[0].name == "rpm") {
+      setMaxvalue(50000);
+      setMinvalue(0);
+    }
+    return;
+  }, []);
 
   return (
     <ResponsiveLine
@@ -65,8 +86,8 @@ const RpmDetailChart = ({ datasets, legend, avgData }: Props) => {
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
-        min: 0,
-        max: 50000,
+        min: minvalue,
+        max: maxvalue,
         stacked: false,
         reverse: false,
       }}
@@ -85,17 +106,8 @@ const RpmDetailChart = ({ datasets, legend, avgData }: Props) => {
       useMesh={true}
       animate={false}
       legends={legend ? legends : []}
-      markers={[
-        {
-          axis: "y",
-          value: 45000,
-          lineStyle: { stroke: "red", strokeWidth: 2 },
-          legend: "danger",
-          // legendOrientation: "vertical",
-        },
-      ]}
     />
   );
 };
 
-export default RpmDetailChart;
+export default DetailChart;
