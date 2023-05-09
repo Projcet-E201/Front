@@ -1,0 +1,56 @@
+.sensorcontainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.sensorcard {
+  width: 16vw;
+  height: calc(36vh + 1.2em);
+  margin: 0.5rem;
+  margin-left: 0.8rem;
+
+  /* transition: transform 0.3s ease-in-out; */
+  /* float: left; */
+}
+.sensorheader {
+  margin: 0.5em;
+  margin-left: 1em;
+  margin: 0 auto;
+  padding: 0.3em;
+  padding-left: 0.5em;
+  padding-bottom: 0;
+  font-size: 1.2em;
+  line-height: 1.5em;
+}
+.sensorheader:hover {
+  background-color: #191ba9;
+  color: white;
+}
+.sensorheader:active {
+  background-color: #191ba9;
+  color: white;
+}
+.sensordatacontent {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 0;
+  /* padding-left: 0.8vh;
+  padding-right: 0.8vh; */
+  font-size: 1em;
+  line-height: 1.3em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+.sensordatascore {
+  color: #5cc2f2;
+  font-weight: 1000;
+}
+.sensordatastyle {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sensordatacontent:hover {
+  cursor: pointer;
+  transform: scale(1.02);
+}
