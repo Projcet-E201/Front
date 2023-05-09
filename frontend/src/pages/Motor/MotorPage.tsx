@@ -133,7 +133,7 @@ const MotorPage = () => {
             style={{ width: "49%", cursor: "pointer" }}
             onClick={() => navigate(`${index + 1}`)}
           >
-            <CardContent style={{ height: "20vh", margin: "0" }}>
+            <CardContent style={{ height: "250px", margin: "0" }}>
               <h4 style={{ margin: "0" }}>Motor{index + 1}</h4>
               <MotorChart datasets={[dataset]} legend={false} />
             </CardContent>

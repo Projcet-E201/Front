@@ -31,7 +31,7 @@ const NavBar = ({ leftNavWidth }: any) => {
         {/* <p>최상단 네브바</p> */}
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div style={{ display: "flex" }}>
-            <div className={styles.title} style={{ width: "15vw" }}>
+            <div className={styles.title} style={{ width: "220px" }}>
               <img src={logo} alt="logo" onClick={() => navigate(`/`)} />
               <h1 onClick={() => navigate(`/`)}>SEMSE</h1>
             </div>

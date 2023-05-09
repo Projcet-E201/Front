@@ -267,7 +267,7 @@ const LeftNav = ({ childrenHeight }: any) => {
           <ListItemText primary="설비 관리" />
         </ListItemButton>
 
-        <ListItemButton
+        {/* <ListItemButton
           sx={{
             "&:hover": {
               bgcolor: "#191BA9",
@@ -300,9 +300,9 @@ const LeftNav = ({ childrenHeight }: any) => {
             />
           </ListItemIcon>
           <ListItemText primary="서비스 관리" />
-        </ListItemButton>
+        </ListItemButton> */}
 
-        <ListItemButton
+        {/* <ListItemButton
           sx={{
             "&:hover": {
               bgcolor: "#191BA9",
@@ -328,9 +328,9 @@ const LeftNav = ({ childrenHeight }: any) => {
             />
           </ListItemIcon>
           <ListItemText primary="Test" />
-        </ListItemButton>
+        </ListItemButton> */}
 
-        <ListItemButton
+        {/* <ListItemButton
           sx={{
             "&:hover": {
               bgcolor: "#191BA9",
@@ -356,7 +356,7 @@ const LeftNav = ({ childrenHeight }: any) => {
             />
           </ListItemIcon>
           <ListItemText primary="Test2" />
-        </ListItemButton>
+        </ListItemButton> */}
       </List>
     </div>
   );

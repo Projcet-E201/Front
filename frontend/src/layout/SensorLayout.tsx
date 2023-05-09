@@ -38,7 +38,7 @@ const SensorLayout = ({ children }: Props) => {
         <div>
           <LeftNav childrenHeight={childrenHeight} />
         </div>
-        <div style={{ width: "100%" }}>
+        <div style={{ width: "100%", height: "100%" }}>
           <div className={styles.children}>{children}</div>
         </div>
       </div>

@@ -37,13 +37,14 @@ const StringState = () => {
   }, []);
 
   return (
-    <div style={{ width: "100%", margin: "0" }}>
+    <div style={{ width: "100%", margin: "0", height: "100%" }}>
       {/* <h3 style={{ margin: "0" }}>StringState입니다.</h3> */}
       <table
         style={{
           borderCollapse: "collapse",
           width: "100%",
-          marginTop: "1rem",
+          // marginTop: "1rem",
+          height: "90%",
         }}
       >
         <thead>

@@ -174,7 +174,7 @@ const State = () => {
             className={styles.card}
             style={{ height: "50vh", minHeight: "468.5px" }}
           >
-            <CardContent>
+            <CardContent sx={{ height: "100%" }}>
               {/* <p>string type</p> */}
               <StringState />
             </CardContent>
