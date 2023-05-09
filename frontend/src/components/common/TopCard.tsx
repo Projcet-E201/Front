@@ -586,10 +586,10 @@ const TopCard = ({ location }: Props) => {
       ) : (
         <List>
           {markers.map((marker: any, index: number) => (
-            <ListItem key={index}>
+            <ListItem key={index} sx={{ marginBottom: "20px" }}>
               <div style={{ width: "100%" }}>
                 <FormControlLabel
-                  sx={{ width: "70%" }}
+                  sx={{ width: "100%" }}
                   control={
                     <Checkbox
                       checked={marker.checked}
@@ -615,7 +615,7 @@ const TopCard = ({ location }: Props) => {
                 />
                 <div style={{ width: "100%" }}>
                   <TextField
-                    sx={{ width: "100%" }}
+                    sx={{ width: "100%", marginTop: "10px" }}
                     id="input-with-icon-textfield"
                     label="Value"
                     value={marker.value}

@@ -114,7 +114,7 @@ const MotorPage = () => {
           </CardContent>
         </Card>
         <Card className={styles.card} style={{ flex: "2" }}>
-          <CardContent style={{ height: "25vh" }}>
+          <CardContent style={{ height: "250px" }}>
             <MotorChart datasets={datasets} legend={true} />
           </CardContent>
         </Card>
@@ -123,14 +123,15 @@ const MotorPage = () => {
         style={{
           display: "flex",
           flexWrap: "wrap",
+          // width: "100%",
           justifyContent: "space-between",
         }}
       >
         {datasets.map((dataset, index) => (
           // <Card className={styles.card} style={{ width: "32.3%" }}>
           <Card
-            className={styles.card}
-            style={{ width: "49%", cursor: "pointer" }}
+            className={styles.botcard}
+            // style={{ width: "32%", cursor: "pointer" }}
             onClick={() => navigate(`${index + 1}`)}
           >
             <CardContent style={{ height: "250px", margin: "0" }}>
