@@ -8,6 +8,7 @@ const Test2Page: React.FC = () => {
   const [message, setMessage] = useState<any>();
 
   const connectUrl = "http://localhost:8091/ws";
+  // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
   const connectWebSocket = () => {
     console.log(connectUrl);
     const socket = new SockJS(connectUrl);
@@ -30,11 +31,7 @@ const Test2Page: React.FC = () => {
   const handleTitleModify = useCallback(() => {
     if (stompClient) {
       // stompClient.send(`/server/post`, {}, JSON.stringify({ data: "data" }));
-      stompClient.send(
-        `/server/main/machine`,
-        {},
-        JSON.stringify({ data: "data" })
-      );
+      stompClient.send(`/server/main/machine`, {}, JSON.stringify(1));
     }
   }, [stompClient]);
 
@@ -63,7 +60,7 @@ const Test2Page: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       handleTitleModify();
-    }, 1000);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, [handleTitleModify]);
