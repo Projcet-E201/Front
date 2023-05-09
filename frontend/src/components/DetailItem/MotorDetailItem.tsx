@@ -16,10 +16,38 @@ const MotorDetailItem: React.FC = () => {
   const location = useLocation();
   const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
   const [intervalSeconds, setIntervalSeconds] = useState<number>(5);
-  const datasets = [...Array(1)].map((_, i) => ({
-    id: `Motor${i + 1}`,
-    data: data.map((d) => ({ x: d.x, y: d[`Motor${i + 1}`] })),
-  }));
+  const [sensorId, setSensorId] = useState<string>("");
+  const [startDate, setStartDate] = useState<Date | undefined>();
+  const [endDate, setEndDate] = useState<Date | undefined>();
+  const datasets = [...Array(1)].map((_, i) => {
+    const values = data.map((d) => d[`Motor${i + 1}`]);
+    const max = values.length > 0 ? Math.max(...values) : 0;
+    const avg =
+      values.length > 0 ? values.reduce((a, b) => a + b, 0) / values.length : 0;
+    const min = values.length > 0 ? Math.min(...values) : 0;
+
+    return {
+      id: `${sensorId}`,
+      data: data.map((d) => ({ x: d.x, y: d[`Motor${i + 1}`] })),
+      max: Number(max.toFixed(3)),
+      avg: Number(avg.toFixed(3)),
+      min: Number(min.toFixed(3)),
+    };
+  });
+
+  const handleDateChange = useCallback(
+    (dates: any, dateStrings: [string, string]) => {
+      setStartDate(dates[0].toDate());
+      setEndDate(dates[1].toDate());
+    },
+    []
+  );
+
+  useEffect(() => {
+    const pathname = location.pathname;
+    const [, , , sensor, id] = pathname.split("/");
+    setSensorId(`${sensor}${id}`);
+  }, [location.pathname]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -42,8 +70,7 @@ const MotorDetailItem: React.FC = () => {
   //웹소켓 코드 시작
 
   // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
-  const connectUrl = "https://api:8091/ws";
-  // const connectUrl = "http://localhost:8091/ws";
+  const connectUrl = "http://localhost:8091/ws";
 
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
@@ -74,24 +101,19 @@ const MotorDetailItem: React.FC = () => {
     window.location.reload();
   };
 
-  const handleDateChange = useCallback(() => {
+  const handlehistoryButtonClick = useCallback(() => {
     if (stompClient) {
       stompClient.send(
         "/server/machine/history",
         {},
         JSON.stringify({
-          start: "시작 날짜",
-          end: "종료 날짜",
+          sensorId: sensorId,
+          start: startDate,
+          end: endDate,
         })
       );
     }
-  }, [stompClient]);
-
-  const handlehistoryButtonClick = () => {
-    if (ws) {
-      ws.send(JSON.stringify({ realTime: true }));
-    }
-  };
+  }, [stompClient, startDate, endDate]);
 
   useEffect(() => {
     connectWebSocket();
@@ -104,21 +126,21 @@ const MotorDetailItem: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    //WebSocket으로 데이터 수신
     if (stompClient) {
-      stompClient.subscribe("/client/machine/history", (data) => {
-        setMessage(JSON.parse(data.body));
-      });
+      const subscription = stompClient.subscribe(
+        "/client/machine/history",
+        (message) => {
+          const data = JSON.parse(message.body);
+          setData(data.data.map((d: any) => ({ x: new Date(d.x), y: d.y })));
+        }
+      );
+      return () => subscription.unsubscribe();
     }
-  }, [stompClient]);
+  }, [location, intervalSeconds, stompClient]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      handleDateChange();
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, [handleDateChange]);
   //웹소켓 코드 끝
+  console.log(datasets);
 
   return (
     <div style={{ width: "100%" }}>
@@ -134,15 +156,15 @@ const MotorDetailItem: React.FC = () => {
           <div style={{ height: "33vh", marginTop: "0%" }}>
             <div className={styles.data}>
               <div className={styles.max}>
-                <h1 style={{ marginBottom: "0%" }}>0.8</h1>
+                <h1 style={{ marginBottom: "0%" }}>{datasets[0].max}</h1>
                 <p>Maximum Value</p>
               </div>
               <div className={styles.avg}>
-                <h1 style={{ marginBottom: "0%" }}>0.5</h1>
+                <h1 style={{ marginBottom: "0%" }}>{datasets[0].avg}</h1>
                 <p>Average Value</p>
               </div>
               <div className={styles.min}>
-                <h1 style={{ marginBottom: "0%" }}>0</h1>
+                <h1 style={{ marginBottom: "0%" }}>{datasets[0].min}</h1>
                 <p>Minimum Value</p>
               </div>
             </div>

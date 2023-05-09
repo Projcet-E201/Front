@@ -2,6 +2,12 @@
   background-color: red;
   transition: background-color 1s ease-in-out;
 }
+.errorbox {
+  /* flex-direction: column;
+  justify-content: space-between; */
+  width: 100%;
+  margin: 0;
+}
 .errorstyle {
   padding-left: 0.5rem;
   text-align: start;

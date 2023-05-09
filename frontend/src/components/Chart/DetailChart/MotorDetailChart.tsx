@@ -32,10 +32,6 @@ const MotorDetailChart = ({ datasets, legend }: Props) => {
       symbolSize: 12,
       symbolShape: "circle",
       symbolBorderColor: "rgba(0, 0, 0, .5)",
-      onClick: (data: any) => {
-        const id: string = data.id as string;
-        navigate(`${data.id.slice(5)}`);
-      },
       effects: [
         {
           on: "hover",
