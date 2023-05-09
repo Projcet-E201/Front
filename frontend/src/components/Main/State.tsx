@@ -26,9 +26,19 @@ const State = () => {
   const [intData, setIntData] = useState<any[]>([]);
   const [doubleData, setDoubleData] = useState<any[]>([]);
 
-  // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
-  const connectUrl = "https://api:8091/ws";
+  // const connectUrl = "https://k8e201.p.ssafy.io:8091/ws";
+  const connectUrl = "http://localhost:8091/ws";
+
+  const disconnetWebSocket = useCallback(() => {
+    if (stompClient) {
+      stompClient.disconnect(() => "");
+      setStompClient(null);
+    }
+  }, [stompClient]);
+
   const connectWebsocket = () => {
+    disconnetWebSocket();
+
     const socket = new SockJS(connectUrl);
     const stompClient = Stomp.over(socket);
     stompClient.connect(
@@ -56,7 +66,7 @@ const State = () => {
     connectWebsocket();
     return () => {
       if (stompClient) {
-        stompClient.disconnect(() => "");
+        disconnetWebSocket();
       }
     };
   }, []);
@@ -66,44 +76,48 @@ const State = () => {
     if (stompClient) {
       stompClient.subscribe(`/client/machine/state`, (data) => {
         const parsedData = JSON.parse(data.body);
-        setMessage(parsedData);
 
-        const booleanDataArray = new Array(10).fill(null);
-        for (const [key, value] of Object.entries(parsedData[0])) {
-          if (key.startsWith("boolean")) {
-            const id = parseInt(key.slice(7));
-            booleanDataArray[id - 1] = { id: id, value: value };
-          }
-        }
-        setBooleanData(booleanDataArray);
+        if (parsedData === Object) {
+          // 수정된 부분
+          setMessage(parsedData);
 
-        const intDataArray = new Array(10).fill(null);
-        for (const [key, value] of Object.entries(parsedData[2])) {
-          if (key.startsWith("int")) {
-            const id = parseInt(key.slice(3));
-            intDataArray[id - 1] = {
-              id: key,
-              name: `I${id}`,
-              value: value,
-              color: "#000000",
-            };
+          const booleanDataArray = new Array(10).fill(null);
+          for (const [key, value] of Object.entries(parsedData[0])) {
+            if (key.startsWith("boolean")) {
+              const id = parseInt(key.slice(7));
+              booleanDataArray[id - 1] = { id: id, value: value };
+            }
           }
-        }
-        setIntData(intDataArray);
+          setBooleanData(booleanDataArray);
 
-        const doubleDataArray = new Array(10).fill(null);
-        for (const [key, value] of Object.entries(parsedData[1])) {
-          if (key.startsWith("double")) {
-            const id = parseInt(key.slice(6));
-            doubleDataArray[id - 1] = {
-              id: key,
-              name: `D${id}`,
-              value: value,
-              color: "#000000",
-            };
+          const intDataArray = new Array(10).fill(null);
+          for (const [key, value] of Object.entries(parsedData[2])) {
+            if (key.startsWith("int")) {
+              const id = parseInt(key.slice(3));
+              intDataArray[id - 1] = {
+                id: key,
+                name: `I${id}`,
+                value: value,
+                color: "#000000",
+              };
+            }
           }
+          setIntData(intDataArray);
+
+          const doubleDataArray = new Array(10).fill(null);
+          for (const [key, value] of Object.entries(parsedData[1])) {
+            if (key.startsWith("double")) {
+              const id = parseInt(key.slice(6));
+              doubleDataArray[id - 1] = {
+                id: key,
+                name: `D${id}`,
+                value: value,
+                color: "#000000",
+              };
+            }
+          }
+          setDoubleData(doubleDataArray);
         }
-        setDoubleData(doubleDataArray);
       });
     }
   }, [stompClient]);
@@ -114,13 +128,12 @@ const State = () => {
     setIntData([]);
     setDoubleData([]);
   }, [machine]);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      handleGetState();
-    }, 1000);
 
-    return () => clearInterval(interval);
-  }, [handleGetState]);
+  useEffect(() => {
+    if (stompClient) {
+      handleGetState();
+    }
+  }, [stompClient]);
 
   const firstHalf = booleanData.slice(0, 5);
   const secondHalf = booleanData.slice(5, 10);
