@@ -4,7 +4,7 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 
 import DetailTopCard from "../../components/common/DetailTopCard";
 import SensorLayout from "../../layout/SensorLayout";
-import MotorDetailItem from "../../components/DetailItem/MotorDetailItem";
+import DetailItem from "../../components/DetailItem/DetailItem";
 import styles from "./MotorPage.module.css";
 
 const MotorDetailPage = () => {
@@ -17,8 +17,8 @@ const MotorDetailPage = () => {
         <DetailTopCard location={location.pathname} />
       </div>
       <div style={{ width: "100%" }}>
-        <MotorDetailItem />
-        <MotorDetailItem />
+        <DetailItem />
+        <DetailItem />
       </div>
     </SensorLayout>
   );
