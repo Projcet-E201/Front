@@ -30,7 +30,7 @@ const StringState = () => {
   }, []);
 
   return (
-    <div style={{ width: "100%", margin: "0" }}>
+    <div className={styles.errorbox}>
       {/* <h3 style={{ margin: "0" }}>StringState입니다.</h3> */}
 
       <table>
