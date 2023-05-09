@@ -3,32 +3,35 @@ import { faker } from "@faker-js/faker";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import MotorDetailChart from "../Chart/DetailChart/MotorDetailChart";
-import styles from "./MotorDetailItem.module.css";
+import DetailChart from "../Chart/DetailChart/DetailChart";
+import styles from "./DetailItem.module.css";
 import { DatePicker, Space, Button } from "antd";
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
 
 const { RangePicker } = DatePicker;
 
-const MotorDetailItem: React.FC = () => {
+const DetailItem: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
-  const [intervalSeconds, setIntervalSeconds] = useState<number>(5);
+  const [intervalSeconds, setIntervalSeconds] = useState<number>(1);
   const [sensorId, setSensorId] = useState<string>("");
   const [startDate, setStartDate] = useState<Date | undefined>();
   const [endDate, setEndDate] = useState<Date | undefined>();
+
   const datasets = [...Array(1)].map((_, i) => {
-    const values = data.map((d) => d[`Motor${i + 1}`]);
+    const values = data.map((d) => d[`${sensorId}`]);
     const max = values.length > 0 ? Math.max(...values) : 0;
     const avg =
       values.length > 0 ? values.reduce((a, b) => a + b, 0) / values.length : 0;
     const min = values.length > 0 ? Math.min(...values) : 0;
+    const [, , , sensor] = location.pathname.split("/");
 
     return {
       id: `${sensorId}`,
-      data: data.map((d) => ({ x: d.x, y: d[`Motor${i + 1}`] })),
+      name: `${sensor}`,
+      data: data.map((d) => ({ x: d.x, y: d[`${sensorId}`] })),
       max: Number(max.toFixed(3)),
       avg: Number(avg.toFixed(3)),
       min: Number(min.toFixed(3)),
@@ -51,12 +54,17 @@ const MotorDetailItem: React.FC = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
+      const pathname = location.pathname;
+      const [, , , sensor, id] = pathname.split("/");
       const currentTime = new Date().toLocaleTimeString("ko-KR", {
         hour12: false,
       });
       const newEntry: any = { x: currentTime };
       for (let i = 1; i <= 1; i++) {
-        newEntry[`Motor${i}`] = faker.datatype.number({ min: 10, max: 290 });
+        newEntry[`${sensor}${id}`] = faker.datatype.number({
+          min: 10,
+          max: 290,
+        });
       }
       setData((prevData) =>
         prevData.length >= 10
@@ -147,7 +155,7 @@ const MotorDetailItem: React.FC = () => {
       <Card className={styles.detailcard}>
         <CardContent>
           <div style={{ height: "33vh" }}>
-            <MotorDetailChart datasets={datasets} legend={false} />
+            <DetailChart datasets={datasets} legend={false} />
           </div>
         </CardContent>
       </Card>
@@ -198,4 +206,4 @@ const MotorDetailItem: React.FC = () => {
   );
 };
 
-export default MotorDetailItem;
+export default DetailItem;
