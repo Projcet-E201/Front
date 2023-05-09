@@ -6,6 +6,19 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Link from "@mui/material/Link";
 
+import ChangeColorPicker from "./ChangeColorPicker";
+
+import {
+  Select,
+  MenuItem,
+  Slider,
+  Input,
+  Grid,
+  Typography,
+  TextField,
+  Button,
+} from "@mui/material";
+
 import { useRecoilState } from "recoil";
 import { selectedMachineAtom } from "../../store/atoms";
 import {
@@ -225,6 +238,132 @@ const TopCard = ({ location }: Props) => {
     }
   }, []);
 
+  const handleMarkerValueChange = (index: number, inputValue: any) => {
+    setMarkers((markers: any[]) => {
+      const updatedMarkers = [...markers];
+      updatedMarkers[index] = {
+        ...updatedMarkers[index],
+        value: inputValue,
+      };
+      if (location.includes("motor")) {
+        localStorage.setItem(
+          "MotorChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setMotorRecoilMarkers(updatedMarkers);
+      } else if (location.includes("vacuum")) {
+        localStorage.setItem(
+          "VacuumChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setVacuumRecoilMarkers(updatedMarkers);
+      } else if (location.includes("air-in")) {
+        localStorage.setItem(
+          "AirInChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAirInRecoilMarkers(updatedMarkers);
+      } else if (location.includes("air-out-kpa")) {
+        localStorage.setItem(
+          "AirOutKpaChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAirOutKpaRecoilMarkers(updatedMarkers);
+      } else if (location.includes("air-out-mpa")) {
+        localStorage.setItem(
+          "AirOutMpaChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAirOutMpaRecoilMarkers(updatedMarkers);
+      } else if (location.includes("water")) {
+        localStorage.setItem(
+          "WaterChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setWaterRecoilMarkers(updatedMarkers);
+      } else if (location.includes("load")) {
+        localStorage.setItem(
+          "LoadChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setLoadRecoilMarkers(updatedMarkers);
+      } else if (location.includes("rpm")) {
+        localStorage.setItem("RpmChartMarkers", JSON.stringify(updatedMarkers));
+        setRpmRecoilMarkers(updatedMarkers);
+      } else if (location.includes("abrasion")) {
+        localStorage.setItem(
+          "AbrasionChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAbrasionRecoilMarkers(updatedMarkers);
+      }
+      return updatedMarkers;
+    });
+  };
+
+  const handleMarkerLegendChange = (index: number, inputlegend: any) => {
+    setMarkers((markers: any[]) => {
+      const updatedMarkers = [...markers];
+      updatedMarkers[index] = {
+        ...updatedMarkers[index],
+        legend: inputlegend,
+      };
+      if (location.includes("motor")) {
+        localStorage.setItem(
+          "MotorChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setMotorRecoilMarkers(updatedMarkers);
+      } else if (location.includes("vacuum")) {
+        localStorage.setItem(
+          "VacuumChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setVacuumRecoilMarkers(updatedMarkers);
+      } else if (location.includes("air-in")) {
+        localStorage.setItem(
+          "AirInChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAirInRecoilMarkers(updatedMarkers);
+      } else if (location.includes("air-out-kpa")) {
+        localStorage.setItem(
+          "AirOutKpaChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAirOutKpaRecoilMarkers(updatedMarkers);
+      } else if (location.includes("air-out-mpa")) {
+        localStorage.setItem(
+          "AirOutMpaChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAirOutMpaRecoilMarkers(updatedMarkers);
+      } else if (location.includes("water")) {
+        localStorage.setItem(
+          "WaterChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setWaterRecoilMarkers(updatedMarkers);
+      } else if (location.includes("load")) {
+        localStorage.setItem(
+          "LoadChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setLoadRecoilMarkers(updatedMarkers);
+      } else if (location.includes("rpm")) {
+        localStorage.setItem("RpmChartMarkers", JSON.stringify(updatedMarkers));
+        setRpmRecoilMarkers(updatedMarkers);
+      } else if (location.includes("abrasion")) {
+        localStorage.setItem(
+          "AbrasionChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAbrasionRecoilMarkers(updatedMarkers);
+      }
+      return updatedMarkers;
+    });
+  };
+
   const handleMarkerCheckedChange = (index: number) => () => {
     setMarkers((markers: any[]) => {
       const updatedMarkers = [...markers];
@@ -232,6 +371,141 @@ const TopCard = ({ location }: Props) => {
         ...updatedMarkers[index],
         checked: !updatedMarkers[index].checked,
       };
+      if (location.includes("motor")) {
+        localStorage.setItem(
+          "MotorChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setMotorRecoilMarkers(updatedMarkers);
+      } else if (location.includes("vacuum")) {
+        localStorage.setItem(
+          "VacuumChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setVacuumRecoilMarkers(updatedMarkers);
+      } else if (location.includes("air-in")) {
+        localStorage.setItem(
+          "AirInChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAirInRecoilMarkers(updatedMarkers);
+      } else if (location.includes("air-out-kpa")) {
+        localStorage.setItem(
+          "AirOutKpaChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAirOutKpaRecoilMarkers(updatedMarkers);
+      } else if (location.includes("air-out-mpa")) {
+        localStorage.setItem(
+          "AirOutMpaChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAirOutMpaRecoilMarkers(updatedMarkers);
+      } else if (location.includes("water")) {
+        localStorage.setItem(
+          "WaterChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setWaterRecoilMarkers(updatedMarkers);
+      } else if (location.includes("load")) {
+        localStorage.setItem(
+          "LoadChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setLoadRecoilMarkers(updatedMarkers);
+      } else if (location.includes("rpm")) {
+        localStorage.setItem("RpmChartMarkers", JSON.stringify(updatedMarkers));
+        setRpmRecoilMarkers(updatedMarkers);
+      } else if (location.includes("abrasion")) {
+        localStorage.setItem(
+          "AbrasionChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAbrasionRecoilMarkers(updatedMarkers);
+      }
+      return updatedMarkers;
+    });
+  };
+
+  const handleMarkerWidthChange = (index: number, width: number) => () => {
+    setMarkers((markers: any[]) => {
+      const updatedMarkers = [...markers];
+      console.log(width);
+      updatedMarkers[index] = {
+        ...updatedMarkers[index],
+        lineStyle: {
+          ...updatedMarkers[index].lineStyle,
+          strokeWidth: width,
+        },
+      };
+      if (location.includes("motor")) {
+        localStorage.setItem(
+          "MotorChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setMotorRecoilMarkers(updatedMarkers);
+      } else if (location.includes("vacuum")) {
+        localStorage.setItem(
+          "VacuumChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setVacuumRecoilMarkers(updatedMarkers);
+      } else if (location.includes("air-in")) {
+        localStorage.setItem(
+          "AirInChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAirInRecoilMarkers(updatedMarkers);
+      } else if (location.includes("air-out-kpa")) {
+        localStorage.setItem(
+          "AirOutKpaChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAirOutKpaRecoilMarkers(updatedMarkers);
+      } else if (location.includes("air-out-mpa")) {
+        localStorage.setItem(
+          "AirOutMpaChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAirOutMpaRecoilMarkers(updatedMarkers);
+      } else if (location.includes("water")) {
+        localStorage.setItem(
+          "WaterChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setWaterRecoilMarkers(updatedMarkers);
+      } else if (location.includes("load")) {
+        localStorage.setItem(
+          "LoadChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setLoadRecoilMarkers(updatedMarkers);
+      } else if (location.includes("rpm")) {
+        localStorage.setItem("RpmChartMarkers", JSON.stringify(updatedMarkers));
+        setRpmRecoilMarkers(updatedMarkers);
+      } else if (location.includes("abrasion")) {
+        localStorage.setItem(
+          "AbrasionChartMarkers",
+          JSON.stringify(updatedMarkers)
+        );
+        setAbrasionRecoilMarkers(updatedMarkers);
+      }
+      return updatedMarkers;
+    });
+  };
+
+  const [isChangeColorPickerOpen, setIsChangeColorPickerOpen] =
+    useState<number>(0);
+  const [isPickerOpen, setIsPickerOpen] = useState<boolean>(false);
+  const handleEditColor = (color: string) => {
+    console.log(color);
+    setMarkers((markers: any[]) => {
+      const updatedMarkers = [...markers];
+      const newLineStyle = {
+        ...updatedMarkers[isChangeColorPickerOpen].lineStyle,
+      };
+      newLineStyle.stroke = color;
+      updatedMarkers[isChangeColorPickerOpen].lineStyle = newLineStyle;
       if (location.includes("motor")) {
         localStorage.setItem(
           "MotorChartMarkers",
@@ -320,12 +594,37 @@ const TopCard = ({ location }: Props) => {
                       onChange={handleMarkerCheckedChange(index)}
                     />
                   }
-                  label={marker.legend}
+                  // label={marker.legend}
+                  label={
+                    <TextField
+                      sx={{ width: "100%" }}
+                      id="input-with-icon-textfield"
+                      label="Marker Name"
+                      value={marker.legend}
+                      variant="standard"
+                      onChange={(event) =>
+                        handleMarkerLegendChange(
+                          index,
+                          String(event.target.value)
+                        )
+                      }
+                    />
+                  }
                 />
                 <div style={{ width: "100%" }}>
-                  <p style={{ margin: "0" }}>value: {marker.value}</p>
+                  <TextField
+                    sx={{ width: "100%" }}
+                    id="input-with-icon-textfield"
+                    label="Value"
+                    value={marker.value}
+                    type="number"
+                    variant="standard"
+                    onChange={(event) =>
+                      handleMarkerValueChange(index, Number(event.target.value))
+                    }
+                  />
                   {/* <p>{marker.lineStyle.stroke}</p> */}
-                  <div
+                  {/* <div
                     style={{
                       display: "inline-block",
                       width: "90%",
@@ -334,7 +633,103 @@ const TopCard = ({ location }: Props) => {
                       backgroundColor: marker.lineStyle.stroke,
                       border: "1px solid #ddd",
                     }}
-                  ></div>
+                  ></div> */}
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      marginTop: "10px",
+                    }}
+                  >
+                    <div
+                      id="colorBar"
+                      style={{
+                        display: "inline-block",
+                        width: "90%",
+                        height: `${marker.lineStyle.strokeWidth}px`,
+                        marginRight: "5px",
+                        // backgroundColor: MotorMarker.lineStyle.stroke,
+                        backgroundColor: marker.checked
+                          ? marker.lineStyle.stroke
+                          : "gray",
+                        border: "1px solid #ddd",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        if (isChangeColorPickerOpen !== index) {
+                          setIsChangeColorPickerOpen(index);
+                        }
+                        setIsPickerOpen(!isPickerOpen);
+                      }}
+                    ></div>
+                  </div>
+                  {isPickerOpen && isChangeColorPickerOpen === index && (
+                    <div style={{ marginTop: "10px" }}>
+                      <div
+                        style={
+                          (index + 1) % 3 === 0
+                            ? {
+                                position: "absolute",
+                                zIndex: "2",
+                                right: "0px",
+                              }
+                            : { position: "absolute", zIndex: "2" }
+                        }
+                      >
+                        <div>
+                          <ChangeColorPicker onColorChange={handleEditColor} />
+                        </div>
+                        <div style={{ display: "flex", marginTop: "10px" }}>
+                          <Select
+                            sx={{
+                              backgroundColor: "white",
+                              // marginTop: "10px",
+                              width: "100%",
+                            }}
+                            value={marker.lineStyle.strokeWidth}
+                            onChange={(e) =>
+                              handleMarkerWidthChange(index, e.target.value)
+                            }
+                          >
+                            {Array.from({ length: 10 }, (_, i) => i + 1).map(
+                              (width) => (
+                                <MenuItem key={width} value={width}>
+                                  <div
+                                    style={{
+                                      display: "inline-block",
+                                      width: "90%",
+                                      height: `${width}px`,
+                                      marginRight: "5px",
+                                      border: "1px solid #ddd",
+
+                                      backgroundColor: marker.lineStyle.stroke,
+                                    }}
+                                  ></div>
+                                  {/* <p>{width}px</p> */}
+                                </MenuItem>
+                              )
+                            )}
+                          </Select>
+                          <div
+                            style={{
+                              marginLeft: "10px",
+                              display: "flex",
+                              alignItems: "end",
+                            }}
+                          >
+                            <Button
+                              variant="outlined"
+                              color="error"
+                              onClick={() => setIsPickerOpen(false)}
+                              sx={{ height: "30px" }}
+                            >
+                              닫기
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </ListItem>

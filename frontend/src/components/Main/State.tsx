@@ -26,8 +26,8 @@ const State = () => {
   const [intData, setIntData] = useState<any[]>([]);
   const [doubleData, setDoubleData] = useState<any[]>([]);
 
-  // const connectUrl = "https://k8e201.p.ssafy.io:8091/ws";
-  const connectUrl = "http://localhost:8091/ws";
+  const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  // const connectUrl = "http://localhost:8091/ws";
 
   const disconnetWebSocket = useCallback(() => {
     if (stompClient) {
