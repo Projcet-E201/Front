@@ -52,7 +52,7 @@ const AbrasionChartMarkers = () => {
   const [AbrasionMarkers, setAbrasionMarkers] = useState<any>([]);
   // const [newAbrasionMarkerValue, setNewAbrasionMarkerValue] = useState<number>(0);
   const [newAbrasionMarkerValue, setNewAbrasionMarkerValue] =
-    React.useState<any>(30);
+    React.useState<any>(0);
   const [newAbrasionMarkerWidth, setNewAbrasionMarkerWidth] =
     useState<number>(2);
   const [newAbrasionMarkerLegend, setNewAbrasionMarkerLegend] =
@@ -289,7 +289,7 @@ const AbrasionChartMarkers = () => {
                   onChange={handleSliderChange}
                   aria-labelledby="input-slider"
                   min={0}
-                  max={300}
+                  max={40}
                 />
               </Grid>
               <Grid item xs={2.5}>
@@ -299,9 +299,9 @@ const AbrasionChartMarkers = () => {
                   onChange={handleInputChange}
                   onBlur={handleBlur}
                   inputProps={{
-                    step: 10,
+                    step: 1,
                     min: 0,
-                    max: 300,
+                    max: 40,
                     type: "number",
                     "aria-labelledby": "input-slider",
                   }}

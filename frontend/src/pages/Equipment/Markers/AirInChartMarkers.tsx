@@ -51,7 +51,8 @@ interface Marker {
 const AirInChartMarkers = () => {
   const [AirInMarkers, setAirInMarkers] = useState<any>([]);
   // const [newAirInMarkerValue, setNewAirInMarkerValue] = useState<number>(0);
-  const [newAirInMarkerValue, setNewAirInMarkerValue] = React.useState<any>(30);
+  const [newAirInMarkerValue, setNewAirInMarkerValue] =
+    React.useState<any>(100);
   const [newAirInMarkerWidth, setNewAirInMarkerWidth] = useState<number>(2);
   const [newAirInMarkerLegend, setNewAirInMarkerLegend] = useState<string>("");
 
@@ -280,7 +281,7 @@ const AirInChartMarkers = () => {
                   onChange={handleSliderChange}
                   aria-labelledby="input-slider"
                   min={0}
-                  max={300}
+                  max={900}
                 />
               </Grid>
               <Grid item xs={2.5}>
@@ -292,7 +293,7 @@ const AirInChartMarkers = () => {
                   inputProps={{
                     step: 10,
                     min: 0,
-                    max: 300,
+                    max: 900,
                     type: "number",
                     "aria-labelledby": "input-slider",
                   }}

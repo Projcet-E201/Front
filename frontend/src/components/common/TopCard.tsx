@@ -8,16 +8,7 @@ import Link from "@mui/material/Link";
 
 import ChangeColorPicker from "./ChangeColorPicker";
 
-import {
-  Select,
-  MenuItem,
-  Slider,
-  Input,
-  Grid,
-  Typography,
-  TextField,
-  Button,
-} from "@mui/material";
+import { Select, MenuItem, TextField, Button } from "@mui/material";
 
 import { useRecoilState } from "recoil";
 import { selectedMachineAtom } from "../../store/atoms";

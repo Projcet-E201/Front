@@ -52,7 +52,7 @@ const AirOutKpaChartMarkers = () => {
   const [AirOutKpaMarkers, setAirOutKpaMarkers] = useState<any>([]);
   // const [newAirOutKpaMarkerValue, setNewAirOutKpaMarkerValue] = useState<number>(0);
   const [newAirOutKpaMarkerValue, setNewAirOutKpaMarkerValue] =
-    React.useState<any>(30);
+    React.useState<any>(100);
   const [newAirOutKpaMarkerWidth, setNewAirOutKpaMarkerWidth] =
     useState<number>(2);
   const [newAirOutKpaMarkerLegend, setNewAirOutKpaMarkerLegend] =
@@ -291,7 +291,7 @@ const AirOutKpaChartMarkers = () => {
                   onChange={handleSliderChange}
                   aria-labelledby="input-slider"
                   min={0}
-                  max={300}
+                  max={900}
                 />
               </Grid>
               <Grid item xs={2.5}>
@@ -303,7 +303,7 @@ const AirOutKpaChartMarkers = () => {
                   inputProps={{
                     step: 10,
                     min: 0,
-                    max: 300,
+                    max: 900,
                     type: "number",
                     "aria-labelledby": "input-slider",
                   }}

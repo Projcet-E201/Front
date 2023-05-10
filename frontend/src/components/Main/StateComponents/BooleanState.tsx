@@ -1,34 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./BooleanState.module.css";
 import booleanOn from "../../../assets/state/ON_button_icon.png";
 import booleanOff from "../../../assets/state/OFF_button_icon.png";
 
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import { setUncaughtExceptionCaptureCallback } from "process";
 
 const BooleanState = ({ data, error, time }: any) => {
-  const dummy = [
-    {
-      id: 1,
-      value: 1,
-    },
-    {
-      id: 2,
-      value: 1,
-    },
-    {
-      id: 3,
-      value: 0,
-    },
-    {
-      id: 4,
-      value: 0,
-    },
-    {
-      id: 4,
-      value: 1,
-    },
-  ];
+  // const dummy = [
+  //   {
+  //     id: 1,
+  //     value: 1,
+  //   },
+  //   {
+  //     id: 2,
+  //     value: 1,
+  //   },
+  //   {
+  //     id: 3,
+  //     value: 0,
+  //   },
+  //   {
+  //     id: 4,
+  //     value: 0,
+  //   },
+  //   {
+  //     id: 4,
+  //     value: 1,
+  //   },
+  // ];
+  const [booleanData, setBooleanData] = useState<any>([]);
+  // console.log(data, "재필이는 바보야~");
+  useEffect(() => {
+    // console.log(data);
+    setBooleanData(data);
+  }, [data, booleanData]);
   return (
     <div style={{ width: "100%" }}>
       {error !== "error" ? (

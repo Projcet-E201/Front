@@ -52,7 +52,7 @@ const VacuumChartMarkers = () => {
   const [VacuumMarkers, setVacuumMarkers] = useState<any>([]);
   // const [newVacuumMarkerValue, setNewVacuumMarkerValue] = useState<number>(0);
   const [newVacuumMarkerValue, setNewVacuumMarkerValue] =
-    React.useState<any>(30);
+    React.useState<any>(0);
   const [newVacuumMarkerWidth, setNewVacuumMarkerWidth] = useState<number>(2);
   const [newVacuumMarkerLegend, setNewVacuumMarkerLegend] =
     useState<string>("");
@@ -282,7 +282,7 @@ const VacuumChartMarkers = () => {
                   onChange={handleSliderChange}
                   aria-labelledby="input-slider"
                   min={0}
-                  max={300}
+                  max={100}
                 />
               </Grid>
               <Grid item xs={2.5}>
@@ -292,9 +292,9 @@ const VacuumChartMarkers = () => {
                   onChange={handleInputChange}
                   onBlur={handleBlur}
                   inputProps={{
-                    step: 10,
+                    step: 5,
                     min: 0,
-                    max: 300,
+                    max: 100,
                     type: "number",
                     "aria-labelledby": "input-slider",
                   }}

@@ -9,8 +9,9 @@ import styles from "./StringState.module.css";
 //   content: string;
 // }
 
-const StringState = () => {
+const StringState = ({ data }: any) => {
   const [messages, setMessages] = useState<any>([]);
+  console.log(data);
   // const [messages, setMessages] = useState<Message[]>(
   //   Array.from({ length: 10 }, (_, i) => {
   //     const id = `S${i + 1}`;
@@ -40,7 +41,7 @@ const StringState = () => {
 
   return (
     <div style={{ width: "100%", margin: "0", height: "100%" }}>
-      {messages.length > 1 ? (
+      {data.length > 1 ? (
         <table
           style={{
             borderCollapse: "collapse",
@@ -75,7 +76,7 @@ const StringState = () => {
             </tr>
           </thead>
           <tbody>
-            {messages?.messages.map((message: any, index: number) => (
+            {data.map((message: any, index: number) => (
               <tr key={index}>
                 <td
                   style={{

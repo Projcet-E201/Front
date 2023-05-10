@@ -51,7 +51,7 @@ interface Marker {
 const LoadChartMarkers = () => {
   const [LoadMarkers, setLoadMarkers] = useState<any>([]);
   // const [newLoadMarkerValue, setNewLoadMarkerValue] = useState<number>(0);
-  const [newLoadMarkerValue, setNewLoadMarkerValue] = React.useState<any>(30);
+  const [newLoadMarkerValue, setNewLoadMarkerValue] = React.useState<any>(0);
   const [newLoadMarkerWidth, setNewLoadMarkerWidth] = useState<number>(2);
   const [newLoadMarkerLegend, setNewLoadMarkerLegend] = useState<string>("");
 
@@ -280,7 +280,7 @@ const LoadChartMarkers = () => {
                   onChange={handleSliderChange}
                   aria-labelledby="input-slider"
                   min={0}
-                  max={300}
+                  max={16}
                 />
               </Grid>
               <Grid item xs={2.5}>
@@ -290,9 +290,9 @@ const LoadChartMarkers = () => {
                   onChange={handleInputChange}
                   onBlur={handleBlur}
                   inputProps={{
-                    step: 10,
+                    step: 1,
                     min: 0,
-                    max: 300,
+                    max: 16,
                     type: "number",
                     "aria-labelledby": "input-slider",
                   }}

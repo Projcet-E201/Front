@@ -111,13 +111,20 @@ const State = () => {
     };
   }, []);
 
+  // const firstHalf = booleanData.slice(0, 5);
+  // const secondHalf = booleanData.slice(5, 10);
+  const [firstBoolean, setFirstBoolean] = useState<any>([]);
+  const [secondBoolean, setSecondBoolean] = useState<any>([]);
+
   useEffect(() => {
     // console.log(booleanData, "zzzzzzzzzzzzzzzzzzzz");
     if (stompClient) {
       stompClient.subscribe(`/client/machine/state`, (data) => {
         const parsedData = JSON.parse(data.body);
 
-        if (parsedData === Object) {
+        // console.log(parsedData, "재필재필");
+        // console.log(typeof parsedData);
+        if (parsedData.length > 1) {
           // 수정된 부분
           setMessage(parsedData);
 
@@ -129,7 +136,9 @@ const State = () => {
               booleanDataArray[id - 1] = { id: id, value: value };
             }
           }
-          setBooleanData(booleanDataArray);
+          // setBooleanData(booleanDataArray);
+          setFirstBoolean(booleanDataArray.slice(0, 5));
+          setSecondBoolean(booleanDataArray.slice(5, 10));
 
           const intDataArray = new Array(10).fill(null);
           for (const [key, value] of Object.entries(parsedData[2])) {
@@ -139,7 +148,7 @@ const State = () => {
                 id: key,
                 name: `I${id}`,
                 value: value,
-                color: "#000000",
+                color: (id - 1) % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
               };
             }
           }
@@ -153,21 +162,46 @@ const State = () => {
                 id: key,
                 name: `D${id}`,
                 value: value,
-                color: "#000000",
+                color: (id - 1) % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
               };
             }
           }
           setDoubleData(doubleDataArray);
+
+          const stringDataArray = new Array(10).fill(null);
+          for (const [key, value] of Object.entries(parsedData[3])) {
+            if (key.startsWith("string")) {
+              const id = parseInt(key.slice(6));
+              const currentDate = new Date();
+              const options = { timeZone: "Asia/Seoul" };
+              const formattedTime = currentDate.toLocaleString(
+                "ko-KR",
+                options
+              );
+              stringDataArray[id - 1] = {
+                id: key,
+                name: `S${id}`,
+                content: value,
+                time: formattedTime,
+              };
+            }
+          }
+
+          setStringData(stringDataArray);
         }
       });
     }
   }, [stompClient]);
+
+  // console.log(intData, "wflwflwflw");
 
   // 주소 바뀌면 새로 가져오깅
   useEffect(() => {
     setBooleanData([]);
     setIntData([]);
     setDoubleData([]);
+    setFirstBoolean([]);
+    setSecondBoolean([]);
   }, [machine]);
 
   useEffect(() => {
@@ -175,9 +209,6 @@ const State = () => {
       handleGetState();
     }
   }, [stompClient]);
-
-  const firstHalf = booleanData.slice(0, 5);
-  const secondHalf = booleanData.slice(5, 10);
 
   return (
     <div>
@@ -194,16 +225,15 @@ const State = () => {
                 >
                   <CardContent
                     sx={{
-                      height: "100%",
+                      // height: "100%",
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
                     }}
                   >
-                    {/* <p>bool 5개</p> */}
-                    {/* {JSON.stringify(booleanData)} */}
                     <BooleanState
-                      data={firstHalf}
+                      // data={firstHalf}
+                      data={firstBoolean}
                       error={error}
                       time={reconnectTimeLeft}
                     />
@@ -218,14 +248,15 @@ const State = () => {
                 >
                   <CardContent
                     sx={{
-                      height: "100%",
+                      // height: "100%",
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
                     }}
                   >
                     <BooleanState
-                      data={secondHalf}
+                      // data={secondHalf}
+                      data={secondBoolean}
                       error={error}
                       time={reconnectTimeLeft}
                     />
@@ -241,14 +272,14 @@ const State = () => {
               >
                 <CardContent
                   sx={{
-                    height: "100%",
+                    height: "40vh",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
                   {/* <p>string type</p> */}
-                  <StringState />
+                  <StringState data={stringData} />
                 </CardContent>
               </Card>
             </div>
@@ -261,10 +292,7 @@ const State = () => {
               >
                 <CardContent
                   style={{
-                    height: "40vh",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    height: "100%",
                   }}
                 >
                   {/* <p>double</p> */}
@@ -279,13 +307,9 @@ const State = () => {
               >
                 <CardContent
                   style={{
-                    height: "40vh",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    height: "100%",
                   }}
                 >
-                  {/* <p>int type</p> */}
                   <IntState data={intData} />
                 </CardContent>
               </Card>
