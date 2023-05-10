@@ -15,6 +15,7 @@
   justify-content: space-around;
 }
 
+
 @media (max-width: 876px) {
   .state {
     display: inline
