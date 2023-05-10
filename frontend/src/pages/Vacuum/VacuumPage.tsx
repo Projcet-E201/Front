@@ -57,6 +57,8 @@ const VacuumPage = () => {
       clearInterval(countdownIntervalId);
     };
   }, [data]);
+  console.log(data);
+
   return (
     <SensorLayout>
       <div className={styles.topcard}>

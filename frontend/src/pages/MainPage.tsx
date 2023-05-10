@@ -9,6 +9,11 @@ import styles from "./MainPage.module.css";
 import MainError from "../components/MainError/MainError";
 import MainMachineItem from "../components/MainMachineItem/MainMachineItem";
 import MainSenserItem from "../components/MainSenserItem/MainSenserItem";
+import MainSenserLaegeItem from "../components/MainSenserItem/MainSenserLaegeItem";
+import MainSenserSmallItem from "../components/MainSenserItem/MainSenserSmallItem";
+import { BsFillBarChartFill } from "react-icons/bs";
+import { RiBarChartHorizontalFill } from "react-icons/ri";
+import { FaListAlt } from "react-icons/fa";
 
 type ClientData = {
   [key: string]: {
@@ -33,8 +38,8 @@ const MainPage: React.FC = () => {
       MOTOR: 100,
       VACUUM: 50,
       AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 0.8,
-      AIR_OUT_MPA: 500,
+      AIR_OUT_KPA: 500,
+      AIR_OUT_MPA: 0.8,
       WATER: 3,
       ABRASION: 16,
       LOAD: 8,
@@ -42,35 +47,35 @@ const MainPage: React.FC = () => {
       SCORE: 80,
     },
     CLIENT2: {
-      MOTOR: 100,
-      VACUUM: 50,
-      AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 0.8,
-      AIR_OUT_MPA: 500,
-      WATER: 3,
+      MOTOR: 150,
+      VACUUM: 10,
+      AIR_IN_KPA: 300,
+      AIR_OUT_KPA: 500,
+      AIR_OUT_MPA: 0.1,
+      WATER: 2,
       ABRASION: 16,
       LOAD: 8,
-      VELOCITY: 30000,
+      VELOCITY: 10000,
       SCORE: 80,
     },
     CLIENT3: {
-      MOTOR: 100,
-      VACUUM: 50,
+      MOTOR: 280,
+      VACUUM: 70,
       AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 0.8,
-      AIR_OUT_MPA: 500,
-      WATER: 3,
-      ABRASION: 16,
-      LOAD: 8,
-      VELOCITY: 30000,
+      AIR_OUT_KPA: 500,
+      AIR_OUT_MPA: 0.5,
+      WATER: 2,
+      ABRASION: 13,
+      LOAD: 1,
+      VELOCITY: 20000,
       SCORE: 80,
     },
     CLIENT4: {
       MOTOR: 100,
       VACUUM: 50,
       AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 0.8,
-      AIR_OUT_MPA: 500,
+      AIR_OUT_KPA: 500,
+      AIR_OUT_MPA: 0.8,
       WATER: 3,
       ABRASION: 16,
       LOAD: 8,
@@ -78,23 +83,23 @@ const MainPage: React.FC = () => {
       SCORE: 80,
     },
     CLIENT5: {
-      MOTOR: 100,
-      VACUUM: 50,
-      AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 0.8,
-      AIR_OUT_MPA: 500,
+      MOTOR: 50,
+      VACUUM: 10,
+      AIR_IN_KPA: 700,
+      AIR_OUT_KPA: 500,
+      AIR_OUT_MPA: 0.6,
       WATER: 3,
       ABRASION: 16,
       LOAD: 8,
-      VELOCITY: 30000,
+      VELOCITY: 15000,
       SCORE: 80,
     },
     CLIENT6: {
       MOTOR: 100,
       VACUUM: 50,
       AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 0.8,
-      AIR_OUT_MPA: 500,
+      AIR_OUT_KPA: 500,
+      AIR_OUT_MPA: 0.8,
       WATER: 3,
       ABRASION: 16,
       LOAD: 8,
@@ -105,8 +110,8 @@ const MainPage: React.FC = () => {
       MOTOR: 100,
       VACUUM: 50,
       AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 0.8,
-      AIR_OUT_MPA: 500,
+      AIR_OUT_KPA: 500,
+      AIR_OUT_MPA: 0.8,
       WATER: 3,
       ABRASION: 16,
       LOAD: 8,
@@ -117,8 +122,8 @@ const MainPage: React.FC = () => {
       MOTOR: 100,
       VACUUM: 50,
       AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 0.8,
-      AIR_OUT_MPA: 500,
+      AIR_OUT_KPA: 500,
+      AIR_OUT_MPA: 0.8,
       WATER: 3,
       ABRASION: 16,
       LOAD: 8,
@@ -129,8 +134,8 @@ const MainPage: React.FC = () => {
       MOTOR: 100,
       VACUUM: 50,
       AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 0.8,
-      AIR_OUT_MPA: 500,
+      AIR_OUT_KPA: 500,
+      AIR_OUT_MPA: 0.8,
       WATER: 3,
       ABRASION: 16,
       LOAD: 8,
@@ -141,8 +146,8 @@ const MainPage: React.FC = () => {
       MOTOR: 100,
       VACUUM: 50,
       AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 0.8,
-      AIR_OUT_MPA: 500,
+      AIR_OUT_KPA: 500,
+      AIR_OUT_MPA: 0.8,
       WATER: 3,
       ABRASION: 16,
       LOAD: 8,
@@ -153,8 +158,8 @@ const MainPage: React.FC = () => {
       MOTOR: 100,
       VACUUM: 50,
       AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 0.8,
-      AIR_OUT_MPA: 500,
+      AIR_OUT_KPA: 500,
+      AIR_OUT_MPA: 0.8,
       WATER: 3,
       ABRASION: 16,
       LOAD: 8,
@@ -165,8 +170,8 @@ const MainPage: React.FC = () => {
       MOTOR: 100,
       VACUUM: 50,
       AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 0.8,
-      AIR_OUT_MPA: 500,
+      AIR_OUT_KPA: 500,
+      AIR_OUT_MPA: 0.8,
       WATER: 3,
       ABRASION: 16,
       LOAD: 8,
@@ -242,6 +247,11 @@ const MainPage: React.FC = () => {
   // }, [handleTitleModify]);
 
   //웹소켓 연결 코드 끝
+  const [tabIndex, setTabIndex] = useState(1);
+
+  const onClickTab = (index: number) => {
+    setTabIndex(index);
+  };
 
   return (
     <MainLayout>
@@ -259,8 +269,39 @@ const MainPage: React.FC = () => {
             </CardContent>
           </Card>
         </div>
-        <div className={styles.sensordatastyle}>
+        {/* <div className={styles.sensordatastyle}>
           <MainSenserItem clientData={clientData} />
+        </div> */}
+        <div className={styles.sensordatastyle}>
+          {tabIndex === 0 && <MainSenserSmallItem clientData={clientData} />}
+          {tabIndex === 1 && <MainSenserItem clientData={clientData} />}
+          {tabIndex === 2 && <MainSenserLaegeItem clientData={clientData} />}
+          <div className={styles.tab}>
+            <div
+              onClick={() => onClickTab(0)}
+              className={
+                tabIndex === 0 ? styles["selected"] : styles["not-selected"]
+              }
+            >
+              <BsFillBarChartFill />
+            </div>
+            <div
+              onClick={() => onClickTab(1)}
+              className={
+                tabIndex === 1 ? styles["selected"] : styles["not-selected"]
+              }
+            >
+              <FaListAlt />
+            </div>
+            <div
+              onClick={() => onClickTab(2)}
+              className={
+                tabIndex === 2 ? styles["selected"] : styles["not-selected"]
+              }
+            >
+              <RiBarChartHorizontalFill />
+            </div>
+          </div>
         </div>
       </div>
     </MainLayout>

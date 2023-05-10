@@ -5,7 +5,7 @@
 }
 .sensorcard {
   width: 16vw;
-  height: calc(16vh + 1em);
+  height: calc(18vh + 0.18em);
   margin: 0.5rem;
   margin-left: 0.8rem;
 

@@ -3,12 +3,14 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import styles from "./MainSenserSmallItem.module.css";
+import SensorBarChart from "../Chart/MainChart/SensorBarChart";
 import {
   DragDropContext,
   Droppable,
   Draggable,
   DropResult,
 } from "react-beautiful-dnd";
+import { ResponsiveBar } from "@nivo/bar";
 
 export type SenserPropsType = {
   [key: string]: {
@@ -60,47 +62,52 @@ const MainSenserSmallItem = (props: MainSenserItemProps) => {
     VELOCITY: "velocity",
   };
 
-  const sensorCards = sensors.map((sensor, index) => (
-    <Draggable
-      key={`sensor-${sensor}`}
-      draggableId={`sensor-${sensor}`}
-      index={index}
-    >
-      {(provided) => (
-        <Card
-          className={styles.sensorcard}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-        >
-          <h3
-            className={styles.sensorheader}
-            {...provided.dragHandleProps}
-            {...(index === 0 ? {} : { isdragdisabled: "true" })}
+  const sensorCards = sensors.map((sensor, index) => {
+    const chartData = Object.entries(props.clientData).map(([key, data]) => ({
+      id: key,
+      [sensor]: data[sensor as keyof typeof data],
+    }));
+
+    return (
+      <Draggable
+        key={`sensor-${sensor}`}
+        draggableId={`sensor-${sensor}`}
+        index={index}
+      >
+        {(provided) => (
+          <Card
+            className={styles.sensorcard}
+            ref={provided.innerRef}
+            {...provided.draggableProps}
           >
-            {sensor}
-          </h3>
-          <CardContent>
-            {Object.entries(props.clientData).map(([key, data], dataIndex) => (
-              <div
-                className={styles.sensordatacontent}
-                key={`sensordata-${dataIndex}`}
-                onClick={() =>
-                  navigate(
-                    `/machine/${machines[dataIndex]}/${sensorAddressMap[sensor]}`
-                  )
-                }
-              >
-                <div>{key}</div>
-                <div className={styles.sensordatascore}>
-                  {data[sensor as keyof typeof data]}
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      )}
-    </Draggable>
-  ));
+            <h3
+              className={styles.sensorheader}
+              {...provided.dragHandleProps}
+              {...(index === 0 ? {} : { isdragdisabled: "true" })}
+            >
+              {sensor}
+            </h3>
+            <CardContent>
+              <SensorBarChart data={chartData} sensor={sensor} />
+              {Object.entries(props.clientData).map(
+                ([key, data], dataIndex) => (
+                  <div
+                    className={styles.sensordatacontent}
+                    key={`sensordata-${dataIndex}`}
+                    onClick={() =>
+                      navigate(
+                        `/machine/${machines[dataIndex]}/${sensorAddressMap[sensor]}`
+                      )
+                    }
+                  ></div>
+                )
+              )}
+            </CardContent>
+          </Card>
+        )}
+      </Draggable>
+    );
+  });
 
   const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return;
