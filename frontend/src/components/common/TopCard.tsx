@@ -238,6 +238,49 @@ const TopCard = ({ location }: Props) => {
     }
   }, []);
 
+  const setLocalStorage = (updatedMarkers: any) => {
+    if (location.includes("motor")) {
+      localStorage.setItem("MotorChartMarkers", JSON.stringify(updatedMarkers));
+      setMotorRecoilMarkers(updatedMarkers);
+    } else if (location.includes("vacuum")) {
+      localStorage.setItem(
+        "VacuumChartMarkers",
+        JSON.stringify(updatedMarkers)
+      );
+      setVacuumRecoilMarkers(updatedMarkers);
+    } else if (location.includes("air-in")) {
+      localStorage.setItem("AirInChartMarkers", JSON.stringify(updatedMarkers));
+      setAirInRecoilMarkers(updatedMarkers);
+    } else if (location.includes("air-out-kpa")) {
+      localStorage.setItem(
+        "AirOutKpaChartMarkers",
+        JSON.stringify(updatedMarkers)
+      );
+      setAirOutKpaRecoilMarkers(updatedMarkers);
+    } else if (location.includes("air-out-mpa")) {
+      localStorage.setItem(
+        "AirOutMpaChartMarkers",
+        JSON.stringify(updatedMarkers)
+      );
+      setAirOutMpaRecoilMarkers(updatedMarkers);
+    } else if (location.includes("water")) {
+      localStorage.setItem("WaterChartMarkers", JSON.stringify(updatedMarkers));
+      setWaterRecoilMarkers(updatedMarkers);
+    } else if (location.includes("load")) {
+      localStorage.setItem("LoadChartMarkers", JSON.stringify(updatedMarkers));
+      setLoadRecoilMarkers(updatedMarkers);
+    } else if (location.includes("rpm")) {
+      localStorage.setItem("RpmChartMarkers", JSON.stringify(updatedMarkers));
+      setRpmRecoilMarkers(updatedMarkers);
+    } else if (location.includes("abrasion")) {
+      localStorage.setItem(
+        "AbrasionChartMarkers",
+        JSON.stringify(updatedMarkers)
+      );
+      setAbrasionRecoilMarkers(updatedMarkers);
+    }
+  };
+
   const handleMarkerValueChange = (index: number, inputValue: any) => {
     setMarkers((markers: any[]) => {
       const updatedMarkers = [...markers];
@@ -245,58 +288,7 @@ const TopCard = ({ location }: Props) => {
         ...updatedMarkers[index],
         value: inputValue,
       };
-      if (location.includes("motor")) {
-        localStorage.setItem(
-          "MotorChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setMotorRecoilMarkers(updatedMarkers);
-      } else if (location.includes("vacuum")) {
-        localStorage.setItem(
-          "VacuumChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setVacuumRecoilMarkers(updatedMarkers);
-      } else if (location.includes("air-in")) {
-        localStorage.setItem(
-          "AirInChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAirInRecoilMarkers(updatedMarkers);
-      } else if (location.includes("air-out-kpa")) {
-        localStorage.setItem(
-          "AirOutKpaChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAirOutKpaRecoilMarkers(updatedMarkers);
-      } else if (location.includes("air-out-mpa")) {
-        localStorage.setItem(
-          "AirOutMpaChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAirOutMpaRecoilMarkers(updatedMarkers);
-      } else if (location.includes("water")) {
-        localStorage.setItem(
-          "WaterChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setWaterRecoilMarkers(updatedMarkers);
-      } else if (location.includes("load")) {
-        localStorage.setItem(
-          "LoadChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setLoadRecoilMarkers(updatedMarkers);
-      } else if (location.includes("rpm")) {
-        localStorage.setItem("RpmChartMarkers", JSON.stringify(updatedMarkers));
-        setRpmRecoilMarkers(updatedMarkers);
-      } else if (location.includes("abrasion")) {
-        localStorage.setItem(
-          "AbrasionChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAbrasionRecoilMarkers(updatedMarkers);
-      }
+      setLocalStorage(updatedMarkers);
       return updatedMarkers;
     });
   };
@@ -308,58 +300,7 @@ const TopCard = ({ location }: Props) => {
         ...updatedMarkers[index],
         legend: inputlegend,
       };
-      if (location.includes("motor")) {
-        localStorage.setItem(
-          "MotorChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setMotorRecoilMarkers(updatedMarkers);
-      } else if (location.includes("vacuum")) {
-        localStorage.setItem(
-          "VacuumChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setVacuumRecoilMarkers(updatedMarkers);
-      } else if (location.includes("air-in")) {
-        localStorage.setItem(
-          "AirInChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAirInRecoilMarkers(updatedMarkers);
-      } else if (location.includes("air-out-kpa")) {
-        localStorage.setItem(
-          "AirOutKpaChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAirOutKpaRecoilMarkers(updatedMarkers);
-      } else if (location.includes("air-out-mpa")) {
-        localStorage.setItem(
-          "AirOutMpaChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAirOutMpaRecoilMarkers(updatedMarkers);
-      } else if (location.includes("water")) {
-        localStorage.setItem(
-          "WaterChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setWaterRecoilMarkers(updatedMarkers);
-      } else if (location.includes("load")) {
-        localStorage.setItem(
-          "LoadChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setLoadRecoilMarkers(updatedMarkers);
-      } else if (location.includes("rpm")) {
-        localStorage.setItem("RpmChartMarkers", JSON.stringify(updatedMarkers));
-        setRpmRecoilMarkers(updatedMarkers);
-      } else if (location.includes("abrasion")) {
-        localStorage.setItem(
-          "AbrasionChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAbrasionRecoilMarkers(updatedMarkers);
-      }
+      setLocalStorage(updatedMarkers);
       return updatedMarkers;
     });
   };
@@ -371,58 +312,7 @@ const TopCard = ({ location }: Props) => {
         ...updatedMarkers[index],
         checked: !updatedMarkers[index].checked,
       };
-      if (location.includes("motor")) {
-        localStorage.setItem(
-          "MotorChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setMotorRecoilMarkers(updatedMarkers);
-      } else if (location.includes("vacuum")) {
-        localStorage.setItem(
-          "VacuumChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setVacuumRecoilMarkers(updatedMarkers);
-      } else if (location.includes("air-in")) {
-        localStorage.setItem(
-          "AirInChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAirInRecoilMarkers(updatedMarkers);
-      } else if (location.includes("air-out-kpa")) {
-        localStorage.setItem(
-          "AirOutKpaChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAirOutKpaRecoilMarkers(updatedMarkers);
-      } else if (location.includes("air-out-mpa")) {
-        localStorage.setItem(
-          "AirOutMpaChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAirOutMpaRecoilMarkers(updatedMarkers);
-      } else if (location.includes("water")) {
-        localStorage.setItem(
-          "WaterChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setWaterRecoilMarkers(updatedMarkers);
-      } else if (location.includes("load")) {
-        localStorage.setItem(
-          "LoadChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setLoadRecoilMarkers(updatedMarkers);
-      } else if (location.includes("rpm")) {
-        localStorage.setItem("RpmChartMarkers", JSON.stringify(updatedMarkers));
-        setRpmRecoilMarkers(updatedMarkers);
-      } else if (location.includes("abrasion")) {
-        localStorage.setItem(
-          "AbrasionChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAbrasionRecoilMarkers(updatedMarkers);
-      }
+      setLocalStorage(updatedMarkers);
       return updatedMarkers;
     });
   };
@@ -438,58 +328,7 @@ const TopCard = ({ location }: Props) => {
           strokeWidth: inputwidth,
         },
       };
-      if (location.includes("motor")) {
-        localStorage.setItem(
-          "MotorChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setMotorRecoilMarkers(updatedMarkers);
-      } else if (location.includes("vacuum")) {
-        localStorage.setItem(
-          "VacuumChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setVacuumRecoilMarkers(updatedMarkers);
-      } else if (location.includes("air-in")) {
-        localStorage.setItem(
-          "AirInChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAirInRecoilMarkers(updatedMarkers);
-      } else if (location.includes("air-out-kpa")) {
-        localStorage.setItem(
-          "AirOutKpaChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAirOutKpaRecoilMarkers(updatedMarkers);
-      } else if (location.includes("air-out-mpa")) {
-        localStorage.setItem(
-          "AirOutMpaChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAirOutMpaRecoilMarkers(updatedMarkers);
-      } else if (location.includes("water")) {
-        localStorage.setItem(
-          "WaterChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setWaterRecoilMarkers(updatedMarkers);
-      } else if (location.includes("load")) {
-        localStorage.setItem(
-          "LoadChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setLoadRecoilMarkers(updatedMarkers);
-      } else if (location.includes("rpm")) {
-        localStorage.setItem("RpmChartMarkers", JSON.stringify(updatedMarkers));
-        setRpmRecoilMarkers(updatedMarkers);
-      } else if (location.includes("abrasion")) {
-        localStorage.setItem(
-          "AbrasionChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAbrasionRecoilMarkers(updatedMarkers);
-      }
+      setLocalStorage(updatedMarkers);
       return updatedMarkers;
     });
   };
@@ -508,64 +347,13 @@ const TopCard = ({ location }: Props) => {
       updatedMarkers[isChangeColorPickerOpen] = markerToUpdate;
       newLineStyle.stroke = color;
       updatedMarkers[isChangeColorPickerOpen].lineStyle = newLineStyle;
-      if (location.includes("motor")) {
-        localStorage.setItem(
-          "MotorChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setMotorRecoilMarkers(updatedMarkers);
-      } else if (location.includes("vacuum")) {
-        localStorage.setItem(
-          "VacuumChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setVacuumRecoilMarkers(updatedMarkers);
-      } else if (location.includes("air-in")) {
-        localStorage.setItem(
-          "AirInChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAirInRecoilMarkers(updatedMarkers);
-      } else if (location.includes("air-out-kpa")) {
-        localStorage.setItem(
-          "AirOutKpaChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAirOutKpaRecoilMarkers(updatedMarkers);
-      } else if (location.includes("air-out-mpa")) {
-        localStorage.setItem(
-          "AirOutMpaChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAirOutMpaRecoilMarkers(updatedMarkers);
-      } else if (location.includes("water")) {
-        localStorage.setItem(
-          "WaterChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setWaterRecoilMarkers(updatedMarkers);
-      } else if (location.includes("load")) {
-        localStorage.setItem(
-          "LoadChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setLoadRecoilMarkers(updatedMarkers);
-      } else if (location.includes("rpm")) {
-        localStorage.setItem("RpmChartMarkers", JSON.stringify(updatedMarkers));
-        setRpmRecoilMarkers(updatedMarkers);
-      } else if (location.includes("abrasion")) {
-        localStorage.setItem(
-          "AbrasionChartMarkers",
-          JSON.stringify(updatedMarkers)
-        );
-        setAbrasionRecoilMarkers(updatedMarkers);
-      }
+      setLocalStorage(updatedMarkers);
       return updatedMarkers;
     });
   };
 
   const markerList = (anchor: "right") => (
-    <Box sx={{ width: 300, height: "100%" }} role="presentation">
+    <Box sx={{ width: 350, height: "100%" }} role="presentation">
       <div style={{ textAlign: "center", height: "10vh" }}>
         <h1>MarkerList</h1>
         <div style={{ display: "flex", justifyContent: "end" }}>
