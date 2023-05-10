@@ -7,3 +7,12 @@
 .card:hover {
   /* transform: scale(1.02); */
 }
+
+.icon {
+  cursor: pointer;
+  margin: '0'
+}
+
+.icon:hover {
+  transform: scale(1.2);
+}

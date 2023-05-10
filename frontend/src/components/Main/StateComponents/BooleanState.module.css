@@ -1,5 +1,12 @@
+.booleanimg {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 .booleanimg img {
-  width: 5vw;
+  width:60%;
   height: auto;
 }
 

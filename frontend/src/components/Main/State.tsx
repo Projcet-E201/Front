@@ -192,7 +192,14 @@ const State = () => {
                   className={styles.card}
                   style={{ height: "17vh", minHeight: "159.28px" }}
                 >
-                  <CardContent>
+                  <CardContent
+                    sx={{
+                      height: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
                     {/* <p>bool 5개</p> */}
                     {/* {JSON.stringify(booleanData)} */}
                     <BooleanState
@@ -209,7 +216,14 @@ const State = () => {
                   className={styles.card}
                   style={{ height: "17vh", minHeight: "159.28px" }}
                 >
-                  <CardContent>
+                  <CardContent
+                    sx={{
+                      height: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
                     <BooleanState
                       data={secondHalf}
                       error={error}

@@ -7,15 +7,41 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
 const BooleanState = ({ data, error, time }: any) => {
-  // console.log(data);
-  // console.log(error, "123123");
+  const dummy = [
+    {
+      id: 1,
+      value: 1,
+    },
+    {
+      id: 2,
+      value: 1,
+    },
+    {
+      id: 3,
+      value: 0,
+    },
+    {
+      id: 4,
+      value: 0,
+    },
+    {
+      id: 4,
+      value: 1,
+    },
+  ];
   return (
-    <div>
+    <div style={{ width: "100%" }}>
       {error !== "error" ? (
-        <div>
-          {data.length > 1 ? (
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              {data.map((value: any, index: number) => (
+        <div style={{ width: "100%" }}>
+          {dummy.length > 1 ? (
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "space-between",
+              }}
+            >
+              {dummy.map((value: any, index: number) => (
                 <div
                   key={index}
                   style={{ display: "flex", justifyContent: "center" }}
@@ -41,7 +67,6 @@ const BooleanState = ({ data, error, time }: any) => {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                marginTop: "10px",
               }}
             >
               <CircularProgress />

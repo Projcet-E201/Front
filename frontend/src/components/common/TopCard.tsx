@@ -547,7 +547,7 @@ const TopCard = ({ location }: Props) => {
             style={{ display: "flex", alignItems: "center", height: "100%" }}
           >
             <IconButton
-              aria-label="go-to-water-page"
+              // aria-label="go-to-water-page"
               onClick={handleLeftButtonClick}
             >
               <ArrowBackIcon />
