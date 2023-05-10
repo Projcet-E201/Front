@@ -24,7 +24,7 @@ import RpmPage from "./pages/Rpm/RpmPage";
 import RpmDetailPage from "./pages/Rpm/RpmDetailPage";
 import LoginPage from "./pages/Login/LoginPage";
 import TestPage from "./pages/TestPage";
-import CustomBuildPage from "./pages/CustomBuildPage";
+import CustomBuildPage from "./pages/Custom/CustomBuildPage";
 import EquipmentSettingPage from "./pages/Equipment/EquipmentSettingPage";
 import Test2Page from "./pages/Test2Page";
 

@@ -51,7 +51,7 @@ interface Marker {
 const WaterChartMarkers = () => {
   const [WaterMarkers, setWaterMarkers] = useState<any>([]);
   // const [newWaterMarkerValue, setNewWaterMarkerValue] = useState<number>(0);
-  const [newWaterMarkerValue, setNewWaterMarkerValue] = React.useState<any>(30);
+  const [newWaterMarkerValue, setNewWaterMarkerValue] = React.useState<any>(0);
   const [newWaterMarkerWidth, setNewWaterMarkerWidth] = useState<number>(2);
   const [newWaterMarkerLegend, setNewWaterMarkerLegend] = useState<string>("");
 
@@ -277,7 +277,7 @@ const WaterChartMarkers = () => {
                   onChange={handleSliderChange}
                   aria-labelledby="input-slider"
                   min={0}
-                  max={300}
+                  max={4}
                 />
               </Grid>
               <Grid item xs={2.5}>
@@ -287,9 +287,9 @@ const WaterChartMarkers = () => {
                   onChange={handleInputChange}
                   onBlur={handleBlur}
                   inputProps={{
-                    step: 10,
+                    step: 0.5,
                     min: 0,
-                    max: 300,
+                    max: 4,
                     type: "number",
                     "aria-labelledby": "input-slider",
                   }}

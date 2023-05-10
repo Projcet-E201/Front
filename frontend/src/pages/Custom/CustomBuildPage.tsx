@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 
-import MainLayout from "../layout/MainLayout";
+import MainLayout from "../../layout/MainLayout";
 import styles from "./CustomBuildPage.module.css";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+
+import SendIcon from "@mui/icons-material/Send";
 
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+
+import toast, { Toaster } from "react-hot-toast";
 
 // import MotorChart from "../components/Chart/MotorChart";
-import CardMotorChart from "../components/Main/CardChart/CardMotorChart";
+// import CardMotorChart from "../../components/Main/CardChart/CardMotorChart";
+import CustomChart from "./CustomChart";
+
+import { TbEqualDouble, TbEqual } from "react-icons/tb";
 
 import line_1 from "../../src/assets/1line.png";
 
@@ -69,10 +79,20 @@ const CustomBuildPage = () => {
       sensor: selectedSensor,
       sensorNumber: selectedNumber,
     };
-    setChartList((prevList): any => [...prevList, newChart]);
-    setSelectedMachine("");
-    setSelectedSensor("");
-    setSelectedNumber("");
+    if (selectedMachine === "") {
+      toast.error("Machine을 선택해주세요", {
+        duration: 2000,
+      });
+    } else if (selectedSensor === "") {
+      toast.error("Sensor를 선택해주세요", {
+        duration: 2000,
+      });
+    } else {
+      setChartList((prevList): any => [...prevList, newChart]);
+      setSelectedMachine("");
+      setSelectedSensor("");
+      setSelectedNumber("");
+    }
   };
 
   const machineChange = (event: SelectChangeEvent) => {
@@ -127,15 +147,19 @@ const CustomBuildPage = () => {
 
   return (
     <MainLayout>
+      <Toaster />
       <Card className={styles.card} sx={{ paddingBottom: "0" }}>
         <CardContent>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div>
               <h3 style={{ marginTop: "0" }}>차트 선택</h3>
             </div>
-            <div onClick={resetHandler} style={{ cursor: "pointer" }}>
+            {/* <div onClick={resetHandler} style={{ cursor: "pointer" }}>
               <RestartAltIcon />
-            </div>
+            </div> */}
+            <IconButton onClick={resetHandler}>
+              <RestartAltIcon />
+            </IconButton>
           </div>
 
           <div style={{ display: "flex", justifyContent: "center" }}>
@@ -203,9 +227,22 @@ const CustomBuildPage = () => {
             }}
           >
             <div style={{ alignItems: "end" }}>
-              <button onClick={handleSingleRowClick}>1줄에 1개</button>
+              {/* <button onClick={handleSingleRowClick}>1줄에 1개</button> */}
+              <TbEqual
+                onClick={handleSingleRowClick}
+                size={40}
+                style={{ marginRight: "0 20px 0 0" }}
+                className={styles.icon}
+                title="한 줄로 보기"
+              />
               {/* <img src={line_1} alt="" /> */}
-              <button onClick={handleDoubleRowClick}>1줄에 2개</button>
+              {/* <button onClick={handleDoubleRowClick}>1줄에 2개</button> */}
+              <TbEqualDouble
+                onClick={handleDoubleRowClick}
+                size={40}
+                className={styles.icon}
+                title="두 줄로 보기"
+              />
             </div>
             <div style={{ display: "flex" }}>
               <div
@@ -223,9 +260,16 @@ const CustomBuildPage = () => {
                   {selectedNumber && <span>{selectedNumber}</span>}{" "}
                 </h4>
               </div>
-              <button style={{ height: "40px" }} onClick={addChartHandler}>
+              {/* <button style={{ height: "40px" }} onClick={addChartHandler}>
                 ADD CHART
-              </button>
+              </button> */}
+              <Button
+                onClick={addChartHandler}
+                variant="contained"
+                endIcon={<SendIcon />}
+              >
+                ADD CHART
+              </Button>
             </div>
           </div>
         </CardContent>
@@ -253,7 +297,10 @@ const CustomBuildPage = () => {
                 <h4 style={{ marginTop: "0" }}>
                   Machine{chart.machine} -{chart.sensor} - {chart.sensorNumber}
                 </h4>
-                <button onClick={() => deleteChart(index)}>삭제</button>
+                {/* <button onClick={() => deleteChart(index)}>삭제</button> */}
+                <IconButton onClick={() => deleteChart(index)}>
+                  <DeleteIcon />
+                </IconButton>
               </div>
               {/* <div style={{ height: chartList.length > 2 ? "23vh" : "55vh" }}> */}
               <div
@@ -261,7 +308,7 @@ const CustomBuildPage = () => {
                   height: chartList.length < 3 ? "50vh" : "35vh",
                 }}
               >
-                {chart.sensor === "Motor" && <CardMotorChart />}
+                <CustomChart chart={chart} />
               </div>
             </CardContent>
           </Card>

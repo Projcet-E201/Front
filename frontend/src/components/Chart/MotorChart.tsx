@@ -32,9 +32,6 @@ const MotorChart = ({ datasets, legend }: Props) => {
     setRecoilMarkers(
       markersFromLocalStorage.filter((marker: any) => marker.checked)
     );
-    console.log(markers);
-    // markers에 의존하면  markers의 변경에 의해 자신이 다시 실행되면서 엄청 많이 실행되고 있음 주의할 것.
-    // 성능 이슈 발생하면 버려야 할 듯
   }, []);
 
   const legends: any = [

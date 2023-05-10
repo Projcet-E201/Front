@@ -1,7 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 
 import { ResponsiveLine } from "@nivo/line";
+
+import { useRecoilState } from "recoil";
+import {
+  MotorMarkersAtom,
+  VacuumMarkersAtom,
+  AirInMarkersAtom,
+  AirOutKpaMarkersAtom,
+  AirOutMpaMarkersAtom,
+  WaterMarkersAtom,
+  LoadMarkersAtom,
+  RpmMarkersAtom,
+  AbrasionMarkersAtom,
+} from "../../../store/atoms";
 
 interface Props {
   datasets: any[];
@@ -16,6 +29,7 @@ const formatTime = (secondsAgo: number) => {
 
 const DetailChart = ({ datasets, legend }: Props) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const legends: any = [
     {
@@ -78,6 +92,93 @@ const DetailChart = ({ datasets, legend }: Props) => {
     return;
   }, []);
 
+  const [markers, setMarkers] = useState<any>([]);
+  const [MotorRecoilMarkers, setMotorRecoilMarkers] =
+    useRecoilState(MotorMarkersAtom);
+  const [VacuumRecoilMarkers, setVacuumRecoilMarkers] =
+    useRecoilState(VacuumMarkersAtom);
+  const [AirInRecoilMarkers, setAirInRecoilMarkers] =
+    useRecoilState(AirInMarkersAtom);
+  const [AirOutKpaRecoilMarkers, setAirOutKpaRecoilMarkers] =
+    useRecoilState(AirOutKpaMarkersAtom);
+  const [AirOutMpaRecoilMarkers, setAirOutMpaRecoilMarkers] =
+    useRecoilState(AirOutMpaMarkersAtom);
+  const [WaterRecoilMarkers, setWaterRecoilMarkers] =
+    useRecoilState(WaterMarkersAtom);
+  const [LoadRecoilMarkers, setLoadRecoilMarkers] =
+    useRecoilState(LoadMarkersAtom);
+  const [RpmRecoilMarkers, setRpmRecoilMarkers] =
+    useRecoilState(RpmMarkersAtom);
+  const [AbrasionRecoilMarkers, setAbrasionRecoilMarkers] =
+    useRecoilState(AbrasionMarkersAtom);
+
+  useEffect(() => {
+    if (location.pathname.includes("motor")) {
+      const storedMarkers = JSON.parse(
+        localStorage.getItem("MotorChartMarkers") || "[]"
+      );
+      setMarkers(storedMarkers);
+      setMotorRecoilMarkers(storedMarkers);
+      // console.log(markers);
+    } else if (location.pathname.includes("vacuum")) {
+      const storedMarkers = JSON.parse(
+        localStorage.getItem("VacuumChartMarkers") || "[]"
+      );
+      setMarkers(storedMarkers);
+      setVacuumRecoilMarkers(storedMarkers);
+      // console.log(markers);
+    } else if (location.pathname.includes("air-in")) {
+      const storedMarkers = JSON.parse(
+        localStorage.getItem("AirInChartMarkers") || "[]"
+      );
+      setMarkers(storedMarkers);
+      setAirInRecoilMarkers(storedMarkers);
+      // console.log(markers);
+    } else if (location.pathname.includes("air-out-kpa")) {
+      const storedMarkers = JSON.parse(
+        localStorage.getItem("AirOutKpaChartMarkers") || "[]"
+      );
+      setMarkers(storedMarkers);
+      setAirOutKpaRecoilMarkers(storedMarkers);
+      // console.log(markers);
+    } else if (location.pathname.includes("air-out-mpa")) {
+      const storedMarkers = JSON.parse(
+        localStorage.getItem("AirOutMpaChartMarkers") || "[]"
+      );
+      setMarkers(storedMarkers);
+      setAirOutMpaRecoilMarkers(storedMarkers);
+      // console.log(markers);
+    } else if (location.pathname.includes("water")) {
+      const storedMarkers = JSON.parse(
+        localStorage.getItem("WaterChartMarkers") || "[]"
+      );
+      setMarkers(storedMarkers);
+      setWaterRecoilMarkers(storedMarkers);
+      // console.log(markers);
+    } else if (location.pathname.includes("load")) {
+      const storedMarkers = JSON.parse(
+        localStorage.getItem("LoadChartMarkers") || "[]"
+      );
+      setMarkers(storedMarkers);
+      setLoadRecoilMarkers(storedMarkers);
+      // console.log(markers);
+    } else if (location.pathname.includes("rpm")) {
+      const storedMarkers = JSON.parse(
+        localStorage.getItem("RpmChartMarkers") || "[]"
+      );
+      setMarkers(storedMarkers);
+      setRpmRecoilMarkers(storedMarkers);
+      // console.log(markers);
+    } else if (location.pathname.includes("abrasion")) {
+      const storedMarkers = JSON.parse(
+        localStorage.getItem("AbrasionChartMarkers") || "[]"
+      );
+      setMarkers(storedMarkers);
+      setAbrasionRecoilMarkers(storedMarkers);
+      // console.log(markers);
+    }
+  }, []);
+
   return (
     <ResponsiveLine
       data={datasets}
@@ -106,6 +207,28 @@ const DetailChart = ({ datasets, legend }: Props) => {
       useMesh={true}
       animate={false}
       legends={legend ? legends : []}
+      // markers={markers.filter((marker: any) => marker.checked)}
+      markers={
+        location.pathname.includes("motor")
+          ? MotorRecoilMarkers.filter((marker: any) => marker.checked)
+          : location.pathname.includes("vacuum")
+          ? VacuumRecoilMarkers.filter((marker) => marker.checked)
+          : location.pathname.includes("air-in")
+          ? AirInRecoilMarkers.filter((marker) => marker.checked)
+          : location.pathname.includes("air-out-kpa")
+          ? AirOutKpaRecoilMarkers.filter((marker) => marker.checked)
+          : location.pathname.includes("air-out-mpa")
+          ? AirOutMpaRecoilMarkers.filter((marker) => marker.checked)
+          : location.pathname.includes("water")
+          ? WaterRecoilMarkers.filter((marker) => marker.checked)
+          : location.pathname.includes("load")
+          ? LoadRecoilMarkers.filter((marker) => marker.checked)
+          : location.pathname.includes("rpm")
+          ? RpmRecoilMarkers.filter((marker) => marker.checked)
+          : location.pathname.includes("abrasion")
+          ? AbrasionRecoilMarkers.filter((marker) => marker.checked)
+          : []
+      }
     />
   );
 };

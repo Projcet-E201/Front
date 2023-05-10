@@ -51,7 +51,7 @@ interface Marker {
 const RpmChartMarkers = () => {
   const [RpmMarkers, setRpmMarkers] = useState<any>([]);
   // const [newRpmMarkerValue, setNewRpmMarkerValue] = useState<number>(0);
-  const [newRpmMarkerValue, setNewRpmMarkerValue] = React.useState<any>(30);
+  const [newRpmMarkerValue, setNewRpmMarkerValue] = React.useState<any>(0);
   const [newRpmMarkerWidth, setNewRpmMarkerWidth] = useState<number>(2);
   const [newRpmMarkerLegend, setNewRpmMarkerLegend] = useState<string>("");
 
@@ -280,7 +280,7 @@ const RpmChartMarkers = () => {
                   onChange={handleSliderChange}
                   aria-labelledby="input-slider"
                   min={0}
-                  max={300}
+                  max={50000}
                 />
               </Grid>
               <Grid item xs={2.5}>
@@ -290,9 +290,9 @@ const RpmChartMarkers = () => {
                   onChange={handleInputChange}
                   onBlur={handleBlur}
                   inputProps={{
-                    step: 10,
+                    step: 100,
                     min: 0,
-                    max: 300,
+                    max: 50000,
                     type: "number",
                     "aria-labelledby": "input-slider",
                   }}

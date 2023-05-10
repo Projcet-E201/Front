@@ -70,8 +70,12 @@ const NavBar = ({ leftNavWidth }: any) => {
                     ))}
                 </>
               )}
-              {location.pathname === "/custom-build" && <h2>CustomBuild</h2>}
-              {location.pathname === "/equipment-setting" && <h2>설비 관리</h2>}
+              {location.pathname === "/custom-build" && (
+                <h3 style={{ marginBottom: "0" }}>CustomBuild</h3>
+              )}
+              {location.pathname === "/equipment-setting" && (
+                <h3 style={{ marginBottom: "0" }}>설비 관리</h3>
+              )}
             </div>
           </div>
           <div className={styles.rightbutton}>

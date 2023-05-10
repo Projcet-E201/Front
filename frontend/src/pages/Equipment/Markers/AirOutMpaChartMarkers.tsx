@@ -52,7 +52,7 @@ const AirOutMpaChartMarkers = () => {
   const [AirOutMpaMarkers, setAirOutMpaMarkers] = useState<any>([]);
   // const [newAirOutMpaMarkerValue, setNewAirOutMpaMarkerValue] = useState<number>(0);
   const [newAirOutMpaMarkerValue, setNewAirOutMpaMarkerValue] =
-    React.useState<any>(30);
+    React.useState<any>(0);
   const [newAirOutMpaMarkerWidth, setNewAirOutMpaMarkerWidth] =
     useState<number>(2);
   const [newAirOutMpaMarkerLegend, setNewAirOutMpaMarkerLegend] =
@@ -301,9 +301,9 @@ const AirOutMpaChartMarkers = () => {
                   onChange={handleInputChange}
                   onBlur={handleBlur}
                   inputProps={{
-                    step: 10,
-                    min: 0,
-                    max: 300,
+                    step: 0.1,
+                    min: -0.1,
+                    max: 1,
                     type: "number",
                     "aria-labelledby": "input-slider",
                   }}
