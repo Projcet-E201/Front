@@ -33,7 +33,7 @@ const BooleanState = ({ data, error, time }: any) => {
     <div style={{ width: "100%" }}>
       {error !== "error" ? (
         <div style={{ width: "100%" }}>
-          {dummy.length > 1 ? (
+          {data.length > 1 ? (
             <div
               style={{
                 display: "flex",
@@ -41,7 +41,7 @@ const BooleanState = ({ data, error, time }: any) => {
                 justifyContent: "space-between",
               }}
             >
-              {dummy.map((value: any, index: number) => (
+              {data.map((value: any, index: number) => (
                 <div
                   key={index}
                   style={{ display: "flex", justifyContent: "center" }}
