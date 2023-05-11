@@ -10,8 +10,9 @@ import styles from "./StringState.module.css";
 // }
 
 const StringState = ({ data }: any) => {
-  const [messages, setMessages] = useState<any>([]);
-  console.log(data);
+  // const [messages, setMessages] = useState<any>([]);
+  // console.log(data, "zxczczxc");
+  // console.log(typeof data, "타입");
   // const [messages, setMessages] = useState<Message[]>(
   //   Array.from({ length: 10 }, (_, i) => {
   //     const id = `S${i + 1}`;
@@ -38,6 +39,7 @@ const StringState = ({ data }: any) => {
   //     intervalIds.forEach(clearInterval);
   //   };
   // }, []);
+  console.log(data);
 
   return (
     <div style={{ width: "100%", margin: "0", height: "100%" }}>
@@ -103,7 +105,7 @@ const StringState = ({ data }: any) => {
                     textAlign: "center",
                   }}
                 >
-                  {message.content}
+                  {message.value}
                 </td>
               </tr>
             ))}

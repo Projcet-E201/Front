@@ -97,7 +97,6 @@ const State = () => {
     return () => {
       if (stompClient) {
         disconnetWebSocket();
-        console.log("disconnect");
       }
     };
   }, []);
@@ -160,17 +159,10 @@ const State = () => {
           for (const [key, value] of Object.entries(parsedData[3])) {
             if (key.startsWith("string")) {
               const id = parseInt(key.slice(6));
-              const currentDate = new Date();
-              const options = { timeZone: "Asia/Seoul" };
-              const formattedTime = currentDate.toLocaleString(
-                "ko-KR",
-                options
-              );
               stringDataArray[id - 1] = {
                 id: key,
                 name: `S${id}`,
-                content: value,
-                time: formattedTime,
+                value: value,
               };
             }
           }
@@ -186,6 +178,7 @@ const State = () => {
     setBooleanData([]);
     setIntData([]);
     setDoubleData([]);
+    setStringData([]);
     setFirstBoolean([]);
     setSecondBoolean([]);
   }, [machine]);
