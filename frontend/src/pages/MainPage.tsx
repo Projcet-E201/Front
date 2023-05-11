@@ -181,7 +181,8 @@ const MainPage: React.FC = () => {
   });
 
   //웹소켓 연결 코드 시작
-  const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  const connectUrl = "https://semse.info/api/ws";
 
   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
   const [message, setMessage] = useState<any>();
