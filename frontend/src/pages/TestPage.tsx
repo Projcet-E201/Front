@@ -13,7 +13,8 @@ const TestPage: React.FC = () => {
   const [intData, setIntData] = useState<any[]>([]);
   const [doubleData, setDoubleData] = useState<any[]>([]);
 
-  const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  const connectUrl = "https://semse.info/api/ws";
   // const connectUrl = "http://localhost:8091/ws";
 
   const disconnetWebSocket = useCallback(() => {

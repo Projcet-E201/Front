@@ -22,6 +22,10 @@ import CardAbrasionChart from "./CardChart/CardAbrasionChart";
 // import { useParams } from "react-router-dom";
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
+import derivative from "antd/es/theme/themes/default";
+
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 const Sensor = () => {
   const navigate = useNavigate();
@@ -40,7 +44,8 @@ const Sensor = () => {
   const [reconnectTimer, setReconnectTimer] = useState<any>();
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
 
-  const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  const connectUrl = "https://semse.info/api/ws";
   // const connectUrl = "https://k8e201.p.ssafy.io:8091/ws";
   // const connectUrl = "http://localhost:8091/ws";
 
@@ -187,8 +192,26 @@ const Sensor = () => {
                     onClick={() => navigate(`/machine/${machine}/motor`)}
                     style={{ width: "auto", height: "23vh" }}
                   >
-                    <h3 style={{ margin: "0" }}>Motor Toque(%)</h3>
-                    <CardMotorChart />
+                    {/* {motorData.includes(null) ? ( */}
+                    {motorData[0] !== null ? (
+                      <Box
+                        sx={{
+                          height: "100%",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <CircularProgress />
+                        <h3>Motor 데이터를 불러오는 중 입니다...</h3>
+                      </Box>
+                    ) : (
+                      <div style={{ height: "100%" }}>
+                        <h3 style={{ margin: "0" }}>Motor Toque(%)</h3>
+                        <CardMotorChart motorData={motorData} />
+                      </div>
+                    )}
                   </div>
                 )}
                 {index === 1 && (

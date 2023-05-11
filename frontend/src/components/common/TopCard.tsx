@@ -417,13 +417,19 @@ const TopCard = ({ location }: Props) => {
                         ? 16
                         : // rpm
                           50000,
-                      step: location.includes("motor")
+                      step: location.includes(
+                        "motor" || "air-out-kpa" || "air-in"
+                      )
                         ? 10
                         : location.includes("vacuum")
                         ? 5
-                        : location.includes("air-in")
-                        ? 10
-                        : 0, // step 값 설정
+                        : location.includes("water")
+                        ? 0.5
+                        : location.includes("abrasion" || "load")
+                        ? 1
+                        : location.includes("air-out-mpa")
+                        ? 0.1
+                        : 1000, // rpm
                     }}
                     variant="standard"
                     onChange={(event) =>

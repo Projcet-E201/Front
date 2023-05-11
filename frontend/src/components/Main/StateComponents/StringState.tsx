@@ -41,7 +41,7 @@ const StringState = ({ data }: any) => {
 
   return (
     <div style={{ width: "100%", margin: "0", height: "100%" }}>
-      {data.length > 1 ? (
+      {data.length > 0 ? (
         <table
           style={{
             borderCollapse: "collapse",

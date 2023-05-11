@@ -73,8 +73,8 @@ const AirOut2Chart = ({ datasets, legend }: Props) => {
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
-        min: 0,
-        max: 900,
+        min: -0.1,
+        max: 1,
         stacked: false,
         reverse: false,
       }}
