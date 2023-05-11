@@ -32,7 +32,8 @@ const State = () => {
   const [intData, setIntData] = useState<any[]>([]);
   const [doubleData, setDoubleData] = useState<any[]>([]);
 
-  const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  const connectUrl = "https://k8e201.p.ssafy.io:8091/ws";
   // const connectUrl = "http://localhost:8091/ws";
 
   const disconnetWebSocket = useCallback(() => {
@@ -192,8 +193,6 @@ const State = () => {
       });
     }
   }, [stompClient]);
-
-  // console.log(intData, "wflwflwflw");
 
   // 주소 바뀌면 새로 가져오깅
   useEffect(() => {

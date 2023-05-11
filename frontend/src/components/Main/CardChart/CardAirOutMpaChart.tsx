@@ -61,7 +61,7 @@ const CardAirOutMpaChart = () => {
     id: `AirOutMpa${i + 1}`,
     data: data.map((d) => ({ x: d.x, y: d[`AirOutMpa${i + 1}`] })),
   }));
-  console.log(datasets);
+  // console.log(datasets);
 
   return (
     <ResponsiveLine

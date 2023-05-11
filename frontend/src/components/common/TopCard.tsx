@@ -399,10 +399,32 @@ const TopCard = ({ location }: Props) => {
                     label="Value"
                     value={marker.value}
                     type="number"
-                    // inputProps={{
-                    //   min: 0, // 최소값
-                    //   max: 100, // 최대값
-                    // }}
+                    inputProps={{
+                      min: location.includes("air-in") ? -0.1 : 0,
+                      max: location.includes("motor")
+                        ? 300
+                        : location.includes("vacuum")
+                        ? 100
+                        : location.includes("air-in" || "air-out-kpa")
+                        ? 900
+                        : location.includes("air-out-mpa")
+                        ? 1
+                        : location.includes("water")
+                        ? 4
+                        : location.includes("abrasion")
+                        ? 40
+                        : location.includes("load")
+                        ? 16
+                        : // rpm
+                          50000,
+                      step: location.includes("motor")
+                        ? 10
+                        : location.includes("vacuum")
+                        ? 5
+                        : location.includes("air-in")
+                        ? 10
+                        : 0, // step 값 설정
+                    }}
                     variant="standard"
                     onChange={(event) =>
                       handleMarkerValueChange(index, Number(event.target.value))

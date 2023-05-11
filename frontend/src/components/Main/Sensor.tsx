@@ -40,7 +40,8 @@ const Sensor = () => {
   const [reconnectTimer, setReconnectTimer] = useState<any>();
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
 
-  const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  const connectUrl = "https://k8e201.p.ssafy.io:8091/ws";
   // const connectUrl = "http://localhost:8091/ws";
 
   const disconnetWebSocket = useCallback(() => {

@@ -61,7 +61,7 @@ const CardAirOutKpaChart = () => {
     id: `AirOutKpa${i + 1}`,
     data: data.map((d) => ({ x: d.x, y: d[`AirOutKpa${i + 1}`] })),
   }));
-  console.log(datasets);
+  // console.log(datasets);
 
   return (
     <ResponsiveLine
