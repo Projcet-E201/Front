@@ -78,7 +78,8 @@ const DetailItem: React.FC = () => {
   //웹소켓 코드 시작
 
   // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
-  const connectUrl = "http://localhost:8091/ws";
+  // const connectUrl = "http://localhost:8091/ws";
+  const connectUrl = "https://semse.info/api/ws";
 
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
