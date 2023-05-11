@@ -104,7 +104,7 @@ const State = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       handleGetState();
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [handleGetState]);
@@ -164,17 +164,6 @@ const State = () => {
           setDoubleData(doubleDataArray);
 
           const stringDataArray = new Array(10).fill(null);
-          // for (const [key, value] of Object.entries(parsedData[3])) {
-          //   if (key.startsWith("string")) {
-          //     const id = parseInt(key.slice(6));
-          //     stringDataArray[id - 1] = {
-          //       id: key,
-          //       name: `S${id}`,
-          //       value: value,
-          //     };
-          //   }
-          // }
-
           setStringData(parsedData[3]);
         }
       });
@@ -212,7 +201,7 @@ const State = () => {
                 >
                   <CardContent
                     sx={{
-                      // height: "100%",
+                      height: "100%",
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
@@ -235,7 +224,7 @@ const State = () => {
                 >
                   <CardContent
                     sx={{
-                      // height: "100%",
+                      height: "100%",
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
@@ -259,7 +248,7 @@ const State = () => {
               >
                 <CardContent
                   sx={{
-                    height: "40vh",
+                    height: "100%",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",

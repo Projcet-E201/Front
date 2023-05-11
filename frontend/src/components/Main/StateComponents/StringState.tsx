@@ -20,20 +20,31 @@ const StringState = ({ data }: any) => {
   );
 
   useEffect(() => {
-    const formattedData: Message[] = Object.keys(data).map((key) => ({
-      id: key,
-      time: data[key].time,
-      content: data[key].value,
-    }));
+    const formattedData: Message[] = Object.keys(data)
+      .sort((a, b) => {
+        const timeA = data[a].time;
+        const timeB = data[b].time;
+
+        if (timeA === null) return 1; // timeA가 null인 경우 timeB보다 뒤로 정렬
+        if (timeB === null) return -1; // timeB가 null인 경우 timeA보다 뒤로 정렬
+
+        return parseInt(timeA.slice(6)) - parseInt(timeB.slice(6));
+      })
+      .map((key) => ({
+        id: key,
+        time: data[key].time || "",
+        content: data[key].value,
+      }));
     setMessages(formattedData);
   }, [data]);
 
-  console.log(data, "zzxxxxxxxx020202020");
+  // console.log(data, "zzxxxxxxxx020202020");
+  // console.log(messages, "sdfsdfsdf");
 
   return (
     <div style={{ width: "100%", margin: "0", height: "100%" }}>
-      <p>{data.length}</p>
-      {data.length > 0 ? (
+      {/* <p>{data.length}</p> */}
+      {messages.length > 0 ? (
         <table
           style={{
             borderCollapse: "collapse",
@@ -68,8 +79,8 @@ const StringState = ({ data }: any) => {
             </tr>
           </thead>
           <tbody>
-            {data.map((message: any, index: number) => (
-              <tr key={index}>
+            {messages.map((message: any, index: number) => (
+              <tr key={message.id}>
                 <td
                   style={{
                     padding: "0.5rem",
@@ -95,7 +106,7 @@ const StringState = ({ data }: any) => {
                     textAlign: "center",
                   }}
                 >
-                  {message.value}
+                  {message.content}
                 </td>
               </tr>
             ))}
@@ -112,6 +123,7 @@ const StringState = ({ data }: any) => {
           }}
         >
           <CircularProgress />
+
           <h3>String 데이터를 불러오는 중 입니다...</h3>
         </Box>
       )}

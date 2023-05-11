@@ -90,7 +90,7 @@ const Sensor = () => {
     );
   };
 
-  const handleGetMessage = useCallback(() => {
+  const handleGetSensor = useCallback(() => {
     if (stompClient) {
       stompClient.send(
         `/server/machine/sensor`,
@@ -156,10 +156,12 @@ const Sensor = () => {
   }, [machine]);
 
   useEffect(() => {
-    if (stompClient) {
-      handleGetMessage();
-    }
-  }, [stompClient]);
+    const interval = setInterval(() => {
+      handleGetSensor();
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [handleGetSensor]);
 
   // console.log(message[0], "message!!");
 

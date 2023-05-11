@@ -37,21 +37,26 @@ const BooleanState = ({ data, error, time }: any) => {
     setBooleanData(data);
   }, [data, booleanData]);
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: "100%", height: "100%" }}>
       {error !== "error" ? (
-        <div style={{ width: "100%" }}>
+        <div style={{ width: "100%", height: "100%" }}>
           {data.length > 1 ? (
             <div
               style={{
                 display: "flex",
                 width: "100%",
+                height: "100%",
                 justifyContent: "space-between",
               }}
             >
               {data.map((value: any, index: number) => (
                 <div
                   key={index}
-                  style={{ display: "flex", justifyContent: "center" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    height: "100%",
+                  }}
                 >
                   {value.value === 1 ? (
                     <div className={styles.booleanimg}>
@@ -70,6 +75,7 @@ const BooleanState = ({ data, error, time }: any) => {
           ) : (
             <Box
               sx={{
+                height: "100%",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
