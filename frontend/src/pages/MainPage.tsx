@@ -9,8 +9,8 @@ import styles from "./MainPage.module.css";
 import MainError from "../components/MainError/MainError";
 import MainMachineItem from "../components/MainMachineItem/MainMachineItem";
 import MainSenserItem from "../components/MainSenserItem/MainSenserItem";
-import MainSenserLaegeItem from "../components/MainSenserItem/MainSenserLaegeItem";
-import MainSenserSmallItem from "../components/MainSenserItem/MainSenserSmallItem";
+import MainSenserHorizonBarItem from "../components/MainSenserItem/MainSenserHorizonBarItem";
+import MainSensorBarItem from "../components/MainSenserItem/MainSensorBarItem";
 import { BsFillBarChartFill } from "react-icons/bs";
 import { RiBarChartHorizontalFill } from "react-icons/ri";
 import { FaListAlt } from "react-icons/fa";
@@ -181,87 +181,111 @@ const MainPage: React.FC = () => {
   });
 
   //웹소켓 연결 코드 시작
-  // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
 
-  // const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
-  // const [message, setMessage] = useState<any>();
+  const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
+  const [message, setMessage] = useState<any>();
 
-  // const connectWebSocket = () => {
-  //   console.log(connectUrl);
-  //   const socket = new SockJS(connectUrl);
-  //   const stompClient = Stomp.over(socket);
-  //   stompClient.connect(
-  //     // 헤더
-  //     {},
-  //     () => {
-  //       // 연결 성공시 이벤트
-  //       // console.log("WebSocket connected");
-  //       setStompClient(stompClient);
-  //     },
-  //     (error) => {
-  //       // 연결 실패시 이벤트
-  //       console.error("WebSocket error: ", error);
-  //     }
-  //   );
-  // };
+  const connectWebSocket = () => {
+    console.log(connectUrl);
+    const socket = new SockJS(connectUrl);
+    const stompClient = Stomp.over(socket);
+    stompClient.connect(
+      // 헤더
+      {},
+      () => {
+        // 연결 성공시 이벤트
+        console.log("성공, WebSocket connected");
+        setStompClient(stompClient);
+      },
+      (error) => {
+        // 연결 실패시 이벤트
+        console.error("WebSocket error: ", error);
+      }
+    );
+  };
 
-  // const handleTitleModify = f(() => {
-  //   if (stompClient) {
-  //     // stompClient.send(`/server/post`, {}, JSON.stringify({ data: "data" }));
-  //     stompClient.send(
-  //       `/server/main/machine`,
-  //       {},
-  //       JSON.stringify({ data: "data" })
-  //     );
-  //   }
-  // }, [stompClient]);
+  const handleTitleModify = useCallback(() => {
+    if (stompClient) {
+      stompClient.send(
+        `/server/main/machine`,
+        {},
+        JSON.stringify({ data: "data" })
+      );
+    }
+  }, [stompClient]);
 
-  // useEffect(() => {
-  //   connectWebSocket();
-  //   return () => {
-  //     if (stompClient) {
-  //       stompClient.disconnect(() => "");
-  //       // stompClient.close();
-  //     }
-  //   };
-  // }, []);
+  useEffect(() => {
+    connectWebSocket();
+    return () => {
+      if (stompClient) {
+        stompClient.disconnect(() => "");
+        // stompClient.close();
+      }
+    };
+  }, []);
 
-  // useEffect(() => {
-  //   // server 에서 보내는 데이터를 실시간으로 받는 코드
-  //   if (stompClient) {
-  //     // console.log("stompClient2");
-  //     stompClient.subscribe(`/client/main/machine`, (data) => {
-  //       // console.log(data);
-  //       setMessage(JSON.parse(data.body)); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
-  //       // setMessage(data.body); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
-  //     });
-  //   }
-  // }, [stompClient]);
+  useEffect(() => {
+    // server 에서 보내는 데이터를 실시간으로 받는 코드
+    if (stompClient) {
+      // console.log("stompClient2");
+      stompClient.subscribe(`/client/main/machine`, (data) => {
+        // console.log(data);
+        setMessage(JSON.parse(data.body)); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
+        // setMessage(data.body); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
+      });
+    }
+  }, [stompClient]);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     handleTitleModify();
-  //   }, 10000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleTitleModify();
+    }, 5000);
 
-  //   return () => clearInterval(interval);
-  // }, [handleTitleModify]);
+    return () => clearInterval(interval);
+  }, [handleTitleModify]);
 
   //웹소켓 연결 코드 끝
+  const [machinetabIndex, setMachineTabIndex] = useState(1);
+
+  const onClickMachineTab = (index: number) => {
+    setMachineTabIndex(index);
+  };
+
   const [tabIndex, setTabIndex] = useState(1);
 
   const onClickTab = (index: number) => {
     setTabIndex(index);
   };
 
+  console.log("여기", message);
+
   return (
     <MainLayout>
       <div className={styles.main1}>
         <div className={styles.main2}>
+          {/* {machinetabIndex === 0 && (
+            <MainSensorBarItem clientData={clientData} />
+          )}
+          {machinetabIndex === 1 && (
+            <div>
+              {Object.entries(clientData).map(([key, client], index) => (
+                <div className={styles.maincard} key={`${key}-${index}`}>
+                  <MainMachineItem client={client} id={key} index={index} />
+                </div>
+              ))}
+            </div>
+          )}
+          {machinetabIndex === 2 && (
+            <MainSenserHorizonBarItem clientData={clientData} />
+          )} */}
+
           {Object.entries(clientData).map(([key, client], index) => (
             <div className={styles.maincard} key={key}>
               <MainMachineItem client={client} id={key} index={index} />
             </div>
           ))}
+
           <Card className={styles.errorcard}>
             <CardContent className={styles.errorcardcomponent}>
               {/* <p>{JSON.stringify(message)}</p> */}
@@ -269,14 +293,14 @@ const MainPage: React.FC = () => {
             </CardContent>
           </Card>
         </div>
-        {/* <div className={styles.sensordatastyle}>
-          <MainSenserItem clientData={clientData} />
-        </div> */}
+
         <div className={styles.sensordatastyle}>
-          {tabIndex === 0 && <MainSenserSmallItem clientData={clientData} />}
+          {tabIndex === 0 && <MainSensorBarItem clientData={clientData} />}
           {tabIndex === 1 && <MainSenserItem clientData={clientData} />}
-          {tabIndex === 2 && <MainSenserLaegeItem clientData={clientData} />}
-          <div className={styles.tab}>
+          {tabIndex === 2 && (
+            <MainSenserHorizonBarItem clientData={clientData} />
+          )}
+          <div className={styles.sensortab}>
             <div
               onClick={() => onClickTab(0)}
               className={

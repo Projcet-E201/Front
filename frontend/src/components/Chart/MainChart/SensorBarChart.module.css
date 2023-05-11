@@ -1,0 +1,17 @@
+.chartcontainer {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.chartcontainer > div {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  transform: translateY(100%);
+  transition: transform 1s ease-in-out;
+}
+
+.chartcontainer.loaded > div {
+  transform: translateY(0%);
+}
