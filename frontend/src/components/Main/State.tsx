@@ -101,6 +101,14 @@ const State = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleGetState();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [handleGetState]);
+
   // const firstHalf = booleanData.slice(0, 5);
   // const secondHalf = booleanData.slice(5, 10);
   const [firstBoolean, setFirstBoolean] = useState<any>([]);
@@ -156,18 +164,18 @@ const State = () => {
           setDoubleData(doubleDataArray);
 
           const stringDataArray = new Array(10).fill(null);
-          for (const [key, value] of Object.entries(parsedData[3])) {
-            if (key.startsWith("string")) {
-              const id = parseInt(key.slice(6));
-              stringDataArray[id - 1] = {
-                id: key,
-                name: `S${id}`,
-                value: value,
-              };
-            }
-          }
+          // for (const [key, value] of Object.entries(parsedData[3])) {
+          //   if (key.startsWith("string")) {
+          //     const id = parseInt(key.slice(6));
+          //     stringDataArray[id - 1] = {
+          //       id: key,
+          //       name: `S${id}`,
+          //       value: value,
+          //     };
+          //   }
+          // }
 
-          setStringData(stringDataArray);
+          setStringData(parsedData[3]);
         }
       });
     }

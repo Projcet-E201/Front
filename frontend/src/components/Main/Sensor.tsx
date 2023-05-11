@@ -129,13 +129,13 @@ const Sensor = () => {
           // console.log(parsedData[0].MOTOR, "zzzz");
           const motorDataArray = new Array(10).fill(null);
           for (const [key, value] of Object.entries(parsedData[0].MOTOR)) {
-            // if (key.startsWith("motor")) {
-            //   const id = parseInt(key.slice(7));
-            //   // 순서대로 array에 넣기
-            //   console.log(key, "key");
-            //   console.log(value, "value");
-            //   // motorDataArray[id - 1] = {x:  };
-            // }
+            if (key.startsWith("motor")) {
+              const id = parseInt(key.slice(7));
+              // 순서대로 array에 넣기
+              // console.log(key, "key");
+              // console.log(value, "value");
+              motorDataArray[id - 1] = { x: key, y: value };
+            }
             // console.log(key, "key");
             // console.log(value, "value");
             // console.log("---------------------");
@@ -195,7 +195,7 @@ const Sensor = () => {
                     {/* motorData가 []이면 연결조차 되지 않았다는 것이고
                 null로 채워져 있으면 연결을 되었지만 데이터를 받아오지 못했다는 것이고 */}
 
-                    {motorData.includes(null) ? (
+                    {motorData.length === 0 ? (
                       <Box
                         sx={{
                           height: "100%",
@@ -211,7 +211,7 @@ const Sensor = () => {
                     ) : (
                       <div style={{ height: "100%" }}>
                         <h3 style={{ margin: "0" }}>Motor Toque(%)</h3>
-                        <p>{JSON.stringify(motorData)}</p>
+
                         <CardMotorChart motorData={motorData} />
                       </div>
                     )}

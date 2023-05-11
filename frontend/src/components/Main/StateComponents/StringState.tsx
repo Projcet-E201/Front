@@ -3,46 +3,36 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import styles from "./StringState.module.css";
 
-// interface Message {
-//   id: string;
-//   time: string;
-//   content: string;
-// }
+interface Message {
+  id: string;
+  time: string;
+  content: string;
+}
 
 const StringState = ({ data }: any) => {
-  // const [messages, setMessages] = useState<any>([]);
   // console.log(data, "zxczczxc");
   // console.log(typeof data, "타입");
-  // const [messages, setMessages] = useState<Message[]>(
-  //   Array.from({ length: 10 }, (_, i) => {
-  //     const id = `S${i + 1}`;
-  //     return { id, time: "", content: "" };
-  //   })
-  // );
+  const [messages, setMessages] = useState<Message[]>(
+    Array.from({ length: 10 }, (_, i) => {
+      const id = `S${i + 1}`;
+      return { id, time: "", content: "" };
+    })
+  );
 
-  // useEffect(() => {
-  //   const intervalIds = Array.from({ length: 10 }, (_, i) => {
-  //     const id = `S${i + 1}`;
-  //     return setInterval(() => {
-  //       const date = new Date();
-  //       const time = date.toLocaleString();
-  //       const content = `새로운 String data 생성 -${id}`;
-  //       setMessages((prevMessages) => {
-  //         const newMessages = [...prevMessages];
-  //         const index = i % 10;
-  //         newMessages[index] = { id, time, content };
-  //         return newMessages;
-  //       });
-  //     }, (i + 1) * 1000); // 각 id마다 주기를 다르게 설정 (1초부터 10초까지)
-  //   });
-  //   return () => {
-  //     intervalIds.forEach(clearInterval);
-  //   };
-  // }, []);
-  console.log(data);
+  useEffect(() => {
+    const formattedData: Message[] = Object.keys(data).map((key) => ({
+      id: key,
+      time: data[key].time,
+      content: data[key].value,
+    }));
+    setMessages(formattedData);
+  }, [data]);
+
+  console.log(data, "zzxxxxxxxx020202020");
 
   return (
     <div style={{ width: "100%", margin: "0", height: "100%" }}>
+      <p>{data.length}</p>
       {data.length > 0 ? (
         <table
           style={{
