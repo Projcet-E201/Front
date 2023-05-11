@@ -33,3 +33,78 @@
 .errorcardcomponent {
   line-height: 2.8em;
 }
+
+.button {
+  position: fixed;
+  bottom: 20px; /* 버튼을 화면 하단에서 20px 떨어진 위치에 배치 */
+  right: 20px; /* 버튼을 화면 오른쪽에서 20px 떨어진 위치에 배치 */
+  padding: 10px 20px; /* 버튼 내부의 패딩 */
+  background-color: #007bff; /* 버튼의 배경색 */
+  color: #fff; /* 버튼의 글자색 */
+  border: none; /* 버튼 테두리 제거 */
+  border-radius: 4px; /* 버튼 모서리 둥글게 */
+  cursor: pointer; /* 마우스 커서를 손가락 모양으로 변경 */
+}
+
+.tab {
+  position: fixed;
+  width: 30vh;
+  height: 5vh;
+  bottom: 1vh;
+  right: 28vh;
+  display: flex;
+  align-items: center;
+  /* border-top: 2px solid #5e5e5e; */
+  border-bottom: 2px solid #5e5e5e;
+  justify-content: center;
+  margin-bottom: 12px;
+  cursor: pointer;
+  /* background: linear-gradient(
+    to right,
+    rgba(94, 94, 94, 0.02),
+    rgba(94, 94, 94, 0.04),
+    rgba(94, 94, 94, 0.06),
+    rgba(94, 94, 94, 0.08),
+    rgba(94, 94, 94, 0.1),
+    rgba(94, 94, 94, 0.2),
+    rgba(94, 94, 94, 0.3),
+    rgba(94, 94, 94, 0.4),
+    rgba(94, 94, 94, 0.5),
+    rgba(94, 94, 94, 0.6),
+    rgba(94, 94, 94, 0.7),
+    rgba(94, 94, 94, 0.8),
+    rgba(94, 94, 94, 0.9),
+    rgba(94, 94, 94, 1),
+    rgba(94, 94, 94, 1),
+    rgba(94, 94, 94, 0.9),
+    rgba(94, 94, 94, 0.8),
+    rgba(94, 94, 94, 0.7),
+    rgba(94, 94, 94, 0.6),
+    rgba(94, 94, 94, 0.5),
+    rgba(94, 94, 94, 0.4),
+    rgba(94, 94, 94, 0.3),
+    rgba(94, 94, 94, 0.2),
+    rgba(94, 94, 94, 0.1),
+    rgba(94, 94, 94, 0.08),
+    rgba(94, 94, 94, 0.06),
+    rgba(94, 94, 94, 0.04),
+    rgba(94, 94, 94, 0.02)
+  ); */
+}
+
+.selected {
+  text-align: center;
+  width: 10vh;
+  font-size: xx-large;
+  font-weight: 700;
+  color: #191ba9;
+  transform: scale(1.05);
+}
+
+.not-selected {
+  text-align: center;
+  font-size: xx-large;
+  width: 10vh;
+  font-weight: 500;
+  color: #5e5e5e;
+}
