@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import styles from "./MainSenserSmallItem.module.css";
-import SensorBarChart from "../Chart/MainChart/SensorBarChart";
+import styles from "./MainSenserHorizonBarItem.module.css";
+import SensorHorizonBarChart from "../Chart/MainChart/SensorHorizonBarChart";
 import {
   DragDropContext,
   Droppable,
@@ -31,7 +31,7 @@ type MainSenserItemProps = {
   clientData: SenserPropsType;
 };
 
-const MainSenserSmallItem = (props: MainSenserItemProps) => {
+const MainSenserHorizonBarItem = (props: MainSenserItemProps) => {
   const navigate = useNavigate();
   const machines = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const [sensors, setsensors] = useState<string[]>([
@@ -88,7 +88,7 @@ const MainSenserSmallItem = (props: MainSenserItemProps) => {
               {sensor}
             </h3>
             <CardContent>
-              <SensorBarChart data={chartData} sensor={sensor} />
+              <SensorHorizonBarChart data={chartData} sensor={sensor} />
               {Object.entries(props.clientData).map(
                 ([key, data], dataIndex) => (
                   <div
@@ -137,4 +137,4 @@ const MainSenserSmallItem = (props: MainSenserItemProps) => {
   );
 };
 
-export default MainSenserSmallItem;
+export default MainSenserHorizonBarItem;

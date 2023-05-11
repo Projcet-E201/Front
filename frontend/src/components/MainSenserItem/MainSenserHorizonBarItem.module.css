@@ -4,7 +4,11 @@
   gap: 10px;
 }
 .sensorcard {
-  width: calc(32vw + 1em);
+  /* width: calc(32vw + 1em);
+  height: calc(36vh + 1.2em);
+  margin: 0.5rem;
+  margin-left: 0.8rem; */
+  width: 16vw;
   height: calc(36vh + 1.2em);
   margin: 0.5rem;
   margin-left: 0.8rem;

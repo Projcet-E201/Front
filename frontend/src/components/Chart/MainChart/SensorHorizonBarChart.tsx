@@ -8,12 +8,8 @@ type SensorBarChartProps = {
   sensor: string;
 };
 
-const SensorBarChart = ({ data, sensor }: SensorBarChartProps) => {
-  // const navigate = useNavigate();
-  // const handleBarClick = (data: any, event: any) => {
-  //   navigate(`${data.indexValue.slice(1)}`);
-  // };
-
+const SensorHorizontalBarChart = ({ data, sensor }: SensorBarChartProps) => {
+  const reversedData = data.slice().reverse();
   const customTooltip = (bar: any) => {
     return (
       <div
@@ -36,10 +32,11 @@ const SensorBarChart = ({ data, sensor }: SensorBarChartProps) => {
       <ResponsiveBar
         // onClick={handleBarClick}
 
-        data={data}
+        data={reversedData}
         keys={[sensor]}
         indexBy="id"
-        margin={{ top: 3, right: 10, bottom: 200, left: 10 }}
+        layout="horizontal" // 수평 막대 그래프로 변경
+        margin={{ top: 3, right: 10, bottom: 10, left: 60 }} // 왼쪽 여백 조정
         padding={0.3}
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}
@@ -48,7 +45,14 @@ const SensorBarChart = ({ data, sensor }: SensorBarChartProps) => {
         axisTop={null}
         axisRight={null}
         axisBottom={null}
-        axisLeft={null}
+        axisLeft={{
+          tickSize: 5, // x축 틱 높이 조정
+          tickPadding: 5,
+          tickRotation: 0,
+          // legend: sensor,
+          legendPosition: "middle",
+          legendOffset: -40, // x축 레전드 위치 조정
+        }}
         labelSkipWidth={12}
         labelSkipHeight={12}
         labelTextColor="rgba(0, 0, 0, 0)"
@@ -80,4 +84,4 @@ const SensorBarChart = ({ data, sensor }: SensorBarChartProps) => {
   );
 };
 
-export default SensorBarChart;
+export default SensorHorizontalBarChart;
