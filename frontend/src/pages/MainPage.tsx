@@ -181,7 +181,8 @@ const MainPage: React.FC = () => {
   });
 
   //웹소켓 연결 코드 시작
-  const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  const connectUrl = "https://semse.info/api/ws";
 
   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
   const [message, setMessage] = useState<any>();
@@ -215,15 +216,12 @@ const MainPage: React.FC = () => {
     }
   }, [stompClient]);
 
-  useEffect(() => {
-    connectWebSocket();
-    return () => {
-      if (stompClient) {
-        stompClient.disconnect(() => "");
-        // stompClient.close();
-      }
-    };
-  }, []);
+  const disconnetWebSocket = useCallback(() => {
+    if (stompClient) {
+      stompClient.disconnect(() => "");
+      setStompClient(null);
+    }
+  }, [stompClient]);
 
   useEffect(() => {
     // server 에서 보내는 데이터를 실시간으로 받는 코드
@@ -257,6 +255,14 @@ const MainPage: React.FC = () => {
   const onClickTab = (index: number) => {
     setTabIndex(index);
   };
+  useEffect(() => {
+    connectWebSocket();
+    return () => {
+      if (stompClient) {
+        disconnetWebSocket();
+      }
+    };
+  }, []);
 
   console.log("여기", message);
 
