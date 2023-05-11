@@ -124,12 +124,18 @@ const DetailItem: React.FC = () => {
     }
   }, [stompClient, startDate, endDate]);
 
+  const disconnetWebSocket = useCallback(() => {
+    if (stompClient) {
+      stompClient.disconnect(() => "");
+      setStompClient(null);
+    }
+  }, [stompClient]);
+
   useEffect(() => {
     connectWebSocket();
     return () => {
       if (stompClient) {
-        stompClient.disconnect(() => "");
-        // stompClient.close();
+        disconnetWebSocket();
       }
     };
   }, []);

@@ -216,15 +216,12 @@ const MainPage: React.FC = () => {
     }
   }, [stompClient]);
 
-  useEffect(() => {
-    connectWebSocket();
-    return () => {
-      if (stompClient) {
-        stompClient.disconnect(() => "");
-        // stompClient.close();
-      }
-    };
-  }, []);
+  const disconnetWebSocket = useCallback(() => {
+    if (stompClient) {
+      stompClient.disconnect(() => "");
+      setStompClient(null);
+    }
+  }, [stompClient]);
 
   useEffect(() => {
     // server 에서 보내는 데이터를 실시간으로 받는 코드
@@ -258,6 +255,14 @@ const MainPage: React.FC = () => {
   const onClickTab = (index: number) => {
     setTabIndex(index);
   };
+  useEffect(() => {
+    connectWebSocket();
+    return () => {
+      if (stompClient) {
+        disconnetWebSocket();
+      }
+    };
+  }, []);
 
   console.log("여기", message);
 
@@ -282,12 +287,8 @@ const MainPage: React.FC = () => {
           )} */}
 
           {Object.entries(clientData).map(([key, client], index) => (
-            <div className={styles.maincard} key={`${key}-${index}`}>
-              <MainMachineItem
-                client={client}
-                id={`${key}-${index}`}
-                index={index}
-              />
+            <div className={styles.maincard} key={key}>
+              <MainMachineItem client={client} id={key} index={index} />
             </div>
           ))}
 
