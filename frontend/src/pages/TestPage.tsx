@@ -22,6 +22,7 @@ const TestPage: React.FC = () => {
       setStompClient(null);
     }
   }, [stompClient]);
+
   const [error, setError] = useState<any>();
   const [reconnectTimer, setReconnectTimer] = useState<any>();
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);

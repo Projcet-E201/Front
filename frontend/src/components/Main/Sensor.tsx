@@ -40,8 +40,8 @@ const Sensor = () => {
   const [reconnectTimer, setReconnectTimer] = useState<any>();
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
 
-  // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
-  const connectUrl = "https://k8e201.p.ssafy.io:8091/ws";
+  const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  // const connectUrl = "https://k8e201.p.ssafy.io:8091/ws";
   // const connectUrl = "http://localhost:8091/ws";
 
   const disconnetWebSocket = useCallback(() => {
@@ -105,6 +105,15 @@ const Sensor = () => {
   }, []);
 
   const [motorData, setMotorData] = useState<any[]>([]);
+  const [vacuumData, setVacuumData] = useState<any[]>([]);
+  const [airInData, setAirInData] = useState<any[]>([]);
+  const [airOutKpaData, setAirOutKpaData] = useState<any[]>([]);
+  const [airOutMpaData, setAirOutMpaData] = useState<any[]>([]);
+  const [waterData, setWaterData] = useState<any[]>([]);
+  const [loadData, setLoadData] = useState<any[]>([]);
+  const [velocityData, setVelocityData] = useState<any[]>([]);
+  const [abrasionData, setAbrasionData] = useState<any[]>([]);
+
   useEffect(() => {
     // console.log(booleanData, "zzzzzzzzzzzzzzzzzzzz");
     if (stompClient) {
@@ -115,14 +124,18 @@ const Sensor = () => {
           // console.log(parsedData[0].MOTOR, "zzzz");
           const motorDataArray = new Array(10).fill(null);
           for (const [key, value] of Object.entries(parsedData[0].MOTOR)) {
-            if (key.startsWith("motor")) {
-              const id = parseInt(key.slice(7));
-              // 순서대로 array에 넣기
-              console.log(key, "key"); // motor1, motor2,...
-              console.log(value, "value");
-              // motorDataArray[id - 1] = {x:  };
-            }
+            // if (key.startsWith("motor")) {
+            //   const id = parseInt(key.slice(7));
+            //   // 순서대로 array에 넣기
+            //   console.log(key, "key");
+            //   console.log(value, "value");
+            //   // motorDataArray[id - 1] = {x:  };
+            // }
+            // console.log(key, "key");
+            // console.log(value, "value");
+            // console.log("---------------------");
           }
+          setMotorData(motorDataArray);
         }
       });
     }

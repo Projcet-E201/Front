@@ -32,8 +32,8 @@ const State = () => {
   const [intData, setIntData] = useState<any[]>([]);
   const [doubleData, setDoubleData] = useState<any[]>([]);
 
-  // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
-  const connectUrl = "https://k8e201.p.ssafy.io:8091/ws";
+  const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  // const connectUrl = "https://k8e201.p.ssafy.io:8091/ws";
   // const connectUrl = "http://localhost:8091/ws";
 
   const disconnetWebSocket = useCallback(() => {
@@ -79,18 +79,6 @@ const State = () => {
       }
     );
   };
-  // console.log(Math.ceil(reconnectTimeLeft / 1000));
-
-  // // 연결 실패시 다시 재연결 시도
-  // const connectWithRetry = () => {
-  //   connectWebsocket();
-  //   setTimeout(() => {
-  //     if (!stompClient) {
-  //       connectWithRetry();
-  //     }
-  //   }, 7000);
-  //   setError("");
-  // };
 
   const handleGetState = useCallback(() => {
     if (stompClient) {
@@ -122,9 +110,6 @@ const State = () => {
     if (stompClient) {
       stompClient.subscribe(`/client/machine/state`, (data) => {
         const parsedData = JSON.parse(data.body);
-
-        // console.log(parsedData, "재필재필");
-        // console.log(typeof parsedData);
         if (parsedData.length > 0) {
           // 수정된 부분
           setMessage(parsedData);
