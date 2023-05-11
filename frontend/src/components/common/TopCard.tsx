@@ -309,7 +309,7 @@ const TopCard = ({ location }: Props) => {
   };
 
   const handleMarkerWidthChange = (index: number, inputwidth: any) => {
-    console.log(inputwidth);
+    // console.log(inputwidth);
     setMarkers((markers: any[]) => {
       const updatedMarkers = [...markers];
       updatedMarkers[index] = {
@@ -328,7 +328,7 @@ const TopCard = ({ location }: Props) => {
     useState<number>(0);
   const [isPickerOpen, setIsPickerOpen] = useState<boolean>(false);
   const handleEditColor = (color: string) => {
-    console.log(color);
+    // console.log(color);
     setMarkers((markers: any[]) => {
       const updatedMarkers = [...markers];
       const markerToUpdate = { ...updatedMarkers[isChangeColorPickerOpen] };
@@ -399,22 +399,16 @@ const TopCard = ({ location }: Props) => {
                     label="Value"
                     value={marker.value}
                     type="number"
+                    // inputProps={{
+                    //   min: 0, // 최소값
+                    //   max: 100, // 최대값
+                    // }}
                     variant="standard"
                     onChange={(event) =>
                       handleMarkerValueChange(index, Number(event.target.value))
                     }
                   />
-                  {/* <p>{marker.lineStyle.stroke}</p> */}
-                  {/* <div
-                    style={{
-                      display: "inline-block",
-                      width: "90%",
-                      height: `${marker.lineStyle.strokeWidth}px`,
-                      marginRight: "5px",
-                      backgroundColor: marker.lineStyle.stroke,
-                      border: "1px solid #ddd",
-                    }}
-                  ></div> */}
+
                   <div
                     style={{
                       display: "flex",
@@ -470,7 +464,7 @@ const TopCard = ({ location }: Props) => {
                             value={marker.lineStyle.strokeWidth}
                             onChange={(e) => {
                               handleMarkerWidthChange(index, e.target.value);
-                              console.log(e.target.value);
+                              // console.log(e.target.value);
                             }}
                           >
                             {Array.from({ length: 10 }, (_, i) => i + 1).map(

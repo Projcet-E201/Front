@@ -68,7 +68,7 @@ const CardMotorChart = () => {
     },
   ];
 
-  console.log(datasets);
+  // console.log(datasets);
 
   return (
     <ResponsiveLine

@@ -124,7 +124,7 @@ const State = () => {
 
         // console.log(parsedData, "재필재필");
         // console.log(typeof parsedData);
-        if (parsedData.length > 1) {
+        if (parsedData.length > 0) {
           // 수정된 부분
           setMessage(parsedData);
 

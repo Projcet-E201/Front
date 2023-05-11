@@ -45,7 +45,7 @@ const MotorPage = () => {
     (dataset) => dataset.data[dataset.data.length - 1]
   );
 
-  console.log(latestData);
+  // console.log(latestData);
 
   return (
     <SensorLayout>
@@ -130,6 +130,7 @@ const MotorPage = () => {
         {datasets.map((dataset, index) => (
           // <Card className={styles.card} style={{ width: "32.3%" }}>
           <Card
+            key={index}
             className={styles.botcard}
             // style={{ width: "32%", cursor: "pointer" }}
             onClick={() => navigate(`${index + 1}`)}

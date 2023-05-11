@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 // DnD 기능
 // import { DragDropContext } from "react-beautiful-dnd";
@@ -19,10 +19,130 @@ import CardRpmChart from "./CardChart/CardRpmChart";
 import CardLoadChart from "./CardChart/CardLoadChart";
 import CardAbrasionChart from "./CardChart/CardAbrasionChart";
 
+// import { useParams } from "react-router-dom";
+import Stomp from "stompjs";
+import SockJS from "sockjs-client";
+
 const Sensor = () => {
   const navigate = useNavigate();
   const { machine }: any = useParams();
   const repeat = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+  //socket
+  const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
+  const [message, setMessage] = useState<any>();
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const [error, setError] = useState<any>();
+  const [reconnectTimer, setReconnectTimer] = useState<any>();
+  const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
+
+  const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
+  // const connectUrl = "http://localhost:8091/ws";
+
+  const disconnetWebSocket = useCallback(() => {
+    if (stompClient) {
+      stompClient.disconnect(() => "");
+      setStompClient(null);
+    }
+  }, [stompClient]);
+
+  const connectWebsocket = () => {
+    const socket = new SockJS(connectUrl);
+    const stompClient = Stomp.over(socket);
+    setOpen(false);
+    stompClient.connect(
+      {},
+      () => {
+        setStompClient(stompClient);
+        setError(undefined);
+        // 연결이 성공하면 reconnectTimer 해제
+        if (reconnectTimer) clearTimeout(reconnectTimer);
+        setReconnectTimeLeft(0);
+      },
+      (err) => {
+        console.error(err, "에러에러에러");
+        setError("error");
+        setOpen(true);
+        // 연결이 실패하면 5초 후에 재연결 시도
+        let timeLeft = 5000;
+        const timer = setInterval(() => {
+          timeLeft -= 1000;
+          setReconnectTimeLeft(timeLeft);
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+            connectWebsocket();
+            setError("");
+          }
+        }, 1000);
+        setReconnectTimer(timer);
+        setReconnectTimeLeft(timeLeft);
+      }
+    );
+  };
+
+  const handleGetMessage = useCallback(() => {
+    if (stompClient) {
+      stompClient.send(
+        `/server/machine/state`,
+        {},
+        JSON.stringify(parseInt(machine))
+      );
+    }
+  }, [stompClient, machine]);
+
+  useEffect(() => {
+    connectWebsocket();
+    return () => {
+      if (stompClient) {
+        disconnetWebSocket();
+      }
+    };
+  }, []);
+
+  const [motorData, setMotorData] = useState<any[]>([]);
+  useEffect(() => {
+    // console.log(booleanData, "zzzzzzzzzzzzzzzzzzzz");
+    if (stompClient) {
+      stompClient.subscribe(`/client/machine/sensor`, (data) => {
+        const parsedData = JSON.parse(data.body);
+        if (parsedData.length > 0) {
+          setMessage(parsedData);
+          // console.log(parsedData[0].MOTOR, "zzzz");
+          const motorDataArray = new Array(10).fill(null);
+          for (const [key, value] of Object.entries(parsedData[0].MOTOR)) {
+            if (key.startsWith("motor")) {
+              const id = parseInt(key.slice(7));
+              // 순서대로 array에 넣기
+              console.log(key, "key"); // motor1, motor2,...
+              console.log(value, "value");
+              // motorDataArray[id - 1] = {x:  };
+            }
+          }
+        }
+      });
+    }
+  }, [stompClient]);
+
+  // 주소 바뀌면 새로 가져오깅
+  useEffect(() => {
+    // setBooleanData([]);
+    // setIntData([]);
+    // setDoubleData([]);
+    // setFirstBoolean([]);
+    // setSecondBoolean([]);
+  }, [machine]);
+
+  useEffect(() => {
+    if (stompClient) {
+      handleGetMessage();
+    }
+  }, [stompClient]);
+
+  // console.log(message[0], "message!!");
 
   return (
     <div>

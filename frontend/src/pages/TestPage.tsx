@@ -1,71 +1,98 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
 
 const TestPage: React.FC = () => {
   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
   const [message, setMessage] = useState<any>();
+  const { machine = "" } = useParams();
 
-  // const connectUrl = "http://api:8091/ws";
-  const connectUrl = "https://k8e201.p.ssafy.io:8091/ws";
+  const [booleanData, setBooleanData] = useState<any[]>([]);
+  const [stringData, setStringData] = useState<any[]>([]);
+  const [intData, setIntData] = useState<any[]>([]);
+  const [doubleData, setDoubleData] = useState<any[]>([]);
+
+  const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
   // const connectUrl = "http://localhost:8091/ws";
-  const connectWebSocket = () => {
-    console.log(connectUrl);
+
+  const disconnetWebSocket = useCallback(() => {
+    if (stompClient) {
+      stompClient.disconnect(() => "");
+      setStompClient(null);
+    }
+  }, [stompClient]);
+  const [error, setError] = useState<any>();
+  const [reconnectTimer, setReconnectTimer] = useState<any>();
+  const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const connectWebsocket = () => {
     const socket = new SockJS(connectUrl);
     const stompClient = Stomp.over(socket);
+    setOpen(false);
     stompClient.connect(
-      // 헤더
       {},
       () => {
-        // 연결 성공시 이벤트
-        // console.log("WebSocket connected");
         setStompClient(stompClient);
+        setError(undefined);
+        // 연결이 성공하면 reconnectTimer 해제
+        if (reconnectTimer) clearTimeout(reconnectTimer);
+        setReconnectTimeLeft(0);
       },
-      (error) => {
-        // 연결 실패시 이벤트
-        console.error("WebSocket error: ", error);
+      (err) => {
+        console.error(err, "에러에러에러");
+        setError("error");
+        setOpen(true);
+        // 연결이 실패하면 5초 후에 재연결 시도
+        let timeLeft = 5000;
+        const timer = setInterval(() => {
+          timeLeft -= 1000;
+          setReconnectTimeLeft(timeLeft);
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+            connectWebsocket();
+            setError("");
+          }
+        }, 1000);
+        setReconnectTimer(timer);
+        setReconnectTimeLeft(timeLeft);
       }
     );
   };
 
-  const handleTitleModify = useCallback(() => {
+  const handleGetMessage = useCallback(() => {
     if (stompClient) {
-      // stompClient.send(`/server/post`, {}, JSON.stringify({ data: "data" }));
-      stompClient.send(`/server/machine/state`, {}, JSON.stringify(3));
+      stompClient.send(
+        `/server/machine/state`,
+        {},
+        JSON.stringify(parseInt(machine))
+      );
     }
-  }, [stompClient]);
+  }, [stompClient, machine]);
 
   useEffect(() => {
-    connectWebSocket();
+    connectWebsocket();
+    // connectWithRetry();
     return () => {
       if (stompClient) {
-        stompClient.disconnect(() => "");
-        // stompClient.close();
+        disconnetWebSocket();
       }
     };
   }, []);
 
   useEffect(() => {
-    // server 에서 보내는 데이터를 실시간으로 받는 코드
+    // console.log(booleanData, "zzzzzzzzzzzzzzzzzzzz");
     if (stompClient) {
-      // console.log("stompClient2");
-      stompClient.subscribe(`/client/machine/state`, (data) => {
-        // console.log(data);
-        setMessage(JSON.parse(data.body)); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
-        // setMessage(data.body); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
+      stompClient.subscribe(`/client/machine/sensor`, (data) => {
+        const parsedData = JSON.parse(data.body);
+        setMessage(parsedData);
       });
     }
   }, [stompClient]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      handleTitleModify();
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [handleTitleModify]);
-
-  // console.log(message);
 
   return (
     <div className="App">
