@@ -93,7 +93,7 @@ const Sensor = () => {
   const handleGetMessage = useCallback(() => {
     if (stompClient) {
       stompClient.send(
-        `/server/machine/state`,
+        `/server/machine/sensor`,
         {},
         JSON.stringify(parseInt(machine))
       );
@@ -192,8 +192,10 @@ const Sensor = () => {
                     onClick={() => navigate(`/machine/${machine}/motor`)}
                     style={{ width: "auto", height: "23vh" }}
                   >
-                    {/* {motorData.includes(null) ? ( */}
-                    {motorData[0] !== null ? (
+                    {/* motorData가 []이면 연결조차 되지 않았다는 것이고
+                null로 채워져 있으면 연결을 되었지만 데이터를 받아오지 못했다는 것이고 */}
+
+                    {motorData.includes(null) ? (
                       <Box
                         sx={{
                           height: "100%",
@@ -209,6 +211,7 @@ const Sensor = () => {
                     ) : (
                       <div style={{ height: "100%" }}>
                         <h3 style={{ margin: "0" }}>Motor Toque(%)</h3>
+                        <p>{JSON.stringify(motorData)}</p>
                         <CardMotorChart motorData={motorData} />
                       </div>
                     )}
