@@ -282,8 +282,12 @@ const MainPage: React.FC = () => {
           )} */}
 
           {Object.entries(clientData).map(([key, client], index) => (
-            <div className={styles.maincard} key={key}>
-              <MainMachineItem client={client} id={key} index={index} />
+            <div className={styles.maincard} key={`${key}-${index}`}>
+              <MainMachineItem
+                client={client}
+                id={`${key}-${index}`}
+                index={index}
+              />
             </div>
           ))}
 
