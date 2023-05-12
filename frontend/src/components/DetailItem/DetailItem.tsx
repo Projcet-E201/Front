@@ -79,88 +79,88 @@ const DetailItem: React.FC = () => {
 
   // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
   // const connectUrl = "http://localhost:8091/ws";
-  const connectUrl = "https://semse.info/api/ws";
+  // const connectUrl = "https://semse.info/api/ws";
 
-  const [ws, setWs] = useState<WebSocket | null>(null);
-  const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
-  const [message, setMessage] = useState<any>();
+  // const [ws, setWs] = useState<WebSocket | null>(null);
+  // const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
+  // const [message, setMessage] = useState<any>();
 
-  const connectWebSocket = () => {
-    // console.log(connectUrl);
-    const socket = new SockJS(connectUrl);
-    const stompClient = Stomp.over(socket);
-    stompClient.connect(
-      // 헤더
-      {},
-      () => {
-        // 연결 성공시 이벤트
-        // console.log("WebSocket connected");
-        setStompClient(stompClient);
-      },
-      (error) => {
-        // 연결 실패시 이벤트
-        console.error("WebSocket error: ", error);
-      }
-    );
-  };
-  const handleRealTimeButtonClick = () => {
-    if (ws) {
-      ws.send(JSON.stringify({ realTime: true }));
-    }
-    window.location.reload();
-  };
+  // const connectWebSocket = () => {
+  //   // console.log(connectUrl);
+  //   const socket = new SockJS(connectUrl);
+  //   const stompClient = Stomp.over(socket);
+  //   stompClient.connect(
+  //     // 헤더
+  //     {},
+  //     () => {
+  //       // 연결 성공시 이벤트
+  //       // console.log("WebSocket connected");
+  //       setStompClient(stompClient);
+  //     },
+  //     (error) => {
+  //       // 연결 실패시 이벤트
+  //       console.error("WebSocket error: ", error);
+  //     }
+  //   );
+  // };
+  // const handleRealTimeButtonClick = () => {
+  //   if (ws) {
+  //     ws.send(JSON.stringify({ realTime: true }));
+  //   }
+  //   window.location.reload();
+  // };
 
-  const handlehistoryButtonClick = useCallback(() => {
-    if (stompClient) {
-      stompClient.send(
-        "/server/machine/history",
-        {},
-        JSON.stringify({
-          sensorId: sensorId,
-          start: startDate,
-          end: endDate,
-        })
-      );
-    }
-  }, [stompClient, startDate, endDate]);
+  // const handlehistoryButtonClick = useCallback(() => {
+  //   if (stompClient) {
+  //     stompClient.send(
+  //       "/server/machine/history",
+  //       {},
+  //       JSON.stringify({
+  //         sensorId: sensorId,
+  //         start: startDate,
+  //         end: endDate,
+  //       })
+  //     );
+  //   }
+  // }, [stompClient, startDate, endDate]);
 
-  const disconnetWebSocket = useCallback(() => {
-    if (stompClient) {
-      stompClient.disconnect(() => "");
-      setStompClient(null);
-    }
-  }, [stompClient]);
+  // const disconnetWebSocket = useCallback(() => {
+  //   if (stompClient) {
+  //     stompClient.disconnect(() => "");
+  //     setStompClient(null);
+  //   }
+  // }, [stompClient]);
 
-  useEffect(() => {
-    connectWebSocket();
-    return () => {
-      if (stompClient) {
-        disconnetWebSocket();
-      }
-    };
-  }, []);
+  // useEffect(() => {
+  //   connectWebSocket();
+  //   return () => {
+  //     if (stompClient) {
+  //       disconnetWebSocket();
+  //     }
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    //WebSocket으로 데이터 수신
-    if (stompClient) {
-      const subscription = stompClient.subscribe(
-        "/client/machine/history",
-        (message) => {
-          const data = JSON.parse(message.body);
-          setData(data.data.map((d: any) => ({ x: new Date(d.x), y: d.y })));
-        }
-      );
-      return () => subscription.unsubscribe();
-    }
-  }, [location, intervalSeconds, stompClient]);
+  // useEffect(() => {
+  //   //WebSocket으로 데이터 수신
+  //   if (stompClient) {
+  //     const subscription = stompClient.subscribe(
+  //       "/client/machine/history",
+  //       (message) => {
+  //         const data = JSON.parse(message.body);
+  //         setData(data.data.map((d: any) => ({ x: new Date(d.x), y: d.y })));
+  //       }
+  //     );
+  //     return () => subscription.unsubscribe();
+  //   }
+  // }, [location, intervalSeconds, stompClient]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      handlehistoryButtonClick();
-    });
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     handlehistoryButtonClick();
+  //   });
 
-    return () => clearInterval(interval);
-  }, [handlehistoryButtonClick]);
+  //   return () => clearInterval(interval);
+  // }, [handlehistoryButtonClick]);
 
   //웹소켓 코드 끝
   // console.log(datasets);
@@ -206,10 +206,14 @@ const DetailItem: React.FC = () => {
             <br />
             <div style={{ display: "flex", justifyContent: "center" }}>
               <Space direction="vertical" style={{ width: "80%" }}>
-                <Button block onClick={handlehistoryButtonClick}>
+                {/* <Button block onClick={handlehistoryButtonClick}>
                   검색하기
                 </Button>
                 <Button type="text" block onClick={handleRealTimeButtonClick}>
+                  실시간 보기
+                </Button> */}
+                <Button block>검색하기</Button>
+                <Button type="text" block>
                   실시간 보기
                 </Button>
               </Space>
