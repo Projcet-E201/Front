@@ -42,14 +42,14 @@ const CardAbrasionChart = () => {
       colors={(bar) => bar.data.color}
       maxValue={40}
       // colors={{ datum: "category10" }}
-      markers={[
-        {
-          axis: "x",
-          value: 30,
-          lineStyle: { stroke: "red", strokeWidth: 2 },
-          legend: "히히",
-        },
-      ]}
+      // markers={[
+      //   {
+      //     axis: "x",
+      //     value: 30,
+      //     lineStyle: { stroke: "red", strokeWidth: 2 },
+      //     legend: "히히",
+      //   },
+      // ]}
     />
   );
 };

@@ -66,22 +66,22 @@ const CardRpmChart = () => {
       // }}
       maxValue={100}
       colors={(bar) => bar.data.color}
-      markers={[
-        {
-          axis: "y",
-          value: 30,
-          lineStyle: { stroke: "red", strokeWidth: 2 },
-          legend: "위험 구간",
-          legendOrientation: "vertical",
-        },
-        {
-          axis: "y",
-          value: 70,
-          lineStyle: { stroke: "red", strokeWidth: 2 },
-          legend: "",
-          legendOrientation: "vertical",
-        },
-      ]}
+      // markers={[
+      //   {
+      //     axis: "y",
+      //     value: 30,
+      //     lineStyle: { stroke: "red", strokeWidth: 2 },
+      //     legend: "위험 구간",
+      //     legendOrientation: "vertical",
+      //   },
+      //   {
+      //     axis: "y",
+      //     value: 70,
+      //     lineStyle: { stroke: "red", strokeWidth: 2 },
+      //     legend: "",
+      //     legendOrientation: "vertical",
+      //   },
+      // ]}
     />
   );
 };

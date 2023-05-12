@@ -5,7 +5,7 @@ import { ResponsiveLine } from "@nivo/line";
 import { linearGradientDef } from "@nivo/core";
 
 const CardMotorChart = ({ motorData }: any) => {
-  console.log(motorData, " motordata prop 받음!");
+  // console.log(motorData, " motordata prop 받음!");
   const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
 
   useEffect(() => {
@@ -69,7 +69,7 @@ const CardMotorChart = ({ motorData }: any) => {
     },
   ];
 
-  console.log(datasets);
+  // console.log(datasets);
 
   return (
     <ResponsiveLine

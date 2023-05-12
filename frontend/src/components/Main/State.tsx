@@ -33,13 +33,13 @@ const State = () => {
   const [doubleData, setDoubleData] = useState<any[]>([]);
 
   // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
-  const connectUrl = "https://semse.info/api/ws";
+  const connectUrl = "https://semse.info/api/ws-state";
   // const connectUrl = "https://k8e201.p.ssafy.io:8091/ws";
   // const connectUrl = "http://localhost:8091/ws";
 
   const disconnetWebSocket = useCallback(() => {
     if (stompClient) {
-      stompClient.disconnect(() => "");
+      stompClient.disconnect(() => "연결종료");
       setStompClient(null);
     }
   }, [stompClient]);
@@ -49,7 +49,11 @@ const State = () => {
 
   const connectWebsocket = () => {
     const socket = new SockJS(connectUrl);
-    const stompClient = Stomp.over(socket);
+    const stompClient: any = Stomp.over(socket);
+    // if (stompClient) {
+    //   return;
+    // }
+
     setOpen(false);
     stompClient.connect(
       {},
@@ -60,7 +64,7 @@ const State = () => {
         if (reconnectTimer) clearTimeout(reconnectTimer);
         setReconnectTimeLeft(0);
       },
-      (err) => {
+      (err: any) => {
         console.error(err, "에러에러에러");
         setError("error");
         setOpen(true);

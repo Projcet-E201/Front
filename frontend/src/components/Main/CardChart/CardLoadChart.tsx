@@ -42,14 +42,14 @@ const CardLoadChart = () => {
       colors={(bar) => bar.data.color}
       // colors={{ datum: "category10" }}
       maxValue={16}
-      markers={[
-        {
-          axis: "x",
-          value: 13,
-          lineStyle: { stroke: "red", strokeWidth: 2 },
-          legend: "히히",
-        },
-      ]}
+      // markers={[
+      //   {
+      //     axis: "x",
+      //     value: 13,
+      //     lineStyle: { stroke: "red", strokeWidth: 2 },
+      //     legend: "히히",
+      //   },
+      // ]}
     />
   );
 };
