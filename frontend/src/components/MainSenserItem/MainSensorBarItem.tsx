@@ -20,10 +20,10 @@ export type SenserPropsType = {
     AIR_OUT_KPA: number;
     AIR_OUT_MPA: number;
     WATER: number;
-    ABRASION: number;
+    // ABRASION: number;
     LOAD: number;
     VELOCITY: number;
-    SCORE: number;
+    // SCORE: number;
   };
 };
 
@@ -41,7 +41,7 @@ const MainSensorBarItem = (props: MainSenserItemProps) => {
     "AIR_OUT_KPA",
     "AIR_OUT_MPA",
     "WATER",
-    "ABRASION",
+    // "ABRASION",
     "LOAD",
     "VELOCITY",
   ]);
@@ -70,8 +70,8 @@ const MainSensorBarItem = (props: MainSenserItemProps) => {
 
     return (
       <Draggable
-        key={`sensor-${sensor}`}
-        draggableId={`sensor-${sensor}`}
+        key={`sensor-${sensor}-${index}`}
+        draggableId={`sensor-${sensor}-${index}`}
         index={index}
       >
         {(provided) => (
@@ -93,7 +93,7 @@ const MainSensorBarItem = (props: MainSenserItemProps) => {
                 ([key, data], dataIndex) => (
                   <div
                     className={styles.sensordatacontent}
-                    key={`sensordata-${dataIndex}`}
+                    key={`sensordata-${key}-${dataIndex}`}
                     onClick={() =>
                       navigate(
                         `/machine/${machines[dataIndex]}/${sensorAddressMap[sensor]}`

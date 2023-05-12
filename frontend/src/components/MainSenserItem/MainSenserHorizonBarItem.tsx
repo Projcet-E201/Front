@@ -20,10 +20,10 @@ export type SenserPropsType = {
     AIR_OUT_KPA: number;
     AIR_OUT_MPA: number;
     WATER: number;
-    ABRASION: number;
+    // ABRASION: number;
     LOAD: number;
     VELOCITY: number;
-    SCORE: number;
+    // SCORE: number;
   };
 };
 
@@ -41,7 +41,7 @@ const MainSenserHorizonBarItem = (props: MainSenserItemProps) => {
     "AIR_OUT_KPA",
     "AIR_OUT_MPA",
     "WATER",
-    "ABRASION",
+    // "ABRASION",
     "LOAD",
     "VELOCITY",
   ]);
