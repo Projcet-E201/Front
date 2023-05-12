@@ -20,21 +20,39 @@ const StringState = ({ data }: any) => {
   );
 
   useEffect(() => {
-    const formattedData: Message[] = Object.keys(data)
+    const formattedData = Object.keys(data)
       .sort((a, b) => {
-        const timeA = data[a].time;
-        const timeB = data[b].time;
+        const timeA = data[a]?.time;
+        const timeB = data[b]?.time;
 
         if (timeA === null) return 1; // timeA가 null인 경우 timeB보다 뒤로 정렬
         if (timeB === null) return -1; // timeB가 null인 경우 timeA보다 뒤로 정렬
 
-        return parseInt(timeA.slice(6)) - parseInt(timeB.slice(6));
+        return parseInt(timeA?.slice(6)) - parseInt(timeB?.slice(6));
       })
-      .map((key) => ({
-        id: key,
-        time: data[key].time || "",
-        content: data[key].value,
-      }));
+      .map((key) => {
+        const originalTime = data[key]?.time;
+        const time = originalTime ? new Date(originalTime) : null;
+
+        let updatedTime = "";
+        if (time) {
+          const year = time.getFullYear();
+          const month = String(time.getMonth()).padStart(2, "0");
+          const date = String(time.getDate()).padStart(2, "0");
+          const hours = String(time.getHours()).padStart(2, "0");
+          const minutes = String(time.getMinutes()).padStart(2, "0");
+          const seconds = String(time.getSeconds()).padStart(2, "0");
+
+          updatedTime = `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
+        }
+
+        return {
+          id: key,
+          time: updatedTime,
+          content: data[key]?.value,
+        };
+      });
+
     setMessages(formattedData);
   }, [data]);
 

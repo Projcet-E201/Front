@@ -163,7 +163,6 @@ const State = () => {
           }
           setDoubleData(doubleDataArray);
 
-          const stringDataArray = new Array(10).fill(null);
           setStringData(parsedData[3]);
         }
       });
