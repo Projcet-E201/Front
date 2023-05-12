@@ -20,7 +20,7 @@ export type SenserPropsType = {
     AIR_OUT_KPA: number;
     AIR_OUT_MPA: number;
     WATER: number;
-    // ABRASION: number;
+    ABRASION: number;
     LOAD: number;
     VELOCITY: number;
     // SCORE: number;
@@ -41,7 +41,7 @@ const MainSensorBarItem = (props: MainSenserItemProps) => {
     "AIR_OUT_KPA",
     "AIR_OUT_MPA",
     "WATER",
-    // "ABRASION",
+    "ABRASION",
     "LOAD",
     "VELOCITY",
   ]);
@@ -63,10 +63,13 @@ const MainSensorBarItem = (props: MainSenserItemProps) => {
   };
 
   const sensorCards = sensors.map((sensor, index) => {
-    const chartData = Object.entries(props.clientData).map(([key, data]) => ({
-      id: key,
-      [sensor]: data[sensor as keyof typeof data],
-    }));
+    const chartData = Object.entries(props.clientData).map(
+      ([key, data], chartindex) => ({
+        id: key,
+        key: chartindex,
+        [sensor]: data[sensor as keyof typeof data],
+      })
+    );
 
     return (
       <Draggable
@@ -89,7 +92,7 @@ const MainSensorBarItem = (props: MainSenserItemProps) => {
             </h3>
             <CardContent>
               <SensorBarChart data={chartData} sensor={sensor} />
-              {Object.entries(props.clientData).map(
+              {/* {Object.entries(props.clientData).map(
                 ([key, data], dataIndex) => (
                   <div
                     className={styles.sensordatacontent}
@@ -101,7 +104,7 @@ const MainSensorBarItem = (props: MainSenserItemProps) => {
                     }
                   ></div>
                 )
-              )}
+              )} */}
             </CardContent>
           </Card>
         )}
