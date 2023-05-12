@@ -33,7 +33,7 @@ const Sensor = () => {
   const repeat = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   //socket
-  const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
+  // const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
   const [message, setMessage] = useState<any>();
 
   const [open, setOpen] = React.useState(false);
@@ -119,32 +119,32 @@ const Sensor = () => {
   const [velocityData, setVelocityData] = useState<any[]>([]);
   const [abrasionData, setAbrasionData] = useState<any[]>([]);
 
-  useEffect(() => {
-    // console.log(booleanData, "zzzzzzzzzzzzzzzzzzzz");
-    if (stompClient) {
-      stompClient.subscribe(`/client/machine/sensor`, (data) => {
-        const parsedData = JSON.parse(data.body);
-        if (parsedData.length > 0) {
-          setMessage(parsedData);
-          // console.log(parsedData[0].MOTOR, "zzzz");
-          const motorDataArray = new Array(10).fill(null);
-          for (const [key, value] of Object.entries(parsedData[0].MOTOR)) {
-            if (key.startsWith("motor")) {
-              const id = parseInt(key.slice(7));
-              // 순서대로 array에 넣기
-              // console.log(key, "key");
-              // console.log(value, "value");
-              motorDataArray[id - 1] = { x: key, y: value };
-            }
-            // console.log(key, "key");
-            // console.log(value, "value");
-            // console.log("---------------------");
-          }
-          setMotorData(motorDataArray);
-        }
-      });
-    }
-  }, [stompClient]);
+  // useEffect(() => {
+  //   // console.log(booleanData, "zzzzzzzzzzzzzzzzzzzz");
+  //   if (stompClient) {
+  //     stompClient.subscribe(`/client/machine/sensor`, (data) => {
+  //       const parsedData = JSON.parse(data.body);
+  //       if (parsedData.length > 0) {
+  //         setMessage(parsedData);
+  //         // console.log(parsedData[0].MOTOR, "zzzz");
+  //         const motorDataArray = new Array(10).fill(null);
+  //         for (const [key, value] of Object.entries(parsedData[0].MOTOR)) {
+  //           if (key.startsWith("motor")) {
+  //             const id = parseInt(key.slice(7));
+  //             // 순서대로 array에 넣기
+  //             // console.log(key, "key");
+  //             // console.log(value, "value");
+  //             motorDataArray[id - 1] = { x: key, y: value };
+  //           }
+  //           // console.log(key, "key");
+  //           // console.log(value, "value");
+  //           // console.log("---------------------");
+  //         }
+  //         setMotorData(motorDataArray);
+  //       }
+  //     });
+  //   }
+  // }, [stompClient]);
 
   // 주소 바뀌면 새로 가져오깅
   // useEffect(() => {
