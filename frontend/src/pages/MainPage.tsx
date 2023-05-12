@@ -182,81 +182,81 @@ const MainPage: React.FC = () => {
 
   //웹소켓 연결 코드 시작
   // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
-  const connectUrl = "https://semse.info/api/ws-main";
+  // const connectUrl = "https://semse.info/api/ws-main";
 
-  const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
-  const [message, setMessage] = useState<any>();
+  // const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
+  // const [message, setMessage] = useState<any>();
 
-  const connectWebSocket = () => {
-    console.log(connectUrl);
-    const socket = new SockJS(connectUrl);
-    const stompClient = Stomp.over(socket);
-    stompClient.connect(
-      // 헤더
-      {},
-      () => {
-        // 연결 성공시 이벤트
-        console.log("성공, WebSocket connected");
-        setStompClient(stompClient);
-      },
-      (error) => {
-        // 연결 실패시 이벤트
-        console.error("WebSocket error: ", error);
-      }
-    );
-  };
+  // const connectWebSocket = () => {
+  //   console.log(connectUrl);
+  //   const socket = new SockJS(connectUrl);
+  //   const stompClient = Stomp.over(socket);
+  //   stompClient.connect(
+  //     // 헤더
+  //     {},
+  //     () => {
+  //       // 연결 성공시 이벤트
+  //       console.log("성공, WebSocket connected");
+  //       setStompClient(stompClient);
+  //     },
+  //     (error) => {
+  //       // 연결 실패시 이벤트
+  //       console.error("WebSocket error: ", error);
+  //     }
+  //   );
+  // };
 
-  const handleTitleModify = useCallback(() => {
-    if (stompClient) {
-      stompClient.send(
-        `/server/main/machine`,
-        {},
-        JSON.stringify({ data: "data" })
-      );
-    }
-  }, [stompClient]);
+  // const handleTitleModify = useCallback(() => {
+  //   if (stompClient) {
+  //     stompClient.send(
+  //       `/server/main/machine`,
+  //       {},
+  //       JSON.stringify({ data: "data" })
+  //     );
+  //   }
+  // }, [stompClient]);
 
-  const disconnetWebSocket = useCallback(() => {
-    if (stompClient) {
-      stompClient.disconnect(() => "");
-      setStompClient(null);
-      console.log("연결해제");
-    }
-  }, [stompClient]);
+  // const disconnetWebSocket = useCallback(() => {
+  //   if (stompClient) {
+  //     stompClient.disconnect(() => "");
+  //     setStompClient(null);
+  //     console.log("연결해제");
+  //   }
+  // }, [stompClient]);
 
-  useEffect(() => {
-    // server 에서 보내는 데이터를 실시간으로 받는 코드
-    if (stompClient) {
-      // console.log("stompClient2");
-      stompClient.subscribe(`/client/main/machine`, (data) => {
-        // console.log(data);
-        setMessage(JSON.parse(data.body)); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
-        // setMessage(data.body); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
-      });
-    }
-  }, [stompClient]);
-  useEffect(() => {
-    if (message) {
-      setClientData(message);
-    }
-  }, [message]);
+  // useEffect(() => {
+  //   // server 에서 보내는 데이터를 실시간으로 받는 코드
+  //   if (stompClient) {
+  //     // console.log("stompClient2");
+  //     stompClient.subscribe(`/client/main/machine`, (data) => {
+  //       // console.log(data);
+  //       setMessage(JSON.parse(data.body)); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
+  //       // setMessage(data.body); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
+  //     });
+  //   }
+  // }, [stompClient]);
+  // useEffect(() => {
+  //   if (message) {
+  //     setClientData(message);
+  //   }
+  // }, [message]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      handleTitleModify();
-    }, 5000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     handleTitleModify();
+  //   }, 5000);
 
-    return () => clearInterval(interval);
-  }, [handleTitleModify]);
+  //   return () => clearInterval(interval);
+  // }, [handleTitleModify]);
 
-  useEffect(() => {
-    connectWebSocket();
-    return () => {
-      if (stompClient) {
-        disconnetWebSocket();
-      }
-    };
-  }, []);
+  // useEffect(() => {
+  //   connectWebSocket();
+  //   return () => {
+  //     if (stompClient) {
+  //       disconnetWebSocket();
+  //     }
+  //   };
+  // }, []);
   //웹소켓 연결 코드 끝
 
   // console.log("여기", message);
@@ -266,7 +266,7 @@ const MainPage: React.FC = () => {
   const onClickTab = (index: number) => {
     setTabIndex(index);
   };
-  console.log(message);
+  // console.log(message);
 
   return (
     <MainLayout>

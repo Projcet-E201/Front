@@ -45,69 +45,69 @@ const Sensor = () => {
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
 
   // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
-  const connectUrl = "https://semse.info/api/ws-sensor";
+  // const connectUrl = "https://semse.info/api/ws-sensor";
   // const connectUrl = "https://k8e201.p.ssafy.io:8091/ws";
   // const connectUrl = "http://localhost:8091/ws";
 
-  const disconnetWebSocket = useCallback(() => {
-    if (stompClient) {
-      stompClient.disconnect(() => "");
-      setStompClient(null);
-    }
-  }, [stompClient]);
+  // const disconnetWebSocket = useCallback(() => {
+  //   if (stompClient) {
+  //     stompClient.disconnect(() => "");
+  //     setStompClient(null);
+  //   }
+  // }, [stompClient]);
 
-  const connectWebsocket = () => {
-    const socket = new SockJS(connectUrl);
-    const stompClient = Stomp.over(socket);
-    setOpen(false);
-    stompClient.connect(
-      {},
-      () => {
-        setStompClient(stompClient);
-        setError(undefined);
-        // 연결이 성공하면 reconnectTimer 해제
-        if (reconnectTimer) clearTimeout(reconnectTimer);
-        setReconnectTimeLeft(0);
-      },
-      (err) => {
-        console.error(err, "에러에러에러");
-        setError("error");
-        setOpen(true);
-        // 연결이 실패하면 5초 후에 재연결 시도
-        let timeLeft = 5000;
-        const timer = setInterval(() => {
-          timeLeft -= 1000;
-          setReconnectTimeLeft(timeLeft);
-          if (timeLeft <= 0) {
-            clearInterval(timer);
-            connectWebsocket();
-            setError("");
-          }
-        }, 1000);
-        setReconnectTimer(timer);
-        setReconnectTimeLeft(timeLeft);
-      }
-    );
-  };
+  // const connectWebsocket = () => {
+  //   const socket = new SockJS(connectUrl);
+  //   const stompClient = Stomp.over(socket);
+  //   setOpen(false);
+  //   stompClient.connect(
+  //     {},
+  //     () => {
+  //       setStompClient(stompClient);
+  //       setError(undefined);
+  //       // 연결이 성공하면 reconnectTimer 해제
+  //       if (reconnectTimer) clearTimeout(reconnectTimer);
+  //       setReconnectTimeLeft(0);
+  //     },
+  //     (err) => {
+  //       console.error(err, "에러에러에러");
+  //       setError("error");
+  //       setOpen(true);
+  //       // 연결이 실패하면 5초 후에 재연결 시도
+  //       let timeLeft = 5000;
+  //       const timer = setInterval(() => {
+  //         timeLeft -= 1000;
+  //         setReconnectTimeLeft(timeLeft);
+  //         if (timeLeft <= 0) {
+  //           clearInterval(timer);
+  //           connectWebsocket();
+  //           setError("");
+  //         }
+  //       }, 1000);
+  //       setReconnectTimer(timer);
+  //       setReconnectTimeLeft(timeLeft);
+  //     }
+  //   );
+  // };
 
-  const handleGetSensor = useCallback(() => {
-    if (stompClient) {
-      stompClient.send(
-        `/server/machine/sensor`,
-        {},
-        JSON.stringify(parseInt(machine))
-      );
-    }
-  }, [stompClient, machine]);
+  // const handleGetSensor = useCallback(() => {
+  //   if (stompClient) {
+  //     stompClient.send(
+  //       `/server/machine/sensor`,
+  //       {},
+  //       JSON.stringify(parseInt(machine))
+  //     );
+  //   }
+  // }, [stompClient, machine]);
 
-  useEffect(() => {
-    connectWebsocket();
-    return () => {
-      if (stompClient) {
-        disconnetWebSocket();
-      }
-    };
-  }, []);
+  // useEffect(() => {
+  //   connectWebsocket();
+  //   return () => {
+  //     if (stompClient) {
+  //       disconnetWebSocket();
+  //     }
+  //   };
+  // }, []);
 
   const [motorData, setMotorData] = useState<any[]>([]);
   const [vacuumData, setVacuumData] = useState<any[]>([]);
@@ -147,21 +147,21 @@ const Sensor = () => {
   }, [stompClient]);
 
   // 주소 바뀌면 새로 가져오깅
-  useEffect(() => {
-    // setBooleanData([]);
-    // setIntData([]);
-    // setDoubleData([]);
-    // setFirstBoolean([]);
-    // setSecondBoolean([]);
-  }, [machine]);
+  // useEffect(() => {
+  //   // setBooleanData([]);
+  //   // setIntData([]);
+  //   // setDoubleData([]);
+  //   // setFirstBoolean([]);
+  //   // setSecondBoolean([]);
+  // }, [machine]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      handleGetSensor();
-    }, 3000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     handleGetSensor();
+  //   }, 3000);
 
-    return () => clearInterval(interval);
-  }, [handleGetSensor]);
+  //   return () => clearInterval(interval);
+  // }, [handleGetSensor]);
 
   // console.log(message[0], "message!!");
 
