@@ -23,7 +23,7 @@ type ClientData = {
     AIR_OUT_KPA: number;
     AIR_OUT_MPA: number;
     WATER: number;
-    // ABRASION: number;
+    ABRASION: number;
     LOAD: number;
     VELOCITY: number;
     // SCORE: number;
@@ -41,7 +41,7 @@ const MainPage: React.FC = () => {
       AIR_OUT_KPA: 500,
       AIR_OUT_MPA: 0.8,
       WATER: 3,
-      // ABRASION: 16,
+      ABRASION: 16,
       LOAD: 8,
       VELOCITY: 30000,
       // SCORE: 80,
@@ -53,7 +53,7 @@ const MainPage: React.FC = () => {
       AIR_OUT_KPA: 500,
       AIR_OUT_MPA: 0.1,
       WATER: 2,
-      // ABRASION: 16,
+      ABRASION: 16,
       LOAD: 8,
       VELOCITY: 10000,
       // SCORE: 80,
@@ -65,7 +65,7 @@ const MainPage: React.FC = () => {
       AIR_OUT_KPA: 500,
       AIR_OUT_MPA: 0.5,
       WATER: 2,
-      // ABRASION: 13,
+      ABRASION: 13,
       LOAD: 1,
       VELOCITY: 20000,
       // SCORE: 80,
@@ -77,7 +77,7 @@ const MainPage: React.FC = () => {
       AIR_OUT_KPA: 500,
       AIR_OUT_MPA: 0.8,
       WATER: 3,
-      // ABRASION: 16,
+      ABRASION: 16,
       LOAD: 8,
       VELOCITY: 30000,
       // SCORE: 80,
@@ -89,7 +89,7 @@ const MainPage: React.FC = () => {
       AIR_OUT_KPA: 500,
       AIR_OUT_MPA: 0.6,
       WATER: 3,
-      // ABRASION: 16,
+      ABRASION: 16,
       LOAD: 8,
       VELOCITY: 15000,
       // SCORE: 80,
@@ -101,7 +101,7 @@ const MainPage: React.FC = () => {
       AIR_OUT_KPA: 500,
       AIR_OUT_MPA: 0.8,
       WATER: 3,
-      // ABRASION: 16,
+      ABRASION: 16,
       LOAD: 8,
       VELOCITY: 30000,
       // SCORE: 80,
@@ -113,7 +113,7 @@ const MainPage: React.FC = () => {
       AIR_OUT_KPA: 500,
       AIR_OUT_MPA: 0.8,
       WATER: 3,
-      // ABRASION: 16,
+      ABRASION: 16,
       LOAD: 8,
       VELOCITY: 30000,
       // SCORE: 80,
@@ -125,7 +125,7 @@ const MainPage: React.FC = () => {
       AIR_OUT_KPA: 500,
       AIR_OUT_MPA: 0.8,
       WATER: 3,
-      // ABRASION: 16,
+      ABRASION: 16,
       LOAD: 8,
       VELOCITY: 30000,
       // SCORE: 80,
@@ -137,7 +137,7 @@ const MainPage: React.FC = () => {
       AIR_OUT_KPA: 500,
       AIR_OUT_MPA: 0.8,
       WATER: 3,
-      // ABRASION: 16,
+      ABRASION: 16,
       LOAD: 8,
       VELOCITY: 30000,
       // SCORE: 80,
@@ -149,7 +149,7 @@ const MainPage: React.FC = () => {
       AIR_OUT_KPA: 500,
       AIR_OUT_MPA: 0.8,
       WATER: 3,
-      // ABRASION: 16,
+      ABRASION: 16,
       LOAD: 8,
       VELOCITY: 30000,
       // SCORE: 80,
@@ -161,7 +161,7 @@ const MainPage: React.FC = () => {
       AIR_OUT_KPA: 500,
       AIR_OUT_MPA: 0.8,
       WATER: 3,
-      // ABRASION: 16,
+      ABRASION: 16,
       LOAD: 8,
       VELOCITY: 30000,
       // SCORE: 80,
@@ -173,7 +173,7 @@ const MainPage: React.FC = () => {
       AIR_OUT_KPA: 500,
       AIR_OUT_MPA: 0.8,
       WATER: 3,
-      // ABRASION: 16,
+      ABRASION: 16,
       LOAD: 8,
       VELOCITY: 30000,
       // SCORE: 80,
@@ -220,6 +220,7 @@ const MainPage: React.FC = () => {
     if (stompClient) {
       stompClient.disconnect(() => "");
       setStompClient(null);
+      console.log("연결해제");
     }
   }, [stompClient]);
 
@@ -265,6 +266,7 @@ const MainPage: React.FC = () => {
   const onClickTab = (index: number) => {
     setTabIndex(index);
   };
+  console.log(message);
 
   return (
     <MainLayout>
@@ -278,8 +280,7 @@ const MainPage: React.FC = () => {
 
           <Card className={styles.errorcard}>
             <CardContent className={styles.errorcardcomponent}>
-              {/* <p>{JSON.stringify(message)}</p> */}
-              <MainError />
+              {/* <MainError /> */}
             </CardContent>
           </Card>
         </div>

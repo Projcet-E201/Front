@@ -13,7 +13,7 @@ export type MachinePropsType = {
   AIR_OUT_KPA: number;
   AIR_OUT_MPA: number;
   WATER: number;
-  // ABRASION: number;
+  ABRASION: number;
   LOAD: number;
   VELOCITY: number;
   // SCORE: number;
