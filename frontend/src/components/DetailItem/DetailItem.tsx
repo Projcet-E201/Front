@@ -86,7 +86,7 @@ const DetailItem: React.FC = () => {
   const [message, setMessage] = useState<any>();
 
   const connectWebSocket = () => {
-    console.log(connectUrl);
+    // console.log(connectUrl);
     const socket = new SockJS(connectUrl);
     const stompClient = Stomp.over(socket);
     stompClient.connect(
@@ -154,8 +154,16 @@ const DetailItem: React.FC = () => {
     }
   }, [location, intervalSeconds, stompClient]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handlehistoryButtonClick();
+    });
+
+    return () => clearInterval(interval);
+  }, [handlehistoryButtonClick]);
+
   //웹소켓 코드 끝
-  console.log(datasets);
+  // console.log(datasets);
 
   return (
     <div style={{ width: "100%" }}>

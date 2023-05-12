@@ -23,7 +23,7 @@ export type SenserPropsType = {
     ABRASION: number;
     LOAD: number;
     VELOCITY: number;
-    SCORE: number;
+    // SCORE: number;
   };
 };
 
@@ -63,15 +63,18 @@ const MainSensorBarItem = (props: MainSenserItemProps) => {
   };
 
   const sensorCards = sensors.map((sensor, index) => {
-    const chartData = Object.entries(props.clientData).map(([key, data]) => ({
-      id: key,
-      [sensor]: data[sensor as keyof typeof data],
-    }));
+    const chartData = Object.entries(props.clientData).map(
+      ([key, data], chartindex) => ({
+        id: key,
+        key: chartindex,
+        [sensor]: data[sensor as keyof typeof data],
+      })
+    );
 
     return (
       <Draggable
-        key={`sensor-${sensor}`}
-        draggableId={`sensor-${sensor}`}
+        key={`sensor-${sensor}-${index}`}
+        draggableId={`sensor-${sensor}-${index}`}
         index={index}
       >
         {(provided) => (
@@ -89,11 +92,11 @@ const MainSensorBarItem = (props: MainSenserItemProps) => {
             </h3>
             <CardContent>
               <SensorBarChart data={chartData} sensor={sensor} />
-              {Object.entries(props.clientData).map(
+              {/* {Object.entries(props.clientData).map(
                 ([key, data], dataIndex) => (
                   <div
                     className={styles.sensordatacontent}
-                    key={`sensordata-${dataIndex}`}
+                    key={`sensordata-${key}-${dataIndex}`}
                     onClick={() =>
                       navigate(
                         `/machine/${machines[dataIndex]}/${sensorAddressMap[sensor]}`
@@ -101,7 +104,7 @@ const MainSensorBarItem = (props: MainSenserItemProps) => {
                     }
                   ></div>
                 )
-              )}
+              )} */}
             </CardContent>
           </Card>
         )}

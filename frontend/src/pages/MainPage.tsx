@@ -26,7 +26,7 @@ type ClientData = {
     ABRASION: number;
     LOAD: number;
     VELOCITY: number;
-    SCORE: number;
+    // SCORE: number;
   };
 };
 
@@ -44,7 +44,7 @@ const MainPage: React.FC = () => {
       ABRASION: 16,
       LOAD: 8,
       VELOCITY: 30000,
-      SCORE: 80,
+      // SCORE: 80,
     },
     CLIENT2: {
       MOTOR: 150,
@@ -56,7 +56,7 @@ const MainPage: React.FC = () => {
       ABRASION: 16,
       LOAD: 8,
       VELOCITY: 10000,
-      SCORE: 80,
+      // SCORE: 80,
     },
     CLIENT3: {
       MOTOR: 280,
@@ -68,7 +68,7 @@ const MainPage: React.FC = () => {
       ABRASION: 13,
       LOAD: 1,
       VELOCITY: 20000,
-      SCORE: 80,
+      // SCORE: 80,
     },
     CLIENT4: {
       MOTOR: 100,
@@ -80,7 +80,7 @@ const MainPage: React.FC = () => {
       ABRASION: 16,
       LOAD: 8,
       VELOCITY: 30000,
-      SCORE: 80,
+      // SCORE: 80,
     },
     CLIENT5: {
       MOTOR: 50,
@@ -92,7 +92,7 @@ const MainPage: React.FC = () => {
       ABRASION: 16,
       LOAD: 8,
       VELOCITY: 15000,
-      SCORE: 80,
+      // SCORE: 80,
     },
     CLIENT6: {
       MOTOR: 100,
@@ -104,7 +104,7 @@ const MainPage: React.FC = () => {
       ABRASION: 16,
       LOAD: 8,
       VELOCITY: 30000,
-      SCORE: 80,
+      // SCORE: 80,
     },
     CLIENT7: {
       MOTOR: 100,
@@ -116,7 +116,7 @@ const MainPage: React.FC = () => {
       ABRASION: 16,
       LOAD: 8,
       VELOCITY: 30000,
-      SCORE: 80,
+      // SCORE: 80,
     },
     CLIENT8: {
       MOTOR: 100,
@@ -128,7 +128,7 @@ const MainPage: React.FC = () => {
       ABRASION: 16,
       LOAD: 8,
       VELOCITY: 30000,
-      SCORE: 80,
+      // SCORE: 80,
     },
     CLIENT9: {
       MOTOR: 100,
@@ -140,7 +140,7 @@ const MainPage: React.FC = () => {
       ABRASION: 16,
       LOAD: 8,
       VELOCITY: 30000,
-      SCORE: 80,
+      // SCORE: 80,
     },
     CLIENT10: {
       MOTOR: 100,
@@ -152,7 +152,7 @@ const MainPage: React.FC = () => {
       ABRASION: 16,
       LOAD: 8,
       VELOCITY: 30000,
-      SCORE: 80,
+      // SCORE: 80,
     },
     CLIENT11: {
       MOTOR: 100,
@@ -164,7 +164,7 @@ const MainPage: React.FC = () => {
       ABRASION: 16,
       LOAD: 8,
       VELOCITY: 30000,
-      SCORE: 80,
+      // SCORE: 80,
     },
     CLIENT12: {
       MOTOR: 100,
@@ -176,7 +176,7 @@ const MainPage: React.FC = () => {
       ABRASION: 16,
       LOAD: 8,
       VELOCITY: 30000,
-      SCORE: 80,
+      // SCORE: 80,
     },
   });
 
@@ -220,6 +220,7 @@ const MainPage: React.FC = () => {
     if (stompClient) {
       stompClient.disconnect(() => "");
       setStompClient(null);
+      console.log("연결해제");
     }
   }, [stompClient]);
 
@@ -234,6 +235,11 @@ const MainPage: React.FC = () => {
       });
     }
   }, [stompClient]);
+  useEffect(() => {
+    if (message) {
+      setClientData(message);
+    }
+  }, [message]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -243,18 +249,6 @@ const MainPage: React.FC = () => {
     return () => clearInterval(interval);
   }, [handleTitleModify]);
 
-  //웹소켓 연결 코드 끝
-  const [machinetabIndex, setMachineTabIndex] = useState(1);
-
-  const onClickMachineTab = (index: number) => {
-    setMachineTabIndex(index);
-  };
-
-  const [tabIndex, setTabIndex] = useState(1);
-
-  const onClickTab = (index: number) => {
-    setTabIndex(index);
-  };
   useEffect(() => {
     connectWebSocket();
     return () => {
@@ -263,39 +257,30 @@ const MainPage: React.FC = () => {
       }
     };
   }, []);
+  //웹소켓 연결 코드 끝
 
-  console.log("여기", message);
+  // console.log("여기", message);
+
+  const [tabIndex, setTabIndex] = useState(1);
+
+  const onClickTab = (index: number) => {
+    setTabIndex(index);
+  };
+  console.log(message);
 
   return (
     <MainLayout>
       <div className={styles.main1}>
         <div className={styles.main2}>
-          {/* {machinetabIndex === 0 && (
-            <MainSensorBarItem clientData={clientData} />
-          )}
-          {machinetabIndex === 1 && (
-            <div>
-              {Object.entries(clientData).map(([key, client], index) => (
-                <div className={styles.maincard} key={`${key}-${index}`}>
-                  <MainMachineItem client={client} id={key} index={index} />
-                </div>
-              ))}
-            </div>
-          )}
-          {machinetabIndex === 2 && (
-            <MainSenserHorizonBarItem clientData={clientData} />
-          )} */}
-
           {Object.entries(clientData).map(([key, client], index) => (
             <div className={styles.maincard} key={key}>
-              <MainMachineItem client={client} id={key} index={index} />
+              <MainMachineItem client={client} id={key} clientindex={index} />
             </div>
           ))}
 
           <Card className={styles.errorcard}>
             <CardContent className={styles.errorcardcomponent}>
-              {/* <p>{JSON.stringify(message)}</p> */}
-              <MainError />
+              {/* <MainError /> */}
             </CardContent>
           </Card>
         </div>
