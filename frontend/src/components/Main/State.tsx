@@ -31,8 +31,8 @@ const State = () => {
   const getStateData = () => {
     console.log("ㄱㄱㄱㄱ");
     axios
-      // .get(`https://semse.info/api/machine/${machine}/state`)
-      .get(`http://localhost:8091/api/machine/${machine}/state`)
+      .get(`https://semse.info/api/machine/${machine}/state`)
+      // .get(`http://localhost:8091/api/machine/${machine}/state`)
       .then((response) => {
         console.log(response.data, "datadata", `${machine}`);
         // Boolean Data 정렬
