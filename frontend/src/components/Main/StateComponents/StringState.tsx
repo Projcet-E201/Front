@@ -20,7 +20,7 @@ const StringState = ({ data }: any) => {
   );
 
   useEffect(() => {
-    const formattedData = Object.keys(data)
+    const formattedData: any = Object.keys(data)
       .sort((a, b) => {
         const timeA = data[a]?.time;
         const timeB = data[b]?.time;
@@ -47,7 +47,7 @@ const StringState = ({ data }: any) => {
         }
 
         return {
-          id: key,
+          id: parseInt(key) + 1,
           time: updatedTime,
           content: data[key]?.value,
         };

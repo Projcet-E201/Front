@@ -35,191 +35,93 @@ const State = () => {
   const [intData, setIntData] = useState<any[]>([]);
   const [doubleData, setDoubleData] = useState<any[]>([]);
 
+  const [error, setError] = useState<any>();
+  const [reconnectTimer, setReconnectTimer] = useState<any>();
+  const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
+
+  const getStateData = () => {
+    console.log("ㄱㄱㄱㄱ");
+    axios
+      .get(`https://semse.info/api/machine/${machine}/state`)
+      .then((response) => {
+        console.log(response.data, "datadata");
+        // Boolean Data 정렬
+
+        const booleanDataArray = new Array(10).fill(null);
+        for (const [key, value] of Object.entries(response.data[0])) {
+          if (key.startsWith("boolean")) {
+            const id = parseInt(key.slice(7));
+            booleanDataArray[id - 1] = { id: id, value: value };
+          }
+        }
+
+        setBooleanData(booleanDataArray);
+
+        const doubleDataArray = new Array(10).fill(null);
+        for (const [key, value] of Object.entries(response.data[1])) {
+          if (key.startsWith("double")) {
+            const id = parseInt(key.slice(6));
+            doubleDataArray[id - 1] = {
+              id: key,
+              name: `D${id}`,
+              value: value,
+              color: (id - 1) % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
+            };
+          }
+        }
+        setDoubleData(doubleDataArray);
+
+        const intDataArray = new Array(10).fill(null);
+        for (const [key, value] of Object.entries(response.data[2])) {
+          if (key.startsWith("int")) {
+            const id = parseInt(key.slice(3));
+            intDataArray[id - 1] = {
+              id: key,
+              name: `I${id}`,
+              value: value,
+              color: (id - 1) % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
+            };
+          }
+        }
+        setIntData(intDataArray);
+
+        const stringDataArray = new Array(10).fill(null);
+        for (const [key, value] of Object.entries(response.data[3])) {
+          if (key.startsWith("string")) {
+            const id = parseInt(key.slice(6));
+            const { value: itemValue, time } = value as {
+              value: any;
+              time: any;
+            };
+            stringDataArray[id - 1] = {
+              id: key + 1,
+              value: itemValue,
+              time,
+            };
+          }
+        }
+        setStringData(stringDataArray);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+
   useEffect(() => {
-    const getStatehData = () => {
-      console.log("시작~~");
-      axios
-        .get(`https://semse.info/api/machine/${machine}/state`)
-        .then((response) => {
-          console.log(response.data, "datadata");
-          setMessage(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        });
-    };
-
-    const interval = setInterval(getStatehData, 3000);
-
+    getStateData();
+    const interval = setInterval(getStateData, 100000);
     return () => {
       clearInterval(interval);
     };
   }, []);
 
-  // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
-  // const connectUrl = "https://semse.info/api/ws-state";
-  // const connectUrl = "https://k8e201.p.ssafy.io:8091/ws";
-  // const connectUrl = "http://localhost:8091/ws";
-
-  // const disconnetWebSocket = useCallback(() => {
-  //   if (stompClient) {
-  //     stompClient.disconnect(() => "연결종료");
-  //     setStompClient(null);
-  //   }
-  // }, [stompClient]);
-  // const [error, setError] = useState<any>();
-  // const [reconnectTimer, setReconnectTimer] = useState<any>();
-  // const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
-
-  // const connectWebsocket = () => {
-  //   const socket = new SockJS(connectUrl);
-  //   const stompClient: any = Stomp.over(socket);
-
-  //   setOpen(false);
-  //   stompClient.connect(
-  //     {},
-  //     () => {
-  //       setStompClient(stompClient);
-  //       setError(undefined);
-  //       // 연결이 성공하면 reconnectTimer 해제
-  //       if (reconnectTimer) clearTimeout(reconnectTimer);
-  //       setReconnectTimeLeft(0);
-  //     },
-  //     (err: any) => {
-  //       console.error(err, "에러에러에러");
-  //       setError("error");
-  //       setOpen(true);
-  //       // 연결이 실패하면 5초 후에 재연결 시도
-  //       let timeLeft = 5000;
-  //       const timer = setInterval(() => {
-  //         timeLeft -= 1000;
-  //         setReconnectTimeLeft(timeLeft);
-  //         if (timeLeft <= 0) {
-  //           clearInterval(timer);
-  //           connectWebsocket();
-  //           setError("");
-  //         }
-  //       }, 1000);
-  //       setReconnectTimer(timer);
-  //       setReconnectTimeLeft(timeLeft);
-  //     }
-  //   );
-  // };
-
-  // const handleGetState = useCallback(() => {
-  //   if (stompClient) {
-  //     stompClient.send(
-  //       `/server/machine/state`,
-  //       {},
-  //       JSON.stringify(parseInt(machine))
-  //     );
-  //   }
-  // }, [stompClient, machine]);
-
-  // useEffect(() => {
-  //   connectWebsocket();
-  //   // connectWithRetry();
-  //   return () => {
-  //     if (stompClient) {
-  //       disconnetWebSocket();
-  //     }
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     handleGetState();
-  //   }, 3000);
-
-  //   return () => clearInterval(interval);
-  // }, [handleGetState]);
-
-  // // const firstHalf = booleanData.slice(0, 5);
-  // // const secondHalf = booleanData.slice(5, 10);
-  // const [firstBoolean, setFirstBoolean] = useState<any>([]);
-  // const [secondBoolean, setSecondBoolean] = useState<any>([]);
-
-  // useEffect(() => {
-  //   // console.log(booleanData, "zzzzzzzzzzzzzzzzzzzz");
-  //   if (stompClient) {
-  //     stompClient.subscribe(`/client/machine/state`, (data) => {
-  //       const parsedData = JSON.parse(data.body);
-  //       if (parsedData.length > 0) {
-  //         // 수정된 부분
-  //         setMessage(parsedData);
-
-  //         const booleanDataArray = new Array(10).fill(null);
-  //         for (const [key, value] of Object.entries(parsedData[0])) {
-  //           if (key.startsWith("boolean")) {
-  //             const id = parseInt(key.slice(7));
-  //             // 순서대로 array에 넣기
-  //             booleanDataArray[id - 1] = { id: id, value: value };
-  //           }
-  //         }
-  //         // setBooleanData(booleanDataArray);
-  //         setFirstBoolean(booleanDataArray.slice(0, 5));
-  //         setSecondBoolean(booleanDataArray.slice(5, 10));
-
-  //         const intDataArray = new Array(10).fill(null);
-  //         for (const [key, value] of Object.entries(parsedData[2])) {
-  //           if (key.startsWith("int")) {
-  //             const id = parseInt(key.slice(3));
-  //             intDataArray[id - 1] = {
-  //               id: key,
-  //               name: `I${id}`,
-  //               value: value,
-  //               color: (id - 1) % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
-  //             };
-  //           }
-  //         }
-  //         setIntData(intDataArray);
-
-  //         const doubleDataArray = new Array(10).fill(null);
-  //         for (const [key, value] of Object.entries(parsedData[1])) {
-  //           if (key.startsWith("double")) {
-  //             const id = parseInt(key.slice(6));
-  //             doubleDataArray[id - 1] = {
-  //               id: key,
-  //               name: `D${id}`,
-  //               value: value,
-  //               color: (id - 1) % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
-  //             };
-  //           }
-  //         }
-  //         setDoubleData(doubleDataArray);
-
-  //         setStringData(parsedData[3]);
-  //       }
-  //     });
-  //   }
-  // }, [stompClient]);
-
-  // // 주소 바뀌면 새로 가져오깅
-  // useEffect(() => {
-  //   setBooleanData([]);
-  //   setIntData([]);
-  //   setDoubleData([]);
-  //   setStringData([]);
-  //   setFirstBoolean([]);
-  //   setSecondBoolean([]);
-  // }, [machine]);
-
-  // useEffect(() => {
-  //   if (stompClient) {
-  //     handleGetState();
-  //   }
-  // }, [stompClient]);
-
   return (
     <div>
-      <h1>{JSON.stringify(message)}</h1>
       {/* {error !== "error" ? ( */}
-      {/* <div className={styles.state}>
+      <div className={styles.state}>
         <div className={styles.left}>
           <div className={styles.boolean}>
-
             <div>
-
               <Card
                 className={styles.card}
                 style={{ height: "17vh", minHeight: "159.28px" }}
@@ -234,7 +136,7 @@ const State = () => {
                 >
                   <BooleanState
                     // data={firstHalf}
-                    data={firstBoolean}
+                    data={booleanData.slice(0, 5)}
                     error={error}
                     time={reconnectTimeLeft}
                   />
@@ -256,7 +158,7 @@ const State = () => {
                 >
                   <BooleanState
                     // data={secondHalf}
-                    data={secondBoolean}
+                    data={booleanData.slice(5, 10)}
                     error={error}
                     time={reconnectTimeLeft}
                   />
@@ -312,7 +214,7 @@ const State = () => {
             </Card>
           </div>
         </div>
-      </div> */}
+      </div>
       {/* ) : ( */}
       {/* <div>
           <Card
