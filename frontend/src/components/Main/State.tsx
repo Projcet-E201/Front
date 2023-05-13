@@ -15,7 +15,6 @@ import DoubleState from "./StateComponents/DoubleState";
 import IntState from "./StateComponents/IntState";
 
 import axios from "axios";
-import { measureMemory } from "vm";
 
 const State = () => {
   const { machine = "" } = useParams();
@@ -30,9 +29,10 @@ const State = () => {
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
 
   const getStateData = () => {
-    // console.log("ㄱㄱㄱㄱ");
+    console.log("ㄱㄱㄱㄱ");
     axios
-      .get(`https://semse.info/api/machine/${machine}/state`)
+      // .get(`https://semse.info/api/machine/${machine}/state`)
+      .get(`http://localhost:8091/api/machine/${machine}/state`)
       .then((response) => {
         console.log(response.data, "datadata", `${machine}`);
         // Boolean Data 정렬

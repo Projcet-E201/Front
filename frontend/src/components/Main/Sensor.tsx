@@ -19,21 +19,16 @@ import CardRpmChart from "./CardChart/CardRpmChart";
 import CardLoadChart from "./CardChart/CardLoadChart";
 import CardAbrasionChart from "./CardChart/CardAbrasionChart";
 
-// import { useParams } from "react-router-dom";
-import Stomp from "stompjs";
-import SockJS from "sockjs-client";
-import derivative from "antd/es/theme/themes/default";
-
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+
+import axios from "axios";
 
 const Sensor = () => {
   const navigate = useNavigate();
   const { machine }: any = useParams();
   const repeat = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-  //socket
-  // const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
   const [message, setMessage] = useState<any>();
 
   const [open, setOpen] = React.useState(false);
@@ -43,71 +38,6 @@ const Sensor = () => {
   const [error, setError] = useState<any>();
   const [reconnectTimer, setReconnectTimer] = useState<any>();
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
-
-  // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
-  // const connectUrl = "https://semse.info/api/ws-sensor";
-  // const connectUrl = "https://k8e201.p.ssafy.io:8091/ws";
-  // const connectUrl = "http://localhost:8091/ws";
-
-  // const disconnetWebSocket = useCallback(() => {
-  //   if (stompClient) {
-  //     stompClient.disconnect(() => "");
-  //     setStompClient(null);
-  //   }
-  // }, [stompClient]);
-
-  // const connectWebsocket = () => {
-  //   const socket = new SockJS(connectUrl);
-  //   const stompClient = Stomp.over(socket);
-  //   setOpen(false);
-  //   stompClient.connect(
-  //     {},
-  //     () => {
-  //       setStompClient(stompClient);
-  //       setError(undefined);
-  //       // 연결이 성공하면 reconnectTimer 해제
-  //       if (reconnectTimer) clearTimeout(reconnectTimer);
-  //       setReconnectTimeLeft(0);
-  //     },
-  //     (err) => {
-  //       console.error(err, "에러에러에러");
-  //       setError("error");
-  //       setOpen(true);
-  //       // 연결이 실패하면 5초 후에 재연결 시도
-  //       let timeLeft = 5000;
-  //       const timer = setInterval(() => {
-  //         timeLeft -= 1000;
-  //         setReconnectTimeLeft(timeLeft);
-  //         if (timeLeft <= 0) {
-  //           clearInterval(timer);
-  //           connectWebsocket();
-  //           setError("");
-  //         }
-  //       }, 1000);
-  //       setReconnectTimer(timer);
-  //       setReconnectTimeLeft(timeLeft);
-  //     }
-  //   );
-  // };
-
-  // const handleGetSensor = useCallback(() => {
-  //   if (stompClient) {
-  //     stompClient.send(
-  //       `/server/machine/sensor`,
-  //       {},
-  //       JSON.stringify(parseInt(machine))
-  //     );
-  //   }
-  // }, [stompClient, machine]);
-
-  // useEffect(() => {
-  //   connectWebsocket();
-  //   return () => {
-  //     if (stompClient) {
-  //       disconnetWebSocket();
-  //     }
-  //   };
-  // }, []);
 
   const [motorData, setMotorData] = useState<any[]>([]);
   const [vacuumData, setVacuumData] = useState<any[]>([]);
@@ -119,51 +49,56 @@ const Sensor = () => {
   const [velocityData, setVelocityData] = useState<any[]>([]);
   const [abrasionData, setAbrasionData] = useState<any[]>([]);
 
-  // useEffect(() => {
-  //   // console.log(booleanData, "zzzzzzzzzzzzzzzzzzzz");
-  //   if (stompClient) {
-  //     stompClient.subscribe(`/client/machine/sensor`, (data) => {
-  //       const parsedData = JSON.parse(data.body);
-  //       if (parsedData.length > 0) {
-  //         setMessage(parsedData);
-  //         // console.log(parsedData[0].MOTOR, "zzzz");
-  //         const motorDataArray = new Array(10).fill(null);
-  //         for (const [key, value] of Object.entries(parsedData[0].MOTOR)) {
-  //           if (key.startsWith("motor")) {
-  //             const id = parseInt(key.slice(7));
-  //             // 순서대로 array에 넣기
-  //             // console.log(key, "key");
-  //             // console.log(value, "value");
-  //             motorDataArray[id - 1] = { x: key, y: value };
-  //           }
-  //           // console.log(key, "key");
-  //           // console.log(value, "value");
-  //           // console.log("---------------------");
-  //         }
-  //         setMotorData(motorDataArray);
-  //       }
-  //     });
-  //   }
-  // }, [stompClient]);
+  const getSensorData = () => {
+    axios
+      .get(`https://semse.info/api/machine/${machine}/sensor`)
+      // .get(`http://localhost:8091/api/machine/${machine}/sensor`)
+      .then((response) => {
+        // console.log(response.data[0].MOTOR, "datadata", `${machine}`);
+        // setMotorData(response.data);
+        console.log(response.data[0].AIR_IN_KPA, "dfdfdf");
+        setMotorData(response.data[0].MOTOR);
+        setAirInData(response.data[0].AIR_IN_KPA);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setError("error");
+        let timeLeft = 5000;
+        const timer = setInterval(() => {
+          timeLeft -= 1000;
+          setReconnectTimeLeft(timeLeft);
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+            getSensorData();
+            setError("");
+          }
+        }, 1000);
+      });
+  };
 
-  // 주소 바뀌면 새로 가져오깅
-  // useEffect(() => {
-  //   // setBooleanData([]);
-  //   // setIntData([]);
-  //   // setDoubleData([]);
-  //   // setFirstBoolean([]);
-  //   // setSecondBoolean([]);
-  // }, [machine]);
+  useEffect(() => {
+    getSensorData();
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     handleGetSensor();
-  //   }, 3000);
+    const interval = setInterval(() => {
+      getSensorData();
+    }, 5000);
 
-  //   return () => clearInterval(interval);
-  // }, [handleGetSensor]);
+    return () => {
+      clearInterval(interval);
+      clearInterval(reconnectTimer);
+      setMotorData([]);
+      setVacuumData([]);
+      setAirInData([]);
+      setAirOutKpaData([]);
+      setAirOutMpaData([]);
+      setWaterData([]);
+      setLoadData([]);
+      setVelocityData([]);
+      setAbrasionData([]);
+    };
+  }, [machine]);
 
-  // console.log(message[0], "message!!");
+  console.log(motorData.length, "motormotor");
 
   return (
     <div>
@@ -224,8 +159,25 @@ const Sensor = () => {
                     onClick={() => navigate(`air-in`)}
                     style={{ width: "auto", height: "23vh" }}
                   >
-                    <h3 style={{ margin: "0" }}>Air입력(kPa)</h3>
-                    <CardAirInChart />
+                    {airInData.length === 0 ? (
+                      <Box
+                        sx={{
+                          height: "100%",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <CircularProgress />
+                        <h3>AirIn 데이터를 불러오는 중 입니다...</h3>
+                      </Box>
+                    ) : (
+                      <div style={{ height: "100%" }}>
+                        <h3 style={{ margin: "0" }}>Air입력(kPa)</h3>
+                        <CardAirInChart />
+                      </div>
+                    )}
                   </div>
                 )}
                 {index === 2 && (
