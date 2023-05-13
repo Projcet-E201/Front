@@ -52,12 +52,12 @@ const Sensor = () => {
   const getSensorData = () => {
     console.log("ㄱㄱㄱ");
     axios
-      // .get(`https://semse.info/api/machine/${machine}/sensor`)
-      .get(`http://localhost:8091/api/machine/${machine}/sensor`)
+      .get(`https://semse.info/api/machine/${machine}/sensor`)
+      // .get(`http://localhost:8091/api/machine/${machine}/sensor`)
       .then((response) => {
         // console.log(response.data[0].MOTOR, "datadata", `${machine}`);
         // setMotorData(response.data);
-        console.log(response.data[0].AIR_IN_KPA, "dfdfdf");
+        console.log(response.data, "dfdfdf");
         setMotorData(response.data[0].MOTOR);
         setAirInData(response.data[0].AIR_IN_KPA);
       })
