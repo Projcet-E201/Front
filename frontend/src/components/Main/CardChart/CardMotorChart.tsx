@@ -102,16 +102,16 @@ const CardMotorChart = ({ motorData }: any) => {
           ],
         },
       ]}
-      markers={[
-        {
-          axis: "y",
-          value: 100,
-          lineStyle: {
-            stroke: "green",
-            strokeWidth: 2,
-          },
-        },
-      ]}
+      // markers={[
+      //   {
+      //     axis: "y",
+      //     value: 100,
+      //     lineStyle: {
+      //       stroke: "green",
+      //       strokeWidth: 2,
+      //     },
+      //   },
+      // ]}
     />
   );
 };

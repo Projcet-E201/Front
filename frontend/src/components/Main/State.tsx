@@ -24,7 +24,7 @@ const State = () => {
   const [intData, setIntData] = useState<any[]>([]);
   const [doubleData, setDoubleData] = useState<any[]>([]);
 
-  const [error, setError] = useState<any>();
+  const [error, setError] = useState<any>("");
   const [reconnectTimer, setReconnectTimer] = useState<any>();
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
 
@@ -101,8 +101,8 @@ const State = () => {
           setReconnectTimeLeft(timeLeft);
           if (timeLeft <= 0) {
             clearInterval(timer);
-            getStateData();
             setError("");
+            getStateData();
           }
         }, 1000);
       });
@@ -113,7 +113,7 @@ const State = () => {
 
     const interval = setInterval(() => {
       getStateData();
-    }, 5000);
+    }, 10000);
 
     return () => {
       clearInterval(interval);

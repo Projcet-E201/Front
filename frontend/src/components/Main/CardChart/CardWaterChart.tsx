@@ -4,40 +4,19 @@ import { ResponsiveBar } from "@nivo/bar";
 import { faker } from "@faker-js/faker";
 
 // import CircularProgress from "@mui/material/CircularProgress";
-const CardWaterChart = () => {
-  const [data, setData] = useState([
-    { id: "vc1", vacuum: "A", value: 10, color: "#FF5722" },
-    { id: "vc2", vacuum: "B", value: 20, color: "#FFC107" },
-    { id: "vc3", vacuum: "C", value: 30, color: "#4CAF50" },
-    { id: "vc4", vacuum: "D", value: 40, color: "#2196F3" },
-    { id: "vc5", vacuum: "E", value: 50, color: "#9C27B0" },
-    { id: "vc6", vacuum: "F", value: 60, color: "#FF9800" },
-    { id: "vc7", vacuum: "G", value: 70, color: "#795548" },
-    { id: "vc8", vacuum: "H", value: 80, color: "#00BCD4" },
-    { id: "vc9", vacuum: "I", value: 90, color: "#E91E63" },
-  ]);
-
-  const [remainingTime, setRemainingTime] = useState(5);
+const CardWaterChart = ({ waterData }: any) => {
+  const [data, setData] = useState(
+    Array.from(Array(10)).map((_, index) => ({
+      id: `water${index + 1}`,
+      water: `W${index + 1}`,
+      value: 0,
+      color: index % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
+    }))
+  );
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      const newData = data.map((d) => ({
-        ...d,
-        value: faker.datatype.number({ min: 10, max: 100 }),
-      }));
-      setData(newData);
-      setRemainingTime(6);
-    }, 5000);
-
-    const countdownIntervalId = setInterval(() => {
-      setRemainingTime((prev) => prev - 1);
-    }, 1000);
-
-    return () => {
-      clearInterval(intervalId);
-      clearInterval(countdownIntervalId);
-    };
-  }, [data]);
+    // waterData가 변경될 때마다 data 배열을 업데이트
+  }, [waterData]);
 
   return (
     <ResponsiveBar
@@ -46,7 +25,7 @@ const CardWaterChart = () => {
       // height={500} // 차트의 세로 길이
       data={data} // 차트에 표시될 데이터 배열
       keys={["value"]} // 표시될 데이터에서 y축 값에 해당하는 키 값
-      indexBy="vacuum" // 표시될 데이터에서 x축 값에 해당하는 키 값
+      indexBy="water" // 표시될 데이터에서 x축 값에 해당하는 키 값
       margin={{ top: 10, right: 10, bottom: 40, left: 40 }} // 차트와 경계선 사이의 여백
       padding={0.2} // 바 사이의 여백
       labelTextColor={{ from: "color", modifiers: [["darker", 1.6]] }} // 라벨의 색상과 스타일 지정
@@ -69,7 +48,7 @@ const CardWaterChart = () => {
       //   legendOffset: -40, // 레전드의 오프셋
       // }}
       maxValue={100}
-      colors={(bar) => bar.data.color}
+      colors={(bar: any) => bar.data.color}
       // markers={[
       //   {
       //     axis: "y",

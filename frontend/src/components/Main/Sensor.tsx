@@ -23,6 +23,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
 import axios from "axios";
+import RpmChart from "../Chart/RpmChart";
 
 const Sensor = () => {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ const Sensor = () => {
   const [reconnectTimer, setReconnectTimer] = useState<any>();
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
 
+  const [data, setData] = useState<any[]>([]);
   const [motorData, setMotorData] = useState<any[]>([]);
   const [vacuumData, setVacuumData] = useState<any[]>([]);
   const [airInData, setAirInData] = useState<any[]>([]);
@@ -49,17 +51,24 @@ const Sensor = () => {
   const [velocityData, setVelocityData] = useState<any[]>([]);
   const [abrasionData, setAbrasionData] = useState<any[]>([]);
 
-  const getSensorData = () => {
+  const getSensorData = async () => {
     console.log("ㄱㄱㄱ");
-    axios
+    await axios
       .get(`https://semse.info/api/machine/${machine}/sensor`)
       // .get(`http://localhost:8091/api/machine/${machine}/sensor`)
       .then((response) => {
         // console.log(response.data[0].MOTOR, "datadata", `${machine}`);
         // setMotorData(response.data);
         console.log(response.data, "dfdfdf");
+        setData(response.data);
         setMotorData(response.data[0].MOTOR);
         setAirInData(response.data[0].AIR_IN_KPA);
+        setAirOutKpaData(response.data[0].AIR_OUT_KPA);
+        setAirOutMpaData(response.data[0].AIR_OUT_MPA);
+        setVelocityData(response.data[0].VELOCITY);
+        setLoadData(response.data[0].LOAD);
+        setAbrasionData(response.data[0].ABRASION);
+        setWaterData(response.data[0].WATER);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -82,7 +91,7 @@ const Sensor = () => {
 
     const interval = setInterval(() => {
       getSensorData();
-    }, 5000);
+    }, 10000);
 
     return () => {
       clearInterval(interval);
@@ -99,7 +108,7 @@ const Sensor = () => {
     };
   }, [machine]);
 
-  console.log(motorData.length, "motormotor");
+  console.log(data.length, "datalength");
 
   return (
     <div>
@@ -133,7 +142,7 @@ const Sensor = () => {
                     {/* motorData가 []이면 연결조차 되지 않았다는 것이고
                 null로 채워져 있으면 연결을 되었지만 데이터를 받아오지 못했다는 것이고 */}
 
-                    {motorData.length === 0 ? (
+                    {data.length === 0 ? (
                       <Box
                         sx={{
                           height: "100%",
@@ -160,7 +169,7 @@ const Sensor = () => {
                     onClick={() => navigate(`air-in`)}
                     style={{ width: "auto", height: "23vh" }}
                   >
-                    {airInData.length === 0 ? (
+                    {data.length === 0 ? (
                       <Box
                         sx={{
                           height: "100%",
@@ -186,8 +195,25 @@ const Sensor = () => {
                     onClick={() => navigate(`/machine/${machine}/vacuum`)}
                     style={{ width: "auto", height: "23vh" }}
                   >
-                    <h3 style={{ margin: "0" }}>Vacuum입력(kPa)</h3>
-                    <CardVacuumChart />
+                    {data.length === 0 ? (
+                      <Box
+                        sx={{
+                          height: "100%",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <CircularProgress />
+                        <h3>Vacuum 데이터를 불러오는 중 입니다...</h3>
+                      </Box>
+                    ) : (
+                      <div style={{ height: "100%" }}>
+                        <h3 style={{ margin: "0" }}>Vacuum입력(kPa)</h3>
+                        <CardVacuumChart vacuumData={vacuumData} />
+                      </div>
+                    )}
                   </div>
                 )}
                 {index === 3 && (
@@ -195,8 +221,25 @@ const Sensor = () => {
                     onClick={() => navigate(`air-out-kpa`)}
                     style={{ width: "auto", height: "23vh" }}
                   >
-                    <h3 style={{ margin: "0" }}>Air출력(kPa)</h3>
-                    <CardAirOutKpaChart />
+                    {data.length === 0 ? (
+                      <Box
+                        sx={{
+                          height: "100%",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <CircularProgress />
+                        <h3>AirOut(Kpa) 데이터를 불러오는 중 입니다...</h3>
+                      </Box>
+                    ) : (
+                      <div style={{ height: "100%" }}>
+                        <h3 style={{ margin: "0" }}>Air출력(kPa)</h3>
+                        <CardAirOutKpaChart airOutKpaData={airOutKpaData} />
+                      </div>
+                    )}
                   </div>
                 )}
                 {index === 4 && (
@@ -204,8 +247,25 @@ const Sensor = () => {
                     onClick={() => navigate(`air-out-mpa`)}
                     style={{ width: "auto", height: "23vh" }}
                   >
-                    <h3 style={{ margin: "0" }}>Air출력(MPa)</h3>
-                    <CardAirOutMpaChart />
+                    {data.length === 0 ? (
+                      <Box
+                        sx={{
+                          height: "100%",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <CircularProgress />
+                        <h3>AirOut(Mpa) 데이터를 불러오는 중 입니다...</h3>
+                      </Box>
+                    ) : (
+                      <div style={{ height: "100%" }}>
+                        <h3 style={{ margin: "0" }}>Air출력(MPa)</h3>
+                        <CardAirOutMpaChart airOutMpaData={airOutMpaData} />
+                      </div>
+                    )}
                   </div>
                 )}
                 {index === 5 && (
@@ -213,8 +273,25 @@ const Sensor = () => {
                     onClick={() => navigate(`water`)}
                     style={{ width: "auto", height: "23vh" }}
                   >
-                    <h3 style={{ margin: "0" }}>Water출력(L/min)</h3>
-                    <CardWaterChart />
+                    {data.length === 0 ? (
+                      <Box
+                        sx={{
+                          height: "100%",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <CircularProgress />
+                        <h3>Water 데이터를 불러오는 중 입니다...</h3>
+                      </Box>
+                    ) : (
+                      <div style={{ height: "100%" }}>
+                        <h3 style={{ margin: "0" }}>Water출력(L/min)</h3>
+                        <CardWaterChart waterData={waterData} />
+                      </div>
+                    )}
                   </div>
                 )}
                 {index === 6 && (
@@ -222,18 +299,51 @@ const Sensor = () => {
                     onClick={() => navigate(`rpm`)}
                     style={{ width: "auto", height: "23vh" }}
                   >
-                    <h3 style={{ margin: "0" }}>기구부 회전속도(/min)</h3>
-                    <CardRpmChart />
+                    {data.length === 0 ? (
+                      <Box
+                        sx={{
+                          height: "100%",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <CircularProgress />
+                        <h3>Rpm 데이터를 불러오는 중 입니다...</h3>
+                      </Box>
+                    ) : (
+                      <div style={{ height: "100%" }}>
+                        <h3 style={{ margin: "0" }}>기구부 회전속도(/min)</h3>
+                        <CardRpmChart velocityData={velocityData} />
+                      </div>
+                    )}
                   </div>
                 )}
                 {index === 7 && (
                   <div
                     onClick={() => navigate(`load`)}
                     style={{ width: "auto", height: "23vh" }}
-                    // style={{ width: "auto", height: "50.5vh" }}
                   >
-                    <h3 style={{ margin: "0" }}>기구부 부하량(Ampere)</h3>
-                    <CardLoadChart />
+                    {data.length === 0 ? (
+                      <Box
+                        sx={{
+                          height: "100%",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <CircularProgress />
+                        <h3>부하량 데이터를 불러오는 중 입니다...</h3>
+                      </Box>
+                    ) : (
+                      <div style={{ height: "100%" }}>
+                        <h3 style={{ margin: "0" }}>기구부 부하량(Ampere)</h3>
+                        <CardLoadChart />
+                      </div>
+                    )}
                   </div>
                 )}
                 {index === 8 && (
@@ -241,8 +351,25 @@ const Sensor = () => {
                     onClick={() => navigate(`abrasion`)}
                     style={{ width: "auto", height: "23vh" }}
                   >
-                    <h3 style={{ margin: "0" }}>기구부 마모량(mm)</h3>
-                    <CardAbrasionChart />
+                    {data.length === 0 ? (
+                      <Box
+                        sx={{
+                          height: "100%",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <CircularProgress />
+                        <h3>마모량 데이터를 불러오는 중 입니다...</h3>
+                      </Box>
+                    ) : (
+                      <div style={{ height: "100%" }}>
+                        <h3 style={{ margin: "0" }}>기구부 마모량(mm)</h3>
+                        <CardAbrasionChart />
+                      </div>
+                    )}
                   </div>
                 )}
               </CardContent>

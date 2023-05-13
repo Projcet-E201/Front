@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import SensorLayout from "../../layout/SensorLayout";
 import MotorChart from "../../components/Chart/MotorChart";
 import { faker } from "@faker-js/faker";
@@ -8,14 +8,20 @@ import CardContent from "@mui/material/CardContent";
 import TopCard from "../../components/common/TopCard";
 import styles from "./MotorPage.module.css";
 
+import axios from "axios";
+
 import event1 from "../../assets/event1.png";
 import event2 from "../../assets/event2.png";
 import event3 from "../../assets/event3.png";
 
 const MotorPage = () => {
+  const [error, setError] = useState<any>();
+  const [reconnectTimer, setReconnectTimer] = useState<any>();
+  const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
   const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
   const location = useLocation();
   const navigate = useNavigate();
+  const { machine = "" } = useParams();
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -46,6 +52,42 @@ const MotorPage = () => {
   );
 
   // console.log(latestData);
+
+  const getMotorData = () => {
+    console.log("motordata 가져오기");
+    axios
+      .get(`https://semse.info/api/machine/${machine}/motor`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setError("error");
+        let timeLeft = 5000;
+        const timer = setInterval(() => {
+          timeLeft -= 1000;
+          setReconnectTimeLeft(timeLeft);
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+            getMotorData();
+            setError("");
+          }
+        }, 1000);
+      });
+  };
+
+  useEffect(() => {
+    getMotorData();
+
+    const interval = setInterval(() => {
+      getMotorData();
+    }, 10000);
+
+    return () => {
+      clearInterval(interval);
+      clearInterval(reconnectTimer);
+    };
+  }, [machine]);
 
   return (
     <SensorLayout>

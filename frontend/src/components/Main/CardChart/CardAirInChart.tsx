@@ -47,7 +47,8 @@ const CardAirInChart = ({ airInData }: any) => {
       // isInteractive={false}
       legends={[
         {
-          anchor: "top-right",
+          // anchor: "top-right",
+          anchor: "right",
           direction: "column",
           justify: false,
           translateX: 110, // 차트와 legend 사이 간격 조정
@@ -58,7 +59,7 @@ const CardAirInChart = ({ airInData }: any) => {
           itemHeight: 20,
           itemOpacity: 0.75,
           symbolSize: 12,
-          symbolShape: "circle",
+          // symbolShape: "circle",
           symbolBorderColor: "rgba(0, 0, 0, .5)",
           // onClick: (data) => {
           //   const id: string = data.id as string;

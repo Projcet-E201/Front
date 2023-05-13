@@ -3,71 +3,32 @@ import { useNavigate, useLocation, useParams } from "react-router";
 import { faker } from "@faker-js/faker";
 import { ResponsiveLine } from "@nivo/line";
 
-const CardVacuumChart = () => {
-  const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
-
-  useEffect(() => {
-    const initialData = [];
-    for (let i = 0; i < 10; i++) {
-      const dataEntry: any = {};
-      const time = new Date(Date.now() - (50000 - i * 5000)).toLocaleTimeString(
-        "ko-KR",
-        {
-          hour12: false,
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        }
-      );
-      dataEntry["x"] = time;
-      for (let j = 1; j <= 2; j++) {
-        dataEntry[`Vacuum${j}`] = faker.datatype.number({ min: 10, max: 100 });
-      }
-      initialData.push(dataEntry);
-    }
-    setData(initialData);
-
-    const intervalId = setInterval(() => {
-      const currentTime = new Date().toLocaleTimeString("ko-KR", {
-        hour12: false,
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      });
-      const newEntry: any = { x: currentTime };
-      for (let i = 1; i <= 2; i++) {
-        newEntry[`Vacuum${i}`] = faker.datatype.number({ min: 10, max: 100 });
-      }
-      setData((prevData) =>
-        prevData.length >= 10
-          ? [...prevData.slice(1), newEntry]
-          : [...prevData, newEntry]
-      );
-    }, 10000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
+const CardVacuumChart = ({ vacuumData }: any) => {
   const datasets = [
     {
       id: "min",
-      data: data.map((d) => {
-        const minVal = Math.min(d["Vacuum1"], d["Vacuum2"]);
-        return { x: d.x, y: minVal };
+      data: vacuumData.map((d: any) => {
+        let minVal = d.min_value;
+        if (minVal > 299) {
+          minVal = 30;
+        }
+        const time = d.time.split("/")[1]; // '/'를 기준으로 문자열을 분할하고 두 번째 요소를 선택합니다.
+
+        return { x: time, y: minVal };
       }),
       color: "skyblue", // min line의 색상을 skyblue로 설정
     },
     {
       id: "max",
-      data: data.map((d) => {
-        const maxVal = Math.max(d["Vacuum1"], d["Vacuum2"]);
-        return { x: d.x, y: maxVal };
+      data: vacuumData.map((d: any) => {
+        const maxVal = d.max_value;
+        const time = d.time.split("/")[1]; // '/'를 기준으로 문자열을 분할하고 두 번째 요소를 선택합니다.
+
+        return { x: time, y: maxVal };
       }),
       color: "red", // max line의 색상을 red로 설정
     },
   ];
-
-  // console.log(datasets);
 
   return (
     <ResponsiveLine
@@ -79,7 +40,7 @@ const CardVacuumChart = () => {
         // min: "auto",
         min: 0,
         // max: "auto",
-        max: 120,
+        max: 100,
         stacked: false,
         // stacked: true,
         reverse: false,
