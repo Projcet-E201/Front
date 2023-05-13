@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { useParams } from "react-router-dom";
 
-import { Modal, Box, Typography, Link } from "@mui/material";
+import { Link } from "@mui/material";
 
 import styles from "./State.module.css";
 
@@ -17,18 +17,8 @@ import IntState from "./StateComponents/IntState";
 import axios from "axios";
 import { measureMemory } from "vm";
 
-// socket 통신
-// import Stomp from "stompjs";
-// import SockJS from "sockjs-client";
-
 const State = () => {
-  // const [open, setOpen] = React.useState(false);
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
-
   const { machine = "" } = useParams();
-  // const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
-  const [message, setMessage] = useState<any>();
 
   const [booleanData, setBooleanData] = useState<any[]>([]);
   const [stringData, setStringData] = useState<any[]>([]);
@@ -40,11 +30,11 @@ const State = () => {
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
 
   const getStateData = () => {
-    console.log("ㄱㄱㄱㄱ");
+    // console.log("ㄱㄱㄱㄱ");
     axios
       .get(`https://semse.info/api/machine/${machine}/state`)
       .then((response) => {
-        console.log(response.data, "datadata");
+        console.log(response.data, "datadata", `${machine}`);
         // Boolean Data 정렬
 
         const booleanDataArray = new Array(10).fill(null);
@@ -104,27 +94,92 @@ const State = () => {
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        setError("error");
+        let timeLeft = 5000;
+        const timer = setInterval(() => {
+          timeLeft -= 1000;
+          setReconnectTimeLeft(timeLeft);
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+            getStateData();
+            setError("");
+          }
+        }, 1000);
       });
   };
 
   useEffect(() => {
     getStateData();
-    const interval = setInterval(getStateData, 100000);
+
+    const interval = setInterval(() => {
+      getStateData();
+    }, 5000);
+
     return () => {
       clearInterval(interval);
+      clearInterval(reconnectTimer);
+      setBooleanData([]);
+      setIntData([]);
+      setDoubleData([]);
+      setStringData([]);
     };
-  }, []);
+  }, [machine]);
 
   return (
     <div>
-      {/* {error !== "error" ? ( */}
-      <div className={styles.state}>
-        <div className={styles.left}>
-          <div className={styles.boolean}>
-            <div>
+      {error !== "error" ? (
+        <div className={styles.state}>
+          <div className={styles.left}>
+            <div className={styles.boolean}>
+              <div>
+                <Card
+                  className={styles.card}
+                  style={{ height: "17vh", minHeight: "159.28px" }}
+                >
+                  <CardContent
+                    sx={{
+                      height: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <BooleanState
+                      // data={firstHalf}
+                      data={booleanData.slice(0, 5)}
+                      error={error}
+                      time={reconnectTimeLeft}
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+              <div>
+                <Card
+                  className={styles.card}
+                  style={{ height: "17vh", minHeight: "159.28px" }}
+                >
+                  <CardContent
+                    sx={{
+                      height: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <BooleanState
+                      // data={secondHalf}
+                      data={booleanData.slice(5, 10)}
+                      error={error}
+                      time={reconnectTimeLeft}
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+            <div className={styles.string}>
               <Card
                 className={styles.card}
-                style={{ height: "17vh", minHeight: "159.28px" }}
+                style={{ height: "50vh", minHeight: "468.5px" }}
               >
                 <CardContent
                   sx={{
@@ -134,89 +189,44 @@ const State = () => {
                     alignItems: "center",
                   }}
                 >
-                  <BooleanState
-                    // data={firstHalf}
-                    data={booleanData.slice(0, 5)}
-                    error={error}
-                    time={reconnectTimeLeft}
-                  />
+                  <StringState data={stringData} />
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+          <div className={styles.right}>
+            <div>
+              <Card
+                className={styles.card}
+                style={{ height: "42vh", minHeight: "393.53px" }}
+              >
+                <CardContent
+                  style={{
+                    height: "100%",
+                  }}
+                >
+                  <DoubleState data={doubleData} />
                 </CardContent>
               </Card>
             </div>
             <div>
               <Card
                 className={styles.card}
-                style={{ height: "17vh", minHeight: "159.28px" }}
+                style={{ height: "42vh", minHeight: "393.53px" }}
               >
                 <CardContent
-                  sx={{
+                  style={{
                     height: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
                   }}
                 >
-                  <BooleanState
-                    // data={secondHalf}
-                    data={booleanData.slice(5, 10)}
-                    error={error}
-                    time={reconnectTimeLeft}
-                  />
+                  <IntState data={intData} />
                 </CardContent>
               </Card>
             </div>
           </div>
-          <div className={styles.string}>
-            <Card
-              className={styles.card}
-              style={{ height: "50vh", minHeight: "468.5px" }}
-            >
-              <CardContent
-                sx={{
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <StringState data={stringData} />
-              </CardContent>
-            </Card>
-          </div>
         </div>
-        <div className={styles.right}>
-          <div>
-            <Card
-              className={styles.card}
-              style={{ height: "42vh", minHeight: "393.53px" }}
-            >
-              <CardContent
-                style={{
-                  height: "100%",
-                }}
-              >
-                <DoubleState data={doubleData} />
-              </CardContent>
-            </Card>
-          </div>
-          <div>
-            <Card
-              className={styles.card}
-              style={{ height: "42vh", minHeight: "393.53px" }}
-            >
-              <CardContent
-                style={{
-                  height: "100%",
-                }}
-              >
-                <IntState data={intData} />
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </div>
-      {/* ) : ( */}
-      {/* <div>
+      ) : (
+        <div>
           <Card
             className={styles.card}
             style={{
@@ -230,7 +240,6 @@ const State = () => {
             }}
           >
             <CardContent>
-
               <h2>서버와 연결에 실패하였습니다.</h2>
               <h4>재연결시도...{Math.ceil(reconnectTimeLeft / 1000)}</h4>
               <br />
@@ -238,7 +247,7 @@ const State = () => {
             </CardContent>
           </Card>
         </div>
-      )} */}
+      )}
     </div>
   );
 };

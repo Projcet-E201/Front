@@ -6,41 +6,25 @@ import booleanOff from "../../../assets/state/OFF_button_icon.png";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { setUncaughtExceptionCaptureCallback } from "process";
+import { useParams } from "react-router";
 
 const BooleanState = ({ data, error, time }: any) => {
-  // const dummy = [
-  //   {
-  //     id: 1,
-  //     value: 1,
-  //   },
-  //   {
-  //     id: 2,
-  //     value: 1,
-  //   },
-  //   {
-  //     id: 3,
-  //     value: 0,
-  //   },
-  //   {
-  //     id: 4,
-  //     value: 0,
-  //   },
-  //   {
-  //     id: 4,
-  //     value: 1,
-  //   },
-  // ];
   const [booleanData, setBooleanData] = useState<any>([]);
+  const { machine = "" } = useParams();
   // console.log(data, "재필이는 바보야~");
   useEffect(() => {
     // console.log(data);
     setBooleanData(data);
   }, [data, booleanData]);
+
+  useEffect(() => {
+    setBooleanData([]); // Clear booleanData when machine changes
+  }, [machine]);
   return (
     <div style={{ width: "100%", height: "100%" }}>
       {error !== "error" ? (
         <div style={{ width: "100%", height: "100%" }}>
-          {data.length > 1 ? (
+          {booleanData.length > 1 ? (
             <div
               style={{
                 display: "flex",
