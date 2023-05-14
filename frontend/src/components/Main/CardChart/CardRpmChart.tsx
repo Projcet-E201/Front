@@ -5,7 +5,7 @@ import { faker } from "@faker-js/faker";
 
 // import CircularProgress from "@mui/material/CircularProgress";
 const CardRpmChart = ({ velocityData }: any) => {
-  console.log(velocityData[0], "water");
+  // console.log(velocityData[0], "rpm");
   const data: any = Object.entries(velocityData[0]).map(
     ([id, value], index) => ({
       id: `velocity${index + 1}`,
@@ -42,9 +42,9 @@ const CardRpmChart = ({ velocityData }: any) => {
         // legend: "Value", // y축에 대한 레전드(축 이름)
         legendPosition: "middle", // 레전드의 위치
         legendOffset: -40, // 레전드의 오프셋
-        tickValues: [0, 100], // 최소값과 최대값 지정
+        // tickValues: [0, 50000], // 최소값과 최대값 지정
       }}
-      maxValue={100}
+      maxValue={50000}
       colors={(bar: any) => bar.data.color}
       // markers={[
       //   {

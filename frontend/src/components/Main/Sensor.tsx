@@ -59,9 +59,10 @@ const Sensor = () => {
       .then((response) => {
         // console.log(response.data[0].MOTOR, "datadata", `${machine}`);
         // setMotorData(response.data);
-        console.log(response.data, "dfdfdf");
+        console.log(response.data, "sensorsensor");
         setData(response.data);
         setMotorData(response.data[0].MOTOR);
+        setVacuumData(response.data[0].VACUUM);
         setAirInData(response.data[0].AIR_IN_KPA);
         setAirOutKpaData(response.data[0].AIR_OUT_KPA);
         setAirOutMpaData(response.data[0].AIR_OUT_MPA);
@@ -91,7 +92,7 @@ const Sensor = () => {
 
     const interval = setInterval(() => {
       getSensorData();
-    }, 10000);
+    }, 5000);
 
     return () => {
       clearInterval(interval);
@@ -341,7 +342,7 @@ const Sensor = () => {
                     ) : (
                       <div style={{ height: "100%" }}>
                         <h3 style={{ margin: "0" }}>기구부 부하량(Ampere)</h3>
-                        <CardLoadChart />
+                        <CardLoadChart loadData={loadData} />
                       </div>
                     )}
                   </div>
@@ -367,7 +368,7 @@ const Sensor = () => {
                     ) : (
                       <div style={{ height: "100%" }}>
                         <h3 style={{ margin: "0" }}>기구부 마모량(mm)</h3>
-                        <CardAbrasionChart />
+                        <CardAbrasionChart abrasionData={abrasionData} />
                       </div>
                     )}
                   </div>

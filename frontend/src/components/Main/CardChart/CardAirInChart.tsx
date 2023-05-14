@@ -16,7 +16,7 @@ const CardAirInChart = ({ airInData }: any) => {
   return (
     <ResponsiveLine
       data={data}
-      margin={{ top: 10, right: 100, bottom: 30, left: 40 }}
+      margin={{ top: 10, right: 70, bottom: 30, left: 40 }}
       // xScale={{ type: "point" }}
       yScale={{
         type: "linear",
@@ -33,10 +33,10 @@ const CardAirInChart = ({ airInData }: any) => {
       axisTop={null}
       axisRight={null}
       colors={{ scheme: "category10" }}
-      lineWidth={1} // 그래프 두께
+      lineWidth={2} // 그래프 두께
       pointSize={10}
       pointColor={{ theme: "background" }}
-      pointBorderWidth={3}
+      pointBorderWidth={2}
       pointBorderColor={{ from: "serieColor" }}
       pointLabelYOffset={-12}
       enableSlices="x"
@@ -51,7 +51,7 @@ const CardAirInChart = ({ airInData }: any) => {
           anchor: "right",
           direction: "column",
           justify: false,
-          translateX: 110, // 차트와 legend 사이 간격 조정
+          translateX: 100, // 차트와 legend 사이 간격 조정
           translateY: -10, // 차트의 y축 위치
           itemsSpacing: 0,
           itemDirection: "left-to-right",

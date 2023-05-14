@@ -34,63 +34,73 @@ const State = () => {
       .get(`https://semse.info/api/machine/${machine}/state`)
       // .get(`http://localhost:8091/api/machine/${machine}/state`)
       .then((response) => {
-        console.log(response.data, "datadata", `${machine}`);
+        console.log(response.data, "statestate", `${machine}`);
         // Boolean Data 정렬
 
-        const booleanDataArray = new Array(10).fill(null);
-        for (const [key, value] of Object.entries(response.data[0])) {
-          if (key.startsWith("boolean")) {
-            const id = parseInt(key.slice(7));
-            booleanDataArray[id - 1] = { id: id, value: value };
+        if (response.data.length > 0) {
+          const booleanDataArray = new Array(10).fill(null);
+          if (response.data[0] !== null) {
+            for (const [key, value] of Object.entries(response.data[0])) {
+              if (key.startsWith("boolean")) {
+                const id = parseInt(key.slice(7));
+                booleanDataArray[id - 1] = { id: id, value: value };
+              }
+            }
           }
-        }
 
-        setBooleanData(booleanDataArray);
+          setBooleanData(booleanDataArray);
 
-        const doubleDataArray = new Array(10).fill(null);
-        for (const [key, value] of Object.entries(response.data[1])) {
-          if (key.startsWith("double")) {
-            const id = parseInt(key.slice(6));
-            doubleDataArray[id - 1] = {
-              id: key,
-              name: `D${id}`,
-              value: value,
-              color: (id - 1) % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
-            };
+          const doubleDataArray = new Array(10).fill(null);
+          if (response.data[1] !== null) {
+            for (const [key, value] of Object.entries(response.data[1])) {
+              if (key.startsWith("double")) {
+                const id = parseInt(key.slice(6));
+                doubleDataArray[id - 1] = {
+                  id: key,
+                  name: `D${id}`,
+                  value: value,
+                  color: (id - 1) % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
+                };
+              }
+            }
           }
-        }
-        setDoubleData(doubleDataArray);
+          setDoubleData(doubleDataArray);
 
-        const intDataArray = new Array(10).fill(null);
-        for (const [key, value] of Object.entries(response.data[2])) {
-          if (key.startsWith("int")) {
-            const id = parseInt(key.slice(3));
-            intDataArray[id - 1] = {
-              id: key,
-              name: `I${id}`,
-              value: value,
-              color: (id - 1) % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
-            };
+          const intDataArray = new Array(10).fill(null);
+          if (response.data[2] !== null) {
+            for (const [key, value] of Object.entries(response.data[2])) {
+              if (key.startsWith("int")) {
+                const id = parseInt(key.slice(3));
+                intDataArray[id - 1] = {
+                  id: key,
+                  name: `I${id}`,
+                  value: value,
+                  color: (id - 1) % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
+                };
+              }
+            }
           }
-        }
-        setIntData(intDataArray);
+          setIntData(intDataArray);
 
-        const stringDataArray = new Array(10).fill(null);
-        for (const [key, value] of Object.entries(response.data[3])) {
-          if (key.startsWith("string")) {
-            const id = parseInt(key.slice(6));
-            const { value: itemValue, time } = value as {
-              value: any;
-              time: any;
-            };
-            stringDataArray[id - 1] = {
-              id: key + 1,
-              value: itemValue,
-              time,
-            };
+          const stringDataArray = new Array(10).fill(null);
+          if (response.data[3] !== null) {
+            for (const [key, value] of Object.entries(response.data[3])) {
+              if (key.startsWith("string")) {
+                const id = parseInt(key.slice(6));
+                const { value: itemValue, time } = value as {
+                  value: any;
+                  time: any;
+                };
+                stringDataArray[id - 1] = {
+                  id: key + 1,
+                  value: itemValue,
+                  time,
+                };
+              }
+            }
           }
+          setStringData(stringDataArray);
         }
-        setStringData(stringDataArray);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -113,7 +123,7 @@ const State = () => {
 
     const interval = setInterval(() => {
       getStateData();
-    }, 10000);
+    }, 5000);
 
     return () => {
       clearInterval(interval);
