@@ -21,7 +21,6 @@ const MotorPage = () => {
   const [error, setError] = useState<any>();
   const [reconnectTimer, setReconnectTimer] = useState<any>();
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
-  const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
   const location = useLocation();
   const navigate = useNavigate();
   const { machine = "" } = useParams();

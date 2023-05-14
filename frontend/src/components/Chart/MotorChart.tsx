@@ -39,7 +39,7 @@ const MotorChart = ({ datasets, legend }: Props) => {
       anchor: "top-right",
       direction: "column",
       justify: false,
-      translateX: 100,
+      translateX: 120,
       translateY: 0,
       itemsSpacing: 0,
       itemDirection: "left-to-right",
@@ -78,7 +78,7 @@ const MotorChart = ({ datasets, legend }: Props) => {
         stacked: false,
         reverse: false,
       }}
-      curve="basis"
+      curve="monotoneX"
       axisTop={null}
       axisRight={null}
       colors={{ scheme: "category10" }}
