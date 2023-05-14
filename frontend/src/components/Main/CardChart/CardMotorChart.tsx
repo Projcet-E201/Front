@@ -6,70 +6,35 @@ import { linearGradientDef } from "@nivo/core";
 
 const CardMotorChart = ({ motorData }: any) => {
   // console.log(motorData, " motordata prop 받음!");
-  const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
-
-  useEffect(() => {
-    const initialData = [];
-    for (let i = 0; i < 10; i++) {
-      const dataEntry: any = {};
-      const time = new Date(Date.now() - (50000 - i * 5000)).toLocaleTimeString(
-        "ko-KR",
-        {
-          hour12: false,
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        }
-      );
-      dataEntry["x"] = time;
-      for (let j = 1; j <= 2; j++) {
-        dataEntry[`Motor${j}`] = faker.datatype.number({ min: 0, max: 300 });
-      }
-      initialData.push(dataEntry);
-    }
-    setData(initialData);
-
-    const intervalId = setInterval(() => {
-      const currentTime = new Date().toLocaleTimeString("ko-KR", {
-        hour12: false,
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      });
-      const newEntry: any = { x: currentTime };
-      for (let i = 1; i <= 2; i++) {
-        newEntry[`Motor${i}`] = faker.datatype.number({ min: 0, max: 300 });
-      }
-      setData((prevData) =>
-        prevData.length >= 10
-          ? [...prevData.slice(1), newEntry]
-          : [...prevData, newEntry]
-      );
-    }, 5000);
-
-    return () => clearInterval(intervalId);
-  }, []);
 
   const datasets = [
     {
       id: "min",
-      data: data.map((d) => {
-        const minVal = Math.min(d["Motor1"], d["Motor2"]);
-        return { x: d.x, y: minVal };
+      data: motorData.map((d: any) => {
+        let minVal = d.min_value;
+        if (minVal > 299) {
+          minVal = 30;
+        }
+        const time = d.time.split("/")[1]; // '/'를 기준으로 문자열을 분할하고 두 번째 요소를 선택합니다.
+
+        return { x: time, y: minVal };
       }),
       color: "skyblue", // min line의 색상을 skyblue로 설정
     },
     {
       id: "max",
-      data: data.map((d) => {
-        const maxVal = Math.max(d["Motor1"], d["Motor2"]);
-        return { x: d.x, y: maxVal };
+      data: motorData.map((d: any) => {
+        const maxVal = d.max_value;
+        const time = d.time.split("/")[1]; // '/'를 기준으로 문자열을 분할하고 두 번째 요소를 선택합니다.
+
+        return { x: time, y: maxVal };
       }),
       color: "red", // max line의 색상을 red로 설정
     },
   ];
 
-  // console.log(datasets);
+  // console.log(datasets, "datasets");
+  // console.log(motorData);
 
   return (
     <ResponsiveLine
@@ -86,7 +51,7 @@ const CardMotorChart = ({ motorData }: any) => {
         // stacked: true,
         reverse: false,
       }}
-      curve="basis"
+      curve="monotoneX"
       // curve="linear"
       axisTop={null}
       axisRight={null}
@@ -137,16 +102,16 @@ const CardMotorChart = ({ motorData }: any) => {
           ],
         },
       ]}
-      markers={[
-        {
-          axis: "y",
-          value: 100,
-          lineStyle: {
-            stroke: "green",
-            strokeWidth: 2,
-          },
-        },
-      ]}
+      // markers={[
+      //   {
+      //     axis: "y",
+      //     value: 100,
+      //     lineStyle: {
+      //       stroke: "green",
+      //       strokeWidth: 2,
+      //     },
+      //   },
+      // ]}
     />
   );
 };

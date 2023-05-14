@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 import SensorLayout from "../../layout/SensorLayout";
 import TopCard from "../../components/common/TopCard";
@@ -12,48 +12,85 @@ import event1 from "../../assets/event1.png";
 import event2 from "../../assets/event2.png";
 import event3 from "../../assets/event3.png";
 
+import axios from "axios";
+
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+
 import LoadChart from "../../components/Chart/LoadChart";
 
 const LoadPage = () => {
-  const navigate = useNavigate();
+  const [error, setError] = useState<any>();
+  const [reconnectTimer, setReconnectTimer] = useState<any>();
+  const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { machine = "" } = useParams();
 
-  const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      const currentTime = new Date().toLocaleTimeString("ko-KR", {
-        hour12: false,
+  const [loadData, setLoadData] = useState<any>([]);
+
+  const getLoadData = () => {
+    console.log("motordata 가져오기");
+    axios
+      .get(`https://semse.info/api/machine/${machine}/load`)
+      .then((res) => {
+        const loadData = res.data.reduce((acc: any, load: any) => {
+          const { name, time, value } = load;
+          const loadId = name.replace("LOAD", "");
+          const dataPoint = { x: time.split("/")[1], y: value };
+
+          if (!acc[loadId]) {
+            acc[loadId] = { id: `Load${loadId}`, data: [dataPoint] };
+          } else {
+            acc[loadId].data.push(dataPoint);
+          }
+
+          return acc;
+        }, {});
+
+        // 데이터를 모두 추가한 후 motorData 배열에 값을 넣어줍니다.
+        setLoadData(Object.values(loadData));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setError("error");
+        let timeLeft = 5000;
+        const timer = setInterval(() => {
+          timeLeft -= 1000;
+          setReconnectTimeLeft(timeLeft);
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+            getLoadData();
+            setError("");
+          }
+        }, 1000);
       });
-      const newEntry: any = { x: currentTime };
-      for (let i = 1; i <= 5; i++) {
-        newEntry[`Load${i}`] = faker.datatype.number({ min: 0, max: 16 });
-      }
-      setData((prevData) =>
-        prevData.length >= 5
-          ? [...prevData.slice(1), newEntry]
-          : [...prevData, newEntry]
-      );
-    }, 60000);
-    return () => clearInterval(intervalId);
-  }, []);
+  };
 
-  const datasets = [...Array(5)].map((_, i) => ({
-    id: `Load${i + 1}`,
-    data: data.map((d) => ({ x: d.x, y: d[`Load${i + 1}`] })),
-  }));
+  useEffect(() => {
+    getLoadData();
 
-  // console.log(datasets);
-  const latestData = datasets.map(
-    (dataset) => dataset.data[dataset.data.length - 1]
+    const interval = setInterval(() => {
+      getLoadData();
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+      clearInterval(reconnectTimer);
+      setLoadData([]);
+    };
+  }, [machine]);
+
+  // console.log(motorData[0]);
+  // console.log(motorData[1]);
+
+  // console.log(motorData);
+
+  const latestData = loadData.map(
+    (dataset: any) => dataset.data[dataset.data.length - 1]
   );
 
-  // console.log(latestData);
-
-  const avgData = datasets.map((dataset) => {
-    const sum = dataset.data.reduce((acc, data) => acc + data.y, 0);
-    const avg = sum / dataset.data.length;
-    return { id: dataset.id, avg };
-  });
+  console.log(latestData);
   return (
     <SensorLayout>
       <div className={styles.topcard}>
@@ -74,7 +111,7 @@ const LoadPage = () => {
                 alignItems: "center",
               }}
             >
-              {latestData.map((data, index) => (
+              {latestData.map((data: any, index: number) => (
                 <div
                   key={index}
                   style={{
@@ -122,7 +159,22 @@ const LoadPage = () => {
         </Card>
         <Card className={styles.card} style={{ flex: "1" }}>
           <CardContent style={{ height: "25vh" }}>
-            <LoadChart datasets={datasets} legend={true} />
+            {loadData.length === 0 ? (
+              <Box
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <CircularProgress />
+                <h3>Load 데이터를 불러오는 중 입니다...</h3>
+              </Box>
+            ) : (
+              <LoadChart datasets={loadData} legend={true} />
+            )}
           </CardContent>
         </Card>
       </div>
@@ -133,7 +185,7 @@ const LoadPage = () => {
           justifyContent: "space-between",
         }}
       >
-        {datasets.map((dataset, index) => (
+        {loadData.map((dataset: any, index: number) => (
           // <Card className={styles.card} style={{ width: "32.3%" }}>
           <Card
             className={styles.card}
@@ -142,11 +194,7 @@ const LoadPage = () => {
           >
             <CardContent style={{ height: "20vh", margin: "0" }}>
               <h4 style={{ margin: "0" }}>Load-{index + 1}</h4>
-              <LoadChart
-                datasets={[dataset]}
-                legend={false}
-                avgData={avgData}
-              />
+              <LoadChart datasets={[dataset]} legend={false} />
             </CardContent>
           </Card>
         ))}

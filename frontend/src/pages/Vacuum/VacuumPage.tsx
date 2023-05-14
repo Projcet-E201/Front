@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import VacuumChart from "../../components/Chart/VacuumChart";
 
 import Card from "@mui/material/Card";
@@ -9,6 +9,11 @@ import { faker } from "@faker-js/faker";
 
 import SensorLayout from "../../layout/SensorLayout";
 import TopCard from "../../components/common/TopCard";
+
+import axios from "axios";
+
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 import styles from "./VacuumPage.module.css";
 
@@ -20,45 +25,82 @@ import event3 from "../../assets/event3.png";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
 
 const VacuumPage = () => {
-  // const { machine } = useParams();
-  const navigate = useNavigate();
+  const [error, setError] = useState<any>();
+  const [reconnectTimer, setReconnectTimer] = useState<any>();
+  const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { machine = "" } = useParams();
 
-  // 전체 vacuum 데이터 가져오기
-  const [data, setData] = useState(() => {
-    const data = [];
-    for (let i = 1; i <= 30; i++) {
-      const vacuum = `V${i}`;
-      const value = faker.datatype.number({ min: 0, max: 100 });
-      const color = (i - 1) % 2 === 0 ? "#C1EAF3" : "#5CC2F2";
-      data.push({ id: `${i}`, vacuum, value, color });
-    }
-    return data;
-  });
+  const [vacuumData, setVacuumData] = useState<any>([]);
 
-  const [remainingTime, setRemainingTime] = useState(5);
+  const getVacuumData = () => {
+    console.log("motordata 가져오기");
+    axios
+      .get(`https://semse.info/api/machine/${machine}/vacuum`)
+      .then((res) => {
+        const vacuumData = res.data.reduce((acc: any, vacuum: any) => {
+          const { name, time, value } = vacuum;
+          const vacuumId = name.replace("VACUUM", "");
+          const dataPoint = {
+            id: vacuumId,
+            vacuum: `V${vacuumId}`,
+            value: value,
+            color: vacuumId % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
+          };
+
+          if (!acc[vacuumId]) {
+            acc[vacuumId] = { id: `Vacuum${vacuumId}`, data: [dataPoint] };
+          } else {
+            acc[vacuumId].data.push(dataPoint);
+          }
+
+          return acc;
+        }, {});
+
+        // 데이터를 모두 추가한 후 motorData 배열에 값을 넣어줍니다.
+        setVacuumData(Object.values(vacuumData));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setError("error");
+        let timeLeft = 5000;
+        const timer = setInterval(() => {
+          timeLeft -= 1000;
+          setReconnectTimeLeft(timeLeft);
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+            getVacuumData();
+            setError("");
+          }
+        }, 1000);
+      });
+  };
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      const newData = data.map((d: any) => ({
-        ...d,
-        value: faker.datatype.number({ min: 0, max: 100 }),
-      }));
-      setData(newData);
-      setRemainingTime(6);
-    }, 10000);
+    getVacuumData();
 
-    const countdownIntervalId = setInterval(() => {
-      setRemainingTime((prev) => prev - 1);
-    }, 10000);
+    const interval = setInterval(() => {
+      getVacuumData();
+    }, 5000);
 
     return () => {
-      clearInterval(intervalId);
-      clearInterval(countdownIntervalId);
+      clearInterval(interval);
+      clearInterval(reconnectTimer);
+      setVacuumData([]);
     };
-  }, [data]);
-  console.log(data);
+  }, [machine]);
 
+  // console.log(motorData[0]);
+  // console.log(motorData[1]);
+
+  // console.log(motorData);
+
+  const latestData = vacuumData.map(
+    (dataset: any) => dataset.data[dataset.data.length - 1]
+  );
+
+  console.log(latestData, "dfdffef22222222222");
   return (
     <SensorLayout>
       <div className={styles.topcard}>
@@ -87,7 +129,7 @@ const VacuumPage = () => {
               height: "100%",
             }}
           >
-            {data.map((d, index) => (
+            {latestData.map((d: any, index: number) => (
               <div
                 key={index}
                 style={{
@@ -145,7 +187,7 @@ const VacuumPage = () => {
                   fontSize: "50px", // Increase the font size here
                 }}
               >
-                {data.filter((d) => d.value <= 70).length}
+                {latestData.filter((d: any) => d.value <= 70).length}
               </h1>
               <h5 style={{ display: "flex", justifyContent: "center" }}>
                 Good
@@ -160,7 +202,10 @@ const VacuumPage = () => {
                   fontSize: "50px", // Increase the font size here
                 }}
               >
-                {data.filter((d) => d.value > 70 && d.value < 90).length}
+                {
+                  latestData.filter((d: any) => d.value > 70 && d.value < 90)
+                    .length
+                }
               </h1>
               <h5 style={{ display: "flex", justifyContent: "center" }}>
                 Fair
@@ -175,7 +220,7 @@ const VacuumPage = () => {
                   fontSize: "50px", // Increase the font size here
                 }}
               >
-                {data.filter((d) => d.value >= 90).length}
+                {latestData.filter((d: any) => d.value >= 90).length}
               </h1>
               <h5 style={{ display: "flex", justifyContent: "center" }}>
                 Pool
@@ -187,7 +232,7 @@ const VacuumPage = () => {
       <div>
         <Card className={styles.card} style={{ height: "50vh" }}>
           <CardContent style={{ height: "48vh" }}>
-            <VacuumChart data={data} />
+            <VacuumChart data={latestData} />
           </CardContent>
         </Card>
       </div>

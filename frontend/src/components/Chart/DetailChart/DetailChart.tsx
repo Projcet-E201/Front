@@ -192,7 +192,7 @@ const DetailChart = ({ datasets, legend }: Props) => {
         stacked: false,
         reverse: false,
       }}
-      curve="basis"
+      curve="monotoneX"
       axisTop={null}
       axisRight={null}
       colors={{ scheme: "category10" }}

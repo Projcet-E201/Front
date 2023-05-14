@@ -77,11 +77,11 @@ const WaterChart = ({ datasets, legend }: Props) => {
       yScale={{
         type: "linear",
         min: 0,
-        max: 120,
+        max: 4,
         stacked: false,
         reverse: false,
       }}
-      curve="basis"
+      curve="monotoneX"
       axisTop={null}
       axisRight={null}
       colors={{ scheme: "category10" }}

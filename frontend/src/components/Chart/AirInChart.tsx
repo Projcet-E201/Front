@@ -10,7 +10,6 @@ import { AirInMarkersAtom } from "../../store/atoms";
 interface Props {
   datasets: any[];
   legend?: boolean;
-  avgData?: any;
 }
 
 const formatTime = (secondsAgo: number) => {
@@ -19,7 +18,7 @@ const formatTime = (secondsAgo: number) => {
   return d.toLocaleTimeString();
 };
 
-const AirInChart = ({ datasets, legend, avgData }: Props) => {
+const AirInChart = ({ datasets, legend }: Props) => {
   // console.log(avgData);
   const navigate = useNavigate();
   const [markers, setMarkers] = useState([]);
@@ -80,7 +79,7 @@ const AirInChart = ({ datasets, legend, avgData }: Props) => {
         stacked: false,
         reverse: false,
       }}
-      curve="basis"
+      curve="monotoneX"
       axisTop={null}
       axisRight={null}
       colors={{ scheme: "category10" }}

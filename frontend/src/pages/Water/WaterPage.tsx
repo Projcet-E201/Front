@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import SensorLayout from "../../layout/SensorLayout";
 import WaterChart from "../../components/Chart/WaterChart";
 import { faker } from "@faker-js/faker";
@@ -12,37 +12,80 @@ import event1 from "../../assets/event1.png";
 import event2 from "../../assets/event2.png";
 import event3 from "../../assets/event3.png";
 
+import axios from "axios";
+
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+
 const WaterPage = () => {
-  const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
+  const [error, setError] = useState<any>();
+  const [reconnectTimer, setReconnectTimer] = useState<any>();
+  const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
   const location = useLocation();
   const navigate = useNavigate();
+  const { machine = "" } = useParams();
+
+  const [waterData, setWaterData] = useState<any>([]);
+
+  const getWaterData = () => {
+    console.log("motordata 가져오기");
+    axios
+      .get(`https://semse.info/api/machine/${machine}/water`)
+      .then((res) => {
+        const waterData = res.data.reduce((acc: any, water: any) => {
+          const { name, time, value } = water;
+          const waterId = name.replace("WATER", "");
+          const dataPoint = { x: time.split("/")[1], y: value };
+
+          if (!acc[waterId]) {
+            acc[waterId] = { id: `Water${waterId}`, data: [dataPoint] };
+          } else {
+            acc[waterId].data.push(dataPoint);
+          }
+
+          return acc;
+        }, {});
+
+        // 데이터를 모두 추가한 후 motorData 배열에 값을 넣어줍니다.
+        setWaterData(Object.values(waterData));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setError("error");
+        let timeLeft = 5000;
+        const timer = setInterval(() => {
+          timeLeft -= 1000;
+          setReconnectTimeLeft(timeLeft);
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+            getWaterData();
+            setError("");
+          }
+        }, 1000);
+      });
+  };
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      const currentTime = new Date().toLocaleTimeString("ko-KR", {
-        hour12: false,
-      });
-      const newEntry: any = { x: currentTime };
-      for (let i = 1; i <= 10; i++) {
-        newEntry[`Water${i}`] = faker.datatype.number({ min: 0, max: 4 });
-      }
-      setData((prevData) =>
-        prevData.length >= 10
-          ? [...prevData.slice(1), newEntry]
-          : [...prevData, newEntry]
-      );
-    }, 10000);
-    return () => clearInterval(intervalId);
-  }, []);
+    getWaterData();
 
-  const datasets = [...Array(10)].map((_, i) => ({
-    id: `Water${i + 1}`,
-    data: data.map((d) => ({ x: d.x, y: d[`Water${i + 1}`] })),
-  }));
+    const interval = setInterval(() => {
+      getWaterData();
+    }, 5000);
 
-  // console.log(datasets);
-  const latestData = datasets.map(
-    (dataset) => dataset.data[dataset.data.length - 1]
+    return () => {
+      clearInterval(interval);
+      clearInterval(reconnectTimer);
+      setWaterData([]);
+    };
+  }, [machine]);
+
+  // console.log(motorData[0]);
+  // console.log(motorData[1]);
+
+  // console.log(motorData);
+
+  const latestData = waterData.map(
+    (dataset: any) => dataset.data[dataset.data.length - 1]
   );
 
   console.log(latestData);
@@ -67,7 +110,7 @@ const WaterPage = () => {
                 alignItems: "center",
               }}
             >
-              {latestData.map((data, index) => (
+              {latestData.map((data: any, index: number) => (
                 <div
                   key={index}
                   style={{
@@ -115,7 +158,22 @@ const WaterPage = () => {
         </Card>
         <Card className={styles.card} style={{ flex: "2" }}>
           <CardContent style={{ height: "25vh" }}>
-            <WaterChart datasets={datasets} legend={true} />
+            {waterData.length === 0 ? (
+              <Box
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <CircularProgress />
+                <h3>Water 데이터를 불러오는 중 입니다...</h3>
+              </Box>
+            ) : (
+              <WaterChart datasets={waterData} legend={true} />
+            )}
           </CardContent>
         </Card>
       </div>
@@ -126,7 +184,7 @@ const WaterPage = () => {
           justifyContent: "space-between",
         }}
       >
-        {datasets.map((dataset, index) => (
+        {waterData.map((dataset: any, index: number) => (
           // <Card className={styles.card} style={{ width: "32.3%" }}>
           <Card
             className={styles.card}

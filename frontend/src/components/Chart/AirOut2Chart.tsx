@@ -78,7 +78,7 @@ const AirOut2Chart = ({ datasets, legend }: Props) => {
         stacked: false,
         reverse: false,
       }}
-      curve="basis"
+      curve="monotoneX"
       axisTop={null}
       axisRight={null}
       colors={{ scheme: "category10" }}
