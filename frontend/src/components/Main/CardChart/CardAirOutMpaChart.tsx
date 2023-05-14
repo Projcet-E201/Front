@@ -44,7 +44,7 @@ const CardAirOutMpaChart = ({ airOutMpaData }: any) => {
         // stacked: true,
         reverse: false,
       }}
-      curve="basis"
+      curve="monotoneX"
       // curve="linear"
       axisTop={null}
       axisRight={null}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 import SensorLayout from "../../layout/SensorLayout";
 import TopCard from "../../components/common/TopCard";
@@ -8,6 +8,11 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import styles from "./RpmPage.module.css";
 
+import axios from "axios";
+
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+
 import event1 from "../../assets/event1.png";
 import event2 from "../../assets/event2.png";
 import event3 from "../../assets/event3.png";
@@ -15,45 +20,77 @@ import event3 from "../../assets/event3.png";
 import RpmChart from "../../components/Chart/RpmChart";
 
 const RpmPage = () => {
-  const navigate = useNavigate();
+  const [error, setError] = useState<any>();
+  const [reconnectTimer, setReconnectTimer] = useState<any>();
+  const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { machine = "" } = useParams();
 
-  const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      const currentTime = new Date().toLocaleTimeString("ko-KR", {
-        hour12: false,
+  const [rpmData, setRpmData] = useState<any>([]);
+
+  const getRpmData = () => {
+    console.log("rpmdata 가져오기");
+    axios
+      .get(`https://semse.info/api/machine/${machine}/velocity`)
+      .then((res) => {
+        const rpmData = res.data.reduce((acc: any, rpm: any) => {
+          const { name, time, value } = rpm;
+          const rpmId = name.replace("VELOCITY", "");
+          const dataPoint = { x: time.split("/")[1], y: value };
+
+          if (!acc[rpmId]) {
+            acc[rpmId] = { id: `Rpm${rpmId}`, data: [dataPoint] };
+          } else {
+            acc[rpmId].data.push(dataPoint);
+          }
+
+          return acc;
+        }, {});
+
+        // 데이터를 모두 추가한 후 motorData 배열에 값을 넣어줍니다.
+        setRpmData(Object.values(rpmData));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setError("error");
+        let timeLeft = 5000;
+        const timer = setInterval(() => {
+          timeLeft -= 1000;
+          setReconnectTimeLeft(timeLeft);
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+            getRpmData();
+            setError("");
+          }
+        }, 1000);
       });
-      const newEntry: any = { x: currentTime };
-      for (let i = 1; i <= 5; i++) {
-        newEntry[`Rpm${i}`] = faker.datatype.number({ min: 0, max: 50000 });
-      }
-      setData((prevData) =>
-        prevData.length >= 5
-          ? [...prevData.slice(1), newEntry]
-          : [...prevData, newEntry]
-      );
-    }, 1000);
-    return () => clearInterval(intervalId);
-  }, []);
+  };
 
-  const datasets = [...Array(5)].map((_, i) => ({
-    id: `Rpm${i + 1}`,
-    data: data.map((d) => ({ x: d.x, y: d[`Rpm${i + 1}`] })),
-  }));
+  useEffect(() => {
+    getRpmData();
 
-  // console.log(datasets);
-  const latestData = datasets.map(
-    (dataset) => dataset.data[dataset.data.length - 1]
+    const interval = setInterval(() => {
+      getRpmData();
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+      clearInterval(reconnectTimer);
+      setRpmData([]);
+    };
+  }, [machine]);
+
+  // console.log(motorData[0]);
+  // console.log(motorData[1]);
+
+  // console.log(motorData);
+
+  const latestData = rpmData.map(
+    (dataset: any) => dataset.data[dataset.data.length - 1]
   );
 
-  // console.log(latestData);
-
-  const avgData = datasets.map((dataset) => {
-    const sum = dataset.data.reduce((acc, data) => acc + data.y, 0);
-    const avg = sum / dataset.data.length;
-    return { id: dataset.id, avg };
-  });
+  console.log(latestData);
   return (
     <SensorLayout>
       <div className={styles.topcard}>
@@ -74,7 +111,7 @@ const RpmPage = () => {
                 alignItems: "center",
               }}
             >
-              {latestData.map((data, index) => (
+              {latestData.map((data: any, index: number) => (
                 <div
                   key={index}
                   style={{
@@ -122,7 +159,22 @@ const RpmPage = () => {
         </Card>
         <Card className={styles.card} style={{ flex: "1" }}>
           <CardContent style={{ height: "25vh" }}>
-            <RpmChart datasets={datasets} legend={true} />
+            {rpmData.length === 0 ? (
+              <Box
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <CircularProgress />
+                <h3>회전속도 데이터를 불러오는 중 입니다...</h3>
+              </Box>
+            ) : (
+              <RpmChart datasets={rpmData} legend={true} />
+            )}
           </CardContent>
         </Card>
       </div>
@@ -133,7 +185,7 @@ const RpmPage = () => {
           justifyContent: "space-between",
         }}
       >
-        {datasets.map((dataset, index) => (
+        {rpmData.map((dataset: any, index: number) => (
           // <Card className={styles.card} style={{ width: "32.3%" }}>
           <Card
             className={styles.card}
@@ -142,7 +194,7 @@ const RpmPage = () => {
           >
             <CardContent style={{ height: "20vh", margin: "0" }}>
               <h4 style={{ margin: "0" }}>Rpm-{index + 1}</h4>
-              <RpmChart datasets={[dataset]} legend={false} avgData={avgData} />
+              <RpmChart datasets={[dataset]} legend={false} />
             </CardContent>
           </Card>
         ))}

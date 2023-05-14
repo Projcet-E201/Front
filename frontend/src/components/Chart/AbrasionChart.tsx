@@ -10,7 +10,6 @@ import { AbrasionMarkersAtom } from "../../store/atoms";
 interface Props {
   datasets: any[];
   legend?: boolean;
-  avgData?: any;
 }
 
 const formatTime = (secondsAgo: number) => {
@@ -18,8 +17,7 @@ const formatTime = (secondsAgo: number) => {
   d.setSeconds(d.getSeconds() - secondsAgo);
   return d.toLocaleTimeString();
 };
-const AbrasionChart = ({ datasets, legend, avgData }: Props) => {
-  console.log(avgData);
+const AbrasionChart = ({ datasets, legend }: Props) => {
   const navigate = useNavigate();
   const [markers, setMarkers] = useState([]);
   const [recoilMarkers, setRecoilMarkers] = useRecoilState(AbrasionMarkersAtom);
@@ -78,7 +76,7 @@ const AbrasionChart = ({ datasets, legend, avgData }: Props) => {
         stacked: false,
         reverse: false,
       }}
-      curve="basis"
+      curve="monotoneX"
       axisTop={null}
       axisRight={null}
       colors={{ scheme: "category10" }}

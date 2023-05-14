@@ -157,7 +157,7 @@ const MotorPage = () => {
           </CardContent>
         </Card>
         <Card className={styles.card} style={{ flex: "2" }}>
-          <CardContent style={{ height: "250px" }}>
+          <CardContent style={{ height: "25vh" }}>
             {motorData.length === 0 ? (
               <Box
                 sx={{

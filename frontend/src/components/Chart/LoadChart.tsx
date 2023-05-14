@@ -10,7 +10,6 @@ import { LoadMarkersAtom } from "../../store/atoms";
 interface Props {
   datasets: any[];
   legend?: boolean;
-  avgData?: any;
 }
 
 const formatTime = (secondsAgo: number) => {
@@ -19,8 +18,7 @@ const formatTime = (secondsAgo: number) => {
   return d.toLocaleTimeString();
 };
 
-const LoadChart = ({ datasets, legend, avgData }: Props) => {
-  console.log(avgData);
+const LoadChart = ({ datasets, legend }: Props) => {
   const navigate = useNavigate();
 
   const [markers, setMarkers] = useState([]);
@@ -78,11 +76,11 @@ const LoadChart = ({ datasets, legend, avgData }: Props) => {
       yScale={{
         type: "linear",
         min: 0,
-        max: 120,
+        max: 16,
         stacked: false,
         reverse: false,
       }}
-      curve="basis"
+      curve="monotoneX"
       axisTop={null}
       axisRight={null}
       colors={{ scheme: "category10" }}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 import SensorLayout from "../../layout/SensorLayout";
 import TopCard from "../../components/common/TopCard";
@@ -14,46 +14,86 @@ import event3 from "../../assets/event3.png";
 
 import AbrasionChart from "../../components/Chart/AbrasionChart";
 
+import axios from "axios";
+
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+
 const AbrasionPage = () => {
-  const navigate = useNavigate();
+  const [error, setError] = useState<any>();
+  const [reconnectTimer, setReconnectTimer] = useState<any>();
+  const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { machine = "" } = useParams();
 
-  const [data, setData] = useState<{ x: number; [key: string]: number }[]>([]);
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      const currentTime = new Date().toLocaleTimeString("ko-KR", {
-        hour12: false,
+  const [abrasionData, setAbrasionData] = useState<any>([]);
+
+  const getAbrasionData = () => {
+    console.log("abrasiondata 가져오기");
+    axios
+      .get(`https://semse.info/api/machine/${machine}/abrasion`)
+      .then((res) => {
+        const abrasionData = res.data.reduce((acc: any, abrasion: any) => {
+          const { name, time, value } = abrasion;
+          const abrasionId = name.replace("ABRASION", "");
+          const dataPoint = { x: time.split("/")[1], y: value };
+
+          if (!acc[abrasionId]) {
+            acc[abrasionId] = {
+              id: `Abrasion${abrasionId}`,
+              data: [dataPoint],
+            };
+          } else {
+            acc[abrasionId].data.push(dataPoint);
+          }
+
+          return acc;
+        }, {});
+
+        // 데이터를 모두 추가한 후 motorData 배열에 값을 넣어줍니다.
+        setAbrasionData(Object.values(abrasionData));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setError("error");
+        let timeLeft = 5000;
+        const timer = setInterval(() => {
+          timeLeft -= 1000;
+          setReconnectTimeLeft(timeLeft);
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+            getAbrasionData();
+            setError("");
+          }
+        }, 1000);
       });
-      const newEntry: any = { x: currentTime };
-      for (let i = 1; i <= 5; i++) {
-        newEntry[`Abrasion${i}`] = faker.datatype.number({ min: 0, max: 40 });
-      }
-      setData((prevData) =>
-        prevData.length >= 5
-          ? [...prevData.slice(1), newEntry]
-          : [...prevData, newEntry]
-      );
-    }, 60000);
-    return () => clearInterval(intervalId);
-  }, []);
+  };
 
-  const datasets = [...Array(5)].map((_, i) => ({
-    id: `Abrasion${i + 1}`,
-    data: data.map((d) => ({ x: d.x, y: d[`Abrasion${i + 1}`] })),
-  }));
+  useEffect(() => {
+    getAbrasionData();
 
-  // console.log(datasets);
-  const latestData = datasets.map(
-    (dataset) => dataset.data[dataset.data.length - 1]
+    const interval = setInterval(() => {
+      getAbrasionData();
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+      clearInterval(reconnectTimer);
+      setAbrasionData([]);
+    };
+  }, [machine]);
+
+  // console.log(motorData[0]);
+  // console.log(motorData[1]);
+
+  // console.log(motorData);
+
+  const latestData = abrasionData.map(
+    (dataset: any) => dataset.data[dataset.data.length - 1]
   );
 
-  // console.log(latestData);
-
-  const avgData = datasets.map((dataset) => {
-    const sum = dataset.data.reduce((acc, data) => acc + data.y, 0);
-    const avg = sum / dataset.data.length;
-    return { id: dataset.id, avg };
-  });
+  console.log(latestData);
   return (
     <SensorLayout>
       <div className={styles.topcard}>
@@ -74,7 +114,7 @@ const AbrasionPage = () => {
                 alignItems: "center",
               }}
             >
-              {latestData.map((data, index) => (
+              {latestData.map((data: any, index: number) => (
                 <div
                   key={index}
                   style={{
@@ -122,7 +162,22 @@ const AbrasionPage = () => {
         </Card>
         <Card className={styles.card} style={{ flex: "1" }}>
           <CardContent style={{ height: "25vh" }}>
-            <AbrasionChart datasets={datasets} legend={true} />
+            {abrasionData.length === 0 ? (
+              <Box
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <CircularProgress />
+                <h3>마모량 데이터를 불러오는 중 입니다...</h3>
+              </Box>
+            ) : (
+              <AbrasionChart datasets={abrasionData} legend={true} />
+            )}
           </CardContent>
         </Card>
       </div>
@@ -133,7 +188,7 @@ const AbrasionPage = () => {
           justifyContent: "space-between",
         }}
       >
-        {datasets.map((dataset, index) => (
+        {abrasionData.map((dataset: any, index: number) => (
           // <Card className={styles.card} style={{ width: "32.3%" }}>
           <Card
             className={styles.card}
@@ -142,11 +197,7 @@ const AbrasionPage = () => {
           >
             <CardContent style={{ height: "20vh", margin: "0" }}>
               <h4 style={{ margin: "0" }}>Abrasion-{index + 1}</h4>
-              <AbrasionChart
-                datasets={[dataset]}
-                legend={false}
-                avgData={avgData}
-              />
+              <AbrasionChart datasets={[dataset]} legend={false} />
             </CardContent>
           </Card>
         ))}
