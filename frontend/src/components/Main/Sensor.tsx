@@ -23,7 +23,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
 import axios from "axios";
-import RpmChart from "../Chart/RpmChart";
 
 const Sensor = () => {
   const navigate = useNavigate();

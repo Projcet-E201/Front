@@ -74,7 +74,7 @@ const MotorChart = ({ datasets, legend }: Props) => {
       yScale={{
         type: "linear",
         min: 0,
-        max: 120,
+        max: 400,
         stacked: false,
         reverse: false,
       }}
