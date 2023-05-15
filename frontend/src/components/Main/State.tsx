@@ -123,7 +123,7 @@ const State = () => {
 
     const interval = setInterval(() => {
       getStateData();
-    }, 5000);
+    }, 20000);
 
     return () => {
       clearInterval(interval);

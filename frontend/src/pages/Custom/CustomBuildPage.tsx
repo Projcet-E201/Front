@@ -26,8 +26,6 @@ import CustomChart from "./CustomChart";
 
 import { TbEqualDouble, TbEqual } from "react-icons/tb";
 
-import line_1 from "../../src/assets/1line.png";
-
 interface chartInterFace {
   machine: string;
   sensor: string;
@@ -72,6 +70,8 @@ const CustomBuildPage = () => {
   useEffect(() => {
     localStorage.setItem("chartList", JSON.stringify(chartList));
   }, [chartList]);
+
+  console.log(chartList, "chartList");
 
   const addChartHandler = () => {
     const newChart = {
@@ -144,6 +144,8 @@ const CustomBuildPage = () => {
   const deleteChart = (index: number) => {
     setChartList((prevList) => prevList.filter((_, i) => i !== index));
   };
+
+  console.log(chartList);
 
   return (
     <MainLayout>

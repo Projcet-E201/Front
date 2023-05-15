@@ -188,6 +188,7 @@ const LoadPage = () => {
         {loadData.map((dataset: any, index: number) => (
           // <Card className={styles.card} style={{ width: "32.3%" }}>
           <Card
+            key={index}
             className={styles.card}
             style={{ width: "49%", cursor: "pointer" }}
             onClick={() => navigate(`${index + 1}`)}
