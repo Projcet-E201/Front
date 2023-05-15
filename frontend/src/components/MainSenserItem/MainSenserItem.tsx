@@ -71,10 +71,10 @@ const MainSenserItem = (props: MainSenserItemProps) => {
           className={styles.sensorcard}
           ref={provided.innerRef}
           {...provided.draggableProps}
+          {...provided.dragHandleProps}
         >
           <h3
             className={styles.sensorheader}
-            {...provided.dragHandleProps}
             {...(index === 0 ? {} : { isdragdisabled: "true" })}
           >
             {sensor}
@@ -108,7 +108,21 @@ const MainSenserItem = (props: MainSenserItemProps) => {
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     setsensors(items.map((item, index) => `${item}`));
+
+    // Save the updated sensor order to local storage
+    localStorage.setItem("sensorOrder", JSON.stringify(items));
+
+    // Rest of your code
   };
+
+  useEffect(() => {
+    // Load the sensor order from local storage on component mount
+    const savedSensorOrder = localStorage.getItem("sensorOrder");
+    if (savedSensorOrder) {
+      const parsedOrder = JSON.parse(savedSensorOrder);
+      setsensors(parsedOrder);
+    }
+  }, []);
 
   return (
     <div>

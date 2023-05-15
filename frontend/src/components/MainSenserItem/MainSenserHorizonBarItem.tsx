@@ -33,18 +33,22 @@ type MainSenserItemProps = {
 
 const MainSenserHorizonBarItem = (props: MainSenserItemProps) => {
   const navigate = useNavigate();
-  const machines = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  const [sensors, setsensors] = useState<string[]>([
-    "MOTOR",
-    "VACUUM",
-    "AIR_IN_KPA",
-    "AIR_OUT_KPA",
-    "AIR_OUT_MPA",
-    "WATER",
-    "ABRASION",
-    "LOAD",
-    "VELOCITY",
-  ]);
+  const savedSensorOrder = localStorage.getItem("sensorOrder");
+  const [sensors, setsensors] = useState<string[]>(
+    savedSensorOrder
+      ? JSON.parse(savedSensorOrder)
+      : [
+          "MOTOR",
+          "VACUUM",
+          "AIR_IN_KPA",
+          "AIR_OUT_KPA",
+          "AIR_OUT_MPA",
+          "WATER",
+          "ABRASION",
+          "LOAD",
+          "VELOCITY",
+        ]
+  );
 
   interface SensorAddressMap {
     [key: string]: string;
@@ -118,6 +122,9 @@ const MainSenserHorizonBarItem = (props: MainSenserItemProps) => {
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     setsensors(items.map((item, index) => `${item}`));
+
+    // Save the updated sensor order to local storage
+    localStorage.setItem("sensorOrder", JSON.stringify(items));
   };
 
   return (
