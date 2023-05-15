@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useParams, useNavigate } from "react-router";
 
 import MainLayout from "../../layout/MainLayout";
 import styles from "./CustomBuildPage.module.css";
@@ -26,6 +26,9 @@ import CustomChart from "./CustomChart";
 
 import { TbEqualDouble, TbEqual } from "react-icons/tb";
 
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+
 interface chartInterFace {
   machine: string;
   sensor: string;
@@ -38,6 +41,8 @@ const CustomBuildPage = () => {
   // const [selectedNumber, setSelectedNumber] = React.useState<string[]>([]);
   const [selectedNumber, setSelectedNumber] = React.useState("");
   const [chartList, setChartList] = useState<chartInterFace[]>([]);
+
+  const navigate = useNavigate();
 
   //height 추가
 
@@ -293,6 +298,52 @@ const CustomBuildPage = () => {
               width:
                 isSingleRow === true || chartList.length === 1 ? "100%" : "49%",
             }}
+            onClick={() => {
+              let navi = "";
+              const defaultUrl = `/machine/${chart.machine}`;
+              if (chart.sensorNumber === "all") {
+                if (chart.sensor === "Motor") {
+                  navi = defaultUrl + `/motor`;
+                } else if (chart.sensor === "Vacuum") {
+                  navi = defaultUrl + "/vacuum";
+                } else if (chart.sensor === "AirIn") {
+                  navi = defaultUrl + "/air-in";
+                } else if (chart.sensor === "AirOut(kPa)") {
+                  navi = defaultUrl + "/air-out-kpa";
+                } else if (chart.sensor === "AirOut(MPa)") {
+                  navi = defaultUrl + "/air-out-mpa";
+                } else if (chart.sensor === "Water") {
+                  navi = defaultUrl + "/water";
+                } else if (chart.sensor === "마모량") {
+                  navi = defaultUrl + "/abrasion";
+                } else if (chart.sensor === "부하량") {
+                  navi = defaultUrl + "/load";
+                } else if (chart.sensor === "회전속도") {
+                  navi = defaultUrl + "/rpm";
+                }
+              } else {
+                if (chart.sensor === "Motor") {
+                  navi = defaultUrl + `/motor/${chart.sensorNumber}`;
+                } else if (chart.sensor === "Vacuum") {
+                  navi = defaultUrl + `/vacuum/${chart.sensorNumber}`;
+                } else if (chart.sensor === "AirIn") {
+                  navi = defaultUrl + `/air-in/${chart.sensorNumber}`;
+                } else if (chart.sensor === "AirOut(kPa)") {
+                  navi = defaultUrl + `/air-out-kpa/${chart.sensorNumber}`;
+                } else if (chart.sensor === "AirOut(MPa)") {
+                  navi = defaultUrl + `/air-out-mpa/${chart.sensorNumber}`;
+                } else if (chart.sensor === "Water") {
+                  navi = defaultUrl + `/water/${chart.sensorNumber}`;
+                } else if (chart.sensor === "마모량") {
+                  navi = defaultUrl + `/abrasion/${chart.sensorNumber}`;
+                } else if (chart.sensor === "부하량") {
+                  navi = defaultUrl + `/load/${chart.sensorNumber}`;
+                } else if (chart.sensor === "회전속도") {
+                  navi = defaultUrl + `/rpm/${chart.sensorNumber}`;
+                }
+              }
+              navigate(navi);
+            }}
           >
             <CardContent>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -304,7 +355,6 @@ const CustomBuildPage = () => {
                   <DeleteIcon />
                 </IconButton>
               </div>
-              {/* <div style={{ height: chartList.length > 2 ? "23vh" : "55vh" }}> */}
               <div
                 style={{
                   height: chartList.length < 3 ? "50vh" : "35vh",
