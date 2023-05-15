@@ -507,16 +507,15 @@ const MainPage: React.FC = () => {
     },
   });
 
-  const connectUrl = "https://semse.info/api/ws-main";
+  // const connectUrl = "https://semse.info/api/ws-main";
 
   const [error, setError] = useState<any>();
   const [reconnectTimer, setReconnectTimer] = useState<any>();
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
 
   const getClientData = async () => {
-    console.log("ㄱㄱㄱ");
     await axios
-      .get("https://semse.info/api/client/main/machine")
+      .get("https://semse.info/api/main/machine")
       .then((response) => {
         setClientData(response.data);
       })
@@ -528,7 +527,7 @@ const MainPage: React.FC = () => {
     getClientData();
     const interval = setInterval(() => {
       getClientData();
-    }, 5000);
+    }, 10000);
     return () => {
       clearInterval(interval);
       clearInterval(reconnectTimer);
@@ -553,7 +552,7 @@ const MainPage: React.FC = () => {
 
           <Card className={styles.errorcard}>
             <CardContent className={styles.errorcardcomponent}>
-              <MainError />
+              {/* <MainError /> */}
             </CardContent>
           </Card>
         </div>
