@@ -1,329 +1,3 @@
-// import { useNavigate } from "react-router-dom";
-// import React, { useCallback, useEffect, useRef, useState } from "react";
-// import Stomp from "stompjs";
-// import SockJS from "sockjs-client";
-// import MainLayout from "../layout/MainLayout";
-// import Card from "@mui/material/Card";
-// import CardContent from "@mui/material/CardContent";
-// import styles from "./MainPage.module.css";
-// import MainError from "../components/MainError/MainError";
-// import MainMachineItem from "../components/MainMachineItem/MainMachineItem";
-// import MainSenserItem from "../components/MainSenserItem/MainSenserItem";
-// import MainSenserHorizonBarItem from "../components/MainSenserItem/MainSenserHorizonBarItem";
-// import MainSensorBarItem from "../components/MainSenserItem/MainSensorBarItem";
-// import { BsFillBarChartFill } from "react-icons/bs";
-// import { RiBarChartHorizontalFill } from "react-icons/ri";
-// import { FaListAlt } from "react-icons/fa";
-
-// type ClientData = {
-//   [key: string]: {
-//     MOTOR: number;
-//     VACUUM: number;
-//     AIR_IN_KPA: number;
-//     AIR_OUT_KPA: number;
-//     AIR_OUT_MPA: number;
-//     WATER: number;
-//     ABRASION: number;
-//     LOAD: number;
-//     VELOCITY: number;
-//     // SCORE: number;
-//   };
-// };
-
-// const MainPage: React.FC = () => {
-//   const navigate = useNavigate();
-
-//   const [clientData, setClientData] = useState<ClientData>({
-//     CLIENT1: {
-//       MOTOR: 100,
-//       VACUUM: 50,
-//       AIR_IN_KPA: 400,
-//       AIR_OUT_KPA: 500,
-//       AIR_OUT_MPA: 0.8,
-//       WATER: 3,
-//       ABRASION: 16,
-//       LOAD: 8,
-//       VELOCITY: 30000,
-//       // SCORE: 80,
-//     },
-//     CLIENT2: {
-//       MOTOR: 150,
-//       VACUUM: 10,
-//       AIR_IN_KPA: 300,
-//       AIR_OUT_KPA: 500,
-//       AIR_OUT_MPA: 0.1,
-//       WATER: 2,
-//       ABRASION: 16,
-//       LOAD: 8,
-//       VELOCITY: 10000,
-//       // SCORE: 80,
-//     },
-//     CLIENT3: {
-//       MOTOR: 280,
-//       VACUUM: 70,
-//       AIR_IN_KPA: 400,
-//       AIR_OUT_KPA: 500,
-//       AIR_OUT_MPA: 0.5,
-//       WATER: 2,
-//       ABRASION: 13,
-//       LOAD: 1,
-//       VELOCITY: 20000,
-//       // SCORE: 80,
-//     },
-//     CLIENT4: {
-//       MOTOR: 100,
-//       VACUUM: 50,
-//       AIR_IN_KPA: 400,
-//       AIR_OUT_KPA: 500,
-//       AIR_OUT_MPA: 0.8,
-//       WATER: 3,
-//       ABRASION: 16,
-//       LOAD: 8,
-//       VELOCITY: 30000,
-//       // SCORE: 80,
-//     },
-//     CLIENT5: {
-//       MOTOR: 50,
-//       VACUUM: 10,
-//       AIR_IN_KPA: 700,
-//       AIR_OUT_KPA: 500,
-//       AIR_OUT_MPA: 0.6,
-//       WATER: 3,
-//       ABRASION: 16,
-//       LOAD: 8,
-//       VELOCITY: 15000,
-//       // SCORE: 80,
-//     },
-//     CLIENT6: {
-//       MOTOR: 100,
-//       VACUUM: 50,
-//       AIR_IN_KPA: 400,
-//       AIR_OUT_KPA: 500,
-//       AIR_OUT_MPA: 0.8,
-//       WATER: 3,
-//       ABRASION: 16,
-//       LOAD: 8,
-//       VELOCITY: 30000,
-//       // SCORE: 80,
-//     },
-//     CLIENT7: {
-//       MOTOR: 100,
-//       VACUUM: 50,
-//       AIR_IN_KPA: 400,
-//       AIR_OUT_KPA: 500,
-//       AIR_OUT_MPA: 0.8,
-//       WATER: 3,
-//       ABRASION: 16,
-//       LOAD: 8,
-//       VELOCITY: 30000,
-//       // SCORE: 80,
-//     },
-//     CLIENT8: {
-//       MOTOR: 100,
-//       VACUUM: 50,
-//       AIR_IN_KPA: 400,
-//       AIR_OUT_KPA: 500,
-//       AIR_OUT_MPA: 0.8,
-//       WATER: 3,
-//       ABRASION: 16,
-//       LOAD: 8,
-//       VELOCITY: 30000,
-//       // SCORE: 80,
-//     },
-//     CLIENT9: {
-//       MOTOR: 100,
-//       VACUUM: 50,
-//       AIR_IN_KPA: 400,
-//       AIR_OUT_KPA: 500,
-//       AIR_OUT_MPA: 0.8,
-//       WATER: 3,
-//       ABRASION: 16,
-//       LOAD: 8,
-//       VELOCITY: 30000,
-//       // SCORE: 80,
-//     },
-//     CLIENT10: {
-//       MOTOR: 100,
-//       VACUUM: 50,
-//       AIR_IN_KPA: 400,
-//       AIR_OUT_KPA: 500,
-//       AIR_OUT_MPA: 0.8,
-//       WATER: 3,
-//       ABRASION: 16,
-//       LOAD: 8,
-//       VELOCITY: 30000,
-//       // SCORE: 80,
-//     },
-//     CLIENT11: {
-//       MOTOR: 100,
-//       VACUUM: 50,
-//       AIR_IN_KPA: 400,
-//       AIR_OUT_KPA: 500,
-//       AIR_OUT_MPA: 0.8,
-//       WATER: 3,
-//       ABRASION: 16,
-//       LOAD: 8,
-//       VELOCITY: 30000,
-//       // SCORE: 80,
-//     },
-//     CLIENT12: {
-//       MOTOR: 100,
-//       VACUUM: 50,
-//       AIR_IN_KPA: 400,
-//       AIR_OUT_KPA: 500,
-//       AIR_OUT_MPA: 0.8,
-//       WATER: 3,
-//       ABRASION: 16,
-//       LOAD: 8,
-//       VELOCITY: 30000,
-//       // SCORE: 80,
-//     },
-//   });
-
-//   //웹소켓 연결 코드 시작
-//   // const connectUrl = "http://k8e201.p.ssafy.io:8091/ws";
-//   const connectUrl = "https://semse.info/api/ws-main";
-
-//   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
-//   const [message, setMessage] = useState<any>();
-
-//   const connectWebSocket = () => {
-//     console.log(connectUrl);
-//     const socket = new SockJS(connectUrl);
-//     const stompClient = Stomp.over(socket);
-//     stompClient.connect(
-//       // 헤더
-//       {},
-//       () => {
-//         // 연결 성공시 이벤트
-//         console.log("성공, WebSocket connected");
-//         setStompClient(stompClient);
-//       },
-//       (error) => {
-//         // 연결 실패시 이벤트
-//         console.error("WebSocket error: ", error);
-//       }
-//     );
-//   };
-
-//   const handleTitleModify = useCallback(() => {
-//     if (stompClient) {
-//       stompClient.send(
-//         `/server/main/machine`,
-//         {},
-//         JSON.stringify({ data: "data" })
-//       );
-//     }
-//   }, [stompClient]);
-
-//   const disconnetWebSocket = useCallback(() => {
-//     if (stompClient) {
-//       stompClient.disconnect(() => "");
-//       setStompClient(null);
-//       console.log("연결해제");
-//     }
-//   }, [stompClient]);
-
-//   useEffect(() => {
-//     // server 에서 보내는 데이터를 실시간으로 받는 코드
-//     if (stompClient) {
-//       // console.log("stompClient2");
-//       stompClient.subscribe(`/client/main/machine`, (data) => {
-//         // console.log(data);
-//         setMessage(JSON.parse(data.body)); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
-//         // setMessage(data.body); // JSON.parse() 함수를 사용하여 데이터를 파싱합니다.
-//       });
-//     }
-//   }, [stompClient]);
-//   useEffect(() => {
-//     if (message) {
-//       setClientData(message);
-//     }
-//   }, [message]);
-
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       handleTitleModify();
-//     }, 5000);
-
-//     return () => clearInterval(interval);
-//   }, [handleTitleModify]);
-
-//   useEffect(() => {
-//     connectWebSocket();
-//     return () => {
-//       if (stompClient) {
-//         disconnetWebSocket();
-//       }
-//     };
-//   }, []);
-//   //웹소켓 연결 코드 끝
-
-//   // console.log("여기", message);
-
-//   const [tabIndex, setTabIndex] = useState(1);
-
-//   const onClickTab = (index: number) => {
-//     setTabIndex(index);
-//   };
-//   console.log(message);
-
-//   return (
-//     <MainLayout>
-//       <div className={styles.main1}>
-//         <div className={styles.main2}>
-//           {Object.entries(clientData).map(([key, client], index) => (
-//             <div className={styles.maincard} key={key}>
-//               <MainMachineItem client={client} id={key} clientindex={index} />
-//             </div>
-//           ))}
-
-//           <Card className={styles.errorcard}>
-//             <CardContent className={styles.errorcardcomponent}>
-//               {/* <MainError /> */}
-//             </CardContent>
-//           </Card>
-//         </div>
-
-//         <div className={styles.sensordatastyle}>
-//           {tabIndex === 0 && <MainSensorBarItem clientData={clientData} />}
-//           {tabIndex === 1 && <MainSenserItem clientData={clientData} />}
-//           {tabIndex === 2 && (
-//             <MainSenserHorizonBarItem clientData={clientData} />
-//           )}
-//           <div className={styles.sensortab}>
-//             <div
-//               onClick={() => onClickTab(0)}
-//               className={
-//                 tabIndex === 0 ? styles["selected"] : styles["not-selected"]
-//               }
-//             >
-//               <BsFillBarChartFill />
-//             </div>
-//             <div
-//               onClick={() => onClickTab(1)}
-//               className={
-//                 tabIndex === 1 ? styles["selected"] : styles["not-selected"]
-//               }
-//             >
-//               <FaListAlt />
-//             </div>
-//             <div
-//               onClick={() => onClickTab(2)}
-//               className={
-//                 tabIndex === 2 ? styles["selected"] : styles["not-selected"]
-//               }
-//             >
-//               <RiBarChartHorizontalFill />
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </MainLayout>
-//   );
-// };
-
-// export default MainPage;
 import { useNavigate } from "react-router-dom";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Stomp from "stompjs";
@@ -332,207 +6,242 @@ import MainLayout from "../layout/MainLayout";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import styles from "./MainPage.module.css";
+import MainMachineRadarItem from "../components/MainMachineItem/MainMachineRadarItem";
 import MainError from "../components/MainError/MainError";
+import MainMachinePieItem from "../components/MainMachineItem/MainMachinePieItem";
 import MainMachineItem from "../components/MainMachineItem/MainMachineItem";
 import MainSenserItem from "../components/MainSenserItem/MainSenserItem";
 import MainSenserHorizonBarItem from "../components/MainSenserItem/MainSenserHorizonBarItem";
 import MainSensorBarItem from "../components/MainSenserItem/MainSensorBarItem";
+
+import { BiTrafficCone } from "react-icons/bi";
+import { AiOutlineRadarChart } from "react-icons/ai";
 import { BsFillBarChartFill } from "react-icons/bs";
 import { RiBarChartHorizontalFill } from "react-icons/ri";
 import { FaListAlt } from "react-icons/fa";
 import axios from "axios";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
 
-type ClientData = {
-  [key: string]: {
-    MOTOR: number;
-    VACUUM: number;
-    AIR_IN_KPA: number;
-    AIR_OUT_KPA: number;
-    AIR_OUT_MPA: number;
-    WATER: number;
-    ABRASION: number;
-    LOAD: number;
-    VELOCITY: number;
-    // SCORE: number;
-  };
-};
+type ClientData = [
+  {
+    [key: string]: {
+      MOTOR: number;
+      VACUUM: number;
+      AIR_IN_KPA: number;
+      AIR_OUT_KPA: number;
+      AIR_OUT_MPA: number;
+      WATER: number;
+      ABRASION: number;
+      LOAD: number;
+      VELOCITY: number;
+      SCORE: number;
+    };
+  }
+];
 
 const MainPage: React.FC = () => {
   const navigate = useNavigate();
-
-  const [clientData, setClientData] = useState<ClientData>({
-    CLIENT1: {
-      MOTOR: 100,
-      VACUUM: 50,
-      AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 500,
-      AIR_OUT_MPA: 0.8,
-      WATER: 3,
-      ABRASION: 16,
-      LOAD: 8,
-      VELOCITY: 30000,
-      // SCORE: 80,
+  const [check, setCheck] = useState(0);
+  const [clientData, setClientData] = useState<ClientData>([
+    {
+      CLIENT1: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 500,
+        AIR_OUT_MPA: 0.8,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+      CLIENT2: {
+        MOTOR: 150,
+        VACUUM: 10,
+        AIR_IN_KPA: 300,
+        AIR_OUT_KPA: 500,
+        AIR_OUT_MPA: 0.1,
+        WATER: 2,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 10000,
+        SCORE: 80,
+      },
+      CLIENT3: {
+        MOTOR: 280,
+        VACUUM: 70,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 500,
+        AIR_OUT_MPA: 0.5,
+        WATER: 2,
+        ABRASION: 13,
+        LOAD: 1,
+        VELOCITY: 20000,
+        SCORE: 80,
+      },
+      CLIENT4: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 500,
+        AIR_OUT_MPA: 0.8,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+      CLIENT5: {
+        MOTOR: 50,
+        VACUUM: 10,
+        AIR_IN_KPA: 700,
+        AIR_OUT_KPA: 500,
+        AIR_OUT_MPA: 0.6,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 15000,
+        SCORE: 80,
+      },
+      CLIENT6: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 500,
+        AIR_OUT_MPA: 0.8,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+      CLIENT7: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 500,
+        AIR_OUT_MPA: 0.8,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+      CLIENT8: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 500,
+        AIR_OUT_MPA: 0.8,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+      CLIENT9: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 500,
+        AIR_OUT_MPA: 0.8,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+      CLIENT10: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 500,
+        AIR_OUT_MPA: 0.8,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+      CLIENT11: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 500,
+        AIR_OUT_MPA: 0.8,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
+      CLIENT12: {
+        MOTOR: 100,
+        VACUUM: 50,
+        AIR_IN_KPA: 400,
+        AIR_OUT_KPA: 500,
+        AIR_OUT_MPA: 0.8,
+        WATER: 3,
+        ABRASION: 16,
+        LOAD: 8,
+        VELOCITY: 30000,
+        SCORE: 80,
+      },
     },
-    CLIENT2: {
-      MOTOR: 150,
-      VACUUM: 10,
-      AIR_IN_KPA: 300,
-      AIR_OUT_KPA: 500,
-      AIR_OUT_MPA: 0.1,
-      WATER: 2,
-      ABRASION: 16,
-      LOAD: 8,
-      VELOCITY: 10000,
-      // SCORE: 80,
-    },
-    CLIENT3: {
-      MOTOR: 280,
-      VACUUM: 70,
-      AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 500,
-      AIR_OUT_MPA: 0.5,
-      WATER: 2,
-      ABRASION: 13,
-      LOAD: 1,
-      VELOCITY: 20000,
-      // SCORE: 80,
-    },
-    CLIENT4: {
-      MOTOR: 100,
-      VACUUM: 50,
-      AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 500,
-      AIR_OUT_MPA: 0.8,
-      WATER: 3,
-      ABRASION: 16,
-      LOAD: 8,
-      VELOCITY: 30000,
-      // SCORE: 80,
-    },
-    CLIENT5: {
-      MOTOR: 50,
-      VACUUM: 10,
-      AIR_IN_KPA: 700,
-      AIR_OUT_KPA: 500,
-      AIR_OUT_MPA: 0.6,
-      WATER: 3,
-      ABRASION: 16,
-      LOAD: 8,
-      VELOCITY: 15000,
-      // SCORE: 80,
-    },
-    CLIENT6: {
-      MOTOR: 100,
-      VACUUM: 50,
-      AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 500,
-      AIR_OUT_MPA: 0.8,
-      WATER: 3,
-      ABRASION: 16,
-      LOAD: 8,
-      VELOCITY: 30000,
-      // SCORE: 80,
-    },
-    CLIENT7: {
-      MOTOR: 100,
-      VACUUM: 50,
-      AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 500,
-      AIR_OUT_MPA: 0.8,
-      WATER: 3,
-      ABRASION: 16,
-      LOAD: 8,
-      VELOCITY: 30000,
-      // SCORE: 80,
-    },
-    CLIENT8: {
-      MOTOR: 100,
-      VACUUM: 50,
-      AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 500,
-      AIR_OUT_MPA: 0.8,
-      WATER: 3,
-      ABRASION: 16,
-      LOAD: 8,
-      VELOCITY: 30000,
-      // SCORE: 80,
-    },
-    CLIENT9: {
-      MOTOR: 100,
-      VACUUM: 50,
-      AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 500,
-      AIR_OUT_MPA: 0.8,
-      WATER: 3,
-      ABRASION: 16,
-      LOAD: 8,
-      VELOCITY: 30000,
-      // SCORE: 80,
-    },
-    CLIENT10: {
-      MOTOR: 100,
-      VACUUM: 50,
-      AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 500,
-      AIR_OUT_MPA: 0.8,
-      WATER: 3,
-      ABRASION: 16,
-      LOAD: 8,
-      VELOCITY: 30000,
-      // SCORE: 80,
-    },
-    CLIENT11: {
-      MOTOR: 100,
-      VACUUM: 50,
-      AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 500,
-      AIR_OUT_MPA: 0.8,
-      WATER: 3,
-      ABRASION: 16,
-      LOAD: 8,
-      VELOCITY: 30000,
-      // SCORE: 80,
-    },
-    CLIENT12: {
-      MOTOR: 100,
-      VACUUM: 50,
-      AIR_IN_KPA: 400,
-      AIR_OUT_KPA: 500,
-      AIR_OUT_MPA: 0.8,
-      WATER: 3,
-      ABRASION: 16,
-      LOAD: 8,
-      VELOCITY: 30000,
-      // SCORE: 80,
-    },
-  });
-
-  // const connectUrl = "https://semse.info/api/ws-main";
+  ]);
 
   const [error, setError] = useState<any>();
   const [reconnectTimer, setReconnectTimer] = useState<any>();
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
 
   const getClientData = async () => {
+    console.log("요청했다냥");
+
     await axios
+
       .get("https://semse.info/api/main/machine")
+
+      // .get("http://localhost8091/api/main/machine")
       .then((response) => {
-        setClientData(response.data);
+        const sortedData: { [key: string]: any } = Object.entries(
+          response.data[0]
+        )
+          .sort(([a], [b]) => {
+            const aIndex = parseInt(a.replace("CLIENT", ""));
+            const bIndex = parseInt(b.replace("CLIENT", ""));
+            return aIndex - bIndex;
+          })
+          .reduce((acc: { [key: string]: any }, [key, value]) => {
+            acc[key] = value;
+            return acc;
+          }, {});
+
+        setCheck(1);
+        setClientData([{ ...sortedData }]);
       })
       .catch((error) => {
-        console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
+        console.error("실패다냥", error);
       });
   };
   useEffect(() => {
     getClientData();
+
     const interval = setInterval(() => {
       getClientData();
-    }, 10000);
+    }, 30000);
     return () => {
       clearInterval(interval);
       clearInterval(reconnectTimer);
     };
   }, []);
+
+  const [tab2Index, setTab2Index] = useState<number>(1);
+
+  const onClickTab2 = (index: number) => {
+    setTab2Index(index);
+  };
 
   const [tabIndex, setTabIndex] = useState(1);
 
@@ -544,11 +253,73 @@ const MainPage: React.FC = () => {
     <MainLayout>
       <div className={styles.main1}>
         <div className={styles.main2}>
-          {Object.entries(clientData).map(([key, client], index) => (
-            <div className={styles.maincard} key={key}>
-              <MainMachineItem client={client} id={key} clientindex={index} />
-            </div>
-          ))}
+          {check == 1 ? (
+            <>
+              {tab2Index === 0 && (
+                <MainMachineRadarItem clientData={clientData[0]} />
+              )}
+              {tab2Index === 1 &&
+                Object.entries(clientData[0]).map(([key, client], index) => (
+                  <div className={styles.maincard} key={key}>
+                    <MainMachineItem
+                      client={client}
+                      id={key}
+                      clientindex={index}
+                    />
+                  </div>
+                ))}
+              {tab2Index === 2 && (
+                <MainMachinePieItem clientData={clientData[0]} />
+              )}
+              <div className={styles.sensortab2}>
+                <div
+                  onClick={() => onClickTab2(0)}
+                  className={
+                    tab2Index === 0
+                      ? styles["selected"]
+                      : styles["not-selected"]
+                  }
+                >
+                  <AiOutlineRadarChart />
+                </div>
+                <div
+                  onClick={() => onClickTab2(1)}
+                  className={
+                    tab2Index === 1
+                      ? styles["selected"]
+                      : styles["not-selected"]
+                  }
+                >
+                  <FaListAlt />
+                </div>
+                <div
+                  onClick={() => onClickTab2(2)}
+                  className={
+                    tab2Index === 2
+                      ? styles["selected"]
+                      : styles["not-selected"]
+                  }
+                >
+                  <BiTrafficCone style={{ transform: "scaleY(-1)" }} />
+                </div>
+              </div>
+            </>
+          ) : (
+            <Card className={styles.mainloadingcard}>
+              <Box
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <CircularProgress />
+                <h3> machine 데이터를 불러오는 중입니다...</h3>
+              </Box>
+            </Card>
+          )}
 
           <Card className={styles.errorcard}>
             <CardContent className={styles.errorcardcomponent}>
@@ -556,40 +327,56 @@ const MainPage: React.FC = () => {
             </CardContent>
           </Card>
         </div>
-
-        <div className={styles.sensordatastyle}>
-          {tabIndex === 0 && <MainSensorBarItem clientData={clientData} />}
-          {tabIndex === 1 && <MainSenserItem clientData={clientData} />}
-          {tabIndex === 2 && (
-            <MainSenserHorizonBarItem clientData={clientData} />
-          )}
-          <div className={styles.sensortab}>
-            <div
-              onClick={() => onClickTab(0)}
-              className={
-                tabIndex === 0 ? styles["selected"] : styles["not-selected"]
-              }
-            >
-              <BsFillBarChartFill />
-            </div>
-            <div
-              onClick={() => onClickTab(1)}
-              className={
-                tabIndex === 1 ? styles["selected"] : styles["not-selected"]
-              }
-            >
-              <FaListAlt />
-            </div>
-            <div
-              onClick={() => onClickTab(2)}
-              className={
-                tabIndex === 2 ? styles["selected"] : styles["not-selected"]
-              }
-            >
-              <RiBarChartHorizontalFill />
+        {check == 1 ? (
+          <div className={styles.sensordatastyle}>
+            {tabIndex === 0 && <MainSensorBarItem clientData={clientData[0]} />}
+            {tabIndex === 1 && <MainSenserItem clientData={clientData[0]} />}
+            {tabIndex === 2 && (
+              <MainSenserHorizonBarItem clientData={clientData[0]} />
+            )}
+            <div className={styles.sensortab}>
+              <div
+                onClick={() => onClickTab(0)}
+                className={
+                  tabIndex === 0 ? styles["selected"] : styles["not-selected"]
+                }
+              >
+                <BsFillBarChartFill />
+              </div>
+              <div
+                onClick={() => onClickTab(1)}
+                className={
+                  tabIndex === 1 ? styles["selected"] : styles["not-selected"]
+                }
+              >
+                <FaListAlt />
+              </div>
+              <div
+                onClick={() => onClickTab(2)}
+                className={
+                  tabIndex === 2 ? styles["selected"] : styles["not-selected"]
+                }
+              >
+                <RiBarChartHorizontalFill />
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <Card className={styles.sensorloadingcard}>
+            <Box
+              sx={{
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <CircularProgress />
+              <h3> sensor 데이터를 불러오는 중입니다...</h3>
+            </Box>
+          </Card>
+        )}
       </div>
     </MainLayout>
   );

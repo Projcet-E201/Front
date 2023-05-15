@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 import styles from "./MainError.module.css";
 
@@ -11,28 +12,35 @@ interface Message {
 const StringState = () => {
   const [messages, setMessages] = useState<Message[]>([]);
 
-  useEffect(() => {
-    let count = 0;
-    const intervalId = setInterval(() => {
-      const date = new Date();
-      const time = date.toLocaleString();
-      const content = `Machine1 > Motor > Motor ${
-        count + 1
-      }  에러 발생했습니다.`;
-      setMessages((prevMessages) => [
-        { id: `S${count}`, time, content },
-        ...prevMessages.slice(0, 3),
-      ]);
-      count = (count + 1) % 5;
-    }, 2000);
+  const getErrorData = async () => {
+    console.log("요청했다냥");
 
-    return () => clearInterval(intervalId);
+    await axios
+
+      .get("https://semse.info/api/main/error")
+
+      // .get("http://localhost8091/api/main/machine")
+      .then((response) => {
+        console.log("성공이다냥", response.data);
+        setMessages(response.data);
+      })
+      .catch((error) => {
+        console.error("실패다냥", error);
+      });
+  };
+  useEffect(() => {
+    getErrorData();
+
+    const interval = setInterval(() => {
+      getErrorData();
+    }, 5000);
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   return (
     <div className={styles.errorbox}>
-      {/* <h3 style={{ margin: "0" }}>StringState입니다.</h3> */}
-
       <table>
         <tbody>
           {messages.map((message) => (
