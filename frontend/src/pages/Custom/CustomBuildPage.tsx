@@ -145,7 +145,7 @@ const CustomBuildPage = () => {
     setChartList((prevList) => prevList.filter((_, i) => i !== index));
   };
 
-  console.log(chartList);
+  // console.log(chartList);
 
   return (
     <MainLayout>

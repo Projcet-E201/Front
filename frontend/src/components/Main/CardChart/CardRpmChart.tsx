@@ -5,15 +5,17 @@ import { faker } from "@faker-js/faker";
 
 // import CircularProgress from "@mui/material/CircularProgress";
 const CardRpmChart = ({ velocityData }: any) => {
-  // console.log(velocityData[0], "rpm");
-  const data: any = Object.entries(velocityData[0]).map(
-    ([id, value], index) => ({
-      id: `velocity${index + 1}`,
-      rpm: `Rpm${index + 1}`,
+  const data: any = velocityData.map((item: any, index: number) => {
+    const key = Object.keys(item)[0];
+    const value = item[key];
+
+    return {
+      id: `V${index + 1}`,
       value,
       color: index % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
-    })
-  );
+    };
+  });
+
   return (
     <ResponsiveBar
       // width={1000} // 차트의 가로 길이
@@ -21,7 +23,7 @@ const CardRpmChart = ({ velocityData }: any) => {
       // height={500} // 차트의 세로 길이
       data={data} // 차트에 표시될 데이터 배열
       keys={["value"]} // 표시될 데이터에서 y축 값에 해당하는 키 값
-      indexBy="rpm" // 표시될 데이터에서 x축 값에 해당하는 키 값
+      indexBy="id" // 표시될 데이터에서 x축 값에 해당하는 키 값
       margin={{ top: 10, right: 10, bottom: 40, left: 40 }} // 차트와 경계선 사이의 여백
       padding={0.2} // 바 사이의 여백
       labelTextColor={{ from: "color", modifiers: [["darker", 1.6]] }} // 라벨의 색상과 스타일 지정

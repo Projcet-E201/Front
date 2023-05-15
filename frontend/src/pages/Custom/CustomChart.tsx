@@ -54,11 +54,11 @@ const CustomChart = ({ chart }: any) => {
   const [data, setData] = useState<any>([]);
 
   const getData = () => {
-    console.log("axios");
+    console.log("axios", url);
     axios
-      .get(url)
+      .get(`${url}`)
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data, "dfdfdf");
         setData(res.data);
       })
       .catch((err) => {
