@@ -50,9 +50,9 @@ const Sensor = () => {
   const [velocityData, setVelocityData] = useState<any[]>([]);
   const [abrasionData, setAbrasionData] = useState<any[]>([]);
 
-  const getSensorData = async () => {
+  const getSensorData = () => {
     console.log("ㄱㄱㄱ");
-    await axios
+    axios
       .get(`https://semse.info/api/machine/${machine}/sensor`)
       // .get(`http://localhost:8091/api/machine/${machine}/sensor`)
       .then((response) => {
@@ -91,7 +91,7 @@ const Sensor = () => {
 
     const interval = setInterval(() => {
       getSensorData();
-    }, 5000);
+    }, 20000);
 
     return () => {
       clearInterval(interval);
