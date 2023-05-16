@@ -30,7 +30,7 @@ const data = [
     id: "Abrasion",
     data: Array.from({ length: 20 }, (_, i) => ({
       x: i + 1,
-      y: Math.sin((i / 5) * Math.PI) * 50 + 50,
+      y: Math.sin((i / 5) * Math.PI) * 20 + 20,
     })),
   },
 ];
@@ -52,7 +52,7 @@ const AbrasionChartMarkers = () => {
   const [AbrasionMarkers, setAbrasionMarkers] = useState<any>([]);
   // const [newAbrasionMarkerValue, setNewAbrasionMarkerValue] = useState<number>(0);
   const [newAbrasionMarkerValue, setNewAbrasionMarkerValue] =
-    React.useState<any>(0);
+    React.useState<any>(10);
   const [newAbrasionMarkerWidth, setNewAbrasionMarkerWidth] =
     useState<number>(2);
   const [newAbrasionMarkerLegend, setNewAbrasionMarkerLegend] =
@@ -79,11 +79,27 @@ const AbrasionChartMarkers = () => {
       const newMarkers = [...prevMarkers];
 
       // max값 설정하기.
-      if (value > 300) {
-        toast.error("Abrasion Marker의 최대값은 300입니다.");
-        value = 300;
+      if (value > 40) {
+        toast.error("부하량 Marker의 최대값은 40입니다.", {
+          duration: 2000,
+          position: "top-right",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
+        value = 40;
       } else if (value < 0) {
-        toast.error("Abrasion Marker의 최소값은 0입니다.");
+        toast.error("부하량 Marker의 최소값은 0입니다.", {
+          duration: 2000,
+          position: "top-right",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
         value = 0;
       }
       newMarkers[index].value = value || 0;
@@ -146,7 +162,7 @@ const AbrasionChartMarkers = () => {
       if (AbrasionMarkers[i].value === newAbrasionMarkerValue) {
         toast.error("이미 존재하는 value 입니다. Value를 수정해주세요", {
           duration: 2000,
-          position: "top-center",
+          position: "top-right",
           style: {
             // backgroundColor: "red",
             // width: "100%",
@@ -159,7 +175,7 @@ const AbrasionChartMarkers = () => {
     setAbrasionMarkers([...AbrasionMarkers, newAbrasionMarker]);
     setNewAbrasionMarkerLegend("");
     setColor("#FF3B30");
-    setNewAbrasionMarkerValue(30);
+    setNewAbrasionMarkerValue(10);
     setNewAbrasionMarkerWidth(2);
   };
 
@@ -167,14 +183,14 @@ const AbrasionChartMarkers = () => {
     const defaultMarker = [
       {
         axis: "y",
-        value: 70,
+        value: 30,
         legend: "경고",
         lineStyle: { stroke: "#FFC041", strokeWidth: "2" },
         checked: true,
       },
       {
         axis: "y",
-        value: 90,
+        value: 35,
         legend: "위험",
         lineStyle: { stroke: "#FF3B30", strokeWidth: "2" },
         checked: true,
@@ -193,7 +209,15 @@ const AbrasionChartMarkers = () => {
     setAbrasionMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
       newMarkers.splice(index, 1);
-      toast.success("삭제가 완료되었습니다.");
+      toast.success("삭제가 완료되었습니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
       return newMarkers;
     });
   };
@@ -231,16 +255,38 @@ const AbrasionChartMarkers = () => {
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewAbrasionMarkerValue(
-      event.target.value === "" ? "" : Number(event.target.value)
-    );
+    let value = parseInt(event.target.value);
+    if (parseInt(event.target.value) > 40) {
+      value = 40;
+      toast.error("부하량의 최대값은 40입니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
+    } else if (parseInt(event.target.value) < 0) {
+      toast.error("부하량의 최소값은 0입니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
+      value = 0;
+    }
+    setNewAbrasionMarkerValue(event.target.value === "" ? "" : Number(value));
   };
 
   const handleBlur = () => {
     if (newAbrasionMarkerValue < 0) {
       setNewAbrasionMarkerValue(0);
-    } else if (newAbrasionMarkerValue > 300) {
-      setNewAbrasionMarkerValue(300);
+    } else if (newAbrasionMarkerValue > 40) {
+      setNewAbrasionMarkerValue(40);
     }
   };
 
@@ -300,8 +346,8 @@ const AbrasionChartMarkers = () => {
                   onBlur={handleBlur}
                   inputProps={{
                     step: 1,
-                    min: 0,
-                    max: 40,
+                    // min: 0,
+                    // max: 40,
                     type: "number",
                     "aria-labelledby": "input-slider",
                   }}
@@ -441,6 +487,9 @@ const AbrasionChartMarkers = () => {
                         </InputAdornment>
                       ),
                     }}
+                    inputProps={{
+                      step: 10,
+                    }}
                     variant="standard"
                   />
                 </div>
@@ -574,7 +623,7 @@ const AbrasionChartMarkers = () => {
           yScale={{
             type: "linear",
             min: 0,
-            max: 120,
+            max: 40,
             stacked: false,
             reverse: false,
           }}

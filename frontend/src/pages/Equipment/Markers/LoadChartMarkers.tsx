@@ -76,11 +76,28 @@ const LoadChartMarkers = () => {
       const newMarkers = [...prevMarkers];
 
       // max값 설정하기.
-      if (value > 300) {
-        toast.error("Load Marker의 최대값은 300입니다.");
-        value = 300;
+      // max값 설정하기.
+      if (value > 16) {
+        toast.error("Motor Marker의 최대값은 300입니다.", {
+          duration: 2000,
+          position: "top-right",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
+        value = 16;
       } else if (value < 0) {
-        toast.error("Load Marker의 최소값은 0입니다.");
+        toast.error("Motor Marker의 최소값은 0입니다.", {
+          duration: 2000,
+          position: "top-right",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
         value = 0;
       }
       newMarkers[index].value = value || 0;
@@ -140,7 +157,7 @@ const LoadChartMarkers = () => {
       if (LoadMarkers[i].value === newLoadMarkerValue) {
         toast.error("이미 존재하는 value 입니다. Value를 수정해주세요", {
           duration: 2000,
-          position: "top-center",
+          position: "top-right",
           style: {
             // backgroundColor: "red",
             // width: "100%",
@@ -153,7 +170,7 @@ const LoadChartMarkers = () => {
     setLoadMarkers([...LoadMarkers, newLoadMarker]);
     setNewLoadMarkerLegend("");
     setColor("#FF3B30");
-    setNewLoadMarkerValue(30);
+    setNewLoadMarkerValue(0);
     setNewLoadMarkerWidth(2);
   };
 
@@ -161,14 +178,14 @@ const LoadChartMarkers = () => {
     const defaultMarker = [
       {
         axis: "y",
-        value: 70,
+        value: 12,
         legend: "경고",
         lineStyle: { stroke: "#FFC041", strokeWidth: "2" },
         checked: true,
       },
       {
         axis: "y",
-        value: 90,
+        value: 15,
         legend: "위험",
         lineStyle: { stroke: "#FF3B30", strokeWidth: "2" },
         checked: true,
@@ -187,7 +204,15 @@ const LoadChartMarkers = () => {
     setLoadMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
       newMarkers.splice(index, 1);
-      toast.success("삭제가 완료되었습니다.");
+      toast.success("삭제가 완료되었습니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
       return newMarkers;
     });
   };
@@ -222,16 +247,38 @@ const LoadChartMarkers = () => {
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewLoadMarkerValue(
-      event.target.value === "" ? "" : Number(event.target.value)
-    );
+    let value = parseInt(event.target.value);
+    if (parseInt(event.target.value) > 16) {
+      value = 16;
+      toast.error("Load Marker의 최대값은 300입니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
+    } else if (parseInt(event.target.value) < 0) {
+      toast.error("Load Marker의 최소값은 0입니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
+      value = 0;
+    }
+    setNewLoadMarkerValue(event.target.value === "" ? "" : Number(value));
   };
 
   const handleBlur = () => {
     if (newLoadMarkerValue < 0) {
       setNewLoadMarkerValue(0);
-    } else if (newLoadMarkerValue > 300) {
-      setNewLoadMarkerValue(300);
+    } else if (newLoadMarkerValue > 16) {
+      setNewLoadMarkerValue(16);
     }
   };
 
@@ -291,8 +338,8 @@ const LoadChartMarkers = () => {
                   onBlur={handleBlur}
                   inputProps={{
                     step: 1,
-                    min: 0,
-                    max: 16,
+                    // min: 0,
+                    // max: 16,
                     type: "number",
                     "aria-labelledby": "input-slider",
                   }}
@@ -451,6 +498,9 @@ const LoadChartMarkers = () => {
                       </InputAdornment>
                     ),
                   }}
+                  inputProps={{
+                    step: 1,
+                  }}
                   variant="standard"
                 />
                 {/* <p style={{ margin: "0" }}>Marker 수정</p> */}
@@ -565,7 +615,7 @@ const LoadChartMarkers = () => {
           yScale={{
             type: "linear",
             min: 0,
-            max: 120,
+            max: 16,
             stacked: false,
             reverse: false,
           }}
