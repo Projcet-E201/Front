@@ -30,12 +30,12 @@ const AbrasionPage = () => {
   const [abrasionData, setAbrasionData] = useState<any>([]);
 
   const getAbrasionData = () => {
-    console.log("요청보냄");
+    // console.log("요청보냄");
     axios
       .get(`https://semse.info/api/machine/${machine}/abrasion`)
       // .get(`http://localhost:8091/api/machine/${machine}/abrasion`)
       .then((res) => {
-        console.log(res.data, "xzzz");
+        // console.log(res.data, "xzzz");
         const abrasionData = res.data.reduce((acc: any, abrasion: any) => {
           const { name, time, value } = abrasion;
           const abrasionId = name.replace("ABRASION", "");
@@ -94,8 +94,8 @@ const AbrasionPage = () => {
   const latestData = abrasionData.map(
     (dataset: any) => dataset.data[dataset.data.length - 1]
   );
-  console.log(abrasionData);
-  console.log(latestData);
+  // console.log(abrasionData);
+  // console.log(latestData);
   return (
     <SensorLayout>
       <div className={styles.topcard}>

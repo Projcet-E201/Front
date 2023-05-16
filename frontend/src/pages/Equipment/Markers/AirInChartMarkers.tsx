@@ -229,7 +229,7 @@ const AirInChartMarkers = () => {
 
   const handleColorChange = (color: string) => {
     setColor(color);
-    console.log(color);
+    // console.log(color);
   };
 
   const handleEditColor = (color: string) => {
@@ -247,7 +247,7 @@ const AirInChartMarkers = () => {
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     let value = parseInt(event.target.value);
     if (parseInt(event.target.value) > 900) {
       value = 900;

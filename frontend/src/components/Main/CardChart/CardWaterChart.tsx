@@ -22,7 +22,7 @@ const CardWaterChart = ({ waterData }: any) => {
       return idA - idB;
     });
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <div style={{ height: "100%" }}>

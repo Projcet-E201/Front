@@ -66,7 +66,7 @@ const CustomBuildPage = () => {
     localStorage.setItem("chartList", JSON.stringify(chartList));
   }, [chartList]);
 
-  console.log(chartList, "chartList");
+  // console.log(chartList, "chartList");
 
   const addChartHandler = () => {
     const newChart = {

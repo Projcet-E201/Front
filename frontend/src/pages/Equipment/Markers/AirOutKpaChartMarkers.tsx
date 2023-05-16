@@ -239,7 +239,7 @@ const AirOutKpaChartMarkers = () => {
 
   const handleColorChange = (color: string) => {
     setColor(color);
-    console.log(color);
+    // console.log(color);
   };
 
   const handleEditColor = (color: string) => {

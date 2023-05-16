@@ -228,7 +228,7 @@ const MotorChartMarkers = () => {
 
   const handleColorChange = (color: string) => {
     setColor(color);
-    console.log(color);
+    // console.log(color);
   };
 
   const handleEditColor = (color: string) => {
@@ -246,7 +246,7 @@ const MotorChartMarkers = () => {
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     let value = parseInt(event.target.value);
     if (parseInt(event.target.value) > 300) {
       value = 300;

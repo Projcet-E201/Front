@@ -35,7 +35,7 @@ const VacuumPage = () => {
   const [vacuumData, setVacuumData] = useState<any>([]);
 
   const getVacuumData = () => {
-    console.log("motordata 가져오기");
+    // console.log("motordata 가져오기");
     axios
       .get(`https://semse.info/api/machine/${machine}/vacuum`)
       .then((res) => {
@@ -100,7 +100,7 @@ const VacuumPage = () => {
     (dataset: any) => dataset.data[dataset.data.length - 1]
   );
 
-  console.log(latestData, "dfdffef22222222222");
+  // console.log(latestData, "dfdffef22222222222");
   return (
     <SensorLayout>
       <div className={styles.topcard}>

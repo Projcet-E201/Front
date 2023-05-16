@@ -28,7 +28,7 @@ const MotorPage = () => {
   const [motorData, setMotorData] = useState<any>([]);
 
   const getMotorData = () => {
-    console.log("motordata 가져오기");
+    // console.log("motordata 가져오기");
     axios
       .get(`https://semse.info/api/machine/${machine}/motor`)
       .then((res) => {
@@ -88,7 +88,7 @@ const MotorPage = () => {
     (dataset: any) => dataset.data[dataset.data.length - 1]
   );
 
-  console.log(latestData);
+  // console.log(latestData);
 
   return (
     <SensorLayout>

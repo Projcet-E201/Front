@@ -22,7 +22,7 @@ const CardLoadChart = ({ loadData }: any) => {
       return idA - idB;
     });
 
-  console.log(data);
+  // console.log(data);
   return (
     <div style={{ height: "100%" }}>
       {data.length === 0 ? (

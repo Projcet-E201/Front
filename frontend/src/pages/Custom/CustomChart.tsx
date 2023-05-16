@@ -141,7 +141,7 @@ const CustomChart = ({ chart }: any) => {
     };
   }, []);
 
-  console.log(customData, "customData");
+  // console.log(customData, "customData");
 
   let filteredData = [];
   if (chart.sensorNumber !== "all") {
