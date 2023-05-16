@@ -18,7 +18,7 @@ const MachinePage = () => {
 
   // 선택한 기계를 저장하기 위한 recoil 값 설정
   const setSelectedMachine = useSetRecoilState(selectedMachineAtom);
-  console.log(machine);
+  // console.log(machine);
   React.useEffect(() => {
     // 주소에서 machineId 추출하여 selectedMachineAtom에 저장
     setSelectedMachine(`${machine}`);

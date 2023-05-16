@@ -87,7 +87,7 @@ const AirOut1Page = () => {
     (dataset: any) => dataset.data[dataset.data.length - 1]
   );
 
-  console.log(latestData);
+  // console.log(latestData);
 
   return (
     <SensorLayout>

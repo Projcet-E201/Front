@@ -30,7 +30,7 @@ const LoadPage = () => {
   const [loadData, setLoadData] = useState<any>([]);
 
   const getLoadData = () => {
-    console.log("motordata 가져오기");
+    // console.log("motordata 가져오기");
     axios
       .get(`https://semse.info/api/machine/${machine}/load`)
       .then((res) => {
@@ -90,7 +90,7 @@ const LoadPage = () => {
     (dataset: any) => dataset.data[dataset.data.length - 1]
   );
 
-  console.log(latestData);
+  // console.log(latestData);
   return (
     <SensorLayout>
       <div className={styles.topcard}>

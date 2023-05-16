@@ -24,7 +24,7 @@ const AirOut2Page = () => {
 
   const [airOutMpaData, setAirOutMpaData] = useState<any>([]);
   const getAirOutMpaData = () => {
-    console.log("airOutMpa 가져오기");
+    // console.log("airOutMpa 가져오기");
     axios
       .get(`https://semse.info/api/machine/${machine}/air_out_mpa`)
       .then((res) => {
@@ -87,7 +87,7 @@ const AirOut2Page = () => {
     (dataset: any) => dataset.data[dataset.data.length - 1]
   );
 
-  console.log(latestData);
+  // console.log(latestData);
 
   return (
     <SensorLayout>

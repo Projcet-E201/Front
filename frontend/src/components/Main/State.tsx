@@ -29,12 +29,12 @@ const State = () => {
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
 
   const getStateData = () => {
-    console.log("ㄱㄱㄱㄱ");
+    // console.log("ㄱㄱㄱㄱ");
     axios
       .get(`https://semse.info/api/machine/${machine}/state`)
       // .get(`http://localhost:8091/api/machine/${machine}/state`)
       .then((response) => {
-        console.log(response.data, "statestate", `${machine}`);
+        // console.log(response.data, "statestate", `${machine}`);
         // Boolean Data 정렬
 
         if (response.data.length > 0) {

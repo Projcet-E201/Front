@@ -25,7 +25,7 @@ const CardRpmChart = ({ velocityData }: any) => {
       return idA - idB;
     });
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <div style={{ height: "100%" }}>

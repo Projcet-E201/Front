@@ -51,14 +51,14 @@ const Sensor = () => {
   const [abrasionData, setAbrasionData] = useState<any[]>([]);
 
   const getSensorData = () => {
-    console.log("ㄱㄱㄱ");
+    // console.log("ㄱㄱㄱ");
     axios
       .get(`https://semse.info/api/machine/${machine}/sensor`)
       // .get(`http://localhost:8091/api/machine/${machine}/sensor`)
       .then((response) => {
         // console.log(response.data[0].MOTOR, "datadata", `${machine}`);
         // setMotorData(response.data);
-        console.log(response.data, "sensorsensor");
+        // console.log(response.data, "sensorsensor");
         setData(response.data);
         setMotorData(response.data[0].MOTOR);
         setVacuumData(response.data[0].VACUUM);
@@ -108,7 +108,7 @@ const Sensor = () => {
     };
   }, [machine]);
 
-  console.log(data.length, "datalength");
+  // console.log(data.length, "datalength");
 
   return (
     <div>

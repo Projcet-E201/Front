@@ -30,7 +30,7 @@ const RpmPage = () => {
   const [rpmData, setRpmData] = useState<any>([]);
 
   const getRpmData = () => {
-    console.log("rpmdata 가져오기");
+    // console.log("rpmdata 가져오기");
     axios
       .get(`https://semse.info/api/machine/${machine}/velocity`)
       .then((res) => {
@@ -90,7 +90,7 @@ const RpmPage = () => {
     (dataset: any) => dataset.data[dataset.data.length - 1]
   );
 
-  console.log(latestData);
+  // console.log(latestData);
   return (
     <SensorLayout>
       <div className={styles.topcard}>

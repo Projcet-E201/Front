@@ -27,7 +27,7 @@ const AirInPage = () => {
   const [airInData, setAirInData] = useState<any>([]);
 
   const getAirInData = () => {
-    console.log("airIndata 가져오기");
+    // console.log("airIndata 가져오기");
     axios
       .get(`https://semse.info/api/machine/${machine}/air_in_kpa`)
       .then((res) => {
@@ -82,9 +82,9 @@ const AirInPage = () => {
     (dataset: any) => dataset.data[dataset.data.length - 1]
   );
 
-  console.log(airInData);
+  // console.log(airInData);
 
-  console.log(latestData);
+  // console.log(latestData);
   return (
     <SensorLayout>
       <div className={styles.topcard}>
