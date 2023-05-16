@@ -257,7 +257,7 @@ const DetailItem: React.FC = () => {
   }, [location, intervalSeconds, historydata]);
 
   const getHistoryData = async () => {
-    console.log("요청했다멍");
+    // console.log("요청했다멍");
 
     const startTime = startDate?.toISOString();
     const endTime = endDate?.toISOString();
@@ -267,7 +267,8 @@ const DetailItem: React.FC = () => {
         `https://semse.info/api/machine/${machineId}/history/${sensor}/${sensorId}/${startTime}/${endTime}`
       )
       .then((response) => {
-        console.log("성공이다멍", response.data);
+        // console.log("성공이다멍", response.data);
+        // console.log(startTime, endTime);
 
         const historyData = response.data.map((item: any) => ({
           x: item.x,
@@ -277,9 +278,35 @@ const DetailItem: React.FC = () => {
         setHistoryData(historyData);
       })
       .catch((error) => {
-        console.error("실패다멍", error);
+        // console.error("실패다멍", error);
+        // console.log(startTime, endTime);
       });
   };
+  // const getHistoryData = async () => {
+  //   console.log("요청했다멍");
+
+  //   const startTime = startDate?.toISOString().split(".")[0];
+  //   const endTime = endDate?.toISOString().split(".")[0];
+  //   console.log(startTime, endTime);
+  //   await axios
+  //     .get(
+  //       `https://semse.info/api/machine/${machineId}/history/${sensor}/${sensorId}/${startTime}/${endTime}`
+  //     )
+  //     .then((response) => {
+  //       console.log("성공이다멍", response.data);
+
+  //       const historyData = response.data.map((item: any) => ({
+  //         x: item.x,
+  //         y: item.y,
+  //       }));
+
+  //       setHistoryData(historyData);
+  //     })
+  //     .catch((error) => {
+  //       console.error("실패다멍", error);
+  //       console.log(startTime, endTime);
+  //     });
+  // };
 
   return (
     <div style={{ width: "100%" }}>

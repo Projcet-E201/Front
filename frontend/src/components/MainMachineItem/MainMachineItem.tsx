@@ -16,7 +16,7 @@ export type MachinePropsType = {
   ABRASION: number;
   LOAD: number;
   VELOCITY: number;
-  // SCORE: number;
+  SCORE: number;
 };
 
 type MainMachineItemProps = {

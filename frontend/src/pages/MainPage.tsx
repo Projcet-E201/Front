@@ -42,7 +42,7 @@ type ClientData = [
 
 const MainPage: React.FC = () => {
   const navigate = useNavigate();
-  const [check, setCheck] = useState(0);
+  const [check, setCheck] = useState(1);
   const [clientData, setClientData] = useState<ClientData>([
     {
       CLIENT1: {
@@ -67,7 +67,7 @@ const MainPage: React.FC = () => {
         ABRASION: 16,
         LOAD: 8,
         VELOCITY: 10000,
-        SCORE: 80,
+        SCORE: 70,
       },
       CLIENT3: {
         MOTOR: 280,
@@ -79,7 +79,7 @@ const MainPage: React.FC = () => {
         ABRASION: 13,
         LOAD: 1,
         VELOCITY: 20000,
-        SCORE: 80,
+        SCORE: 90,
       },
       CLIENT4: {
         MOTOR: 100,
@@ -91,7 +91,7 @@ const MainPage: React.FC = () => {
         ABRASION: 16,
         LOAD: 8,
         VELOCITY: 30000,
-        SCORE: 80,
+        SCORE: 50,
       },
       CLIENT5: {
         MOTOR: 50,
@@ -115,7 +115,7 @@ const MainPage: React.FC = () => {
         ABRASION: 16,
         LOAD: 8,
         VELOCITY: 30000,
-        SCORE: 80,
+        SCORE: 67,
       },
       CLIENT7: {
         MOTOR: 100,
@@ -127,10 +127,10 @@ const MainPage: React.FC = () => {
         ABRASION: 16,
         LOAD: 8,
         VELOCITY: 30000,
-        SCORE: 80,
+        SCORE: 85,
       },
       CLIENT8: {
-        MOTOR: 100,
+        MOTOR: 80,
         VACUUM: 50,
         AIR_IN_KPA: 400,
         AIR_OUT_KPA: 500,
@@ -139,7 +139,7 @@ const MainPage: React.FC = () => {
         ABRASION: 16,
         LOAD: 8,
         VELOCITY: 30000,
-        SCORE: 80,
+        SCORE: 97,
       },
       CLIENT9: {
         MOTOR: 100,
@@ -151,10 +151,10 @@ const MainPage: React.FC = () => {
         ABRASION: 16,
         LOAD: 8,
         VELOCITY: 30000,
-        SCORE: 80,
+        SCORE: 48,
       },
       CLIENT10: {
-        MOTOR: 100,
+        MOTOR: 250,
         VACUUM: 50,
         AIR_IN_KPA: 400,
         AIR_OUT_KPA: 500,
@@ -163,7 +163,7 @@ const MainPage: React.FC = () => {
         ABRASION: 16,
         LOAD: 8,
         VELOCITY: 30000,
-        SCORE: 80,
+        SCORE: 62,
       },
       CLIENT11: {
         MOTOR: 100,
@@ -175,10 +175,10 @@ const MainPage: React.FC = () => {
         ABRASION: 16,
         LOAD: 8,
         VELOCITY: 30000,
-        SCORE: 80,
+        SCORE: 81,
       },
       CLIENT12: {
-        MOTOR: 100,
+        MOTOR: 90,
         VACUUM: 50,
         AIR_IN_KPA: 400,
         AIR_OUT_KPA: 500,
@@ -187,7 +187,7 @@ const MainPage: React.FC = () => {
         ABRASION: 16,
         LOAD: 8,
         VELOCITY: 30000,
-        SCORE: 80,
+        SCORE: 75,
       },
     },
   ]);
@@ -197,7 +197,7 @@ const MainPage: React.FC = () => {
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
 
   const getClientData = async () => {
-    console.log("요청했다냥");
+    // console.log("요청했다냥");
 
     await axios
 
@@ -217,12 +217,13 @@ const MainPage: React.FC = () => {
             acc[key] = value;
             return acc;
           }, {});
+        // console.log("성공이다냥", response.data);
 
         setCheck(1);
         setClientData([{ ...sortedData }]);
       })
       .catch((error) => {
-        console.error("실패다냥", error);
+        // console.error("실패다냥", error);
       });
   };
   useEffect(() => {
@@ -230,7 +231,7 @@ const MainPage: React.FC = () => {
 
     const interval = setInterval(() => {
       getClientData();
-    }, 30000);
+    }, 5000);
     return () => {
       clearInterval(interval);
       clearInterval(reconnectTimer);
@@ -268,9 +269,9 @@ const MainPage: React.FC = () => {
                     />
                   </div>
                 ))}
-              {tab2Index === 2 && (
+              {/* {tab2Index === 2 && (
                 <MainMachinePieItem clientData={clientData[0]} />
-              )}
+              )} */}
               <div className={styles.sensortab2}>
                 <div
                   onClick={() => onClickTab2(0)}
@@ -292,7 +293,7 @@ const MainPage: React.FC = () => {
                 >
                   <FaListAlt />
                 </div>
-                <div
+                {/* <div
                   onClick={() => onClickTab2(2)}
                   className={
                     tab2Index === 2
@@ -301,7 +302,7 @@ const MainPage: React.FC = () => {
                   }
                 >
                   <BiTrafficCone style={{ transform: "scaleY(-1)" }} />
-                </div>
+                </div> */}
               </div>
             </>
           ) : (
