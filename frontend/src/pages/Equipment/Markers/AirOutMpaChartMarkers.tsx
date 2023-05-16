@@ -30,7 +30,7 @@ const data = [
     id: "AirOutMpa",
     data: Array.from({ length: 20 }, (_, i) => ({
       x: i + 1,
-      y: Math.sin((i / 5) * Math.PI) * 50 + 50,
+      y: Math.sin((i / 5) * Math.PI) * 0.5 + 0.5,
     })),
   },
 ];
@@ -81,12 +81,28 @@ const AirOutMpaChartMarkers = () => {
       const newMarkers = [...prevMarkers];
 
       // max값 설정하기.
-      if (value > 300) {
-        toast.error("AirOutMpa Marker의 최대값은 300입니다.");
-        value = 300;
-      } else if (value < 0) {
-        toast.error("AirOutMpa Marker의 최소값은 0입니다.");
-        value = 0;
+      if (value > 1) {
+        toast.error("AirOut(MPa) Marker의 최대값은 1입니다.", {
+          duration: 2000,
+          position: "top-right",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
+        value = 1;
+      } else if (value < -0.1) {
+        toast.error("AirOut(MPa) Marker의 최소값은 -0.1입니다.", {
+          duration: 2000,
+          position: "top-right",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
+        value = -0.1;
       }
       newMarkers[index].value = value || 0;
       if (newMarkers[index].legend.startsWith("Value:")) {
@@ -148,7 +164,7 @@ const AirOutMpaChartMarkers = () => {
       if (AirOutMpaMarkers[i].value === newAirOutMpaMarkerValue) {
         toast.error("이미 존재하는 value 입니다. Value를 수정해주세요", {
           duration: 2000,
-          position: "top-center",
+          position: "top-right",
           style: {
             // backgroundColor: "red",
             // width: "100%",
@@ -161,7 +177,7 @@ const AirOutMpaChartMarkers = () => {
     setAirOutMpaMarkers([...AirOutMpaMarkers, newAirOutMpaMarker]);
     setNewAirOutMpaMarkerLegend("");
     setColor("#FF3B30");
-    setNewAirOutMpaMarkerValue(30);
+    setNewAirOutMpaMarkerValue(0);
     setNewAirOutMpaMarkerWidth(2);
   };
 
@@ -169,14 +185,14 @@ const AirOutMpaChartMarkers = () => {
     const defaultMarker = [
       {
         axis: "y",
-        value: 70,
+        value: 0.7,
         legend: "경고",
         lineStyle: { stroke: "#FFC041", strokeWidth: "2" },
         checked: true,
       },
       {
         axis: "y",
-        value: 90,
+        value: 0.9,
         legend: "위험",
         lineStyle: { stroke: "#FF3B30", strokeWidth: "2" },
         checked: true,
@@ -195,7 +211,15 @@ const AirOutMpaChartMarkers = () => {
     setAirOutMpaMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
       newMarkers.splice(index, 1);
-      toast.success("삭제가 완료되었습니다.");
+      toast.success("삭제가 완료되었습니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
       return newMarkers;
     });
   };
@@ -233,16 +257,38 @@ const AirOutMpaChartMarkers = () => {
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewAirOutMpaMarkerValue(
-      event.target.value === "" ? "" : Number(event.target.value)
-    );
+    let value = parseFloat(event.target.value);
+    if (parseFloat(event.target.value) > 1) {
+      value = 1;
+      toast.error("AirOut(MPa)의 최대값은 1입니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
+    } else if (parseFloat(event.target.value) < -0.1) {
+      toast.error("AirOut(MPa)의 최소값은 -0.1입니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
+      value = -0.1;
+    }
+    setNewAirOutMpaMarkerValue(event.target.value === "" ? "" : Number(value));
   };
 
   const handleBlur = () => {
-    if (newAirOutMpaMarkerValue < 0) {
-      setNewAirOutMpaMarkerValue(0);
-    } else if (newAirOutMpaMarkerValue > 300) {
-      setNewAirOutMpaMarkerValue(300);
+    if (newAirOutMpaMarkerValue < -0.1) {
+      setNewAirOutMpaMarkerValue(-0.1);
+    } else if (newAirOutMpaMarkerValue > 1) {
+      setNewAirOutMpaMarkerValue(1);
     }
   };
 
@@ -290,8 +336,8 @@ const AirOutMpaChartMarkers = () => {
                   }
                   onChange={handleSliderChange}
                   aria-labelledby="input-slider"
-                  min={0}
-                  max={300}
+                  min={-0.1}
+                  max={1}
                 />
               </Grid>
               <Grid item xs={2.5}>
@@ -302,10 +348,9 @@ const AirOutMpaChartMarkers = () => {
                   onBlur={handleBlur}
                   inputProps={{
                     step: 0.1,
-                    min: -0.1,
-                    max: 1,
+                    // min: 0,
+                    // max: 300,
                     type: "number",
-                    "aria-labelledby": "input-slider",
                   }}
                 />
               </Grid>
@@ -455,12 +500,8 @@ const AirOutMpaChartMarkers = () => {
                   onChange={(event) =>
                     handleMarkerValueChange(index, Number(event.target.value))
                   }
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        {/* <TitleIcon /> */}
-                      </InputAdornment>
-                    ),
+                  inputProps={{
+                    step: 0.1,
                   }}
                   variant="standard"
                 />
@@ -575,8 +616,8 @@ const AirOutMpaChartMarkers = () => {
           xScale={{ type: "point" }}
           yScale={{
             type: "linear",
-            min: 0,
-            max: 120,
+            min: -0.1,
+            max: 1,
             stacked: false,
             reverse: false,
           }}

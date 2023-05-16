@@ -30,7 +30,7 @@ const data = [
     id: "Rpm",
     data: Array.from({ length: 20 }, (_, i) => ({
       x: i + 1,
-      y: Math.sin((i / 5) * Math.PI) * 50 + 50,
+      y: Math.sin((i / 5) * Math.PI) * 25000 + 25000,
     })),
   },
 ];
@@ -51,7 +51,7 @@ interface Marker {
 const RpmChartMarkers = () => {
   const [RpmMarkers, setRpmMarkers] = useState<any>([]);
   // const [newRpmMarkerValue, setNewRpmMarkerValue] = useState<number>(0);
-  const [newRpmMarkerValue, setNewRpmMarkerValue] = React.useState<any>(0);
+  const [newRpmMarkerValue, setNewRpmMarkerValue] = React.useState<any>(10000);
   const [newRpmMarkerWidth, setNewRpmMarkerWidth] = useState<number>(2);
   const [newRpmMarkerLegend, setNewRpmMarkerLegend] = useState<string>("");
 
@@ -76,11 +76,27 @@ const RpmChartMarkers = () => {
       const newMarkers = [...prevMarkers];
 
       // max값 설정하기.
-      if (value > 300) {
-        toast.error("Rpm Marker의 최대값은 300입니다.");
-        value = 300;
+      if (value > 50000) {
+        toast.error("회전속도 Marker의 최대값은 50000입니다.", {
+          duration: 2000,
+          position: "top-right",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
+        value = 50000;
       } else if (value < 0) {
-        toast.error("Rpm Marker의 최소값은 0입니다.");
+        toast.error("회전속도 Marker의 최소값은 0입니다.", {
+          duration: 2000,
+          position: "top-right",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
         value = 0;
       }
       newMarkers[index].value = value || 0;
@@ -140,7 +156,7 @@ const RpmChartMarkers = () => {
       if (RpmMarkers[i].value === newRpmMarkerValue) {
         toast.error("이미 존재하는 value 입니다. Value를 수정해주세요", {
           duration: 2000,
-          position: "top-center",
+          position: "top-right",
           style: {
             // backgroundColor: "red",
             // width: "100%",
@@ -153,7 +169,7 @@ const RpmChartMarkers = () => {
     setRpmMarkers([...RpmMarkers, newRpmMarker]);
     setNewRpmMarkerLegend("");
     setColor("#FF3B30");
-    setNewRpmMarkerValue(30);
+    setNewRpmMarkerValue(10000);
     setNewRpmMarkerWidth(2);
   };
 
@@ -161,14 +177,14 @@ const RpmChartMarkers = () => {
     const defaultMarker = [
       {
         axis: "y",
-        value: 70,
+        value: 40000,
         legend: "경고",
         lineStyle: { stroke: "#FFC041", strokeWidth: "2" },
         checked: true,
       },
       {
         axis: "y",
-        value: 90,
+        value: 45000,
         legend: "위험",
         lineStyle: { stroke: "#FF3B30", strokeWidth: "2" },
         checked: true,
@@ -187,7 +203,15 @@ const RpmChartMarkers = () => {
     setRpmMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
       newMarkers.splice(index, 1);
-      toast.success("삭제가 완료되었습니다.");
+      toast.success("삭제가 완료되었습니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
       return newMarkers;
     });
   };
@@ -222,9 +246,31 @@ const RpmChartMarkers = () => {
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewRpmMarkerValue(
-      event.target.value === "" ? "" : Number(event.target.value)
-    );
+    let value = parseInt(event.target.value);
+    if (parseInt(event.target.value) > 50000) {
+      value = 50000;
+      toast.error("회전속도 Marker의 최대값은 50000입니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
+    } else if (parseInt(event.target.value) < 0) {
+      toast.error("회전속도 Marker의 최소값은 0입니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
+      value = 0;
+    }
+    setNewRpmMarkerValue(event.target.value === "" ? "" : Number(value));
   };
 
   const handleBlur = () => {
@@ -290,9 +336,8 @@ const RpmChartMarkers = () => {
                   onChange={handleInputChange}
                   onBlur={handleBlur}
                   inputProps={{
-                    step: 100,
-                    min: 0,
-                    max: 50000,
+                    step: 1000,
+
                     type: "number",
                     "aria-labelledby": "input-slider",
                   }}
@@ -451,6 +496,9 @@ const RpmChartMarkers = () => {
                       </InputAdornment>
                     ),
                   }}
+                  inputProps={{
+                    step: 1000,
+                  }}
                   variant="standard"
                 />
                 {/* <p style={{ margin: "0" }}>Marker 수정</p> */}
@@ -564,7 +612,7 @@ const RpmChartMarkers = () => {
           yScale={{
             type: "linear",
             min: 0,
-            max: 120,
+            max: 50000,
             stacked: false,
             reverse: false,
           }}

@@ -30,7 +30,7 @@ const data = [
     id: "AirOutKpa",
     data: Array.from({ length: 20 }, (_, i) => ({
       x: i + 1,
-      y: Math.sin((i / 5) * Math.PI) * 50 + 50,
+      y: Math.sin((i / 5) * Math.PI) * 450 + 450,
     })),
   },
 ];
@@ -81,11 +81,27 @@ const AirOutKpaChartMarkers = () => {
       const newMarkers = [...prevMarkers];
 
       // max값 설정하기.
-      if (value > 300) {
-        toast.error("AirOutKpa Marker의 최대값은 300입니다.");
-        value = 300;
+      if (value > 900) {
+        toast.error("AirOutKpa Marker의 최대값은 900입니다.", {
+          duration: 2000,
+          position: "top-right",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
+        value = 900;
       } else if (value < 0) {
-        toast.error("AirOutKpa Marker의 최소값은 0입니다.");
+        toast.error("AirOutKpa Marker의 최소값은 0입니다.", {
+          duration: 2000,
+          position: "top-right",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
         value = 0;
       }
       newMarkers[index].value = value || 0;
@@ -148,7 +164,7 @@ const AirOutKpaChartMarkers = () => {
       if (AirOutKpaMarkers[i].value === newAirOutKpaMarkerValue) {
         toast.error("이미 존재하는 value 입니다. Value를 수정해주세요", {
           duration: 2000,
-          position: "top-center",
+          position: "top-right",
           style: {
             // backgroundColor: "red",
             // width: "100%",
@@ -161,7 +177,7 @@ const AirOutKpaChartMarkers = () => {
     setAirOutKpaMarkers([...AirOutKpaMarkers, newAirOutKpaMarker]);
     setNewAirOutKpaMarkerLegend("");
     setColor("#FF3B30");
-    setNewAirOutKpaMarkerValue(30);
+    setNewAirOutKpaMarkerValue(100);
     setNewAirOutKpaMarkerWidth(2);
   };
 
@@ -169,14 +185,14 @@ const AirOutKpaChartMarkers = () => {
     const defaultMarker = [
       {
         axis: "y",
-        value: 70,
+        value: 700,
         legend: "경고",
         lineStyle: { stroke: "#FFC041", strokeWidth: "2" },
         checked: true,
       },
       {
         axis: "y",
-        value: 90,
+        value: 800,
         legend: "위험",
         lineStyle: { stroke: "#FF3B30", strokeWidth: "2" },
         checked: true,
@@ -195,7 +211,15 @@ const AirOutKpaChartMarkers = () => {
     setAirOutKpaMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
       newMarkers.splice(index, 1);
-      toast.success("삭제가 완료되었습니다.");
+      toast.success("삭제가 완료되었습니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
       return newMarkers;
     });
   };
@@ -233,16 +257,38 @@ const AirOutKpaChartMarkers = () => {
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewAirOutKpaMarkerValue(
-      event.target.value === "" ? "" : Number(event.target.value)
-    );
+    let value = parseInt(event.target.value);
+    if (parseInt(event.target.value) > 900) {
+      value = 900;
+      toast.error("AirOut(kPa) Marker의 최대값은 900입니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
+    } else if (parseInt(event.target.value) < 0) {
+      toast.error("AirOut(kPa)의 최소값은 0입니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
+      value = 0;
+    }
+    setNewAirOutKpaMarkerValue(event.target.value === "" ? "" : Number(value));
   };
 
   const handleBlur = () => {
     if (newAirOutKpaMarkerValue < 0) {
       setNewAirOutKpaMarkerValue(0);
-    } else if (newAirOutKpaMarkerValue > 300) {
-      setNewAirOutKpaMarkerValue(300);
+    } else if (newAirOutKpaMarkerValue > 900) {
+      setNewAirOutKpaMarkerValue(900);
     }
   };
 
@@ -302,8 +348,8 @@ const AirOutKpaChartMarkers = () => {
                   onBlur={handleBlur}
                   inputProps={{
                     step: 10,
-                    min: 0,
-                    max: 900,
+                    // min: 0,
+                    // max: 900,
                     type: "number",
                     "aria-labelledby": "input-slider",
                   }}
@@ -576,7 +622,7 @@ const AirOutKpaChartMarkers = () => {
           yScale={{
             type: "linear",
             min: 0,
-            max: 120,
+            max: 900,
             stacked: false,
             reverse: false,
           }}

@@ -30,7 +30,7 @@ const data = [
     id: "Motor",
     data: Array.from({ length: 20 }, (_, i) => ({
       x: i + 1,
-      y: Math.sin((i / 5) * Math.PI) * 50 + 50,
+      y: Math.sin((i / 5) * Math.PI) * 150 + 150,
     })),
   },
 ];
@@ -77,10 +77,26 @@ const MotorChartMarkers = () => {
 
       // max값 설정하기.
       if (value > 300) {
-        toast.error("Motor Marker의 최대값은 300입니다.");
+        toast.error("Motor Marker의 최대값은 300입니다.", {
+          duration: 2000,
+          position: "top-right",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
         value = 300;
       } else if (value < 0) {
-        toast.error("Motor Marker의 최소값은 0입니다.");
+        toast.error("Motor Marker의 최소값은 0입니다.", {
+          duration: 2000,
+          position: "top-right",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
         value = 0;
       }
       newMarkers[index].value = value || 0;
@@ -140,7 +156,7 @@ const MotorChartMarkers = () => {
       if (MotorMarkers[i].value === newMotorMarkerValue) {
         toast.error("이미 존재하는 value 입니다. Value를 수정해주세요", {
           duration: 2000,
-          position: "top-center",
+          position: "top-right",
           style: {
             // backgroundColor: "red",
             // width: "100%",
@@ -187,7 +203,15 @@ const MotorChartMarkers = () => {
     setMotorMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
       newMarkers.splice(index, 1);
-      toast.success("삭제가 완료되었습니다.");
+      toast.success("삭제가 완료되었습니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
       return newMarkers;
     });
   };
@@ -222,9 +246,32 @@ const MotorChartMarkers = () => {
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewMotorMarkerValue(
-      event.target.value === "" ? "" : Number(event.target.value)
-    );
+    console.log(event.target.value);
+    let value = parseInt(event.target.value);
+    if (parseInt(event.target.value) > 300) {
+      value = 300;
+      toast.error("Motor Marker의 최대값은 300입니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
+    } else if (parseInt(event.target.value) < 0) {
+      toast.error("Motor Marker의 최소값은 0입니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
+      value = 0;
+    }
+    setNewMotorMarkerValue(event.target.value === "" ? "" : Number(value));
   };
 
   const handleBlur = () => {
@@ -291,8 +338,8 @@ const MotorChartMarkers = () => {
                   onBlur={handleBlur}
                   inputProps={{
                     step: 10,
-                    min: 0,
-                    max: 300,
+                    // min: 0,
+                    // max: 300,
                     type: "number",
                     "aria-labelledby": "input-slider",
                   }}
@@ -565,7 +612,7 @@ const MotorChartMarkers = () => {
           yScale={{
             type: "linear",
             min: 0,
-            max: 120,
+            max: 300,
             stacked: false,
             reverse: false,
           }}

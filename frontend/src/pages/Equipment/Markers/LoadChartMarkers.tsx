@@ -30,7 +30,7 @@ const data = [
     id: "Load",
     data: Array.from({ length: 20 }, (_, i) => ({
       x: i + 1,
-      y: Math.sin((i / 5) * Math.PI) * 50 + 50,
+      y: Math.sin((i / 5) * Math.PI) * 8 + 8,
     })),
   },
 ];

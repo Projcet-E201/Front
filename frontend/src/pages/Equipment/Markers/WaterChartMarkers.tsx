@@ -30,7 +30,7 @@ const data = [
     id: "Water",
     data: Array.from({ length: 20 }, (_, i) => ({
       x: i + 1,
-      y: Math.sin((i / 5) * Math.PI) * 50 + 50,
+      y: Math.sin((i / 5) * Math.PI) * 2 + 2,
     })),
   },
 ];
@@ -76,11 +76,27 @@ const WaterChartMarkers = () => {
       const newMarkers = [...prevMarkers];
 
       // max값 설정하기.
-      if (value > 300) {
-        toast.error("Water Marker의 최대값은 300입니다.");
-        value = 300;
+      if (value > 4) {
+        toast.error("Water Marker의 최대값은 4입니다.", {
+          duration: 2000,
+          position: "top-right",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
+        value = 4;
       } else if (value < 0) {
-        toast.error("Water Marker의 최소값은 0입니다.");
+        toast.error("Water Marker의 최소값은 0입니다.", {
+          duration: 2000,
+          position: "top-right",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
         value = 0;
       }
       newMarkers[index].value = value || 0;
@@ -137,7 +153,7 @@ const WaterChartMarkers = () => {
       if (WaterMarkers[i].value === newWaterMarkerValue) {
         toast.error("이미 존재하는 value 입니다. Value를 수정해주세요", {
           duration: 2000,
-          position: "top-center",
+          position: "top-right",
           style: {
             // backgroundColor: "red",
             // width: "100%",
@@ -150,7 +166,7 @@ const WaterChartMarkers = () => {
     setWaterMarkers([...WaterMarkers, newWaterMarker]);
     setNewWaterMarkerLegend("");
     setColor("#FF3B30");
-    setNewWaterMarkerValue(30);
+    setNewWaterMarkerValue(0);
     setNewWaterMarkerWidth(2);
   };
 
@@ -158,14 +174,14 @@ const WaterChartMarkers = () => {
     const defaultMarker = [
       {
         axis: "y",
-        value: 70,
+        value: 3,
         legend: "경고",
         lineStyle: { stroke: "#FFC041", strokeWidth: "2" },
         checked: true,
       },
       {
         axis: "y",
-        value: 90,
+        value: 3.5,
         legend: "위험",
         lineStyle: { stroke: "#FF3B30", strokeWidth: "2" },
         checked: true,
@@ -184,7 +200,15 @@ const WaterChartMarkers = () => {
     setWaterMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
       newMarkers.splice(index, 1);
-      toast.success("삭제가 완료되었습니다.");
+      toast.success("삭제가 완료되었습니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
       return newMarkers;
     });
   };
@@ -219,16 +243,38 @@ const WaterChartMarkers = () => {
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewWaterMarkerValue(
-      event.target.value === "" ? "" : Number(event.target.value)
-    );
+    let value = parseFloat(event.target.value);
+    if (parseFloat(event.target.value) > 4) {
+      value = 4;
+      toast.error("Water Marker의 최대값은 4입니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
+    } else if (parseFloat(event.target.value) < 0) {
+      toast.error("Water Marker의 최소값은 0입니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
+      value = 0;
+    }
+    setNewWaterMarkerValue(event.target.value === "" ? "" : Number(value));
   };
 
   const handleBlur = () => {
     if (newWaterMarkerValue < 0) {
       setNewWaterMarkerValue(0);
-    } else if (newWaterMarkerValue > 300) {
-      setNewWaterMarkerValue(300);
+    } else if (newWaterMarkerValue > 4) {
+      setNewWaterMarkerValue(4);
     }
   };
 
@@ -288,8 +334,8 @@ const WaterChartMarkers = () => {
                   onBlur={handleBlur}
                   inputProps={{
                     step: 0.5,
-                    min: 0,
-                    max: 4,
+                    // min: 0,
+                    // max: 4,
                     type: "number",
                     "aria-labelledby": "input-slider",
                   }}
@@ -438,13 +484,7 @@ const WaterChartMarkers = () => {
                 onChange={(event) =>
                   handleMarkerValueChange(index, Number(event.target.value))
                 }
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      {/* <TitleIcon /> */}
-                    </InputAdornment>
-                  ),
-                }}
+                inputProps={{ step: 0.5, type: "number" }}
                 variant="standard"
               />
               {/* <p style={{ margin: "0" }}>Marker 수정</p> */}
@@ -557,7 +597,7 @@ const WaterChartMarkers = () => {
           yScale={{
             type: "linear",
             min: 0,
-            max: 120,
+            max: 4,
             stacked: false,
             reverse: false,
           }}

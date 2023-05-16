@@ -52,7 +52,7 @@ const VacuumChartMarkers = () => {
   const [VacuumMarkers, setVacuumMarkers] = useState<any>([]);
   // const [newVacuumMarkerValue, setNewVacuumMarkerValue] = useState<number>(0);
   const [newVacuumMarkerValue, setNewVacuumMarkerValue] =
-    React.useState<any>(0);
+    React.useState<any>(30);
   const [newVacuumMarkerWidth, setNewVacuumMarkerWidth] = useState<number>(2);
   const [newVacuumMarkerLegend, setNewVacuumMarkerLegend] =
     useState<string>("");
@@ -78,11 +78,27 @@ const VacuumChartMarkers = () => {
       const newMarkers = [...prevMarkers];
 
       // max값 설정하기.
-      if (value > 300) {
-        toast.error("Vacuum Marker의 최대값은 300입니다.");
-        value = 300;
+      if (value > 100) {
+        toast.error("Vacuum Marker의 최대값은 100입니다.", {
+          duration: 2000,
+          position: "top-right",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
+        value = 100;
       } else if (value < 0) {
-        toast.error("Vacuum Marker의 최소값은 0입니다.");
+        toast.error("Vacuum Marker의 최소값은 0입니다.", {
+          duration: 2000,
+          position: "top-right",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
         value = 0;
       }
       newMarkers[index].value = value || 0;
@@ -142,7 +158,7 @@ const VacuumChartMarkers = () => {
       if (VacuumMarkers[i].value === newVacuumMarkerValue) {
         toast.error("이미 존재하는 value 입니다. Value를 수정해주세요", {
           duration: 2000,
-          position: "top-center",
+          position: "top-right",
           style: {
             // backgroundColor: "red",
             // width: "100%",
@@ -163,14 +179,14 @@ const VacuumChartMarkers = () => {
     const defaultMarker = [
       {
         axis: "y",
-        value: 70,
+        value: 60,
         legend: "경고",
         lineStyle: { stroke: "#FFC041", strokeWidth: "2" },
         checked: true,
       },
       {
         axis: "y",
-        value: 90,
+        value: 80,
         legend: "위험",
         lineStyle: { stroke: "#FF3B30", strokeWidth: "2" },
         checked: true,
@@ -189,7 +205,15 @@ const VacuumChartMarkers = () => {
     setVacuumMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
       newMarkers.splice(index, 1);
-      toast.success("삭제가 완료되었습니다.");
+      toast.success("삭제가 완료되었습니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
       return newMarkers;
     });
   };
@@ -224,16 +248,38 @@ const VacuumChartMarkers = () => {
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewVacuumMarkerValue(
-      event.target.value === "" ? "" : Number(event.target.value)
-    );
+    let value = parseInt(event.target.value);
+    if (parseInt(event.target.value) > 100) {
+      value = 100;
+      toast.error("Vacuum Marker의 최대값은 100입니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
+    } else if (parseInt(event.target.value) < 0) {
+      toast.error("Vacuum Marker의 최소값은 0입니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
+      value = 0;
+    }
+    setNewVacuumMarkerValue(event.target.value === "" ? "" : Number(value));
   };
 
   const handleBlur = () => {
     if (newVacuumMarkerValue < 0) {
       setNewVacuumMarkerValue(0);
-    } else if (newVacuumMarkerValue > 300) {
-      setNewVacuumMarkerValue(300);
+    } else if (newVacuumMarkerValue > 100) {
+      setNewVacuumMarkerValue(100);
     }
   };
 
@@ -292,9 +338,9 @@ const VacuumChartMarkers = () => {
                   onChange={handleInputChange}
                   onBlur={handleBlur}
                   inputProps={{
-                    step: 5,
-                    min: 0,
-                    max: 100,
+                    step: 10,
+                    // min: 0,
+                    // max: 100,
                     type: "number",
                     "aria-labelledby": "input-slider",
                   }}
@@ -567,7 +613,7 @@ const VacuumChartMarkers = () => {
           yScale={{
             type: "linear",
             min: 0,
-            max: 120,
+            max: 100,
             stacked: false,
             reverse: false,
           }}

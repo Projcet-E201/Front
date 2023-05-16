@@ -30,7 +30,7 @@ const data = [
     id: "AirIn",
     data: Array.from({ length: 20 }, (_, i) => ({
       x: i + 1,
-      y: Math.sin((i / 5) * Math.PI) * 50 + 50,
+      y: Math.sin((i / 5) * Math.PI) * 450 + 450,
     })),
   },
 ];
@@ -77,11 +77,27 @@ const AirInChartMarkers = () => {
       const newMarkers = [...prevMarkers];
 
       // max값 설정하기.
-      if (value > 300) {
-        toast.error("AirIn Marker의 최대값은 300입니다.");
-        value = 300;
+      if (value > 900) {
+        toast.error("AirIn Marker의 최대값은 900입니다.", {
+          duration: 2000,
+          position: "top-right",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
+        value = 900;
       } else if (value < 0) {
-        toast.error("AirIn Marker의 최소값은 0입니다.");
+        toast.error("AirIn Marker의 최소값은 0입니다.", {
+          duration: 2000,
+          position: "top-right",
+          style: {
+            // backgroundColor: "red",
+            // width: "100%",
+            maxWidth: "100%",
+          },
+        });
         value = 0;
       }
       newMarkers[index].value = value || 0;
@@ -141,7 +157,7 @@ const AirInChartMarkers = () => {
       if (AirInMarkers[i].value === newAirInMarkerValue) {
         toast.error("이미 존재하는 value 입니다. Value를 수정해주세요", {
           duration: 2000,
-          position: "top-center",
+          position: "top-right",
           style: {
             // backgroundColor: "red",
             // width: "100%",
@@ -162,14 +178,14 @@ const AirInChartMarkers = () => {
     const defaultMarker = [
       {
         axis: "y",
-        value: 70,
+        value: 600,
         legend: "경고",
         lineStyle: { stroke: "#FFC041", strokeWidth: "2" },
         checked: true,
       },
       {
         axis: "y",
-        value: 90,
+        value: 800,
         legend: "위험",
         lineStyle: { stroke: "#FF3B30", strokeWidth: "2" },
         checked: true,
@@ -188,7 +204,15 @@ const AirInChartMarkers = () => {
     setAirInMarkers((prevMarkers: any) => {
       const newMarkers = [...prevMarkers];
       newMarkers.splice(index, 1);
-      toast.success("삭제가 완료되었습니다.");
+      toast.success("삭제가 완료되었습니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
       return newMarkers;
     });
   };
@@ -223,16 +247,39 @@ const AirInChartMarkers = () => {
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewAirInMarkerValue(
-      event.target.value === "" ? "" : Number(event.target.value)
-    );
+    console.log(event.target.value);
+    let value = parseInt(event.target.value);
+    if (parseInt(event.target.value) > 900) {
+      value = 900;
+      toast.error("AirIn Marker의 최대값은 900입니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
+    } else if (parseInt(event.target.value) < 0) {
+      toast.error("AirIn Marker의 최소값은 0입니다.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          // backgroundColor: "red",
+          // width: "100%",
+          maxWidth: "100%",
+        },
+      });
+      value = 0;
+    }
+    setNewAirInMarkerValue(event.target.value === "" ? "" : Number(value));
   };
 
   const handleBlur = () => {
     if (newAirInMarkerValue < 0) {
       setNewAirInMarkerValue(0);
-    } else if (newAirInMarkerValue > 300) {
-      setNewAirInMarkerValue(300);
+    } else if (newAirInMarkerValue > 900) {
+      setNewAirInMarkerValue(900);
     }
   };
 
@@ -292,8 +339,8 @@ const AirInChartMarkers = () => {
                   onBlur={handleBlur}
                   inputProps={{
                     step: 10,
-                    min: 0,
-                    max: 900,
+                    // min: 0,
+                    // max: 900,
                     type: "number",
                     "aria-labelledby": "input-slider",
                   }}
@@ -566,7 +613,7 @@ const AirInChartMarkers = () => {
           yScale={{
             type: "linear",
             min: 0,
-            max: 120,
+            max: 900,
             stacked: false,
             reverse: false,
           }}
