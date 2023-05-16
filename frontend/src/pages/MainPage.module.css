@@ -42,7 +42,8 @@
 
 .sensortab2 {
   position: fixed;
-  width: 30vh;
+  /* width: 30vh; */
+  width: 20vh;
   height: 5vh;
   display: flex;
   border-bottom: 0.5vh solid #5e5e5e;
@@ -50,7 +51,8 @@
   cursor: pointer;
   align-items: center;
   margin-top: 82vh;
-  margin-left: 33.6vh;
+  /* margin-left: 33.6vh; */
+  margin-left: 38vh;
 }
 
 .mainloadingcard {

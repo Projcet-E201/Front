@@ -23,7 +23,7 @@ export type SenserPropsType = {
     ABRASION: number;
     LOAD: number;
     VELOCITY: number;
-    // SCORE: number;
+    SCORE: number;
   };
 };
 

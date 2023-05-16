@@ -28,7 +28,7 @@ const MainMachineRadarItem = (props: MainMachineItemProps) => {
   // 추출할 데이터를 배열로 변환합니다.
   const radarData = Object.entries(props.clientData).map(([key, data]) => ({
     id: key,
-    SCORE: data.LOAD,
+    SCORE: data.SCORE,
   }));
 
   // radarData 배열들을 하나의 큰 배열로 모읍니다.
@@ -56,8 +56,8 @@ const MainMachineRadarItem = (props: MainMachineItemProps) => {
       >
         <div
           style={{
-            width: `80%`,
-            height: "80%",
+            width: `90%`,
+            height: "90%",
             margin: "auto",
             padding: "0",
           }}

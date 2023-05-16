@@ -9,7 +9,7 @@ interface Message {
   content: string;
 }
 
-const StringState = () => {
+const MainError = () => {
   const [messages, setMessages] = useState<Message[]>([]);
 
   const getErrorData = async () => {
@@ -55,4 +55,4 @@ const StringState = () => {
   );
 };
 
-export default StringState;
+export default MainError;
