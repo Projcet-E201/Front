@@ -5,18 +5,27 @@ import { faker } from "@faker-js/faker";
 
 // import CircularProgress from "@mui/material/CircularProgress";
 const CardRpmChart = ({ velocityData }: any) => {
-  const data: any = velocityData
-    .filter((item: any) => !isNaN(item.value))
+  const data = velocityData
+    .filter((item: any) => !isNaN(item[Object.keys(item)[0]]))
     .map((item: any, index: number) => {
       const key = Object.keys(item)[0];
+      const id = `R${index + 1}`;
       const value = item[key];
+      const color = index % 2 === 0 ? "#C1EAF3" : "#5CC2F2";
 
       return {
-        id: `V${index + 1}`,
+        id,
         value,
-        color: index % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
+        color,
       };
+    })
+    .sort((a: any, b: any) => {
+      const idA = parseInt(a.id.replace("VELOCITY", ""));
+      const idB = parseInt(b.id.replace("VELOCITY", ""));
+      return idA - idB;
     });
+
+  console.log(data);
 
   return (
     <div style={{ height: "100%" }}>

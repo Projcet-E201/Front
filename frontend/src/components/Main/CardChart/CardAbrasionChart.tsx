@@ -2,18 +2,26 @@ import React, { useState, useEffect, useMemo } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { faker } from "@faker-js/faker";
 const CardAbrasionChart = ({ abrasionData }: any) => {
-  const data: any = abrasionData
-    .filter((item: any) => !isNaN(item.value))
+  const data = abrasionData
+    .filter((item: any) => !isNaN(item[Object.keys(item)[0]]))
     .map((item: any, index: number) => {
       const key = Object.keys(item)[0];
+      const id = `A${index + 1}`;
       const value = item[key];
+      const color = index % 2 === 0 ? "#C1EAF3" : "#5CC2F2";
 
       return {
-        id: `A${index + 1}`,
+        id,
         value,
-        color: index % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
+        color,
       };
+    })
+    .sort((a: any, b: any) => {
+      const idA = parseInt(a.id.replace("ABRASION", ""));
+      const idB = parseInt(b.id.replace("ABRASION", ""));
+      return idA - idB;
     });
+
   return (
     <div style={{ height: "100%" }}>
       {data.length === 0 ? (

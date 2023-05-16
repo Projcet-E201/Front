@@ -2,20 +2,27 @@ import React, { useEffect, useState } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 
 const CardWaterChart = ({ waterData }: any) => {
-  console.log(waterData, "water");
-
-  const data: any = waterData
-    .filter((item: any) => !isNaN(item.value))
+  const data = waterData
+    .filter((item: any) => !isNaN(item[Object.keys(item)[0]]))
     .map((item: any, index: number) => {
       const key = Object.keys(item)[0];
+      const id = `W${index + 1}`;
       const value = item[key];
+      const color = index % 2 === 0 ? "#C1EAF3" : "#5CC2F2";
 
       return {
-        id: `W${index + 1}`,
+        id,
         value,
-        color: index % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
+        color,
       };
+    })
+    .sort((a: any, b: any) => {
+      const idA = parseInt(a.id.replace("WATER", ""));
+      const idB = parseInt(b.id.replace("WATER", ""));
+      return idA - idB;
     });
+
+  console.log(data);
 
   return (
     <div style={{ height: "100%" }}>

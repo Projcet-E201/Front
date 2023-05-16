@@ -2,19 +2,27 @@ import React, { useState, useEffect, useMemo } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { faker } from "@faker-js/faker";
 const CardLoadChart = ({ loadData }: any) => {
-  const data: any = loadData
-    // NaN이면 일단 제외시키기 (추후에 연결 에러 표시로 바꿔야 될 거 같음)
-    .filter((item: any) => !isNaN(item.value))
+  const data = loadData
+    .filter((item: any) => !isNaN(item[Object.keys(item)[0]]))
     .map((item: any, index: number) => {
       const key = Object.keys(item)[0];
+      const id = `L${index + 1}`;
       const value = item[key];
+      const color = index % 2 === 0 ? "#C1EAF3" : "#5CC2F2";
 
       return {
-        id: `L${index + 1}`,
+        id,
         value,
-        color: index % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
+        color,
       };
+    })
+    .sort((a: any, b: any) => {
+      const idA = parseInt(a.id.replace("LOAD", ""));
+      const idB = parseInt(b.id.replace("LOAD", ""));
+      return idA - idB;
     });
+
+  console.log(data);
   return (
     <div style={{ height: "100%" }}>
       {data.length === 0 ? (
