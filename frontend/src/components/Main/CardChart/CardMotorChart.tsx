@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation, useParams } from "react-router";
-import { faker } from "@faker-js/faker";
+
 import { ResponsiveLine } from "@nivo/line";
-import { linearGradientDef } from "@nivo/core";
 
 const CardMotorChart = ({ motorData }: any) => {
   // console.log(motorData, " motordata prop 받음!");

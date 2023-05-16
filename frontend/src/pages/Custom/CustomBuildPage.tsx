@@ -44,16 +44,6 @@ const CustomBuildPage = () => {
 
   const navigate = useNavigate();
 
-  //height 추가
-
-  // const changeSelectedNumber = (event:SelectChangeEvent<typeof selectedNumber>) => {
-  //   const {
-  //     target: {value},
-  //   } = event;
-  //   // autofill
-  //   typeof value === 'string' ? value.split()
-  // }
-
   // 한줄에 1개 볼 지 2개볼 지
   const [isSingleRow, setIsSingleRow] = useState(true);
 
