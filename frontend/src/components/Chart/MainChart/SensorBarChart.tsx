@@ -73,7 +73,7 @@ const SensorBarChart = ({ data, sensor }: SensorBarChartProps) => {
             ? 16
             : 50000
         }
-        // gridYValues={[]}
+        gridYValues={[]}
         tooltip={customTooltip}
       />
     </div>

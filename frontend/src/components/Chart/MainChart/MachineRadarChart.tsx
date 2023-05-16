@@ -32,9 +32,10 @@ const MachineRadarChart = ({ data }: MachineRadarChartProps) => {
       indexBy="id"
       maxValue={100}
       curve="linearClosed"
+      margin={{ top: 50, right: 80, bottom: 50, left: 80 }}
       borderWidth={2}
       borderColor={{ from: "color" }}
-      gridLevels={5}
+      gridLevels={4}
       gridShape="circular"
       gridLabelOffset={16}
       enableDots={true}

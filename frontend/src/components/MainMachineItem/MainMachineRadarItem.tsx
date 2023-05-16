@@ -49,16 +49,16 @@ const MainMachineRadarItem = (props: MainMachineItemProps) => {
           display: "Flex",
           padding: "0",
           overflow: "auto",
-          // flexDirection: "column",
-          // justifyContent: "center",
-          // alignItems: "center",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <div
           style={{
+            width: `80%`,
+            height: "80%",
             margin: "auto",
-            width: "75%",
-            height: "75%",
             padding: "0",
           }}
         >
