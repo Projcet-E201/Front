@@ -29,7 +29,7 @@ const LeftNav = ({ childrenHeight }: any) => {
   // console.log(childrenHeight, "프롭받은 높이");
   const navigate = useNavigate();
   const location = useLocation();
-  const { machine = "" } = useParams();
+  const { machine = 0 } = useParams();
   const [open, setOpen] = React.useState(false);
 
   // index 어떤거 선택되어 있는지
@@ -39,27 +39,26 @@ const LeftNav = ({ childrenHeight }: any) => {
   };
 
   const buttonList = [];
+  const machineNumberMatch = location.pathname.match(/\/machine\/(\d+)/);
+  const machineNumber = machineNumberMatch
+    ? Number(machineNumberMatch[1])
+    : null;
   for (let i = 1; i <= 12; i++) {
+    // console.log(machineNumber);
     buttonList.push(
       <div key={i} style={{ borderBottom: "1px solid gray" }}>
         <ListItemButton
           sx={{
             pl: 4,
             "&:hover": {
-              bgcolor: location.pathname.includes(`/machine/${i}`)
-                ? "#191BA9"
-                : "#CFD0FF",
+              bgcolor: machineNumber === i ? "#191BA9" : "#CFD0FF",
               color: "white",
               "& .MuiSvgIcon-root": {
                 color: "white",
               },
             },
-            bgcolor: location.pathname.includes(`/machine/${i}`)
-              ? "#191BA9"
-              : "inherit",
-            color: location.pathname.includes(`/machine/${i}`)
-              ? "white"
-              : "inherit",
+            bgcolor: machineNumber === i ? "#191BA9" : "inherit",
+            color: machineNumber === i ? "white" : "inherit",
             borderRadius: "10px",
           }}
           key={`button-${i}`}
@@ -70,9 +69,7 @@ const LeftNav = ({ childrenHeight }: any) => {
           <ListItemIcon>
             <PrecisionManufacturingIcon
               sx={{
-                color: location.pathname.includes(`/machine/${i}`)
-                  ? "white"
-                  : undefined,
+                color: machineNumber === i ? "white" : undefined,
               }}
             />
           </ListItemIcon>
@@ -81,23 +78,6 @@ const LeftNav = ({ childrenHeight }: any) => {
       </div>
     );
   }
-
-  // const [currentTime, setCurrentTime] = useState("");
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     const now = new Date();
-  //     const year = now.getFullYear();
-  //     const month = String(now.getMonth() + 1).padStart(2, "0");
-  //     const day = String(now.getDate()).padStart(2, "0");
-  //     const hours = String(now.getHours()).padStart(2, "0");
-  //     const minutes = String(now.getMinutes()).padStart(2, "0");
-  //     const seconds = String(now.getSeconds()).padStart(2, "0");
-  //     setCurrentTime(`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`);
-  //   }, 1000);
-
-  //   return () => clearInterval(interval);
-  // }, []);
 
   return (
     <div

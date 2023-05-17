@@ -50,17 +50,15 @@ const Sensor = () => {
   const [velocityData, setVelocityData] = useState<any[]>([]);
   const [abrasionData, setAbrasionData] = useState<any[]>([]);
 
+  // 가장 최근 업데이트 시간
+
+  const [updatedTime, setUpdatedTime] = useState("");
+
   const getSensorData = () => {
-    // console.log("ㄱㄱㄱ");
     axios
-      .get(`https://semse.info/api/machine/${machine}/sensor`, {
-        // timeout: 10000, // Set the timeout value (in milliseconds)
-      })
-      // .get(`http://localhost:8091/api/machine/${machine}/sensor`)
+      .get(`https://semse.info/api/machine/${machine}/sensor`)
+
       .then((response) => {
-        // console.log(response.data[0].MOTOR, "datadata", `${machine}`);
-        // setMotorData(response.data);
-        // console.log(response.data, "sensorsensor");
         setData(response.data);
         setMotorData(response.data[0].MOTOR);
         setVacuumData(response.data[0].VACUUM);
@@ -71,6 +69,13 @@ const Sensor = () => {
         setLoadData(response.data[0].LOAD);
         setAbrasionData(response.data[0].ABRASION);
         setWaterData(response.data[0].WATER);
+
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, "0");
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        const seconds = String(now.getSeconds()).padStart(2, "0");
+
+        setUpdatedTime(`${hours}시${minutes}분${seconds}초`);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -107,6 +112,7 @@ const Sensor = () => {
       setLoadData([]);
       setVelocityData([]);
       setAbrasionData([]);
+      setData([]);
     };
   }, [machine]);
 
@@ -159,7 +165,17 @@ const Sensor = () => {
                       </Box>
                     ) : (
                       <div style={{ height: "100%" }}>
-                        <h3 style={{ margin: "0" }}>Motor Toque(%)</h3>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <h3 style={{ margin: "0" }}>Motor Toque(%)</h3>
+                          <h5 style={{ margin: "0" }}>
+                            update time: {updatedTime}
+                          </h5>
+                        </div>
 
                         <CardMotorChart motorData={motorData} />
                       </div>
@@ -186,7 +202,17 @@ const Sensor = () => {
                       </Box>
                     ) : (
                       <div style={{ height: "100%" }}>
-                        <h3 style={{ margin: "0" }}>Air입력(kPa)</h3>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <h3 style={{ margin: "0" }}>Air입력(kPa)</h3>
+                          <h5 style={{ margin: "0" }}>
+                            update time: {updatedTime}
+                          </h5>
+                        </div>
                         <CardAirInChart airInData={airInData} />
                       </div>
                     )}
