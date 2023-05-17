@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import Stomp from "stompjs";
-import SockJS from "sockjs-client";
 
 const TestPage: React.FC = () => {
   const [message, setMessage] = useState("");

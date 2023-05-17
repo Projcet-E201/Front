@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import SensorLayout from "../../layout/SensorLayout";
 import MotorChart from "../../components/Chart/MotorChart";
-import { faker } from "@faker-js/faker";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import TopCard from "../../components/common/TopCard";
