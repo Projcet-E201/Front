@@ -106,7 +106,13 @@ const MainMachineItem = (props: MainMachineItemProps) => {
             }
           >
             <div className={styles.mainmachinecardcontentname}>압력</div>
-            <div className={styles.mainmachinecardcontentscore}>
+            <div
+              className={
+                props.client.MOTOR > 90
+                  ? styles.mainmachinecardcontenterrorscore
+                  : styles.mainmachinecardcontentscore
+              }
+            >
               {props.client.VACUUM}
             </div>
           </div>
@@ -115,7 +121,13 @@ const MainMachineItem = (props: MainMachineItemProps) => {
             onClick={() => navigate(`/machine/${props.clientindex + 1}/water`)}
           >
             <div className={styles.mainmachinecardcontentname}>유량</div>
-            <div className={styles.mainmachinecardcontentscore}>
+            <div
+              className={
+                props.client.WATER === 0
+                  ? styles.mainmachinecardcontenterrorscore
+                  : styles.mainmachinecardcontentscore
+              }
+            >
               {props.client.WATER}
             </div>
           </div>
@@ -124,7 +136,13 @@ const MainMachineItem = (props: MainMachineItemProps) => {
             onClick={() => navigate(`/machine/${props.clientindex + 1}/motor`)}
           >
             <div className={styles.mainmachinecardcontentname}>모터 가동</div>
-            <div className={styles.mainmachinecardcontentscore}>
+            <div
+              className={
+                props.client.MOTOR > 270
+                  ? styles.mainmachinecardcontenterrorscore
+                  : styles.mainmachinecardcontentscore
+              }
+            >
               {props.client.MOTOR}
             </div>
           </div>

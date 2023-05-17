@@ -5,7 +5,6 @@ import styles from "./MainError.module.css";
 
 interface Message {
   id: string;
-  time: string;
   content: string;
 }
 
@@ -20,7 +19,12 @@ const MainError: React.FC = () => {
 
     eventSource.onmessage = (event) => {
       console.log("요청왔다어흥", event.data);
-      setMessages(event.data);
+
+      const newMessage = {
+        id: "",
+        content: event.data,
+      };
+      setMessages((prevMessages) => [newMessage, ...prevMessages]);
     };
 
     eventSource.onerror = (event) => {
@@ -35,16 +39,11 @@ const MainError: React.FC = () => {
 
   return (
     <div className={styles.errorbox}>
-      <table>
-        <tbody>
-          {/* {messages.map((message) => (
-            <tr key={message.id} className={styles.errorstyle}>
-              {message.time && <td>[{message.time}]</td>}
-              <td>{message.content}</td>
-            </tr>
-          ))} */}
-        </tbody>
-      </table>
+      <div className={styles.errorboxcontent}>
+        {messages.map((message, index) => (
+          <div key={index}>{message.content}</div>
+        ))}
+      </div>
     </div>
   );
 };

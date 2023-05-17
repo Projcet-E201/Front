@@ -6,6 +6,8 @@ import DetailChart from "../Chart/DetailChart/DetailChart";
 import styles from "./DetailItem.module.css";
 import { DatePicker, Space, Button } from "antd";
 import axios from "axios";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 const { RangePicker } = DatePicker;
 type History = {
@@ -54,6 +56,16 @@ const DetailItem: React.FC = () => {
   useEffect(() => {
     const pathname = location.pathname;
     const [, , machineid, sensor, id] = pathname.split("/");
+
+    // sensor == "rpm"
+    //   ? setSensor("velocity")
+    //   : sensor == "air-in"
+    //   ? setSensor("air_in_kpa")
+    //   : sensor == "air-out-kpa"
+    //   ? setSensor("air_out_kpa")
+    //   : sensor == "air-out-mpa"
+    //   ? setSensor("air_out_mpa")
+    //   : setSensor(`${sensor}`);
     setSensor(`${sensor}`);
     setSensorId(`${id}`);
     setMachineId(`${machineid}`);
@@ -85,13 +97,14 @@ const DetailItem: React.FC = () => {
         // console.log(startTime, endTime);
       });
   };
+  console.log(sensor);
 
   const getNowData = async () => {
     console.log("요청했다람쥐");
 
     const currentDate = new Date();
     const startTime = new Date(
-      currentDate.getTime() - 10 * 60 * 1000
+      currentDate.getTime() - 60 * 60 * 1000
     ).toISOString();
     const endTime = currentDate.toISOString();
 
@@ -112,22 +125,55 @@ const DetailItem: React.FC = () => {
         // console.error("실패다람쥐", error);
       });
   };
-
+  const [check, setCheck] = useState(0);
   useEffect(() => {
     if (data.length === 0) {
       getNowData();
+      setCheck(1);
     }
-  }, [getNowData]);
+  }, [data.length, getNowData]);
 
   return (
     <div style={{ width: "100%" }}>
-      <Card className={styles.detailcard}>
-        <CardContent>
-          <div style={{ height: "33vh" }}>
-            <DetailChart datasets={datasets} legend={false} />
+      {check == 0 ? (
+        <Card className={styles.detailcard}>
+          <Box
+            sx={{
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <CircularProgress />
+            <h3> 현재 데이터를 불러오는 중입니다...</h3>
+          </Box>
+        </Card>
+      ) : data.length === 0 ? (
+        <div
+          style={{
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
+          <div>
+            <h4>저장된 데이터가 없습니다.</h4>
+            <h4>관리자에게 문의하세요.</h4>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      ) : (
+        <Card className={styles.detailcard}>
+          <CardContent>
+            <div style={{ height: "33vh" }}>
+              <DetailChart datasets={datasets} legend={false} />
+            </div>
+          </CardContent>
+        </Card>
+      )}
       <Card className={styles.detaildate}>
         <CardContent>
           <div style={{ height: "33vh", marginTop: "0%" }}>
