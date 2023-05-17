@@ -92,7 +92,23 @@ const MainSenserHorizonBarItem = (props: MainSenserItemProps) => {
               {...provided.dragHandleProps}
               {...(index === 0 ? {} : { isdragdisabled: "true" })}
             >
-              {sensor}
+              {sensor === "MOTOR"
+                ? "모터 가동"
+                : sensor === "VACUUM"
+                ? "압력"
+                : sensor === "AIR_IN_KPA"
+                ? "공기 주입"
+                : sensor === "AIR_OUT_KPA"
+                ? "공기 출력 (kPa)"
+                : sensor === "AIR_OUT_MPA"
+                ? "공기 출력 (MPa)"
+                : sensor === "WATER"
+                ? "유량"
+                : sensor === "ABRASION"
+                ? "마모량"
+                : sensor === "LOAD"
+                ? "부하량"
+                : "회전 속도"}
             </h3>
             <CardContent>
               <SensorHorizonBarChart data={chartData} sensor={sensor} />

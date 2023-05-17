@@ -9,33 +9,28 @@ interface Message {
   content: string;
 }
 
-const MainError = () => {
+const MainError: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
 
-  const getErrorData = async () => {
-    console.log("요청했다냥");
-
-    await axios
-
-      .get("https://semse.info/api/main/error")
-
-      // .get("http://localhost8091/api/main/machine")
-      .then((response) => {
-        console.log("성공이다냥", response.data);
-        setMessages(response.data);
-      })
-      .catch((error) => {
-        console.error("실패다냥", error);
-      });
-  };
   useEffect(() => {
-    getErrorData();
+    console.log("요청했다어흥");
+    const eventSource = new EventSource(
+      // "http://localhost:8090/subscribe/error"
+      "https://semse.info/subscribe/error"
+    );
 
-    const interval = setInterval(() => {
-      getErrorData();
-    }, 5000);
+    eventSource.onmessage = (event) => {
+      console.log("요청왔다어흥");
+      setMessages(event.data);
+    };
+
+    eventSource.onerror = (event) => {
+      console.log("요청실패어흥", event);
+      eventSource.close();
+    };
+
     return () => {
-      clearInterval(interval);
+      eventSource.close();
     };
   }, []);
 

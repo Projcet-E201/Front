@@ -43,22 +43,48 @@ const MainMachineItem = (props: MainMachineItemProps) => {
     }, 100);
     return () => clearInterval(interval);
   }, [data]);
+  const [isScoreZero, setIsScoreZero] = useState(false);
+
+  useEffect(() => {
+    setIsScoreZero(props.client.SCORE > 0 && props.client.SCORE < 60); // SCORE 값이 0인 경우에만 true를 설정
+  }, [props.client.SCORE]);
+
+  const getBackgroundColor = () => {
+    if (props.client.SCORE === 0) {
+      return "#5e5e5e";
+    } else if (props.client.SCORE < 60) {
+      return "red";
+    } else {
+      return "#4CD964";
+    }
+  };
+
+  const getAnimatedStyle = () => {
+    if (isScoreZero) {
+      return {
+        animation: `${styles.pulse} 1s infinite`,
+        backgroundColor: getBackgroundColor(),
+      };
+    } else {
+      return {
+        backgroundColor: getBackgroundColor(),
+      };
+    }
+  };
 
   return (
     <div>
       <Card className={styles.cardall}>
         <div>
           <h3
-            className={styles.mainmachinecardtitle}
+            className={`${styles.mainmachinecardtitle} ${
+              isScoreZero ? styles["is-score-zero"] : ""
+            }`}
             onClick={() => {
               navigate(`/machine/${props.clientindex + 1}`);
               indexClick("Monitoring");
             }}
-            style={
-              data.SCORE < 30
-                ? { backgroundColor: "red" }
-                : { backgroundColor: "#5e5e5e" }
-            }
+            style={getAnimatedStyle()}
           >
             {props.id}
           </h3>
@@ -66,11 +92,18 @@ const MainMachineItem = (props: MainMachineItemProps) => {
         <CardContent
           style={{
             lineHeight: "2.8em",
+            ...(props.client.SCORE === 0 && {
+              backgroundColor: "rgba(0, 0, 0, 0.2)",
+            }),
           }}
         >
           <div
             className={styles.mainmachinecardcontent}
-            onClick={() => navigate(`/machine/${props.clientindex + 1}/vacuum`)}
+            onClick={() =>
+              navigate(
+                `/mprops.client.VACUUMachine/${props.clientindex + 1}/vacuum`
+              )
+            }
           >
             <div className={styles.mainmachinecardcontentname}>압력</div>
             <div className={styles.mainmachinecardcontentscore}>
