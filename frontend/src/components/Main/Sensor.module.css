@@ -32,6 +32,8 @@
   cursor: pointer;
 }
 
+
+
 .midcard {
   width: 32%;
   margin: 0.5rem;
@@ -47,7 +49,15 @@
   border-radius: 10px;
   cursor: pointer;
 }
-
+.topcard:hover {
+  transform: scale(1.02);
+}
+.midcard:hover {
+  transform: scale(1.02);
+}
+.botcard:hover {
+  transform: scale(1.02);
+}
 
 @media (max-width: 1500px) {
   .topcard

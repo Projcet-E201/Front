@@ -4,6 +4,7 @@
   /* margin-right: 100px; */
   align-items: end;
   margin-bottom: 10px;
+  margin-left: 50px;
   /* margin-right: 10px; */
 }
 
@@ -22,13 +23,17 @@
   font-weight: bold;
   margin-top: 10px;
 }
+.toggleButton:hover {
+  transform: scale(1.1);
+}
 
 .active {
   background-color: #191ba9;
 }
 
 .inactive {
-  background-color: rgba(0, 0, 0, 0.35);
+  /* background-color: rgba(0, 0, 0, 0.35); */
+  background-color: gray
 }
 
 .navbutton {
@@ -50,6 +55,7 @@
   display: flex;
   /* cursor: pointer; */
   justify-content: start;
+  align-items: center;
   /* margin-right: 10vh; */
   /* width: 13%; */
 }
@@ -65,18 +71,33 @@
   cursor: pointer;
 }
 
-.navbutton div {
-  margin-right: 15px;
-  color: gray;
-  font-weight: bold;
-  cursor: pointer;
-}
-.navbutton div:last-child {
+
+.navbuttonlist div:last-child {
   margin-right: 0;
 }
 
-.navbutton div:hover {
-  color: #5cc2f2;
+.navbuttonlist div {
+  font-weight: bold;
+  font-size: large;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+/* .navbuttonlist div:hover {
+  color: #CFD0FF;
+  transform: scale(1.1);
+} */
+
+.choicebutton { 
+  color: #191BA9;
+  transform: scale(1.1);
+}
+.nochoicebutton {
+  color: gray
+}
+.nochoicebutton:hover {
+  color: #CFD0FF;
+  transform: scale(1.1);
 }
 
 Link { 

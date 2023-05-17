@@ -1,4 +1,4 @@
-// import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styles from "./NavBar.module.css";
@@ -24,6 +24,25 @@ const NavBar = ({ leftNavWidth }: any) => {
       navigate(`/machine/${machine}`);
     }
   };
+
+  const [currentTime, setCurrentTime] = useState("");
+  const [currentDate, setCurrentDate] = useState("");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      const seconds = String(now.getSeconds()).padStart(2, "0");
+      setCurrentTime(`${hours}시${minutes}분${seconds}초`);
+      setCurrentDate(`${year}년${month}월${day}일`);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div>
@@ -79,146 +98,158 @@ const NavBar = ({ leftNavWidth }: any) => {
             </div>
           </div>
           <div className={styles.rightbutton}>
-            {location.pathname.includes("machine") && (
-              <div className={styles.toggle}>
-                <div
-                  className={`${styles.toggleButton} ${
-                    selected === "Sensor" ? styles.active : styles.inactive
-                  }`}
-                  onClick={() => handleToggleClick("Sensor")}
-                >
-                  <span>Sensor</span>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "end",
+                marginBottom: "10px",
+              }}
+            >
+              <h3
+                style={{
+                  margin: "0",
+                  display: "flex",
+                  alignItems: "end",
+                  letterSpacing: "0.1em",
+                  marginRight: "10px",
+                }}
+              >
+                {currentDate}
+              </h3>
+              <h1
+                style={{
+                  margin: "0",
+                  display: "flex",
+                  alignItems: "end",
+                  letterSpacing: "0.1em",
+                }}
+              >
+                {currentTime}
+              </h1>
+
+              {location.pathname.includes("machine") && (
+                <div className={styles.toggle}>
+                  <div
+                    className={`${styles.toggleButton} ${
+                      selected === "Sensor" ? styles.active : styles.inactive
+                    }`}
+                    onClick={() => handleToggleClick("Sensor")}
+                  >
+                    <span>Sensor</span>
+                  </div>
+                  <div
+                    className={`${styles.toggleButton} ${
+                      selected === "State" ? styles.active : styles.inactive
+                    }`}
+                    onClick={() => handleToggleClick("State")}
+                  >
+                    <span>State</span>
+                  </div>
                 </div>
-                <div
-                  className={`${styles.toggleButton} ${
-                    selected === "State" ? styles.active : styles.inactive
-                  }`}
-                  onClick={() => handleToggleClick("State")}
-                >
-                  <span>State</span>
-                </div>
-              </div>
-            )}
+              )}
+            </div>
 
             {selected === "Sensor" && location.pathname.includes("machine") && (
-              <div className={styles.navbutton}>
-                <div style={{ display: "flex" }}>
-                  {/* {location.pathname !== `/machine/${machine}` && (
-                    <div onClick={() => navigate(`/machine/${machine}`)}>
-                      Main
-                    </div>
-                  )} */}
-                  <div
-                    onClick={() => navigate(`/machine/${machine}`)}
-                    style={{
-                      color:
-                        location.pathname === `/machine/${machine}`
-                          ? "#191BA9"
-                          : "gray",
-                      marginRight: "10px",
-                    }}
-                  >
-                    Main
-                  </div>
-                  <div
-                    onClick={() => navigate(`/machine/${machine}/motor`)}
-                    style={{
-                      color: location.pathname.includes(`/motor`)
-                        ? "#191BA9"
-                        : "gray",
-                      marginRight: "10px",
-                    }}
-                  >
-                    Motor
-                  </div>
-                  <div
-                    onClick={() => navigate(`/machine/${machine}/vacuum`)}
-                    style={{
-                      color: location.pathname.includes(`/vacuum`)
-                        ? "#191BA9"
-                        : "gray",
-                      marginRight: "10px",
-                    }}
-                  >
-                    Vacuum
-                  </div>
-                  <div
-                    onClick={() => navigate(`/machine/${machine}/air-in`)}
-                    style={{
-                      color: location.pathname.includes(`/air-in`)
-                        ? "#191BA9"
-                        : "gray",
-                      marginRight: "10px",
-                    }}
-                  >
-                    AirIn
-                  </div>
-                  <div
-                    onClick={() => navigate(`/machine/${machine}/air-out-kpa`)}
-                    style={{
-                      color: location.pathname.includes(`/air-out-kpa`)
-                        ? "#191BA9"
-                        : "gray",
-                      marginRight: "10px",
-                    }}
-                  >
-                    Air-Out(kPa)
-                  </div>
-                  <div
-                    onClick={() => navigate(`/machine/${machine}/air-out-mpa`)}
-                    style={{
-                      color: location.pathname.includes(`/air-out-mpa`)
-                        ? "#191BA9"
-                        : "gray",
-                      marginRight: "10px",
-                    }}
-                  >
-                    Air-Out(MPa)
-                  </div>
-
-                  <div
-                    onClick={() => navigate(`/machine/${machine}/water`)}
-                    style={{
-                      color: location.pathname.includes(`/water`)
-                        ? "#191BA9"
-                        : "gray",
-                      marginRight: "10px",
-                    }}
-                  >
-                    Water
-                  </div>
-                  <div
-                    onClick={() => navigate(`/machine/${machine}/abrasion`)}
-                    style={{
-                      color: location.pathname.includes(`/abrasion`)
-                        ? "#191BA9"
-                        : "gray",
-                      marginRight: "10px",
-                    }}
-                  >
-                    마모량
-                  </div>
-                  <div
-                    onClick={() => navigate(`/machine/${machine}/load`)}
-                    style={{
-                      color: location.pathname.includes(`/load`)
-                        ? "#191BA9"
-                        : "gray",
-                      marginRight: "10px",
-                    }}
-                  >
-                    부하량
-                  </div>
-                  <div
-                    onClick={() => navigate(`/machine/${machine}/rpm`)}
-                    style={{
-                      color: location.pathname.includes(`/rpm`)
-                        ? "#191BA9"
-                        : "gray",
-                    }}
-                  >
-                    회전속도
-                  </div>
+              <div style={{ display: "flex" }} className={styles.navbuttonlist}>
+                <div
+                  className={`${
+                    location.pathname === `/machine/${machine}`
+                      ? styles.choicebutton
+                      : styles.nochoicebutton
+                  }`}
+                  onClick={() => navigate(`/machine/${machine}`)}
+                >
+                  Main
+                </div>
+                <div
+                  className={`${
+                    location.pathname === `/machine/${machine}/motor`
+                      ? styles.choicebutton
+                      : styles.nochoicebutton
+                  }`}
+                  onClick={() => navigate(`/machine/${machine}/motor`)}
+                >
+                  Motor
+                </div>
+                <div
+                  className={`${
+                    location.pathname === `/machine/${machine}/vacuum`
+                      ? styles.choicebutton
+                      : styles.nochoicebutton
+                  }`}
+                  onClick={() => navigate(`/machine/${machine}/vacuum`)}
+                >
+                  Vacuum
+                </div>
+                <div
+                  className={`${
+                    location.pathname === `/machine/${machine}/air-in`
+                      ? styles.choicebutton
+                      : styles.nochoicebutton
+                  }`}
+                  onClick={() => navigate(`/machine/${machine}/air-in`)}
+                >
+                  AirIn
+                </div>
+                <div
+                  className={`${
+                    location.pathname === `/machine/${machine}/air-out-kpa`
+                      ? styles.choicebutton
+                      : styles.nochoicebutton
+                  }`}
+                  onClick={() => navigate(`/machine/${machine}/air-out-kpa`)}
+                >
+                  Air-Out(kPa)
+                </div>
+                <div
+                  className={`${
+                    location.pathname === `/machine/${machine}/air-out-mpa`
+                      ? styles.choicebutton
+                      : styles.nochoicebutton
+                  }`}
+                  onClick={() => navigate(`/machine/${machine}/air-out-mpa`)}
+                >
+                  Air-Out(MPa)
+                </div>
+                <div
+                  className={`${
+                    location.pathname === `/machine/${machine}/water`
+                      ? styles.choicebutton
+                      : styles.nochoicebutton
+                  }`}
+                  onClick={() => navigate(`/machine/${machine}/water`)}
+                >
+                  Water
+                </div>
+                <div
+                  className={`${
+                    location.pathname === `/machine/${machine}/abrasion`
+                      ? styles.choicebutton
+                      : styles.nochoicebutton
+                  }`}
+                  onClick={() => navigate(`/machine/${machine}/abrasion`)}
+                >
+                  마모량
+                </div>
+                <div
+                  className={`${
+                    location.pathname === `/machine/${machine}/load`
+                      ? styles.choicebutton
+                      : styles.nochoicebutton
+                  }`}
+                  onClick={() => navigate(`/machine/${machine}/load`)}
+                >
+                  부하량
+                </div>
+                <div
+                  className={`${
+                    location.pathname === `/machine/${machine}/rpm`
+                      ? styles.choicebutton
+                      : styles.nochoicebutton
+                  }`}
+                  onClick={() => navigate(`/machine/${machine}/rpm`)}
+                >
+                  회전속도
                 </div>
               </div>
             )}

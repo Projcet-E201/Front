@@ -53,7 +53,9 @@ const Sensor = () => {
   const getSensorData = () => {
     // console.log("ㄱㄱㄱ");
     axios
-      .get(`https://semse.info/api/machine/${machine}/sensor`)
+      .get(`https://semse.info/api/machine/${machine}/sensor`, {
+        // timeout: 10000, // Set the timeout value (in milliseconds)
+      })
       // .get(`http://localhost:8091/api/machine/${machine}/sensor`)
       .then((response) => {
         // console.log(response.data[0].MOTOR, "datadata", `${machine}`);
@@ -91,7 +93,7 @@ const Sensor = () => {
 
     const interval = setInterval(() => {
       getSensorData();
-    }, 20000);
+    }, 10000);
 
     return () => {
       clearInterval(interval);

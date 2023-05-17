@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./LeftNav.module.css";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 
@@ -46,7 +46,9 @@ const LeftNav = ({ childrenHeight }: any) => {
           sx={{
             pl: 4,
             "&:hover": {
-              bgcolor: "#191BA9",
+              bgcolor: location.pathname.includes(`/machine/${i}`)
+                ? "#191BA9"
+                : "#CFD0FF",
               color: "white",
               "& .MuiSvgIcon-root": {
                 color: "white",
@@ -62,13 +64,10 @@ const LeftNav = ({ childrenHeight }: any) => {
           }}
           key={`button-${i}`}
           onClick={() => {
-            // navigate(`${machine.split("/")[0]}/${i}`);/
             navigate(`/machine/${i}`);
-            // setOpen(false);
           }}
         >
           <ListItemIcon>
-            {/* <StarBorder /> */}
             <PrecisionManufacturingIcon
               sx={{
                 color: location.pathname.includes(`/machine/${i}`)
@@ -83,8 +82,22 @@ const LeftNav = ({ childrenHeight }: any) => {
     );
   }
 
-  // console.log(selectedIndex);
-  // console.log(location.pathname);
+  // const [currentTime, setCurrentTime] = useState("");
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     const now = new Date();
+  //     const year = now.getFullYear();
+  //     const month = String(now.getMonth() + 1).padStart(2, "0");
+  //     const day = String(now.getDate()).padStart(2, "0");
+  //     const hours = String(now.getHours()).padStart(2, "0");
+  //     const minutes = String(now.getMinutes()).padStart(2, "0");
+  //     const seconds = String(now.getSeconds()).padStart(2, "0");
+  //     setCurrentTime(`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`);
+  //   }, 1000);
+
+  //   return () => clearInterval(interval);
+  // }, []);
 
   return (
     <div
@@ -106,24 +119,20 @@ const LeftNav = ({ childrenHeight }: any) => {
         }}
         component="nav"
         aria-labelledby="nested-list-subheader"
-        // subheader={
-        //   <ListSubheader component="div" id="nested-list-subheader">
-        //     INDEX
-        //   </ListSubheader>
-        // }
       >
+        {/* <div>
+          <h1 style={{ marginTop: "0" }}>{currentTime}</h1>
+        </div> */}
         <ListItemButton
           sx={{
             "&:hover": {
-              bgcolor: "#191BA9",
+              bgcolor: location.pathname === "/" ? "#191BA9" : "#CFD0FF",
               color: "white",
               "& .MuiSvgIcon-root": {
                 color: "white",
               },
             },
             borderRadius: "10px",
-            // bgcolor: selectedIndex === "Main" ? "#191BA9" : undefined,
-            // color: selectedIndex === "Main" ? "white" : undefined,
             bgcolor: location.pathname === "/" ? "#191BA9" : undefined,
             color: location.pathname === "/" ? "white" : undefined,
           }}
@@ -137,7 +146,6 @@ const LeftNav = ({ childrenHeight }: any) => {
           <ListItemIcon>
             <DashboardIcon
               sx={{
-                // color: selectedIndex === "Main" ? "white" : undefined,
                 color: location.pathname === "/" ? "white" : undefined,
               }}
             />
@@ -147,15 +155,15 @@ const LeftNav = ({ childrenHeight }: any) => {
         <ListItemButton
           sx={{
             "&:hover": {
-              bgcolor: "#191BA9",
+              bgcolor: location.pathname.includes("/machine")
+                ? "#191BA9"
+                : "#CFD0FF",
               color: "white",
               "& .MuiSvgIcon-root": {
                 color: "white",
               },
             },
             borderRadius: "10px",
-            // bgcolor: selectedIndex === "Monitoring" ? "#191BA9" : undefined,
-            // color: selectedIndex === "Monitoring" ? "white" : undefined,
             bgcolor: location.pathname.includes("machine")
               ? "#191BA9"
               : undefined,
@@ -172,13 +180,11 @@ const LeftNav = ({ childrenHeight }: any) => {
         >
           <ListItemIcon
             sx={{
-              // color: selectedIndex === "Monitoring" ? "white" : undefined,
               color: location.pathname.includes("machine")
                 ? "white"
                 : undefined,
             }}
           >
-            {/* 아이콘 수정하기 */}
             <MonitorIcon sx={{}} />
           </ListItemIcon>
           <ListItemText
@@ -198,15 +204,15 @@ const LeftNav = ({ childrenHeight }: any) => {
         <ListItemButton
           sx={{
             "&:hover": {
-              bgcolor: "#191BA9",
+              bgcolor: location.pathname.includes("/custom-build")
+                ? "#191BA9"
+                : "#CFD0FF",
               color: "white",
               "& .MuiSvgIcon-root": {
                 color: "white",
               },
             },
             borderRadius: "10px",
-            // bgcolor: selectedIndex === "Setting" ? "#191BA9" : undefined,
-            // color: selectedIndex === "Setting" ? "white" : undefined,
             bgcolor: location.pathname.includes("custom-build")
               ? "#191BA9"
               : undefined,
@@ -234,15 +240,15 @@ const LeftNav = ({ childrenHeight }: any) => {
         <ListItemButton
           sx={{
             "&:hover": {
-              bgcolor: "#191BA9",
+              bgcolor: location.pathname.includes("/equipment-setting")
+                ? "#191BA9"
+                : "#CFD0FF",
               color: "white",
               "& .MuiSvgIcon-root": {
                 color: "white",
               },
             },
             borderRadius: "10px",
-            // bgcolor: selectedIndex === "Facilities" ? "#191BA9" : undefined,
-            // color: selectedIndex === "Facilities" ? "white" : undefined,
             bgcolor: location.pathname.includes("equipment-setting")
               ? "#191BA9"
               : undefined,
@@ -258,7 +264,6 @@ const LeftNav = ({ childrenHeight }: any) => {
           <ListItemIcon>
             <SettingsInputComponentIcon
               sx={{
-                // color: selectedIndex === "Facilities" ? "white" : undefined,
                 color: location.pathname.includes("equipment-setting")
                   ? "white"
                   : undefined,
@@ -267,97 +272,6 @@ const LeftNav = ({ childrenHeight }: any) => {
           </ListItemIcon>
           <ListItemText primary="설비 관리" />
         </ListItemButton>
-
-        {/* <ListItemButton
-          sx={{
-            "&:hover": {
-              bgcolor: "#191BA9",
-              color: "white",
-              "& .MuiSvgIcon-root": {
-                color: "white",
-              },
-            },
-            borderRadius: "10px",
-            // bgcolor: selectedIndex === "Setting" ? "#191BA9" : undefined,
-            // color: selectedIndex === "Setting" ? "white" : undefined,
-            bgcolor: location.pathname.includes("login")
-              ? "#191BA9"
-              : undefined,
-            color: location.pathname.includes("login") ? "white" : undefined,
-          }}
-          onClick={() => {
-            indexClick("Setting");
-            navigate("/login");
-          }}
-        >
-          <ListItemIcon>
-            <SettingsIcon
-              sx={{
-                // color: selectedIndex === "Setting" ? "white" : undefined,
-                color: location.pathname.includes("login")
-                  ? "white"
-                  : undefined,
-              }}
-            />
-          </ListItemIcon>
-          <ListItemText primary="서비스 관리" />
-        </ListItemButton> */}
-
-        {/* <ListItemButton
-          sx={{
-            "&:hover": {
-              bgcolor: "#191BA9",
-              color: "white",
-              "& .MuiSvgIcon-root": {
-                color: "white",
-              },
-            },
-            borderRadius: "10px",
-            bgcolor: selectedIndex === "Facilities" ? "#191BA9" : undefined,
-            color: selectedIndex === "Facilities" ? "white" : undefined,
-          }}
-          onClick={() => {
-            navigate(`/test`);
-            indexClick("Test1");
-          }}
-        >
-          <ListItemIcon>
-            <SettingsInputComponentIcon
-              sx={{
-                color: selectedIndex === "Facilities" ? "white" : undefined,
-              }}
-            />
-          </ListItemIcon>
-          <ListItemText primary="Test" />
-        </ListItemButton> */}
-
-        {/* <ListItemButton
-          sx={{
-            "&:hover": {
-              bgcolor: "#191BA9",
-              color: "white",
-              "& .MuiSvgIcon-root": {
-                color: "white",
-              },
-            },
-            borderRadius: "10px",
-            bgcolor: selectedIndex === "Facilities" ? "#191BA9" : undefined,
-            color: selectedIndex === "Facilities" ? "white" : undefined,
-          }}
-          onClick={() => {
-            navigate(`/test2`);
-            indexClick("Test2");
-          }}
-        >
-          <ListItemIcon>
-            <SettingsInputComponentIcon
-              sx={{
-                color: selectedIndex === "Facilities" ? "white" : undefined,
-              }}
-            />
-          </ListItemIcon>
-          <ListItemText primary="Test2" />
-        </ListItemButton> */}
       </List>
     </div>
   );
