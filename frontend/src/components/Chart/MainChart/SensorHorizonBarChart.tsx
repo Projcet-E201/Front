@@ -28,7 +28,7 @@ const SensorHorizontalBarChart = ({ data, sensor }: SensorBarChartProps) => {
   };
 
   return (
-    <div style={{ height: "300px" }}>
+    <div style={{ height: "100%" }}>
       <ResponsiveBar
         // onClick={handleBarClick}
 

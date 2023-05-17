@@ -197,7 +197,7 @@ const MainPage: React.FC = () => {
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
 
   const getClientData = async () => {
-    console.log("요청했다냥");
+    // console.log("요청했다냥");
 
     await axios
 
@@ -217,13 +217,13 @@ const MainPage: React.FC = () => {
             acc[key] = value;
             return acc;
           }, {});
-        console.log("성공이다냥", response.data);
+        // console.log("성공이다냥", response.data);
 
         setCheck(1);
         setClientData([{ ...sortedData }]);
       })
       .catch((error) => {
-        console.error("실패다냥", error);
+        // console.error("실패다냥", error);
       });
   };
   useEffect(() => {
@@ -324,7 +324,7 @@ const MainPage: React.FC = () => {
 
           <Card className={styles.errorcard}>
             <CardContent className={styles.errorcardcomponent}>
-              {/* <MainError /> */}
+              <MainError />
             </CardContent>
           </Card>
         </div>

@@ -110,7 +110,8 @@ const MainSensorBarItem = (props: MainSenserItemProps) => {
                 ? "부하량"
                 : "회전 속도"}
             </h3>
-            <CardContent>
+
+            <CardContent style={{ height: "12vh" }}>
               <SensorBarChart data={chartData} sensor={sensor} />
             </CardContent>
           </Card>
