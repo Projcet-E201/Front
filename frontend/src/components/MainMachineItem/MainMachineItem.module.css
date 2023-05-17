@@ -45,6 +45,10 @@
   /* margin-bottom: 20px; */
   color: #5cc2f2;
 }
+.mainmachinecardcontenterrorscore {
+  font-weight: 1000;
+  color: red;
+}
 
 @keyframes pulse {
   0% {
