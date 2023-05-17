@@ -112,3 +112,7 @@
   font-weight: 500;
   color: #5e5e5e;
 }
+.not-selected:hover {
+  color: #cfd0ff;
+  transform: scale(1.05);
+}

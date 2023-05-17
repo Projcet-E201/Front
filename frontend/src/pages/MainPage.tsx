@@ -42,7 +42,7 @@ type ClientData = [
 
 const MainPage: React.FC = () => {
   const navigate = useNavigate();
-  const [check, setCheck] = useState(1);
+  const [check, setCheck] = useState(0);
   const [clientData, setClientData] = useState<ClientData>([
     {
       CLIENT1: {
@@ -197,7 +197,7 @@ const MainPage: React.FC = () => {
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
 
   const getClientData = async () => {
-    // console.log("요청했다냥");
+    console.log("요청했다냥");
 
     await axios
 
@@ -217,13 +217,13 @@ const MainPage: React.FC = () => {
             acc[key] = value;
             return acc;
           }, {});
-        // console.log("성공이다냥", response.data);
+        console.log("성공이다냥", response.data);
 
         setCheck(1);
         setClientData([{ ...sortedData }]);
       })
       .catch((error) => {
-        // console.error("실패다냥", error);
+        console.error("실패다냥", error);
       });
   };
   useEffect(() => {
@@ -231,7 +231,7 @@ const MainPage: React.FC = () => {
 
     const interval = setInterval(() => {
       getClientData();
-    }, 5000);
+    }, 10000);
     return () => {
       clearInterval(interval);
       clearInterval(reconnectTimer);
@@ -317,7 +317,7 @@ const MainPage: React.FC = () => {
                 }}
               >
                 <CircularProgress />
-                <h3> machine 데이터를 불러오는 중입니다...</h3>
+                <h3> 설비 데이터를 불러오는 중입니다...</h3>
               </Box>
             </Card>
           )}
@@ -374,7 +374,7 @@ const MainPage: React.FC = () => {
               }}
             >
               <CircularProgress />
-              <h3> sensor 데이터를 불러오는 중입니다...</h3>
+              <h3> 데이터를 불러오는 중입니다...</h3>
             </Box>
           </Card>
         )}

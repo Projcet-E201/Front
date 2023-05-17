@@ -7,7 +7,9 @@ const TestPage: React.FC = () => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    const eventSource = new EventSource("http://localhost:8090/subscription");
+    const eventSource = new EventSource(
+      "http://localhost:8090/subscribe/error"
+    );
 
     eventSource.onmessage = (event) => {
       setMessage(event.data);

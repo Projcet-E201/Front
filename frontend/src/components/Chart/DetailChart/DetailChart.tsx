@@ -60,6 +60,8 @@ const DetailChart = ({ datasets, legend }: Props) => {
   const [maxvalue, setMaxvalue] = useState(0);
   const [minvalue, setMinvalue] = useState(0);
 
+  console.log("여기야여기", datasets);
+
   useEffect(() => {
     if (datasets[0].name == "motor") {
       setMaxvalue(300);
@@ -68,7 +70,7 @@ const DetailChart = ({ datasets, legend }: Props) => {
       setMaxvalue(4);
       setMinvalue(0);
     } else if (datasets[0].name == "vacuum") {
-      setMaxvalue(30);
+      setMaxvalue(100);
       setMinvalue(0);
     } else if (datasets[0].name == "air-in") {
       setMaxvalue(900);
