@@ -108,7 +108,7 @@ const AirInPage = () => {
           </CardContent>
         </Card>
       ) : (
-        <div>
+        <div style={{ width: "100%" }}>
           <div className={styles.midcard}>
             <Card className={styles.card} style={{ flex: "1" }}>
               <CardContent style={{ height: "100%" }}>
@@ -195,6 +195,7 @@ const AirInPage = () => {
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "space-between",
+              width: "100%",
             }}
           >
             {airInData.map((dataset: any, index: number) => (
@@ -202,7 +203,7 @@ const AirInPage = () => {
               <Card
                 key={index}
                 className={styles.card}
-                style={{ width: "49%" }}
+                style={{ width: "48.5%" }}
                 onClick={() => navigate(`${index + 1}`)}
               >
                 <CardContent style={{ height: "20vh", margin: "0" }}>
