@@ -24,35 +24,35 @@ const CustomChart = ({ chart }: any) => {
 
   // console.log(chart, "34343434");
 
-  let url = "";
+  let customurl = "";
   useEffect(() => {
     if (chart.sensor === "Motor") {
       setSensor("motor");
-      url = defaultUrl + `/motor`;
+      customurl = defaultUrl + `/motor`;
     } else if (chart.sensor === "Vacuum") {
       setSensor("vacuum");
-      url = defaultUrl + "/vacuum";
+      customurl = defaultUrl + "/vacuum";
     } else if (chart.sensor === "AirIn") {
       setSensor("air_in_kpa");
-      url = defaultUrl + defaultUrl + "/air_in_kpa";
+      customurl = defaultUrl + defaultUrl + "/air_in_kpa";
     } else if (chart.sensor === "AirOut(kPa)") {
       setSensor("air_out_kpa");
-      url = defaultUrl + "/air_out_kpa";
+      customurl = defaultUrl + "/air_out_kpa";
     } else if (chart.sensor === "AirOut(MPa)") {
       setSensor("air_out_mpa");
-      url = defaultUrl + defaultUrl + "/air_out_mpa";
+      customurl = defaultUrl + defaultUrl + "/air_out_mpa";
     } else if (chart.sensor === "Water") {
       setSensor("water");
-      url = defaultUrl + "/water";
+      customurl = defaultUrl + "/water";
     } else if (chart.sensor === "마모량") {
       setSensor("abrasion");
-      url = defaultUrl + "/abrasion";
+      customurl = defaultUrl + "/abrasion";
     } else if (chart.sensor === "부하량") {
       setSensor("load");
-      url = defaultUrl + "/load";
+      customurl = defaultUrl + "/load";
     } else if (chart.sensor === "회전속도") {
       setSensor("velocity");
-      url = defaultUrl + "/velocity";
+      customurl = defaultUrl + "/velocity";
     }
   }, []);
 
@@ -61,11 +61,11 @@ const CustomChart = ({ chart }: any) => {
   const [max, setMax] = useState<any>(100);
 
   const getData = () => {
-    console.log(url, "urlurl");
+    console.log(customurl, "urlurl");
     axios
       // .get(`https://semse.info/api/machine/${chart.machine}/motor`)
 
-      .get(url)
+      .get(customurl)
       .then((response) => {
         setData(response.data);
         // console.log(response.data);
