@@ -34,13 +34,13 @@ const CustomChart = ({ chart }: any) => {
       customurl = defaultUrl + "/vacuum";
     } else if (chart.sensor === "AirIn") {
       setSensor("air_in_kpa");
-      customurl = defaultUrl + defaultUrl + "/air_in_kpa";
+      customurl = defaultUrl + "/air_in_kpa";
     } else if (chart.sensor === "AirOut(kPa)") {
       setSensor("air_out_kpa");
       customurl = defaultUrl + "/air_out_kpa";
     } else if (chart.sensor === "AirOut(MPa)") {
       setSensor("air_out_mpa");
-      customurl = defaultUrl + defaultUrl + "/air_out_mpa";
+      customurl = defaultUrl + "/air_out_mpa";
     } else if (chart.sensor === "Water") {
       setSensor("water");
       customurl = defaultUrl + "/water";
