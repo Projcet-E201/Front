@@ -4,7 +4,7 @@
   gap: 10px;
 }
 .sensorcard {
-  width: 16vw;
+  width: 43%;
   height: calc(36vh + 1.2em);
   margin: 0.5rem;
   margin-left: 0.8rem;
@@ -35,6 +35,7 @@
   display: flex;
   justify-content: space-between;
   padding-top: 0;
+  color: #5e5e5e;
   /* padding-left: 0.8vh;
   padding-right: 0.8vh; */
   font-size: 1em;
@@ -53,5 +54,7 @@
 
 .sensordatacontent:hover {
   cursor: pointer;
+  color: black;
+  font-weight: 1000;
   transform: scale(1.02);
 }

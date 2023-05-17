@@ -6,7 +6,7 @@ const TestPage: React.FC = () => {
 
   useEffect(() => {
     const eventSource = new EventSource(
-      "http://localhost:8090/subscribe/error"
+      "http://52.79.42.131:8090/subscribe/error"
     );
 
     eventSource.onmessage = (event) => {

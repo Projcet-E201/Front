@@ -15,12 +15,11 @@ const MainError: React.FC = () => {
   useEffect(() => {
     console.log("요청했다어흥");
     const eventSource = new EventSource(
-      // "http://localhost:8090/subscribe/error"
-      "https://semse.info/subscribe/error"
+      "http://52.79.42.131:8090/subscribe/error"
     );
 
     eventSource.onmessage = (event) => {
-      console.log("요청왔다어흥");
+      console.log("요청왔다어흥", event.data);
       setMessages(event.data);
     };
 
@@ -38,12 +37,12 @@ const MainError: React.FC = () => {
     <div className={styles.errorbox}>
       <table>
         <tbody>
-          {messages.map((message) => (
+          {/* {messages.map((message) => (
             <tr key={message.id} className={styles.errorstyle}>
               {message.time && <td>[{message.time}]</td>}
               <td>{message.content}</td>
             </tr>
-          ))}
+          ))} */}
         </tbody>
       </table>
     </div>
