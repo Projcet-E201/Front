@@ -107,10 +107,10 @@ const LeftNav = ({ childrenHeight }: any) => {
           sx={{
             "&:hover": {
               bgcolor: location.pathname === "/" ? "#191BA9" : "#CFD0FF",
-              color: "white",
-              "& .MuiSvgIcon-root": {
-                color: "white",
-              },
+              // color: "white",
+              // "& .MuiSvgIcon-root": {
+              //   color: "white",
+              // },
             },
             borderRadius: "10px",
             bgcolor: location.pathname === "/" ? "#191BA9" : undefined,
@@ -138,10 +138,10 @@ const LeftNav = ({ childrenHeight }: any) => {
               bgcolor: location.pathname.includes("/machine")
                 ? "#191BA9"
                 : "#CFD0FF",
-              color: "white",
-              "& .MuiSvgIcon-root": {
-                color: "white",
-              },
+              // color: "white",
+              // "& .MuiSvgIcon-root": {
+              //   color: "white",
+              // },
             },
             borderRadius: "10px",
             bgcolor: location.pathname.includes("machine")
@@ -187,10 +187,10 @@ const LeftNav = ({ childrenHeight }: any) => {
               bgcolor: location.pathname.includes("/custom-build")
                 ? "#191BA9"
                 : "#CFD0FF",
-              color: "white",
-              "& .MuiSvgIcon-root": {
-                color: "white",
-              },
+              // color: "white",
+              // "& .MuiSvgIcon-root": {
+              //   color: "white",
+              // },
             },
             borderRadius: "10px",
             bgcolor: location.pathname.includes("custom-build")
@@ -223,10 +223,10 @@ const LeftNav = ({ childrenHeight }: any) => {
               bgcolor: location.pathname.includes("/equipment-setting")
                 ? "#191BA9"
                 : "#CFD0FF",
-              color: "white",
-              "& .MuiSvgIcon-root": {
-                color: "white",
-              },
+              // color: "white",
+              // "& .MuiSvgIcon-root": {
+              //   color: "white",
+              // },
             },
             borderRadius: "10px",
             bgcolor: location.pathname.includes("equipment-setting")
