@@ -52,10 +52,10 @@ const LeftNav = ({ childrenHeight }: any) => {
             pl: 4,
             "&:hover": {
               bgcolor: machineNumber === i ? "#191BA9" : "#CFD0FF",
-              color: "white",
-              "& .MuiSvgIcon-root": {
-                color: "white",
-              },
+              // color: "white",
+              // "& .MuiSvgIcon-root": {
+              //   color: "white",
+              // },
             },
             bgcolor: machineNumber === i ? "#191BA9" : "inherit",
             color: machineNumber === i ? "white" : "inherit",
