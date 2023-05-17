@@ -9,9 +9,7 @@ const CardMotorChart = ({ motorData }: any) => {
       id: "min",
       data: motorData.map((d: any) => {
         let minVal = d.min_value;
-        if (minVal > 299) {
-          minVal = 30;
-        }
+
         const time = d.time.split("/")[1]; // '/'를 기준으로 문자열을 분할하고 두 번째 요소를 선택합니다.
 
         return { x: time, y: minVal };

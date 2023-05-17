@@ -34,7 +34,7 @@ const State = () => {
       .get(`https://semse.info/api/machine/${machine}/state`)
       // .get(`http://localhost:8091/api/machine/${machine}/state`)
       .then((response) => {
-        // console.log(response.data, "statestate", `${machine}`);
+        console.log(response.data, "statestate", `${machine}`);
         // Boolean Data 정렬
 
         if (response.data.length > 0) {

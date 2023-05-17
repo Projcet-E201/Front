@@ -104,138 +104,148 @@ const VacuumPage = () => {
   return (
     <SensorLayout>
       <div className={styles.topcard}>
-        {/* <Card className={styles.card}>
-          <CardContent
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "5vh",
-            }}
-          >
-            <h1>Vacuum</h1>
-          </CardContent>
-        </Card> */}
         <TopCard location={location.pathname} />
       </div>
-      <div className={styles.midcard}>
-        <Card className={styles.card} style={{ flex: "2" }}>
-          <CardContent
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "100%",
-            }}
-          >
-            {latestData.map((d: any, index: number) => (
-              <div
-                key={index}
-                style={{
-                  flexDirection: "column",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                {d.value > 90 ? (
-                  <img
-                    src={event3}
-                    alt="event3"
-                    style={{ width: 60, margin: "5px" }}
-                  />
-                ) : d.value > 70 ? (
-                  <img
-                    src={event2}
-                    alt="event2"
-                    style={{ width: 60, margin: "5px" }}
-                  />
-                ) : (
-                  <img
-                    src={event1}
-                    alt="event1"
-                    style={{ width: 60, margin: "5px" }}
-                  />
-                )}
-                <p
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    marginTop: "0",
-                  }}
-                >
-                  V{d.id}
-                </p>
-              </div>
-            ))}
+      {vacuumData.length === 0 ? (
+        <Card className={styles.card}>
+          <CardContent style={{ height: "70vh" }}>
+            <Box
+              sx={{
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <CircularProgress />
+              <h3>Vacuum 데이터를 불러오는 중 입니다...</h3>
+            </Box>
           </CardContent>
         </Card>
-        <Card className={styles.card} style={{ flex: "1" }}>
-          <CardContent
-            style={{
-              display: "flex",
-              justifyContent: "space-around",
-              alignContent: "center",
-            }}
-          >
-            <div style={{ width: "20%" }}>
-              <h1
+      ) : (
+        <div>
+          <div className={styles.midcard}>
+            <Card className={styles.card} style={{ flex: "2" }}>
+              <CardContent
                 style={{
-                  color: "#4CD964",
                   display: "flex",
+                  flexWrap: "wrap",
+                  alignItems: "center",
                   justifyContent: "center",
-                  fontSize: "50px", // Increase the font size here
+                  height: "100%",
                 }}
               >
-                {latestData.filter((d: any) => d.value <= 70).length}
-              </h1>
-              <h5 style={{ display: "flex", justifyContent: "center" }}>
-                Good
-              </h5>
-            </div>
-            <div style={{ width: "20%" }}>
-              <h1
+                {latestData.map((d: any, index: number) => (
+                  <div
+                    key={index}
+                    style={{
+                      flexDirection: "column",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {d.value > 90 ? (
+                      <img
+                        src={event3}
+                        alt="event3"
+                        style={{ width: 60, margin: "5px" }}
+                      />
+                    ) : d.value > 70 ? (
+                      <img
+                        src={event2}
+                        alt="event2"
+                        style={{ width: 60, margin: "5px" }}
+                      />
+                    ) : (
+                      <img
+                        src={event1}
+                        alt="event1"
+                        style={{ width: 60, margin: "5px" }}
+                      />
+                    )}
+                    <p
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        marginTop: "0",
+                      }}
+                    >
+                      V{d.id}
+                    </p>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+            <Card className={styles.card} style={{ flex: "1" }}>
+              <CardContent
                 style={{
-                  color: "#FFC041",
                   display: "flex",
-                  justifyContent: "center",
-                  fontSize: "50px", // Increase the font size here
+                  justifyContent: "space-around",
+                  alignContent: "center",
                 }}
               >
-                {
-                  latestData.filter((d: any) => d.value > 70 && d.value < 90)
-                    .length
-                }
-              </h1>
-              <h5 style={{ display: "flex", justifyContent: "center" }}>
-                Fair
-              </h5>
-            </div>
-            <div style={{ width: "20%" }}>
-              <h1
-                style={{
-                  color: "#FF3B30",
-                  display: "flex",
-                  justifyContent: "center",
-                  fontSize: "50px", // Increase the font size here
-                }}
-              >
-                {latestData.filter((d: any) => d.value >= 90).length}
-              </h1>
-              <h5 style={{ display: "flex", justifyContent: "center" }}>
-                Pool
-              </h5>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-      <div>
-        <Card className={styles.card} style={{ height: "50vh" }}>
-          <CardContent style={{ height: "48vh" }}>
-            <VacuumChart data={latestData} />
-          </CardContent>
-        </Card>
-      </div>
+                <div style={{ width: "20%" }}>
+                  <h1
+                    style={{
+                      color: "#4CD964",
+                      display: "flex",
+                      justifyContent: "center",
+                      fontSize: "50px", // Increase the font size here
+                    }}
+                  >
+                    {latestData.filter((d: any) => d.value <= 70).length}
+                  </h1>
+                  <h5 style={{ display: "flex", justifyContent: "center" }}>
+                    Good
+                  </h5>
+                </div>
+                <div style={{ width: "20%" }}>
+                  <h1
+                    style={{
+                      color: "#FFC041",
+                      display: "flex",
+                      justifyContent: "center",
+                      fontSize: "50px", // Increase the font size here
+                    }}
+                  >
+                    {
+                      latestData.filter(
+                        (d: any) => d.value > 70 && d.value < 90
+                      ).length
+                    }
+                  </h1>
+                  <h5 style={{ display: "flex", justifyContent: "center" }}>
+                    Fair
+                  </h5>
+                </div>
+                <div style={{ width: "20%" }}>
+                  <h1
+                    style={{
+                      color: "#FF3B30",
+                      display: "flex",
+                      justifyContent: "center",
+                      fontSize: "50px", // Increase the font size here
+                    }}
+                  >
+                    {latestData.filter((d: any) => d.value >= 90).length}
+                  </h1>
+                  <h5 style={{ display: "flex", justifyContent: "center" }}>
+                    Pool
+                  </h5>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+          <div>
+            <Card className={styles.card} style={{ height: "50vh" }}>
+              <CardContent style={{ height: "48vh" }}>
+                <VacuumChart data={latestData} />
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      )}
     </SensorLayout>
   );
 };

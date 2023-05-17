@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import Stomp from "stompjs";
-import SockJS from "sockjs-client";
+
 import MainLayout from "../layout/MainLayout";
 
 const Test2Page: React.FC = () => {

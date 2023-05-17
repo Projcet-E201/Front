@@ -288,52 +288,6 @@ const CustomBuildPage = () => {
               width:
                 isSingleRow === true || chartList.length === 1 ? "100%" : "49%",
             }}
-            onClick={() => {
-              let navi = "";
-              const defaultUrl = `/machine/${chart.machine}`;
-              if (chart.sensorNumber === "all") {
-                if (chart.sensor === "Motor") {
-                  navi = defaultUrl + `/motor`;
-                } else if (chart.sensor === "Vacuum") {
-                  navi = defaultUrl + "/vacuum";
-                } else if (chart.sensor === "AirIn") {
-                  navi = defaultUrl + "/air-in";
-                } else if (chart.sensor === "AirOut(kPa)") {
-                  navi = defaultUrl + "/air-out-kpa";
-                } else if (chart.sensor === "AirOut(MPa)") {
-                  navi = defaultUrl + "/air-out-mpa";
-                } else if (chart.sensor === "Water") {
-                  navi = defaultUrl + "/water";
-                } else if (chart.sensor === "마모량") {
-                  navi = defaultUrl + "/abrasion";
-                } else if (chart.sensor === "부하량") {
-                  navi = defaultUrl + "/load";
-                } else if (chart.sensor === "회전속도") {
-                  navi = defaultUrl + "/rpm";
-                }
-              } else {
-                if (chart.sensor === "Motor") {
-                  navi = defaultUrl + `/motor/${chart.sensorNumber}`;
-                } else if (chart.sensor === "Vacuum") {
-                  navi = defaultUrl + `/vacuum/${chart.sensorNumber}`;
-                } else if (chart.sensor === "AirIn") {
-                  navi = defaultUrl + `/air-in/${chart.sensorNumber}`;
-                } else if (chart.sensor === "AirOut(kPa)") {
-                  navi = defaultUrl + `/air-out-kpa/${chart.sensorNumber}`;
-                } else if (chart.sensor === "AirOut(MPa)") {
-                  navi = defaultUrl + `/air-out-mpa/${chart.sensorNumber}`;
-                } else if (chart.sensor === "Water") {
-                  navi = defaultUrl + `/water/${chart.sensorNumber}`;
-                } else if (chart.sensor === "마모량") {
-                  navi = defaultUrl + `/abrasion/${chart.sensorNumber}`;
-                } else if (chart.sensor === "부하량") {
-                  navi = defaultUrl + `/load/${chart.sensorNumber}`;
-                } else if (chart.sensor === "회전속도") {
-                  navi = defaultUrl + `/rpm/${chart.sensorNumber}`;
-                }
-              }
-              navigate(navi);
-            }}
           >
             <CardContent>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
