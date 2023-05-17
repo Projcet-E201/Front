@@ -169,11 +169,12 @@ const Sensor = () => {
                           style={{
                             display: "flex",
                             justifyContent: "space-between",
+                            alignItems: "end",
                           }}
                         >
                           <h3 style={{ margin: "0" }}>Motor Toque(%)</h3>
                           <h5 style={{ margin: "0" }}>
-                            update time: {updatedTime}
+                            last update: {updatedTime}
                           </h5>
                         </div>
 
@@ -206,11 +207,12 @@ const Sensor = () => {
                           style={{
                             display: "flex",
                             justifyContent: "space-between",
+                            alignItems: "end",
                           }}
                         >
                           <h3 style={{ margin: "0" }}>Air입력(kPa)</h3>
                           <h5 style={{ margin: "0" }}>
-                            update time: {updatedTime}
+                            last update: {updatedTime}
                           </h5>
                         </div>
                         <CardAirInChart airInData={airInData} />
@@ -238,7 +240,18 @@ const Sensor = () => {
                       </Box>
                     ) : (
                       <div style={{ height: "100%" }}>
-                        <h3 style={{ margin: "0" }}>Vacuum입력(kPa)</h3>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "end",
+                          }}
+                        >
+                          <h3 style={{ margin: "0" }}>Vacuum입력(kPa)</h3>
+                          <h5 style={{ margin: "0" }}>
+                            last update: {updatedTime}
+                          </h5>
+                        </div>
                         <CardVacuumChart vacuumData={vacuumData} />
                       </div>
                     )}
@@ -264,7 +277,18 @@ const Sensor = () => {
                       </Box>
                     ) : (
                       <div style={{ height: "100%" }}>
-                        <h3 style={{ margin: "0" }}>Air출력(kPa)</h3>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "end",
+                          }}
+                        >
+                          <h3 style={{ margin: "0" }}>Air출력(kPa)</h3>
+                          <h5 style={{ margin: "0" }}>
+                            last update: {updatedTime}
+                          </h5>
+                        </div>
                         <CardAirOutKpaChart airOutKpaData={airOutKpaData} />
                       </div>
                     )}
@@ -290,7 +314,18 @@ const Sensor = () => {
                       </Box>
                     ) : (
                       <div style={{ height: "100%" }}>
-                        <h3 style={{ margin: "0" }}>Air출력(MPa)</h3>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "end",
+                          }}
+                        >
+                          <h3 style={{ margin: "0" }}>Air출력(MPa)</h3>
+                          <h5 style={{ margin: "0" }}>
+                            last update: {updatedTime}
+                          </h5>
+                        </div>
                         <CardAirOutMpaChart airOutMpaData={airOutMpaData} />
                       </div>
                     )}
@@ -316,7 +351,19 @@ const Sensor = () => {
                       </Box>
                     ) : (
                       <div style={{ height: "100%" }}>
-                        <h3 style={{ margin: "0" }}>Water출력(L/min)</h3>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "end",
+                          }}
+                        >
+                          <h3 style={{ margin: "0" }}>Water출력(L/min)</h3>
+                          <h5 style={{ margin: "0" }}>
+                            last update: {updatedTime}
+                          </h5>
+                        </div>
+
                         <CardWaterChart waterData={waterData} />
                       </div>
                     )}
@@ -342,7 +389,18 @@ const Sensor = () => {
                       </Box>
                     ) : (
                       <div style={{ height: "100%" }}>
-                        <h3 style={{ margin: "0" }}>기구부 회전속도(/min)</h3>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "end",
+                          }}
+                        >
+                          <h3 style={{ margin: "0" }}>회전속도(/min)</h3>
+                          <h5 style={{ margin: "0" }}>
+                            last update: {updatedTime}
+                          </h5>
+                        </div>
                         <CardRpmChart velocityData={velocityData} />
                       </div>
                     )}
@@ -368,7 +426,18 @@ const Sensor = () => {
                       </Box>
                     ) : (
                       <div style={{ height: "100%" }}>
-                        <h3 style={{ margin: "0" }}>기구부 부하량(Ampere)</h3>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "end",
+                          }}
+                        >
+                          <h3 style={{ margin: "0" }}>부하량(Ampere)</h3>
+                          <h5 style={{ margin: "0" }}>
+                            last update: {updatedTime}
+                          </h5>
+                        </div>
                         <CardLoadChart loadData={loadData} />
                       </div>
                     )}
@@ -394,7 +463,18 @@ const Sensor = () => {
                       </Box>
                     ) : (
                       <div style={{ height: "100%" }}>
-                        <h3 style={{ margin: "0" }}>기구부 마모량(mm)</h3>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "end",
+                          }}
+                        >
+                          <h3 style={{ margin: "0" }}>마모량(mm)</h3>
+                          <h5 style={{ margin: "0" }}>
+                            last update: {updatedTime}
+                          </h5>
+                        </div>
                         <CardAbrasionChart abrasionData={abrasionData} />
                       </div>
                     )}

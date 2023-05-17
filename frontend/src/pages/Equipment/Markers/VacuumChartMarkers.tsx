@@ -338,7 +338,7 @@ const VacuumChartMarkers = () => {
                   onChange={handleInputChange}
                   onBlur={handleBlur}
                   inputProps={{
-                    step: 10,
+                    step: 5,
                     // min: 0,
                     // max: 100,
                     type: "number",
@@ -498,6 +498,9 @@ const VacuumChartMarkers = () => {
                         {/* <TitleIcon /> */}
                       </InputAdornment>
                     ),
+                  }}
+                  inputProps={{
+                    step: 5,
                   }}
                   variant="standard"
                 />

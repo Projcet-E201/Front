@@ -498,6 +498,9 @@ const MotorChartMarkers = () => {
                       </InputAdornment>
                     ),
                   }}
+                  inputProps={{
+                    step: 10,
+                  }}
                   variant="standard"
                 />
                 {/* <p style={{ margin: "0" }}>Marker 수정</p> */}
