@@ -110,21 +110,8 @@ const MainSenserHorizonBarItem = (props: MainSenserItemProps) => {
                 ? "부하량"
                 : "회전 속도"}
             </h3>
-            <CardContent>
+            <CardContent style={{ height: "32vh" }}>
               <SensorHorizonBarChart data={chartData} sensor={sensor} />
-              {/* {Object.entries(props.clientData).map(
-                ([key, data], dataIndex) => (
-                  <div
-                    className={styles.sensordatacontent}
-                    key={`sensordata-${dataIndex}`}
-                    onClick={() =>
-                      navigate(
-                        `/machine/${machines[dataIndex]}/${sensorAddressMap[sensor]}`
-                      )
-                    }
-                  ></div>
-                )
-              )} */}
             </CardContent>
           </Card>
         )}

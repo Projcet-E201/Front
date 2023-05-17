@@ -46,33 +46,33 @@ const MachineRadarChart = ({ data }: MachineRadarChartProps) => {
       enableDotLabel={true}
       dotLabel={(bar: any) => bar.id}
       dotLabelYOffset={-12}
-      colors={"#5CC2F2"}
+      colors={"#191ba9"}
       fillOpacity={0.25}
       blendMode="multiply"
       animate={true}
       motionConfig="gentle"
       isInteractive={true}
-      legends={[
-        {
-          anchor: "top-left",
-          direction: "column",
-          translateX: -50,
-          translateY: -40,
-          itemWidth: 80,
-          itemHeight: 20,
-          itemTextColor: "#999",
-          symbolSize: 12,
-          symbolShape: "circle",
-          effects: [
-            {
-              on: "hover",
-              style: {
-                itemTextColor: "#000",
-              },
-            },
-          ],
-        },
-      ]}
+      // legends={[
+      //   {
+      //     anchor: "top-left",
+      //     direction: "column",
+      //     translateX: -50,
+      //     translateY: -40,
+      //     itemWidth: 80,
+      //     itemHeight: 20,
+      //     itemTextColor: "#999",
+      //     symbolSize: 12,
+      //     symbolShape: "circle",
+      //     effects: [
+      //       {
+      //         on: "hover",
+      //         style: {
+      //           itemTextColor: "#000",
+      //         },
+      //       },
+      //     ],
+      //   },
+      // ]}
       // layers={["grid", ...CustomMarkers, ...CustomAxes, "dots", "legends"]}
     />
   );

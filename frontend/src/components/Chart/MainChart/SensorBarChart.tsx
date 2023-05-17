@@ -32,14 +32,14 @@ const SensorBarChart = ({ data, sensor }: SensorBarChartProps) => {
   };
 
   return (
-    <div style={{ height: "31vh" }}>
+    <div style={{ height: "100%" }}>
       <ResponsiveBar
         // onClick={handleBarClick}
 
         data={data}
         keys={[sensor]}
         indexBy="id"
-        margin={{ top: 3, right: 10, bottom: 180, left: 10 }}
+        margin={{ top: 3, right: 10, bottom: 5, left: 10 }}
         padding={0.3}
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}

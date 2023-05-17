@@ -15,10 +15,12 @@
 }
 .mainmachinecardtitle:hover {
   cursor: pointer;
+  opacity: 0.7;
 }
 .mainmachinecardcontent {
   display: flex;
   flex-wrap: wrap;
+  color: #5e5e5e;
   justify-content: space-between;
   padding-top: 0.2em;
   font-size: 2vh;
@@ -28,6 +30,8 @@
 }
 .mainmachinecardcontent:hover {
   cursor: pointer;
+  font-weight: 1000;
+  color: black;
   transform: scale(1.02);
 }
 .mainmachinecardcontentname {
