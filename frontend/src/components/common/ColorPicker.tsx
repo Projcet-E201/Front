@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { TwitterPicker } from "react-color";
 import { CirclePicker } from "react-color";
 
 interface Props {
