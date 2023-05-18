@@ -28,32 +28,36 @@ const State = () => {
   const [reconnectTimer, setReconnectTimer] = useState<any>();
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
 
-  const getStateData = () => {
+  useEffect(() => {
     const eventSource = new EventSource(
       `https://datadivision.semse.info/subscribe/${machine}/info`
     );
 
     eventSource.onmessage = (event) => {
       const allStateData = JSON.parse(event.data);
-      console.log(allStateData);
-      if (allStateData.length > 0) {
-        const booleanDataArray = new Array(10).fill(null);
-        if (allStateData[0] !== null) {
-          for (const [key, value] of Object.entries(allStateData[0])) {
-            if (key.startsWith("boolean")) {
-              const id = parseInt(key.slice(7));
-              booleanDataArray[id - 1] = { id: id, value: value };
-            }
+      // console.log(allStateData);
+      setError("");
+      const booleanDataArray = new Array(10).fill({ id: "error", value: 0 });
+
+      if (allStateData[0] !== null && typeof allStateData[0] === "object") {
+        for (const [key, value] of Object.entries(allStateData[0])) {
+          if (key.startsWith("error")) {
+          } else if (key.startsWith("boolean")) {
+            const id = parseInt(key.slice(7));
+            booleanDataArray[id - 1] = { id: id, value: value };
           }
         }
+      }
 
-        setBooleanData(booleanDataArray);
+      setBooleanData(booleanDataArray);
+      // console.log(booleanData);
 
-        const doubleDataArray = new Array(10).fill(null);
-        if (allStateData[1] !== null) {
-          for (const [key, value] of Object.entries(allStateData[1])) {
-            if (key.startsWith("double")) {
-              const id = parseInt(key.slice(6));
+      const doubleDataArray = new Array(10).fill(null);
+      if (allStateData[1] !== null && typeof allStateData[1] === "object") {
+        for (const [key, value] of Object.entries(allStateData[1])) {
+          if (key.startsWith("double")) {
+            const id = parseInt(key.slice(6));
+            if (value !== undefined) {
               doubleDataArray[id - 1] = {
                 id: key,
                 name: `D${id}`,
@@ -63,13 +67,15 @@ const State = () => {
             }
           }
         }
-        setDoubleData(doubleDataArray);
+      }
+      setDoubleData(doubleDataArray);
 
-        const intDataArray = new Array(10).fill(null);
-        if (allStateData[2] !== null) {
-          for (const [key, value] of Object.entries(allStateData[2])) {
-            if (key.startsWith("int")) {
-              const id = parseInt(key.slice(3));
+      const intDataArray = new Array(10).fill(null);
+      if (allStateData[2] !== null && typeof allStateData[2] === "object") {
+        for (const [key, value] of Object.entries(allStateData[2])) {
+          if (key.startsWith("int")) {
+            const id = parseInt(key.slice(3));
+            if (value !== undefined) {
               intDataArray[id - 1] = {
                 id: key,
                 name: `I${id}`,
@@ -79,17 +85,19 @@ const State = () => {
             }
           }
         }
-        setIntData(intDataArray);
+      }
+      setIntData(intDataArray);
 
-        const stringDataArray = new Array(10).fill(null);
-        if (allStateData[3] !== null) {
-          for (const [key, value] of Object.entries(allStateData[3])) {
-            if (key.startsWith("string")) {
-              const id = parseInt(key.slice(6));
-              const { value: itemValue, time } = value as {
-                value: any;
-                time: any;
-              };
+      const stringDataArray = new Array(10).fill(null);
+      if (allStateData[3] !== null && typeof allStateData[3] === "object") {
+        for (const [key, value] of Object.entries(allStateData[3])) {
+          if (key.startsWith("string")) {
+            const id = parseInt(key.slice(6));
+            const { value: itemValue, time } = value as {
+              value: any;
+              time: any;
+            };
+            if (value !== undefined) {
               stringDataArray[id - 1] = {
                 id: key + 1,
                 value: itemValue,
@@ -98,28 +106,29 @@ const State = () => {
             }
           }
         }
-        setStringData(stringDataArray);
       }
+      setStringData(stringDataArray);
     };
-    // eventSource.onerror = (event) => {
-    //   console.log("err");
-    //   setError("error");
-    //   let timeLeft = 5000;
-    //   const timer = setInterval(() => {
-    //     timeLeft -= 1000;
-    //     setReconnectTimeLeft(timeLeft);
-    //     if (timeLeft <= 0) {
-    //       clearInterval(timer);
-    //       setError("");
-    //       getStateData();
-    //     }
-    //   }, 1000);
-    // };
-  };
+    eventSource.onerror = (event) => {
+      // console.log("err");
+      setError("error");
+      // let timeLeft = 3000;
+      // const timer = setInterval(() => {
+      //   timeLeft -= 1000;
+      //   setReconnectTimeLeft(timeLeft);
+      //   if (timeLeft <= 0) {
+      //     clearInterval(timer);
+      //     setError("");
+      //   }
+      // }, 1000);
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, [machine]);
 
   useEffect(() => {
-    getStateData();
-
     clearInterval(reconnectTimer);
     setBooleanData([]);
     setIntData([]);
@@ -243,7 +252,8 @@ const State = () => {
           >
             <CardContent>
               <h2>서버와 연결에 실패하였습니다.</h2>
-              <h4>재연결시도...{Math.ceil(reconnectTimeLeft / 1000)}</h4>
+              {/* <h4>재연결시도...{Math.ceil(reconnectTimeLeft / 1000)}</h4> */}
+              <h4>다시 연결중...</h4>
               <br />
               <Link href="/">홈으로가기</Link>
             </CardContent>
