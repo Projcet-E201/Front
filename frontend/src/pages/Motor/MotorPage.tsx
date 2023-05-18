@@ -141,13 +141,13 @@ const MotorPage = () => {
                       }}
                       onClick={() => navigate(`${index + 1}`)}
                     >
-                      {data?.y > 90 ? (
+                      {data?.y > 250 ? (
                         <img
                           src={event3}
                           alt="event3"
                           style={{ width: 60, margin: "5px" }}
                         />
-                      ) : data?.y > 70 ? (
+                      ) : data?.y > 200 ? (
                         <img
                           src={event2}
                           alt="event2"

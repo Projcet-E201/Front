@@ -142,13 +142,13 @@ const WaterPage = () => {
                       }}
                       onClick={() => navigate(`${index + 1}`)}
                     >
-                      {data?.y == 0 ? (
+                      {data?.y > 3 ? (
                         <img
                           src={event3}
                           alt="event3"
                           style={{ width: 60, margin: "5px" }}
                         />
-                      ) : data?.y < 1 ? (
+                      ) : data?.y > 2 ? (
                         <img
                           src={event2}
                           alt="event2"

@@ -144,13 +144,13 @@ const AirOut2Page = () => {
                       }}
                       onClick={() => navigate(`${index + 1}`)}
                     >
-                      {data?.y > 800 ? (
+                      {data?.y > 0.8 ? (
                         <img
                           src={event3}
                           alt="event3"
                           style={{ width: 60, margin: "5px" }}
                         />
-                      ) : data?.y > 700 ? (
+                      ) : data?.y > 0.7 ? (
                         <img
                           src={event2}
                           alt="event2"
