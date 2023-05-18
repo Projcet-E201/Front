@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -14,7 +14,7 @@ import StringState from "./StateComponents/StringState";
 import DoubleState from "./StateComponents/DoubleState";
 import IntState from "./StateComponents/IntState";
 
-import axios from "axios";
+// import axios from "axios";
 
 const State = () => {
   const { machine = "" } = useParams();
@@ -29,110 +29,102 @@ const State = () => {
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
 
   const getStateData = () => {
-    // console.log("ㄱㄱㄱㄱ");
-    axios
-      .get(`https://semse.info/api/machine/${machine}/state`)
-      // .get(`http://localhost:8091/api/machine/${machine}/state`)
-      .then((response) => {
-        console.log(response.data, "statestate", `${machine}`);
-        // Boolean Data 정렬
+    const eventSource = new EventSource(
+      `https://datadivision.semse.info/subscribe/${machine}/info`
+    );
 
-        if (response.data.length > 0) {
-          const booleanDataArray = new Array(10).fill(null);
-          if (response.data[0] !== null) {
-            for (const [key, value] of Object.entries(response.data[0])) {
-              if (key.startsWith("boolean")) {
-                const id = parseInt(key.slice(7));
-                booleanDataArray[id - 1] = { id: id, value: value };
-              }
+    eventSource.onmessage = (event) => {
+      const allStateData = JSON.parse(event.data);
+      console.log(allStateData);
+      if (allStateData.length > 0) {
+        const booleanDataArray = new Array(10).fill(null);
+        if (allStateData[0] !== null) {
+          for (const [key, value] of Object.entries(allStateData[0])) {
+            if (key.startsWith("boolean")) {
+              const id = parseInt(key.slice(7));
+              booleanDataArray[id - 1] = { id: id, value: value };
             }
           }
-
-          setBooleanData(booleanDataArray);
-
-          const doubleDataArray = new Array(10).fill(null);
-          if (response.data[1] !== null) {
-            for (const [key, value] of Object.entries(response.data[1])) {
-              if (key.startsWith("double")) {
-                const id = parseInt(key.slice(6));
-                doubleDataArray[id - 1] = {
-                  id: key,
-                  name: `D${id}`,
-                  value: value,
-                  color: (id - 1) % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
-                };
-              }
-            }
-          }
-          setDoubleData(doubleDataArray);
-
-          const intDataArray = new Array(10).fill(null);
-          if (response.data[2] !== null) {
-            for (const [key, value] of Object.entries(response.data[2])) {
-              if (key.startsWith("int")) {
-                const id = parseInt(key.slice(3));
-                intDataArray[id - 1] = {
-                  id: key,
-                  name: `I${id}`,
-                  value: value,
-                  color: (id - 1) % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
-                };
-              }
-            }
-          }
-          setIntData(intDataArray);
-
-          const stringDataArray = new Array(10).fill(null);
-          if (response.data[3] !== null) {
-            for (const [key, value] of Object.entries(response.data[3])) {
-              if (key.startsWith("string")) {
-                const id = parseInt(key.slice(6));
-                const { value: itemValue, time } = value as {
-                  value: any;
-                  time: any;
-                };
-                stringDataArray[id - 1] = {
-                  id: key + 1,
-                  value: itemValue,
-                  time,
-                };
-              }
-            }
-          }
-          setStringData(stringDataArray);
         }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setError("error");
-        let timeLeft = 5000;
-        const timer = setInterval(() => {
-          timeLeft -= 1000;
-          setReconnectTimeLeft(timeLeft);
-          if (timeLeft <= 0) {
-            clearInterval(timer);
-            setError("");
-            getStateData();
+
+        setBooleanData(booleanDataArray);
+
+        const doubleDataArray = new Array(10).fill(null);
+        if (allStateData[1] !== null) {
+          for (const [key, value] of Object.entries(allStateData[1])) {
+            if (key.startsWith("double")) {
+              const id = parseInt(key.slice(6));
+              doubleDataArray[id - 1] = {
+                id: key,
+                name: `D${id}`,
+                value: value,
+                color: (id - 1) % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
+              };
+            }
           }
-        }, 1000);
-      });
+        }
+        setDoubleData(doubleDataArray);
+
+        const intDataArray = new Array(10).fill(null);
+        if (allStateData[2] !== null) {
+          for (const [key, value] of Object.entries(allStateData[2])) {
+            if (key.startsWith("int")) {
+              const id = parseInt(key.slice(3));
+              intDataArray[id - 1] = {
+                id: key,
+                name: `I${id}`,
+                value: value,
+                color: (id - 1) % 2 === 0 ? "#C1EAF3" : "#5CC2F2",
+              };
+            }
+          }
+        }
+        setIntData(intDataArray);
+
+        const stringDataArray = new Array(10).fill(null);
+        if (allStateData[3] !== null) {
+          for (const [key, value] of Object.entries(allStateData[3])) {
+            if (key.startsWith("string")) {
+              const id = parseInt(key.slice(6));
+              const { value: itemValue, time } = value as {
+                value: any;
+                time: any;
+              };
+              stringDataArray[id - 1] = {
+                id: key + 1,
+                value: itemValue,
+                time,
+              };
+            }
+          }
+        }
+        setStringData(stringDataArray);
+      }
+    };
+    // eventSource.onerror = (event) => {
+    //   console.log("err");
+    //   setError("error");
+    //   let timeLeft = 5000;
+    //   const timer = setInterval(() => {
+    //     timeLeft -= 1000;
+    //     setReconnectTimeLeft(timeLeft);
+    //     if (timeLeft <= 0) {
+    //       clearInterval(timer);
+    //       setError("");
+    //       getStateData();
+    //     }
+    //   }, 1000);
+    // };
   };
 
   useEffect(() => {
     getStateData();
 
-    const interval = setInterval(() => {
-      getStateData();
-    }, 20000);
-
-    return () => {
-      clearInterval(interval);
-      clearInterval(reconnectTimer);
-      setBooleanData([]);
-      setIntData([]);
-      setDoubleData([]);
-      setStringData([]);
-    };
+    clearInterval(reconnectTimer);
+    setBooleanData([]);
+    setIntData([]);
+    setDoubleData([]);
+    setStringData([]);
   }, [machine]);
 
   return (

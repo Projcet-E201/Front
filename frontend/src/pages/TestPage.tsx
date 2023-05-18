@@ -6,7 +6,7 @@ const TestPage: React.FC = () => {
 
   useEffect(() => {
     const eventSource = new EventSource(
-      "http://52.79.42.131:8090/subscribe/error"
+      "https://datadivison.semse.info/subscribe/1/info"
     );
 
     eventSource.onmessage = (event) => {
@@ -26,7 +26,7 @@ const TestPage: React.FC = () => {
     <div className="App">
       <div>
         <button>test</button>
-        <p>{JSON.stringify(message)}</p>
+        <p>{message}</p>
       </div>
     </div>
   );

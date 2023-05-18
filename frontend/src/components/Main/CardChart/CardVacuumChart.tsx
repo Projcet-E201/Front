@@ -4,7 +4,7 @@ import { faker } from "@faker-js/faker";
 import { ResponsiveLine } from "@nivo/line";
 
 const CardVacuumChart = ({ vacuumData }: any) => {
-  console.log(vacuumData);
+  // console.log(vacuumData);
   const datasets = [
     {
       id: "min",
