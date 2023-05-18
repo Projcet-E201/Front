@@ -12,14 +12,11 @@ const MainError: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
-    console.log("요청했다어흥");
     const eventSource = new EventSource(
       "https://datadivision.semse.info/subscribe/error"
     );
 
     eventSource.onmessage = (event) => {
-      console.log("요청왔다어흥", event.data);
-
       const newMessage = {
         id: "",
         content: event.data,
@@ -28,7 +25,6 @@ const MainError: React.FC = () => {
     };
 
     eventSource.onerror = (event) => {
-      console.log("요청실패어흥", event);
       eventSource.close();
     };
 

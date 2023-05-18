@@ -74,8 +74,6 @@ const DetailItem: React.FC = () => {
   }, [location.pathname]);
 
   const getHistoryData = async () => {
-    console.log("요청했다멍");
-
     const startTime = startDate?.toISOString();
     const endTime = endDate?.toISOString();
 
@@ -84,7 +82,6 @@ const DetailItem: React.FC = () => {
         `https://semse.info/api/machine/${machineId}/history/${sensor}/${sensorId}/${startTime}/${endTime}`
       )
       .then((response) => {
-        console.log("성공이다람쥐", response.data);
         let currentDate = ""; // 현재 날짜를 저장하는 변수
         const nowData = response.data.data.map((item: any, index: number) => {
           const date = item.x.split("/")[0]; // 날짜 부분 추출
@@ -113,11 +110,8 @@ const DetailItem: React.FC = () => {
         // console.error("실패다람쥐", error);
       });
   };
-  console.log(sensor);
 
   const getNowData = async () => {
-    console.log("요청했다람쥐");
-
     const currentDate = new Date();
     const startTime = new Date(
       currentDate.getTime() - 60 * 60 * 1000
@@ -129,7 +123,6 @@ const DetailItem: React.FC = () => {
         `https://semse.info/api/machine/${machineId}/history/${sensor}/${sensorId}/${startTime}/${endTime}`
       )
       .then((response) => {
-        console.log("성공이다람쥐", response.data);
         let currentDate = ""; // 현재 날짜를 저장하는 변수
         const nowData = response.data.data.map((item: any, index: number) => {
           const date = item.x.split("/")[0]; // 날짜 부분 추출

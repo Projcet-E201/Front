@@ -60,8 +60,6 @@ const DetailChart = ({ datasets, legend }: Props) => {
   const [maxvalue, setMaxvalue] = useState(0);
   const [minvalue, setMinvalue] = useState(0);
 
-  // console.log("여기야여기", datasets);
-
   useEffect(() => {
     if (datasets[0].name === "motor") {
       setMaxvalue(300);
@@ -121,63 +119,54 @@ const DetailChart = ({ datasets, legend }: Props) => {
       );
       setMarkers(storedMarkers);
       setMotorRecoilMarkers(storedMarkers);
-      // console.log(markers);
     } else if (location.pathname.includes("vacuum")) {
       const storedMarkers = JSON.parse(
         localStorage.getItem("VacuumChartMarkers") || "[]"
       );
       setMarkers(storedMarkers);
       setVacuumRecoilMarkers(storedMarkers);
-      // console.log(markers);
     } else if (location.pathname.includes("air-in")) {
       const storedMarkers = JSON.parse(
         localStorage.getItem("AirInChartMarkers") || "[]"
       );
       setMarkers(storedMarkers);
       setAirInRecoilMarkers(storedMarkers);
-      // console.log(markers);
     } else if (location.pathname.includes("air-out-kpa")) {
       const storedMarkers = JSON.parse(
         localStorage.getItem("AirOutKpaChartMarkers") || "[]"
       );
       setMarkers(storedMarkers);
       setAirOutKpaRecoilMarkers(storedMarkers);
-      // console.log(markers);
     } else if (location.pathname.includes("air-out-mpa")) {
       const storedMarkers = JSON.parse(
         localStorage.getItem("AirOutMpaChartMarkers") || "[]"
       );
       setMarkers(storedMarkers);
       setAirOutMpaRecoilMarkers(storedMarkers);
-      // console.log(markers);
     } else if (location.pathname.includes("water")) {
       const storedMarkers = JSON.parse(
         localStorage.getItem("WaterChartMarkers") || "[]"
       );
       setMarkers(storedMarkers);
       setWaterRecoilMarkers(storedMarkers);
-      // console.log(markers);
     } else if (location.pathname.includes("load")) {
       const storedMarkers = JSON.parse(
         localStorage.getItem("LoadChartMarkers") || "[]"
       );
       setMarkers(storedMarkers);
       setLoadRecoilMarkers(storedMarkers);
-      // console.log(markers);
     } else if (location.pathname.includes("rpm")) {
       const storedMarkers = JSON.parse(
         localStorage.getItem("RpmChartMarkers") || "[]"
       );
       setMarkers(storedMarkers);
       setRpmRecoilMarkers(storedMarkers);
-      // console.log(markers);
     } else if (location.pathname.includes("abrasion")) {
       const storedMarkers = JSON.parse(
         localStorage.getItem("AbrasionChartMarkers") || "[]"
       );
       setMarkers(storedMarkers);
       setAbrasionRecoilMarkers(storedMarkers);
-      // console.log(markers);
     }
   }, []);
 
