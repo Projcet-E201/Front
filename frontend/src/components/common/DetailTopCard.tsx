@@ -65,8 +65,9 @@ const DetailTopCard = ({ location }: Props) => {
     abrasionNumber,
     loadNumber,
     rpmNumber,
+    machine,
   } = useParams();
-  const [selectedMachine, setSelectedMachine] =
+  const [selectedMachine, setselectedMachine] =
     useRecoilState(selectedMachineAtom);
 
   let title = "";

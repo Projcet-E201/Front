@@ -60,34 +60,34 @@ const DetailChart = ({ datasets, legend }: Props) => {
   const [maxvalue, setMaxvalue] = useState(0);
   const [minvalue, setMinvalue] = useState(0);
 
-  console.log("여기야여기", datasets);
+  // console.log("여기야여기", datasets);
 
   useEffect(() => {
-    if (datasets[0].name == "motor") {
+    if (datasets[0].name === "motor") {
       setMaxvalue(300);
       setMinvalue(0);
-    } else if (datasets[0].name == "water") {
+    } else if (datasets[0].name === "water") {
       setMaxvalue(4);
       setMinvalue(0);
-    } else if (datasets[0].name == "vacuum") {
+    } else if (datasets[0].name === "vacuum") {
       setMaxvalue(100);
       setMinvalue(0);
-    } else if (datasets[0].name == "air-in") {
+    } else if (datasets[0].name === "air-in") {
       setMaxvalue(900);
       setMinvalue(0);
-    } else if (datasets[0].name == "air-out-kpa") {
+    } else if (datasets[0].name === "air-out-kpa") {
       setMaxvalue(900);
       setMinvalue(0);
-    } else if (datasets[0].name == "air-out-mpa") {
+    } else if (datasets[0].name === "air-out-mpa") {
       setMaxvalue(1);
       setMinvalue(-0.1);
-    } else if (datasets[0].name == "abrasion") {
+    } else if (datasets[0].name === "abrasion") {
       setMaxvalue(40);
       setMinvalue(0);
-    } else if (datasets[0].name == "load") {
+    } else if (datasets[0].name === "load") {
       setMaxvalue(16);
       setMinvalue(0);
-    } else if (datasets[0].name == "rpm") {
+    } else if (datasets[0].name === "rpm") {
       setMaxvalue(50000);
       setMinvalue(0);
     }
@@ -184,9 +184,13 @@ const DetailChart = ({ datasets, legend }: Props) => {
   return (
     <ResponsiveLine
       data={datasets}
-      margin={{ top: 10, right: legend ? 110 : 35, bottom: 30, left: 40 }}
+      margin={{ top: 10, right: legend ? 110 : 50, bottom: 30, left: 50 }}
       xFormat={(value: any) => formatTime(new Date().getTime() / 1000 - value)}
       xScale={{ type: "point" }}
+      // axisBottom={{
+      //   // orient: "bottom-left",
+      //   tickRotation: -45,
+      // }}
       yScale={{
         type: "linear",
         min: minvalue,

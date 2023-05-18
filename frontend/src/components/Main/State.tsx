@@ -35,7 +35,7 @@ const State = () => {
 
     eventSource.onmessage = (event) => {
       const allStateData = JSON.parse(event.data);
-      // console.log(allStateData);
+      console.log(allStateData);
       setError("");
       const booleanDataArray = new Array(10).fill({ id: "error", value: 0 });
 
@@ -251,9 +251,8 @@ const State = () => {
             }}
           >
             <CardContent>
-              <h2>서버와 연결에 실패하였습니다.</h2>
+              <h2>데이터를 가져오는중 입니다...</h2>
               {/* <h4>재연결시도...{Math.ceil(reconnectTimeLeft / 1000)}</h4> */}
-              <h4>다시 연결중...</h4>
               <br />
               <Link href="/">홈으로가기</Link>
             </CardContent>

@@ -47,8 +47,10 @@ const DetailItem: React.FC = () => {
 
   const handleDateChange = useCallback(
     (dates: any, dateStrings: [string, string]) => {
-      setStartDate(dates[0].toDate());
-      setEndDate(dates[1].toDate());
+      if (dates && dates.length === 2 && dates[0] && dates[1]) {
+        setStartDate(dates[0].toDate());
+        setEndDate(dates[1].toDate());
+      }
     },
     []
   );
@@ -82,19 +84,33 @@ const DetailItem: React.FC = () => {
         `https://semse.info/api/machine/${machineId}/history/${sensor}/${sensorId}/${startTime}/${endTime}`
       )
       .then((response) => {
-        console.log("성공이다멍", response.data);
-        // console.log(startTime, endTime);
+        console.log("성공이다람쥐", response.data);
+        let currentDate = ""; // 현재 날짜를 저장하는 변수
+        const nowData = response.data.data.map((item: any, index: number) => {
+          const date = item.x.split("/")[0]; // 날짜 부분 추출
+          const time = item.x.split("/")[1]; // 시간 부분 추출
 
-        const historyData = response.data.data.map((item: any) => ({
-          x: item.x.split("/")[1], // x 값에서 시간 부분만 추출하여 저장
-          y: parseFloat(item.y), // y 값을 숫자로 변환하여 저장
-        }));
+          let x;
+          if (currentDate !== date) {
+            // 날짜가 바뀌면 날짜와 시간을 함께 저장
+            currentDate = date;
+            // x = item.x; // 날짜와 시간 전체를 저장
+            x = item.x.replace(/^../, ""); // 날짜와 시간 전체를 저장
+          } else {
+            // 날짜가 동일하면 시간만 저장
+            x = time; // 시간만 저장
+          }
 
-        setData(historyData); // 데이터를 업데이트합니다.
+          return {
+            x: x,
+            y: parseFloat(item.y), // y 값을 숫자로 변환하여 저장
+          };
+        });
+
+        setData(nowData);
       })
       .catch((error) => {
-        // console.error("실패다멍", error);
-        // console.log(startTime, endTime);
+        // console.error("실패다람쥐", error);
       });
   };
   console.log(sensor);
@@ -113,11 +129,28 @@ const DetailItem: React.FC = () => {
         `https://semse.info/api/machine/${machineId}/history/${sensor}/${sensorId}/${startTime}/${endTime}`
       )
       .then((response) => {
-        // console.log("성공이다람쥐", response.data);
-        const nowData = response.data.data.map((item: any) => ({
-          x: item.x.split("/")[1], // x 값에서 시간 부분만 추출하여 저장
-          y: parseFloat(item.y), // y 값을 숫자로 변환하여 저장
-        }));
+        console.log("성공이다람쥐", response.data);
+        let currentDate = ""; // 현재 날짜를 저장하는 변수
+        const nowData = response.data.data.map((item: any, index: number) => {
+          const date = item.x.split("/")[0]; // 날짜 부분 추출
+          const time = item.x.split("/")[1]; // 시간 부분 추출
+
+          let x;
+          if (currentDate !== date) {
+            // 날짜가 바뀌면 날짜와 시간을 함께 저장
+            currentDate = date;
+            // x = item.x; // 날짜와 시간 전체를 저장
+            x = item.x.replace(/^../, ""); // 날짜와 시간 전체를 저장
+          } else {
+            // 날짜가 동일하면 시간만 저장
+            x = time; // 시간만 저장
+          }
+
+          return {
+            x: x,
+            y: parseFloat(item.y), // y 값을 숫자로 변환하여 저장
+          };
+        });
 
         setData(nowData);
       })
@@ -126,16 +159,18 @@ const DetailItem: React.FC = () => {
       });
   };
   const [check, setCheck] = useState(0);
+
   useEffect(() => {
-    if (data.length === 0) {
-      getNowData();
-      setCheck(1);
-    }
-  }, [data.length, getNowData]);
+    getNowData();
+
+    return () => {
+      setData([]);
+    };
+  }, [sensorId]);
 
   return (
-    <div style={{ width: "100%" }}>
-      {check == 0 ? (
+    <div style={{ width: "100%", display: "flex" }}>
+      {data.length === 0 ? (
         <Card className={styles.detailcard}>
           <Box
             sx={{
@@ -147,28 +182,13 @@ const DetailItem: React.FC = () => {
             }}
           >
             <CircularProgress />
-            <h3> 현재 데이터를 불러오는 중입니다...</h3>
+            <h3> 데이터를 불러오는 중입니다...</h3>
           </Box>
         </Card>
-      ) : data.length === 0 ? (
-        <div
-          style={{
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            textAlign: "center",
-          }}
-        >
-          <div>
-            <h4>저장된 데이터가 없습니다.</h4>
-            <h4>관리자에게 문의하세요.</h4>
-          </div>
-        </div>
       ) : (
         <Card className={styles.detailcard}>
           <CardContent>
-            <div style={{ height: "33vh" }}>
+            <div style={{ height: "32.5vh" }}>
               <DetailChart datasets={datasets} legend={false} />
             </div>
           </CardContent>
@@ -176,7 +196,7 @@ const DetailItem: React.FC = () => {
       )}
       <Card className={styles.detaildate}>
         <CardContent>
-          <div style={{ height: "33vh", marginTop: "0%" }}>
+          <div style={{ height: "32.5vh", marginTop: "0%" }}>
             <div className={styles.data}>
               <div className={styles.max}>
                 <h1 style={{ marginBottom: "0%" }}>{datasets[0].max}</h1>

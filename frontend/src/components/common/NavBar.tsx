@@ -3,7 +3,7 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styles from "./NavBar.module.css";
 
-import logo from "../../assets/semse_logo.png";
+import logo from "../../assets/logo_semse.png";
 
 // recoil 연결
 import { useRecoilState } from "recoil";
@@ -50,14 +50,18 @@ const NavBar = ({ leftNavWidth }: any) => {
         {/* <p>최상단 네브바</p> */}
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div style={{ display: "flex" }}>
-            <div className={styles.title} style={{ width: "220px" }}>
-              <img src={logo} alt="logo" onClick={() => navigate(`/`)} />
-              <h1 onClick={() => navigate(`/`)}>SEMSE</h1>
+            <div
+              className={styles.title}
+              style={{ width: "200px" }}
+              onClick={() => navigate(`/`)}
+            >
+              <img src={logo} alt="logo" style={{ width: "100%" }} />
+              {/* <h1>SEMSE</h1> */}
             </div>
             {/* 경로 부분 */}
             <div style={{ alignItems: "end", display: "flex" }}>
               {location.pathname === "/" && (
-                <h3 style={{ marginBottom: "0" }}>Main</h3>
+                <h1 style={{ marginBottom: "0", marginLeft: "30px" }}>Main</h1>
               )}
               {location.pathname.startsWith("/machine/") && (
                 <>
@@ -65,9 +69,9 @@ const NavBar = ({ leftNavWidth }: any) => {
                     to={`/machine/${machine}`}
                     style={{ textDecoration: "none", color: "inherit" }}
                   >
-                    <h3 style={{ marginBottom: "0" }}>
+                    <h1 style={{ marginBottom: "0", marginLeft: "30px" }}>
                       Machine {machine} &nbsp;
-                    </h3>
+                    </h1>
                   </Link>
                   {location.pathname
                     .split("/")
@@ -81,19 +85,23 @@ const NavBar = ({ leftNavWidth }: any) => {
                           .slice(3, index + 4)
                           .join("/")}`}
                       >
-                        <h3 style={{ marginBottom: "0" }}>
+                        <h1 style={{ marginBottom: "0" }}>
                           &gt; {path.charAt(0).toUpperCase() + path.slice(1)}
                           &nbsp;
-                        </h3>
+                        </h1>
                       </Link>
                     ))}
                 </>
               )}
               {location.pathname === "/custom-build" && (
-                <h3 style={{ marginBottom: "0" }}>CustomBuild</h3>
+                <h1 style={{ marginBottom: "0", marginLeft: "30px" }}>
+                  CustomBuild
+                </h1>
               )}
               {location.pathname === "/equipment-setting" && (
-                <h3 style={{ marginBottom: "0" }}>설비 관리</h3>
+                <h1 style={{ marginBottom: "0", marginLeft: "30px" }}>
+                  EquipmentSetting
+                </h1>
               )}
             </div>
           </div>

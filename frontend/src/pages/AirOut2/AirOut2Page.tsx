@@ -193,8 +193,7 @@ const AirOut2Page = () => {
             {airOutMpaData.map((dataset: any, index: number) => (
               // <Card className={styles.card} style={{ width: "32.3%" }}>
               <Card
-                className={styles.card}
-                style={{ width: "49%", cursor: "pointer" }}
+                className={styles.botcard}
                 onClick={() => navigate(`${index + 1}`)}
               >
                 <CardContent style={{ height: "25vh", margin: "0" }}>

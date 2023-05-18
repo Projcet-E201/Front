@@ -6,7 +6,7 @@ const TestPage: React.FC = () => {
 
   useEffect(() => {
     const eventSource = new EventSource(
-      "https://datadivison.semse.info/subscribe/1/info"
+      "https://datadivision.semse.info/subscribe/1/info"
     );
 
     eventSource.onmessage = (event) => {

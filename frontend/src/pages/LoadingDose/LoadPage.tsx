@@ -208,8 +208,7 @@ const LoadPage = () => {
               // <Card className={styles.card} style={{ width: "32.3%" }}>
               <Card
                 key={index}
-                className={styles.card}
-                style={{ width: "49%", cursor: "pointer" }}
+                className={styles.botcard}
                 onClick={() => navigate(`${index + 1}`)}
               >
                 <CardContent style={{ height: "20vh", margin: "0" }}>

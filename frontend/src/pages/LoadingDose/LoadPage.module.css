@@ -53,3 +53,38 @@
 .avg h1 {
   color: #5cc2f2;
 }
+
+.bottomcard {
+  margin: 0.5rem;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.daycard {
+  margin: 0.5rem;
+  /* background-color: white; */
+  float: left;
+  height: 10vh;
+  width: calc(100% - 1em);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.botcard {
+  margin: 0.5rem;
+  /* background-color: white; */
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  width: 49%;
+  cursor: pointer;
+}
+
+@media (max-width: 1850px) {
+  .botcard {
+    margin: 0.5rem;
+    /* background-color: white; */
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 100%;
+    cursor: pointer;
+  }
+}

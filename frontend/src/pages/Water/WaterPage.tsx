@@ -32,7 +32,6 @@ const WaterPage = () => {
     axios
       .get(`https://semse.info/api/machine/${machine}/water`)
       .then((res) => {
-        // console.log(res.data, "water");
         const waterData = res.data.reduce((acc: any, water: any) => {
           const { name, time, value } = water;
           const waterId = name.replace("WATER", "");
@@ -65,8 +64,6 @@ const WaterPage = () => {
         }, 1000);
       });
   };
-
-  console.log(waterData);
 
   useEffect(() => {
     getWaterData();
@@ -111,7 +108,7 @@ const WaterPage = () => {
               }}
             >
               <CircularProgress />
-              <h3>Water 데이터를 불러오는 중 입니다...</h3>
+              <h3>Motor 데이터를 불러오는 중 입니다...</h3>
             </Box>
           </CardContent>
         </Card>
@@ -209,8 +206,7 @@ const WaterPage = () => {
             {waterData.map((dataset: any, index: number) => (
               // <Card className={styles.card} style={{ width: "32.3%" }}>
               <Card
-                className={styles.card}
-                style={{ width: "49%", cursor: "pointer" }}
+                className={styles.botcard}
                 onClick={() => navigate(`${index + 1}`)}
               >
                 <CardContent style={{ height: "20vh", margin: "0" }}>
