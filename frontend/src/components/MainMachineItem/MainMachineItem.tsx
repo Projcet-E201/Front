@@ -46,16 +46,16 @@ const MainMachineItem = (props: MainMachineItemProps) => {
   const [isScoreZero, setIsScoreZero] = useState(false);
 
   useEffect(() => {
-    setIsScoreZero(props.client.SCORE > 0 && props.client.SCORE < 60); // SCORE 값이 0인 경우에만 true를 설정
+    setIsScoreZero(props.client.SCORE > 0 && props.client.SCORE < 30); // SCORE 값이 0인 경우에만 true를 설정
   }, [props.client.SCORE]);
 
   const getBackgroundColor = () => {
     if (props.client.SCORE === 0) {
       return "#5e5e5e";
-    } else if (props.client.SCORE < 60) {
+    } else if (props.client.SCORE < 30) {
       return "red";
     } else {
-      return "#4CD964";
+      return "#C1EAF3";
     }
   };
 
@@ -64,6 +64,12 @@ const MainMachineItem = (props: MainMachineItemProps) => {
       return {
         animation: `${styles.pulse} 1s infinite`,
         backgroundColor: getBackgroundColor(),
+        color: "white",
+      };
+    } else if (props.client.SCORE === 0) {
+      return {
+        backgroundColor: getBackgroundColor(),
+        color: "white",
       };
     } else {
       return {

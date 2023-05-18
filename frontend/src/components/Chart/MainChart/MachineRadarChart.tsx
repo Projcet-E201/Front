@@ -17,7 +17,6 @@ const MachineRadarChart = ({ data }: MachineRadarChartProps) => {
   const CustomMarkers: RadarCustomLayer<MachineData>[] = [
     // 커스텀 markers 설정
   ];
-  console.log(data);
 
   const sortedData = [...data].sort((a, b) => {
     const aIndex = parseInt(a.id.replace("CLIENT", ""));

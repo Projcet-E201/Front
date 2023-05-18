@@ -40,7 +40,7 @@ type ClientData = [
 
 const MainPage: React.FC = () => {
   const navigate = useNavigate();
-  const [check, setCheck] = useState(0);
+  const [check, setCheck] = useState(1);
   const [clientData, setClientData] = useState<ClientData>([
     {
       CLIENT1: {
@@ -195,8 +195,6 @@ const MainPage: React.FC = () => {
   const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
 
   const getClientData = async () => {
-    // console.log("요청했다냥");
-
     await axios
 
       .get("https://semse.info/api/main/machine")
@@ -215,14 +213,11 @@ const MainPage: React.FC = () => {
             acc[key] = value;
             return acc;
           }, {});
-        // console.log("성공이다냥", response.data);
 
         setCheck(1);
         setClientData([{ ...sortedData }]);
       })
-      .catch((error) => {
-        // console.error("실패다냥", error);
-      });
+      .catch((error) => {});
   };
   useEffect(() => {
     getClientData();
