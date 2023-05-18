@@ -27,7 +27,7 @@ const AirOut1Page = () => {
 
   const [airOutKpaData, setAirOutKpaData] = useState<any>([]);
   const getAirOutKpaData = () => {
-    console.log("airOutKpa 가져오기");
+    // console.log("airOutKpa 가져오기");
     axios
       .get(`https://semse.info/api/machine/${machine}/air_out_kpa`)
       .then((res) => {

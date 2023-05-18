@@ -347,7 +347,7 @@ const DetailTopCard = ({ location }: Props) => {
   };
 
   const handleMarkerWidthChange = (index: number, inputwidth: any) => {
-    console.log(inputwidth);
+    // console.log(inputwidth);
     setMarkers((markers: any[]) => {
       const updatedMarkers = [...markers];
       updatedMarkers[index] = {
@@ -366,7 +366,7 @@ const DetailTopCard = ({ location }: Props) => {
     useState<number>(0);
   const [isPickerOpen, setIsPickerOpen] = useState<boolean>(false);
   const handleEditColor = (color: string) => {
-    console.log(color);
+    // console.log(color);
     setMarkers((markers: any[]) => {
       const updatedMarkers = [...markers];
       const markerToUpdate = { ...updatedMarkers[isChangeColorPickerOpen] };
@@ -508,7 +508,7 @@ const DetailTopCard = ({ location }: Props) => {
                             value={marker.lineStyle.strokeWidth}
                             onChange={(e) => {
                               handleMarkerWidthChange(index, e.target.value);
-                              console.log(e.target.value);
+                              // console.log(e.target.value);
                             }}
                           >
                             {Array.from({ length: 10 }, (_, i) => i + 1).map(

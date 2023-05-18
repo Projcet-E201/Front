@@ -62,7 +62,7 @@ const CustomChart = ({ chart }: any) => {
   const [max, setMax] = useState<any>(100);
 
   const getData = () => {
-    console.log(customurl, "urlurl");
+    // console.log(customurl, "urlurl");
     axios
       // .get(`https://semse.info/api/machine/${chart.machine}/motor`)
 
@@ -126,7 +126,7 @@ const CustomChart = ({ chart }: any) => {
         setCustomData(Object.values(customData));
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 

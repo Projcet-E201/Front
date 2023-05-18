@@ -14,7 +14,7 @@ const TestPage: React.FC = () => {
     };
 
     eventSource.onerror = (event) => {
-      console.log("SSE error", event);
+      // console.log("SSE error", event);
       eventSource.close();
     };
 
