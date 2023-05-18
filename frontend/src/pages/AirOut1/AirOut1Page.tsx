@@ -110,7 +110,7 @@ const AirOut1Page = () => {
               }}
             >
               <CircularProgress />
-              <h3>Motor 데이터를 불러오는 중 입니다...</h3>
+              <h3>AirOut(kPa) 데이터를 불러오는 중 입니다...</h3>
             </Box>
           </CardContent>
         </Card>

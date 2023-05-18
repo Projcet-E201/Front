@@ -14,7 +14,7 @@ const MainError: React.FC = () => {
   useEffect(() => {
     console.log("요청했다어흥");
     const eventSource = new EventSource(
-      "http://52.79.42.131:8090/subscribe/error"
+      "https://datadivision.semse.info/subscribe/error"
     );
 
     eventSource.onmessage = (event) => {
