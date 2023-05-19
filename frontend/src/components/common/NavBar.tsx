@@ -167,7 +167,7 @@ const NavBar = ({ leftNavWidth }: any) => {
                   }`}
                   onClick={() => navigate(`/machine/${machine}`)}
                 >
-                  Main
+                  All
                 </div>
                 <div
                   className={`${
