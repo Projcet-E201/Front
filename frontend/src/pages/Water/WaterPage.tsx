@@ -64,13 +64,14 @@ const WaterPage = () => {
         }, 1000);
       });
   };
-
+  const updateCycle = localStorage.getItem("updateCycle");
+  const time = updateCycle ? parseInt(updateCycle) : 10000;
   useEffect(() => {
     getWaterData();
 
     const interval = setInterval(() => {
       getWaterData();
-    }, 5000);
+    }, time);
 
     return () => {
       clearInterval(interval);

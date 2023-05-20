@@ -129,12 +129,13 @@ const CustomChart = ({ chart }: any) => {
         // console.log(err);
       });
   };
-
+  const updateCycle = localStorage.getItem("updateCycle");
+  const time = updateCycle ? parseInt(updateCycle) : 10000;
   useEffect(() => {
     getData();
     const interval = setInterval(() => {
       getData();
-    }, 10000);
+    }, time);
 
     return () => {
       clearInterval(interval);

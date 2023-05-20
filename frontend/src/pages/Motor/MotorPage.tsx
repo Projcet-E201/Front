@@ -63,13 +63,14 @@ const MotorPage = () => {
         }, 1000);
       });
   };
-
+  const updateCycle = localStorage.getItem("updateCycle");
+  const time = updateCycle ? parseInt(updateCycle) : 10000;
   useEffect(() => {
     getMotorData();
 
     const interval = setInterval(() => {
       getMotorData();
-    }, 5000);
+    }, time);
 
     return () => {
       clearInterval(interval);

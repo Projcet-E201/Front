@@ -66,13 +66,14 @@ const RpmPage = () => {
         }, 1000);
       });
   };
-
+  const updateCycle = localStorage.getItem("updateCycle");
+  const time = updateCycle ? parseInt(updateCycle) : 10000;
   useEffect(() => {
     getRpmData();
 
     const interval = setInterval(() => {
       getRpmData();
-    }, 5000);
+    }, time);
 
     return () => {
       clearInterval(interval);

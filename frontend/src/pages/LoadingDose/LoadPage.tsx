@@ -66,13 +66,14 @@ const LoadPage = () => {
         }, 1000);
       });
   };
-
+  const updateCycle = localStorage.getItem("updateCycle");
+  const time = updateCycle ? parseInt(updateCycle) : 10000;
   useEffect(() => {
     getLoadData();
 
     const interval = setInterval(() => {
       getLoadData();
-    }, 5000);
+    }, time);
 
     return () => {
       clearInterval(interval);

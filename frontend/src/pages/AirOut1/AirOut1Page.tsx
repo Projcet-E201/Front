@@ -66,13 +66,15 @@ const AirOut1Page = () => {
         }, 1000);
       });
   };
+  const updateCycle = localStorage.getItem("updateCycle");
+  const time = updateCycle ? parseInt(updateCycle) : 10000;
 
   useEffect(() => {
     getAirOutKpaData();
 
     const interval = setInterval(() => {
       getAirOutKpaData();
-    }, 5000);
+    }, time);
 
     return () => {
       clearInterval(interval);

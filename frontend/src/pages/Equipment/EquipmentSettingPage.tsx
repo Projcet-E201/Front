@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MainLayout from "../../layout/MainLayout";
 import SensorLayout from "../../layout/SensorLayout";
 import MotorChartMarkers from "./Markers/MotorChartMarkers";
@@ -15,8 +15,15 @@ import MotorMarkerChart from "./MarkerChart/MotorMarkerChart";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Grid";
+import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
-import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  MenuItem,
+} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import styles from "./EquipmentSettingPage.module.css";
@@ -46,24 +53,89 @@ const EquipmentSettingPage = () => {
     <AbrasionChartMarkers />,
   ];
 
-  const [expanded, setExpanded] = useState<number | false>(0);
+  const [expanded, setExpanded] = useState<number[]>([]);
 
-  const handleChange = (panel: number) => (event: any, isExpanded: boolean) => {
-    setExpanded(isExpanded ? panel : false);
+  const handleChange =
+    (panel: number) => (_event: any, isExpanded: boolean) => {
+      setExpanded((prevExpanded) =>
+        isExpanded
+          ? [...prevExpanded, panel]
+          : prevExpanded.filter((p) => p !== panel)
+      );
+    };
+
+  const [updateCycle, setUpdateCycle] = useState<any>(
+    localStorage.getItem("updateCycle") || 10000
+  );
+
+  const changeUpdateCycle = (event: any) => {
+    const selectedValue = event.target.value;
+    const convertedValue: any = selectedValue * 1000;
+
+    setUpdateCycle(convertedValue);
+    localStorage.setItem("updateCycle", convertedValue);
   };
+
+  useEffect(() => {
+    localStorage.setItem("updateCycle", updateCycle);
+  }, [updateCycle]);
 
   return (
     <SensorLayout>
       <div>
+        <h3>- default Setting</h3>
+        <Card>
+          <CardContent>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <div>
+                  <h3>Update cycle</h3>
+                  <p>sensor 데이터의 업데이트 주기를 설정합니다.</p>
+                  <Select
+                    value={updateCycle / 1000} // 1000 -> 1, 2000 -> 2, ...
+                    onChange={changeUpdateCycle}
+                  >
+                    {Array.from(Array(10), (_, i) => i + 1).map((value) => (
+                      <MenuItem key={value} value={value}>
+                        {value}초
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </div>
+              </Grid>
+              <Grid item xs={4}>
+                <div>
+                  <h3>line color</h3>
+                  <p>chart에 그려지는 선들의 색상을 지정합니다.</p>
+                  <p>max</p>
+                  <p>min</p>
+                </div>
+              </Grid>
+              <Grid item xs={4}>
+                <div>
+                  <h3>라인 두께</h3>
+                </div>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+      </div>
+      <div>
+        <h3>- Marker Setting</h3>
         {componentList.map((component: any, index: number) => (
           <div
-            style={{ display: "flex", justifyContent: "center", height:'100%' }}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              height: "100%",
+              marginBottom: expanded.includes(index) ? "20px" : 0, // Add margin-bottom when expanded
+              // marginTop: expanded.includes(index) ? "20px" : 0, // Add margin-top when expanded
+            }}
             key={index}
           >
-
             <Accordion
               className={styles.card}
-              expanded={expanded === index}
+              expanded={expanded.includes(index)}
               onChange={handleChange(index)}
               sx={{
                 width: "100%",
@@ -79,20 +151,9 @@ const EquipmentSettingPage = () => {
               <AccordionDetails>
                 <div style={{ display: "flex", width: "100%" }}>
                   <div style={{ width: "100%" }}>{component}</div>
-                  {/* <div
-                    style={{
-                      width: "40%",
-                      marginLeft: "40px",
-                      height: "350px",
-                    }}
-                  >
-                    <MotorMarkerChart />
-                  </div> */}
                 </div>
               </AccordionDetails>
             </Accordion>
-            {/* </CardContent>
-          </Card> */}
           </div>
         ))}
       </div>

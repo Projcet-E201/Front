@@ -93,16 +93,18 @@ const Sensor = () => {
       });
   };
 
+  const updateCycle = localStorage.getItem("updateCycle");
+  const time = updateCycle ? parseInt(updateCycle) : 10000;
   useEffect(() => {
     getSensorData();
 
     const interval = setInterval(() => {
       getSensorData();
-    }, 10000);
+    }, time);
 
     return () => {
       clearInterval(interval);
-      clearInterval(reconnectTimer);
+      // reconnectTimer에 대한 처리 추가 필요
       setMotorData([]);
       setVacuumData([]);
       setAirInData([]);

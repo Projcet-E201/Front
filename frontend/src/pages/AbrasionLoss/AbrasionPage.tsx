@@ -72,12 +72,14 @@ const AbrasionPage = () => {
       });
   };
 
+  const updateCycle = localStorage.getItem("updateCycle");
+  const time = updateCycle ? parseInt(updateCycle) : 10000;
   useEffect(() => {
     getAbrasionData();
 
     const interval = setInterval(() => {
       getAbrasionData();
-    }, 10000);
+    }, time);
 
     return () => {
       clearInterval(interval);

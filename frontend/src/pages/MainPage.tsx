@@ -219,12 +219,16 @@ const MainPage: React.FC = () => {
       })
       .catch((error) => {});
   };
+
+  const updateCycle = localStorage.getItem("updateCycle");
+  const time = updateCycle ? parseInt(updateCycle) : 10000;
+
   useEffect(() => {
     getClientData();
 
     const interval = setInterval(() => {
       getClientData();
-    }, 5000);
+    }, time);
     return () => {
       clearInterval(interval);
       clearInterval(reconnectTimer);
