@@ -80,22 +80,38 @@ const EquipmentSettingPage = () => {
     localStorage.setItem("updateCycle", updateCycle);
   }, [updateCycle]);
 
+  const [updateWidth, setUpdateWidth] = useState<any>(
+    localStorage.getItem("updateWidth") || 2
+  );
+
+  const changeUpdateWidth = (event: any) => {
+    const selectedWidth = event.target.value;
+    const convertedValue: any = selectedWidth;
+
+    setUpdateWidth(convertedValue);
+    localStorage.setItem("updateWidth", convertedValue);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("updateWidth", updateWidth);
+  }, [updateWidth]);
+
   return (
     <SensorLayout>
       <div>
-        <h3>- default Setting</h3>
+        <h2>- default Setting</h2>
         <Card>
           <CardContent>
             <Grid container spacing={2}>
               <Grid item xs={4}>
                 <div>
-                  <h3>Update cycle</h3>
+                  <h3>Update Cycle</h3>
                   <p>sensor 데이터의 업데이트 주기를 설정합니다.</p>
                   <Select
                     value={updateCycle / 1000} // 1000 -> 1, 2000 -> 2, ...
                     onChange={changeUpdateCycle}
                   >
-                    {Array.from(Array(10), (_, i) => i + 1).map((value) => (
+                    {Array.from(Array(20), (_, i) => i + 1).map((value) => (
                       <MenuItem key={value} value={value}>
                         {value}초
                       </MenuItem>
@@ -103,17 +119,28 @@ const EquipmentSettingPage = () => {
                   </Select>
                 </div>
               </Grid>
-              <Grid item xs={4}>
+              {/* <Grid item xs={4}>
                 <div>
-                  <h3>line color</h3>
-                  <p>chart에 그려지는 선들의 색상을 지정합니다.</p>
+                  <h3>Line Color</h3>
+                  <p>chart Line 색상을 지정합니다.</p>
                   <p>max</p>
                   <p>min</p>
                 </div>
-              </Grid>
+              </Grid> */}
               <Grid item xs={4}>
                 <div>
-                  <h3>라인 두께</h3>
+                  <h3>Line Width(px)</h3>
+                  <p>Chart에 그려지는 Line의 굵기를 선택합니다.</p>
+                  <Select
+                    value={updateWidth} // 1000 -> 1, 2000 -> 2, ...
+                    onChange={changeUpdateWidth}
+                  >
+                    {Array.from(Array(10), (_, i) => i + 1).map((value) => (
+                      <MenuItem key={value} value={value}>
+                        {value}px
+                      </MenuItem>
+                    ))}
+                  </Select>
                 </div>
               </Grid>
             </Grid>
@@ -121,7 +148,7 @@ const EquipmentSettingPage = () => {
         </Card>
       </div>
       <div>
-        <h3>- Marker Setting</h3>
+        <h2>- Marker Setting</h2>
         {componentList.map((component: any, index: number) => (
           <div
             style={{

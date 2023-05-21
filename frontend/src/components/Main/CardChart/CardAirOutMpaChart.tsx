@@ -26,6 +26,9 @@ const CardAirOutMpaChart = ({ airOutMpaData }: any) => {
       color: "red", // max line의 색상을 red로 설정
     },
   ];
+
+  const updateWidth = localStorage.getItem("updateWidth");
+  const lineWidth = updateWidth ? parseInt(updateWidth) : 2;
   return (
     <div style={{ height: "100%" }}>
       {airOutMpaData.length === 0 ? (
@@ -63,7 +66,7 @@ const CardAirOutMpaChart = ({ airOutMpaData }: any) => {
           axisTop={null}
           axisRight={null}
           colors={(data) => data.color}
-          lineWidth={1} // 그래프 두께
+          lineWidth={datasets.length > 1 ? 2 : lineWidth}
           pointSize={10}
           pointColor={{ theme: "background" }}
           pointBorderWidth={2}
@@ -71,7 +74,7 @@ const CardAirOutMpaChart = ({ airOutMpaData }: any) => {
           pointLabelYOffset={-12}
           enableSlices="x"
           enablePoints={false}
-          // useMesh={true}
+          useMesh={true}
           animate={false}
           // isInteractive={true}
           // isInteractive={false}

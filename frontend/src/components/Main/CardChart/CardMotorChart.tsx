@@ -31,6 +31,9 @@ const CardMotorChart = ({ motorData }: any) => {
   // console.log(datasets, "datasets");
   // console.log(motorData);
 
+  const updateWidth = localStorage.getItem("updateWidth");
+  const lineWidth = updateWidth ? parseInt(updateWidth) : 2;
+
   return (
     <div style={{ height: "100%" }}>
       {motorData.length === 0 ? (
@@ -69,7 +72,7 @@ const CardMotorChart = ({ motorData }: any) => {
           axisRight={null}
           // colors={{ scheme: "category10" }}
           colors={(data) => data.color}
-          lineWidth={2} // 그래프 두께
+          lineWidth={datasets.length > 1 ? 2 : lineWidth}
           pointSize={10}
           pointColor={{ theme: "background" }}
           pointBorderWidth={2}
@@ -77,7 +80,7 @@ const CardMotorChart = ({ motorData }: any) => {
           pointLabelYOffset={-12}
           enableSlices="x"
           enablePoints={false}
-          // useMesh={true}
+          useMesh={true}
           animate={true}
           // isInteractive={true}
           // isInteractive={false}

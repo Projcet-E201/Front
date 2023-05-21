@@ -61,7 +61,7 @@ const AbrasionChartMarkers = () => {
 
   const [data, setData] = useState<any>([
     {
-      id: "Motor",
+      id: "Abrasion",
       data: Array.from({ length: 20 }, (_, i) => ({
         x: i + 1,
         y: Math.sin((i / 5) * Math.PI) * 20 + 20,
@@ -321,7 +321,8 @@ const AbrasionChartMarkers = () => {
       setNewAbrasionMarkerValue(40);
     }
   };
-
+  const updateWidth = localStorage.getItem("updateWidth");
+  const lineWidth = updateWidth ? parseInt(updateWidth) : 2;
   return (
     <div style={{ display: "flex" }}>
       <Toaster />
@@ -663,7 +664,7 @@ const AbrasionChartMarkers = () => {
           axisTop={null}
           axisRight={null}
           colors={{ scheme: "category10" }}
-          lineWidth={2}
+          lineWidth={data.length > 1 ? 2 : lineWidth}
           pointSize={10}
           pointColor={{ theme: "background" }}
           pointBorderWidth={2}
@@ -671,7 +672,7 @@ const AbrasionChartMarkers = () => {
           pointLabelYOffset={-12}
           enableSlices="x"
           enablePoints={false}
-          useMesh={true}
+          // useMesh={true}
           animate={true}
           motionConfig={{
             mass: 20,

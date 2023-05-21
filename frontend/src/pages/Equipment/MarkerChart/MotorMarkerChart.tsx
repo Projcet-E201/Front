@@ -57,7 +57,8 @@ const MotorMarkerChart = () => {
       // ],
     },
   ];
-
+  const updateWidth = localStorage.getItem("updateWidth");
+  const lineWidth = updateWidth ? parseInt(updateWidth) : 2;
   return (
     <ResponsiveLine
       data={data}
@@ -75,7 +76,7 @@ const MotorMarkerChart = () => {
       axisTop={null}
       axisRight={null}
       colors={{ scheme: "category10" }}
-      lineWidth={2}
+      lineWidth={data.length > 1 ? 2 : lineWidth}
       pointSize={10}
       pointColor={{ theme: "background" }}
       pointBorderWidth={2}
@@ -83,7 +84,7 @@ const MotorMarkerChart = () => {
       pointLabelYOffset={-12}
       enableSlices="x"
       enablePoints={false}
-      useMesh={true}
+      // useMesh={true}
       animate={true}
       // legends={legend ? legends : []}
       markers={markers}

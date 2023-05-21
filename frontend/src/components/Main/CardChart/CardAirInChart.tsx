@@ -13,6 +13,8 @@ const CardAirInChart = ({ airInData }: any) => {
       })),
     },
   ];
+  const updateWidth = localStorage.getItem("updateWidth");
+  const lineWidth = updateWidth ? parseInt(updateWidth) : 2;
   return (
     <div style={{ height: "100%" }}>
       {airInData.length === 0 ? (
@@ -50,7 +52,7 @@ const CardAirInChart = ({ airInData }: any) => {
           axisTop={null}
           axisRight={null}
           colors={{ scheme: "category10" }}
-          lineWidth={2} // 그래프 두께
+          lineWidth={data.length > 1 ? 2 : lineWidth}
           pointSize={10}
           pointColor={{ theme: "background" }}
           pointBorderWidth={2}
@@ -58,7 +60,7 @@ const CardAirInChart = ({ airInData }: any) => {
           pointLabelYOffset={-12}
           enableSlices="x"
           enablePoints={false}
-          // useMesh={true}
+          useMesh={true}
           animate={false}
           // isInteractive={true}
           // isInteractive={false}

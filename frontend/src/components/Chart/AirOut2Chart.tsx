@@ -64,7 +64,8 @@ const AirOut2Chart = ({ datasets, legend }: Props) => {
       ],
     },
   ];
-
+  const updateWidth = localStorage.getItem("updateWidth");
+  const lineWidth = updateWidth ? parseInt(updateWidth) : 2;
   return (
     <ResponsiveLine
       data={datasets}
@@ -82,7 +83,7 @@ const AirOut2Chart = ({ datasets, legend }: Props) => {
       axisTop={null}
       axisRight={null}
       colors={{ scheme: "category10" }}
-      lineWidth={2}
+      lineWidth={datasets.length >= 2 ? 2 : lineWidth}
       pointSize={10}
       pointColor={{ theme: "background" }}
       pointBorderWidth={2}

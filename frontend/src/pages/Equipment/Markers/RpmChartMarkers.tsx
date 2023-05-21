@@ -58,7 +58,7 @@ const RpmChartMarkers = () => {
 
   const [data, setData] = useState<any>([
     {
-      id: "Motor",
+      id: "Rpm",
       data: Array.from({ length: 20 }, (_, i) => ({
         x: i + 1,
         y: Math.sin((i / 5) * Math.PI) * 25000 + 25000,
@@ -312,7 +312,8 @@ const RpmChartMarkers = () => {
       setNewRpmMarkerValue(300);
     }
   };
-
+  const updateWidth = localStorage.getItem("updateWidth");
+  const lineWidth = updateWidth ? parseInt(updateWidth) : 2;
   return (
     <div style={{ display: "flex" }}>
       <Toaster />
@@ -652,7 +653,7 @@ const RpmChartMarkers = () => {
           axisTop={null}
           axisRight={null}
           colors={{ scheme: "category10" }}
-          lineWidth={2}
+          lineWidth={data.length > 1 ? 2 : lineWidth}
           pointSize={10}
           pointColor={{ theme: "background" }}
           pointBorderWidth={2}

@@ -60,7 +60,7 @@ const VacuumChartMarkers = () => {
 
   const [data, setData] = useState<any>([
     {
-      id: "Motor",
+      id: "Vacuum",
       data: Array.from({ length: 20 }, (_, i) => ({
         x: i + 1,
         y: Math.sin((i / 5) * Math.PI) * 50 + 50,
@@ -314,7 +314,8 @@ const VacuumChartMarkers = () => {
       setNewVacuumMarkerValue(100);
     }
   };
-
+  const updateWidth = localStorage.getItem("updateWidth");
+  const lineWidth = updateWidth ? parseInt(updateWidth) : 2;
   return (
     <div style={{ display: "flex" }}>
       <Toaster />
@@ -656,7 +657,7 @@ const VacuumChartMarkers = () => {
           axisTop={null}
           axisRight={null}
           colors={{ scheme: "category10" }}
-          lineWidth={2}
+          lineWidth={data.length > 1 ? 2 : lineWidth}
           pointSize={10}
           pointColor={{ theme: "background" }}
           pointBorderWidth={2}

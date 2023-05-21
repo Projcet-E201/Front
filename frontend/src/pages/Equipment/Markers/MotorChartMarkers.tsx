@@ -314,6 +314,9 @@ const MotorChartMarkers = () => {
     }
   };
 
+  const updateWidth = localStorage.getItem("updateWidth");
+  const lineWidth = updateWidth ? parseInt(updateWidth) : 2;
+
   return (
     <div style={{ display: "flex" }}>
       <Toaster />
@@ -656,7 +659,8 @@ const MotorChartMarkers = () => {
           axisRight={null}
           colors={{ scheme: "category10" }}
           // colors={"yellow"}
-          lineWidth={2}
+          // lineWidth={2}
+          lineWidth={data.length >= 2 ? 2 : lineWidth}
           pointSize={10}
           pointColor={{ theme: "background" }}
           pointBorderWidth={2}

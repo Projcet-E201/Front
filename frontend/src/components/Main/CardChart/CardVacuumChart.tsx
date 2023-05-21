@@ -27,7 +27,8 @@ const CardVacuumChart = ({ vacuumData }: any) => {
       color: "red", // max line의 색상을 red로 설정
     },
   ];
-
+  const updateWidth = localStorage.getItem("updateWidth");
+  const lineWidth = updateWidth ? parseInt(updateWidth) : 2;
   return (
     <div style={{ height: "100%" }}>
       {vacuumData.length === 0 ? (
@@ -63,7 +64,7 @@ const CardVacuumChart = ({ vacuumData }: any) => {
           axisRight={null}
           // colors={{ scheme: "category10" }}
           colors={(data) => data.color}
-          lineWidth={2} // 그래프 두께
+          lineWidth={datasets.length > 1 ? 2 : lineWidth}
           pointSize={10}
           pointColor={{ theme: "background" }}
           pointBorderWidth={2}
