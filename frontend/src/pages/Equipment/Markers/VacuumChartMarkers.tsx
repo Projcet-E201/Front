@@ -25,16 +25,6 @@ import TitleIcon from "@mui/icons-material/Title";
 
 import { ResponsiveLine } from "@nivo/line";
 
-const data = [
-  {
-    id: "Vacuum",
-    data: Array.from({ length: 20 }, (_, i) => ({
-      x: i + 1,
-      y: Math.sin((i / 5) * Math.PI) * 50 + 50,
-    })),
-  },
-];
-
 interface LineStyle {
   stroke: string;
   strokeWidth: string;
@@ -64,6 +54,48 @@ const VacuumChartMarkers = () => {
   const [isChangeColorPickerOpen, setIsChangeColorPickerOpen] =
     useState<number>(0);
   const [isPickerOpen, setIsPickerOpen] = useState<boolean>(false);
+
+  const updateCycle = localStorage.getItem("updateCycle");
+  const time = updateCycle ? parseInt(updateCycle) : 10000;
+
+  const [data, setData] = useState<any>([
+    {
+      id: "Motor",
+      data: Array.from({ length: 20 }, (_, i) => ({
+        x: i + 1,
+        y: Math.sin((i / 5) * Math.PI) * 50 + 50,
+      })),
+    },
+  ]);
+
+  // 매 시간마다 데이터 업데이트 함수
+  const updateData = () => {
+    setData((prevData: any) => {
+      const newData = [...prevData];
+      const currentData = newData[0].data;
+      const lastX = currentData[currentData.length - 1].x;
+
+      // 새로운 데이터 생성 및 추가
+      const newEntry = {
+        x: lastX + 1,
+        y: Math.sin(((lastX + 1) / 5) * Math.PI) * 50 + 50,
+      };
+      currentData.push(newEntry);
+
+      // 길이가 20을 초과하면 첫 번째 데이터 삭제
+      if (currentData.length > 20) {
+        currentData.shift();
+      }
+
+      return newData;
+    });
+  };
+
+  // 매 시간마다 데이터 업데이트 실행
+  useEffect(() => {
+    const interval = setInterval(updateData, time);
+    return () => clearInterval(interval);
+  }, [time]);
 
   // localStorage에서 markers 가져오기
   useEffect(() => {
@@ -632,7 +664,7 @@ const VacuumChartMarkers = () => {
           pointLabelYOffset={-12}
           enableSlices="x"
           enablePoints={false}
-          useMesh={true}
+          // useMesh={true}
           animate={true}
           // legends={legend ? legends : []}
           markers={VacuumMarkers.filter((marker: any) => marker.checked)}

@@ -9,9 +9,6 @@ import Box from "@mui/material/Box";
 
 const CustomChart = ({ chart }: any) => {
   const navigate = useNavigate();
-  // console.log(chart.machine, "prop chart");
-  // console.log(chart.sensor, "prop chart");
-  // console.log(chart.sensorNumber, "prop chart");
 
   const [error, setError] = useState<any>();
   const [reconnectTimer, setReconnectTimer] = useState<any>();
@@ -62,9 +59,7 @@ const CustomChart = ({ chart }: any) => {
   const [max, setMax] = useState<any>(100);
 
   const getData = () => {
-    // console.log(customurl, "urlurl");
     axios
-      // .get(`https://semse.info/api/machine/${chart.machine}/motor`)
 
       .get(customurl)
       .then((response) => {
@@ -240,7 +235,7 @@ const CustomChart = ({ chart }: any) => {
           // curve="linear"
           axisTop={null}
           axisRight={null}
-          // colors={{ scheme: "category10" }}
+          colors={{ scheme: "category10" }}
           // colors={(data) => data.color}
           lineWidth={2} // 그래프 두께
           pointSize={10}

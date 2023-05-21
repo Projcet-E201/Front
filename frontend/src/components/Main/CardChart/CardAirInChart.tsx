@@ -62,6 +62,9 @@ const CardAirInChart = ({ airInData }: any) => {
           animate={false}
           // isInteractive={true}
           // isInteractive={false}
+          enableArea={true}
+          areaBaselineValue={0} //default 0
+          areaOpacity={0.5}
           legends={[
             {
               // anchor: "top-right",

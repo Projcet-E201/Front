@@ -168,7 +168,7 @@ const LeftNav = ({ childrenHeight }: any) => {
             <MonitorIcon sx={{}} />
           </ListItemIcon>
           <ListItemText
-            primary="Clients"
+            primary="Client"
             secondary={machine ? `No. ${machine}` : ""}
             secondaryTypographyProps={{
               color: "white",
