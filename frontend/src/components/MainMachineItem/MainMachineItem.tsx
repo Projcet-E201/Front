@@ -62,7 +62,7 @@ const MainMachineItem = (props: MainMachineItemProps) => {
   };
 
   const getAnimatedStyle = () => {
-    if (isScoreZero) {
+    if (isScoreZero && props.id != "CLIENT12") {
       return {
         animation: `${styles.pulse} 1s infinite`,
         backgroundColor: getBackgroundColor(),
@@ -92,7 +92,10 @@ const MainMachineItem = (props: MainMachineItemProps) => {
               navigate(`/machine/${props.clientindex + 1}`);
               indexClick("Monitoring");
             }}
-            style={getAnimatedStyle()}
+            style={{
+              color: props.id === "CLIENT12" ? "white" : undefined,
+              ...getAnimatedStyle(),
+            }}
           >
             {props.id}
           </h3>

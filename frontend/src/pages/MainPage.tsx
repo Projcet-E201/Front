@@ -149,7 +149,7 @@ const MainPage: React.FC = () => {
         ABRASION: 16,
         LOAD: 8,
         VELOCITY: 30000,
-        SCORE: 48,
+        SCORE: 61,
       },
       CLIENT10: {
         MOTOR: 250,
@@ -185,7 +185,7 @@ const MainPage: React.FC = () => {
         ABRASION: 16,
         LOAD: 8,
         VELOCITY: 30000,
-        SCORE: 75,
+        SCORE: 0,
       },
     },
   ]);

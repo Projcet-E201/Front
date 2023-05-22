@@ -50,6 +50,7 @@ const LeftNav = ({ childrenHeight }: any) => {
         <ListItemButton
           sx={{
             pl: 4,
+
             "&:hover": {
               bgcolor: machineNumber === i ? "#191BA9" : "#CFD0FF",
               // color: "white",
@@ -88,6 +89,8 @@ const LeftNav = ({ childrenHeight }: any) => {
         minHeight: `calc(100vh - ${childrenHeight}px`,
         height: "100%",
         minWidth: "220.88px",
+
+        borderRight: "0.1em solid rgba(128, 128, 128, 0.25)",
       }}
     >
       <List
@@ -107,12 +110,14 @@ const LeftNav = ({ childrenHeight }: any) => {
           sx={{
             "&:hover": {
               bgcolor: location.pathname === "/" ? "#191BA9" : "#CFD0FF",
+
               // color: "white",
               // "& .MuiSvgIcon-root": {
               //   color: "white",
               // },
             },
             borderRadius: "10px",
+
             bgcolor: location.pathname === "/" ? "#191BA9" : undefined,
             color: location.pathname === "/" ? "white" : undefined,
           }}
@@ -130,7 +135,13 @@ const LeftNav = ({ childrenHeight }: any) => {
               }}
             />
           </ListItemIcon>
-          <ListItemText primary="Main" />
+          <ListItemText
+            primary="Main"
+            primaryTypographyProps={{
+              fontSize: "1.2em",
+              fontWeight: "bold",
+            }}
+          />
         </ListItemButton>
         <ListItemButton
           sx={{
@@ -143,6 +154,7 @@ const LeftNav = ({ childrenHeight }: any) => {
               //   color: "white",
               // },
             },
+
             borderRadius: "10px",
             bgcolor: location.pathname.includes("machine")
               ? "#191BA9"
@@ -169,11 +181,18 @@ const LeftNav = ({ childrenHeight }: any) => {
           </ListItemIcon>
           <ListItemText
             primary="Client"
+            primaryTypographyProps={{
+              fontSize: "1.2em",
+              fontWeight: "bold",
+            }}
             secondary={machine ? `No. ${machine}` : ""}
             secondaryTypographyProps={{
+              fontSize: "1.2em",
+              fontWeight: "bold",
               color: "white",
             }}
           />
+
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={open} timeout="auto" unmountOnExit>
@@ -214,7 +233,13 @@ const LeftNav = ({ childrenHeight }: any) => {
               }}
             />
           </ListItemIcon>
-          <ListItemText primary="Custom" />
+          <ListItemText
+            primary="Custom"
+            primaryTypographyProps={{
+              fontSize: "1.2em",
+              fontWeight: "bold",
+            }}
+          />
         </ListItemButton>
 
         <ListItemButton
@@ -250,7 +275,13 @@ const LeftNav = ({ childrenHeight }: any) => {
               }}
             />
           </ListItemIcon>
-          <ListItemText primary="설비 관리" />
+          <ListItemText
+            primary="설비 관리"
+            primaryTypographyProps={{
+              fontSize: "1.2em",
+              fontWeight: "bold",
+            }}
+          />
         </ListItemButton>
       </List>
     </div>
