@@ -52,6 +52,8 @@ const MainMachineItem = (props: MainMachineItemProps) => {
   const getBackgroundColor = () => {
     if (props.client.SCORE === 0) {
       return "#5e5e5e";
+    } else if (props.id === "CLIENT12") {
+      return "#5e5e5e";
     } else if (props.client.SCORE < 60) {
       return "red";
     } else {
@@ -98,7 +100,7 @@ const MainMachineItem = (props: MainMachineItemProps) => {
         <CardContent
           style={{
             lineHeight: "2.8em",
-            ...(props.client.SCORE === 0 && {
+            ...((props.client.SCORE === 0 || props.id === "CLIENT12") && {
               backgroundColor: "rgba(0, 0, 0, 0.2)",
             }),
           }}
@@ -114,7 +116,9 @@ const MainMachineItem = (props: MainMachineItemProps) => {
             <div className={styles.mainmachinecardcontentname}>압력</div>
             <div
               className={
-                props.client.MOTOR > 90
+                props.id === "CLIENT12"
+                  ? styles.mainmachinecardcontentscorenone
+                  : props.client.MOTOR > 90
                   ? styles.mainmachinecardcontenterrorscore
                   : styles.mainmachinecardcontentscore
               }
@@ -129,7 +133,9 @@ const MainMachineItem = (props: MainMachineItemProps) => {
             <div className={styles.mainmachinecardcontentname}>유량</div>
             <div
               className={
-                props.client.WATER === 0
+                props.id === "CLIENT12"
+                  ? styles.mainmachinecardcontentscorenone
+                  : props.client.WATER === 0
                   ? styles.mainmachinecardcontenterrorscore
                   : styles.mainmachinecardcontentscore
               }
@@ -144,7 +150,9 @@ const MainMachineItem = (props: MainMachineItemProps) => {
             <div className={styles.mainmachinecardcontentname}>모터 가동</div>
             <div
               className={
-                props.client.MOTOR > 270
+                props.id === "CLIENT12"
+                  ? styles.mainmachinecardcontentscorenone
+                  : props.client.MOTOR > 270
                   ? styles.mainmachinecardcontenterrorscore
                   : styles.mainmachinecardcontentscore
               }
