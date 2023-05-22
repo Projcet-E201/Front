@@ -213,6 +213,7 @@ const MainPage: React.FC = () => {
             acc[key] = value;
             return acc;
           }, {});
+        console.log(response);
 
         setCheck(1);
         setClientData([{ ...sortedData }]);
