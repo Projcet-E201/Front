@@ -49,6 +49,9 @@
   font-weight: 1000;
   color: red;
 }
+.mainmachinecardcontentscorenone {
+  opacity: 0;
+}
 
 @keyframes pulse {
   0% {

@@ -40,7 +40,7 @@ type ClientData = [
 
 const MainPage: React.FC = () => {
   const navigate = useNavigate();
-  const [check, setCheck] = useState(0);
+  const [check, setCheck] = useState(1);
   const [clientData, setClientData] = useState<ClientData>([
     {
       CLIENT1: {
@@ -213,6 +213,7 @@ const MainPage: React.FC = () => {
             acc[key] = value;
             return acc;
           }, {});
+        console.log(response);
 
         setCheck(1);
         setClientData([{ ...sortedData }]);
