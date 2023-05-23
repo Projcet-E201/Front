@@ -7,7 +7,7 @@ import CardContent from "@mui/material/CardContent";
 // import Typography from "@mui/material/Typography";
 import { faker } from "@faker-js/faker";
 
-import SensorLayout from "../../layout/SensorLayout";
+import MainLayout from "../../layout/MainLayout";
 import TopCard from "../../components/common/TopCard";
 
 import axios from "axios";
@@ -103,7 +103,7 @@ const VacuumPage = () => {
 
   // console.log(latestData, "dfdffef22222222222");
   return (
-    <SensorLayout>
+    <MainLayout>
       <div className={styles.topcard}>
         <TopCard location={location.pathname} />
       </div>
@@ -247,7 +247,7 @@ const VacuumPage = () => {
           </div>
         </div>
       )}
-    </SensorLayout>
+    </MainLayout>
   );
 };
 

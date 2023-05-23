@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 
-import SensorLayout from "../../layout/SensorLayout";
+import MainLayout from "../../layout/MainLayout";
 import TopCard from "../../components/common/TopCard";
 import { faker } from "@faker-js/faker";
 import Card from "@mui/material/Card";
@@ -99,7 +99,7 @@ const AbrasionPage = () => {
   // console.log(abrasionData);
   // console.log(latestData);
   return (
-    <SensorLayout>
+    <MainLayout>
       <div className={styles.topcard}>
         <TopCard location={location.pathname} />
       </div>
@@ -226,7 +226,7 @@ const AbrasionPage = () => {
           </div>
         </div>
       )}
-    </SensorLayout>
+    </MainLayout>
   );
 };
 

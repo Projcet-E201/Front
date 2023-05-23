@@ -7,7 +7,12 @@ import logo from "../../assets/logo_semse.png";
 
 // recoil 연결
 import { useRecoilState } from "recoil";
-import { selectedAtom } from "../../store/atoms";
+import {
+  selectedAtom,
+  useDateTimeUpdater,
+  currentDateAtom,
+  currentTimeAtom,
+} from "../../store/atoms";
 
 const NavBar = ({ leftNavWidth }: any) => {
   // const [selected, setSelected] = useState("Sensor");
@@ -25,24 +30,11 @@ const NavBar = ({ leftNavWidth }: any) => {
     }
   };
 
-  const [currentTime, setCurrentTime] = useState("");
-  const [currentDate, setCurrentDate] = useState("");
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, "0");
-      const day = String(now.getDate()).padStart(2, "0");
-      const hours = String(now.getHours()).padStart(2, "0");
-      const minutes = String(now.getMinutes()).padStart(2, "0");
-      const seconds = String(now.getSeconds()).padStart(2, "0");
-      setCurrentTime(`${hours}시${minutes}분${seconds}초`);
-      setCurrentDate(`${year}년${month}월${day}일`);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
+  // const [currentTime, setCurrentTime] = useState("");
+  // const [currentDate, setCurrentDate] = useState("");
+  const [currentTime] = useRecoilState(currentTimeAtom);
+  const [currentDate] = useRecoilState(currentDateAtom);
+  useDateTimeUpdater();
 
   return (
     <div>
@@ -100,7 +92,7 @@ const NavBar = ({ leftNavWidth }: any) => {
               )}
               {location.pathname === "/equipment-setting" && (
                 <h1 style={{ marginBottom: "0", marginLeft: "30px" }}>
-                  EquipmentSetting
+                  Setting
                 </h1>
               )}
             </div>

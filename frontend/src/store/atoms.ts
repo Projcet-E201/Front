@@ -14,7 +14,7 @@ export const indexAtom = atom<string>({
 
 export const useSetIndexAtom = () => {
   const location = useLocation();
-  const [index, setIndex] = useRecoilState(indexAtom);
+  const [, setIndex] = useRecoilState(indexAtom);
 
   useEffect(() => {
     if (location.pathname === "/") {
@@ -71,3 +71,40 @@ export const AbrasionMarkersAtom = atom<any[]>({
   key: "AbrasionMarkersAtom",
   default: JSON.parse(localStorage.getItem("AbrasionChartMarkers") || "[]"),
 });
+
+export const currentTimeAtom = atom<string>({
+  key: "currentTime",
+  default: "",
+});
+
+export const currentDateAtom = atom<string>({
+  key: "currentDate",
+  default: "",
+});
+
+export const useDateTimeUpdater = () => {
+  const [currentTime, setCurrentTime] = useRecoilState(currentTimeAtom);
+  const [currentDate, setCurrentDate] = useRecoilState(currentDateAtom);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      const seconds = String(now.getSeconds()).padStart(2, "0");
+      setCurrentTime(`${hours}시 ${minutes}분 ${seconds}초`);
+      setCurrentDate(`${year}년 ${month}월 ${day}일`);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [setCurrentTime, setCurrentDate]);
+
+  // Return the current time and date values in case you need them in your component
+  return {
+    currentTime,
+    currentDate,
+  };
+};

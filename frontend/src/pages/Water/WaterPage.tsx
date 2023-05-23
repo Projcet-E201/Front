@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import SensorLayout from "../../layout/SensorLayout";
+import MainLayout from "../../layout/MainLayout";
 import WaterChart from "../../components/Chart/WaterChart";
-import { faker } from "@faker-js/faker";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import TopCard from "../../components/common/TopCard";
@@ -18,9 +17,9 @@ import event3 from "../../assets/event3.png";
 import axios from "axios";
 
 const WaterPage = () => {
-  const [error, setError] = useState<any>();
-  const [reconnectTimer, setReconnectTimer] = useState<any>();
-  const [reconnectTimeLeft, setReconnectTimeLeft] = useState<number>(0);
+  const [, setError] = useState<any>();
+  const [reconnectTimer] = useState<any>();
+  const [, setReconnectTimeLeft] = useState<number>(0);
   const location = useLocation();
   const navigate = useNavigate();
   const { machine = "" } = useParams();
@@ -66,6 +65,7 @@ const WaterPage = () => {
   };
   const updateCycle = localStorage.getItem("updateCycle");
   const time = updateCycle ? parseInt(updateCycle) : 10000;
+
   useEffect(() => {
     getWaterData();
 
@@ -80,11 +80,6 @@ const WaterPage = () => {
     };
   }, [machine]);
 
-  // console.log(motorData[0]);
-  // console.log(motorData[1]);
-
-  // console.log(motorData);
-
   const latestData = waterData.map(
     (dataset: any) => dataset.data[dataset.data.length - 1]
   );
@@ -92,7 +87,7 @@ const WaterPage = () => {
   // console.log(latestData);
 
   return (
-    <SensorLayout>
+    <MainLayout>
       <div className={styles.topcard}>
         <TopCard location={location.pathname} />
       </div>
@@ -219,7 +214,7 @@ const WaterPage = () => {
           </div>
         </div>
       )}
-    </SensorLayout>
+    </MainLayout>
   );
 };
 

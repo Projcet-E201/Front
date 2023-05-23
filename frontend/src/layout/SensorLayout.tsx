@@ -8,7 +8,7 @@ interface Props {
   children: JSX.Element | JSX.Element[];
 }
 
-const SensorLayout = ({ children }: Props) => {
+const MainLayout = ({ children }: Props) => {
   const [childrenHeight, setChildrenHeight] = useState<number>(0);
   const childrenRef = useRef<HTMLDivElement>(null);
 
@@ -46,4 +46,4 @@ const SensorLayout = ({ children }: Props) => {
   );
 };
 
-export default SensorLayout;
+export default MainLayout;

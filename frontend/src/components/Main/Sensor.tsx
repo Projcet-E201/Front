@@ -387,7 +387,7 @@ const Sensor = () => {
                         }}
                       >
                         <CircularProgress />
-                        <h3>Rpm 데이터를 불러오는 중 입니다...</h3>
+                        <h3>회전속도 데이터를 불러오는 중 입니다...</h3>
                       </Box>
                     ) : (
                       <div style={{ height: "100%" }}>

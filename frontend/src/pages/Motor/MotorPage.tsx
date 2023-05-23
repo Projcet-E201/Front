@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import SensorLayout from "../../layout/SensorLayout";
+import MainLayout from "../../layout/MainLayout";
 import MotorChart from "../../components/Chart/MotorChart";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -91,7 +91,7 @@ const MotorPage = () => {
   // console.log(latestData);
 
   return (
-    <SensorLayout>
+    <MainLayout>
       <div className={styles.topcard}>
         <TopCard location={location.pathname} />
       </div>
@@ -238,7 +238,7 @@ const MotorPage = () => {
           </div>
         </div>
       )}
-    </SensorLayout>
+    </MainLayout>
   );
 };
 
