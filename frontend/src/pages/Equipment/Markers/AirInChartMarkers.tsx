@@ -314,6 +314,8 @@ const AirInChartMarkers = () => {
   };
   const updateWidth = localStorage.getItem("updateWidth");
   const lineWidth = updateWidth ? parseInt(updateWidth) : 2;
+  const lineStyle = localStorage.getItem("lineStyle");
+  const curve: any = lineStyle ? lineStyle : "monotoneX";
   return (
     <div style={{ display: "flex" }}>
       <Toaster />
@@ -651,7 +653,7 @@ const AirInChartMarkers = () => {
             stacked: false,
             reverse: false,
           }}
-          curve="monotoneX"
+          curve={curve}
           axisTop={null}
           axisRight={null}
           colors={{ scheme: "category10" }}

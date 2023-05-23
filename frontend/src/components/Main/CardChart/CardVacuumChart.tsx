@@ -29,6 +29,8 @@ const CardVacuumChart = ({ vacuumData }: any) => {
   ];
   const updateWidth = localStorage.getItem("updateWidth");
   const lineWidth = updateWidth ? parseInt(updateWidth) : 2;
+  const lineStyle = localStorage.getItem("lineStyle");
+  const curve: any = lineStyle ? lineStyle : "monotoneX";
   return (
     <div style={{ height: "100%" }}>
       {vacuumData.length === 0 ? (
@@ -58,7 +60,7 @@ const CardVacuumChart = ({ vacuumData }: any) => {
             stacked: false,
             reverse: false,
           }}
-          curve="monotoneX"
+          curve={curve}
           // curve="linear"
           axisTop={null}
           axisRight={null}

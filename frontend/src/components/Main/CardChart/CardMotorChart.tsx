@@ -33,6 +33,8 @@ const CardMotorChart = ({ motorData }: any) => {
 
   const updateWidth = localStorage.getItem("updateWidth");
   const lineWidth = updateWidth ? parseInt(updateWidth) : 2;
+  const lineStyle = localStorage.getItem("lineStyle");
+  const curve: any = lineStyle ? lineStyle : "monotoneX";
 
   return (
     <div style={{ height: "100%" }}>
@@ -66,7 +68,7 @@ const CardMotorChart = ({ motorData }: any) => {
             // stacked: true,
             reverse: false,
           }}
-          curve="monotoneX"
+          curve={curve}
           // curve="linear"
           axisTop={null}
           axisRight={null}

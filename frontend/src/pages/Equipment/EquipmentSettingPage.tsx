@@ -63,6 +63,21 @@ const EquipmentSettingPage = () => {
       );
     };
 
+  const [lineStyle, setLineStyle] = useState<any>(
+    localStorage.getItem("lineStyle") || "monotoneX"
+  );
+
+  const changeUpdateLineStyle = (event: any) => {
+    const selectedValue = event.target.value;
+
+    setLineStyle(selectedValue);
+    localStorage.setItem("lineStyle", selectedValue);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("lineStyle", lineStyle);
+  }, [lineStyle]);
+
   const [updateCycle, setUpdateCycle] = useState<any>(
     localStorage.getItem("updateCycle") || 10000
   );
@@ -118,14 +133,7 @@ const EquipmentSettingPage = () => {
                   </Select>
                 </div>
               </Grid>
-              {/* <Grid item xs={4}>
-                <div>
-                  <h3>Line Color</h3>
-                  <p>chart Line 색상을 지정합니다.</p>
-                  <p>max</p>
-                  <p>min</p>
-                </div>
-              </Grid> */}
+
               <Grid item xs={4}>
                 <div>
                   <h3>Line Width(px)</h3>
@@ -139,6 +147,17 @@ const EquipmentSettingPage = () => {
                         {value}px
                       </MenuItem>
                     ))}
+                  </Select>
+                </div>
+              </Grid>
+              <Grid item xs={4}>
+                <div>
+                  <h3>Line Style</h3>
+                  <p>Line Style을 지정합니다.</p>
+                  <Select value={lineStyle} onChange={changeUpdateLineStyle}>
+                    <MenuItem value="monotoneX">Smooth</MenuItem>
+                    <MenuItem value="linear">Zigzag</MenuItem>
+                    <MenuItem value="step">Step</MenuItem>
                   </Select>
                 </div>
               </Grid>

@@ -144,7 +144,9 @@ const VacuumPage = () => {
                       flexDirection: "column",
                       display: "flex",
                       justifyContent: "center",
+                      cursor: "pointer",
                     }}
+                    onClick={() => navigate(`${index + 1}`)}
                   >
                     {d.value > 90 ? (
                       <img

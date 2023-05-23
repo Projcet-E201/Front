@@ -59,6 +59,9 @@ const MotorMarkerChart = () => {
   ];
   const updateWidth = localStorage.getItem("updateWidth");
   const lineWidth = updateWidth ? parseInt(updateWidth) : 2;
+  const lineStyle = localStorage.getItem("lineStyle");
+  const curve: any = lineStyle ? lineStyle : "monotoneX";
+
   return (
     <ResponsiveLine
       data={data}
@@ -72,7 +75,7 @@ const MotorMarkerChart = () => {
         stacked: false,
         reverse: false,
       }}
-      curve="monotoneX"
+      curve="step"
       axisTop={null}
       axisRight={null}
       colors={{ scheme: "category10" }}
