@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import SensorLayout from "../../layout/SensorLayout";
+import MainLayout from "../../layout/MainLayout";
 import AirInChart from "../../components/Chart/AirInChart";
 import { faker } from "@faker-js/faker";
 import Card from "@mui/material/Card";
@@ -87,7 +87,7 @@ const AirInPage = () => {
 
   // console.log(latestData);
   return (
-    <SensorLayout>
+    <MainLayout>
       <div className={styles.topcard}>
         <TopCard location={location.pathname} />
       </div>
@@ -232,7 +232,7 @@ const AirInPage = () => {
           </div>
         </div>
       )}
-    </SensorLayout>
+    </MainLayout>
   );
 };
 

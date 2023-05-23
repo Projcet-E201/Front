@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 
 import DetailTopCard from "../../components/common/DetailTopCard";
-import SensorLayout from "../../layout/SensorLayout";
+import MainLayout from "../../layout/MainLayout";
 import DetailItem from "../../components/DetailItem/DetailItem";
 import styles from "./LoadPage.module.css";
 
@@ -12,7 +12,7 @@ const LoadDetailPage = () => {
   const location = useLocation();
 
   return (
-    <SensorLayout>
+    <MainLayout>
       <div className={styles.topcard}>
         <DetailTopCard location={location.pathname} />
       </div>
@@ -20,7 +20,7 @@ const LoadDetailPage = () => {
         <DetailItem />
         <DetailItem />
       </div>
-    </SensorLayout>
+    </MainLayout>
   );
 };
 

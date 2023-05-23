@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../../layout/MainLayout";
-import SensorLayout from "../../layout/SensorLayout";
 import MotorChartMarkers from "./Markers/MotorChartMarkers";
 import AirInChartMarkers from "./Markers/AirInChartMarkers";
 import VacuumChartMarkers from "./Markers/VacuumChartMarkers";
@@ -97,7 +96,7 @@ const EquipmentSettingPage = () => {
   }, [updateWidth]);
 
   return (
-    <SensorLayout>
+    <MainLayout>
       <div>
         <h2>- default Setting</h2>
         <Card>
@@ -184,7 +183,7 @@ const EquipmentSettingPage = () => {
           </div>
         ))}
       </div>
-    </SensorLayout>
+    </MainLayout>
   );
 };
 

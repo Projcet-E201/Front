@@ -9,7 +9,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
-import SendIcon from "@mui/icons-material/Send";
+import TuneIcon from "@mui/icons-material/Tune";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import StarBorder from "@mui/icons-material/StarBorder";
@@ -267,7 +267,7 @@ const LeftNav = ({ childrenHeight }: any) => {
           }}
         >
           <ListItemIcon>
-            <SettingsInputComponentIcon
+            <TuneIcon
               sx={{
                 color: location.pathname.includes("equipment-setting")
                   ? "white"
@@ -276,7 +276,7 @@ const LeftNav = ({ childrenHeight }: any) => {
             />
           </ListItemIcon>
           <ListItemText
-            primary="설비 관리"
+            primary="Setting"
             primaryTypographyProps={{
               fontSize: "1.2em",
               fontWeight: "bold",
