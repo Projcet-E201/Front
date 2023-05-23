@@ -37,9 +37,11 @@ const AirInPage = () => {
           const dataPoint = { x: time.split("/")[1], y: value };
 
           if (!acc[airInId]) {
-            acc[airInId] = { id: `AirIn${airInId}`, data: [dataPoint] };
-          } else {
-            acc[airInId].data.push(dataPoint);
+            acc[airInId] = { id: `AirIn${airInId}`, data: [] };
+          }
+          acc[airInId].data.push(dataPoint);
+          if (acc[airInId].data.length > 10) {
+            acc[airInId].data.shift();
           }
 
           return acc;

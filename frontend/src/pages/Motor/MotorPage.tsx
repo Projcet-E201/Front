@@ -37,15 +37,18 @@ const MotorPage = () => {
           const dataPoint = { x: time.split("/")[1], y: value };
 
           if (!acc[motorId]) {
-            acc[motorId] = { id: `Motor${motorId}`, data: [dataPoint] };
-          } else {
-            acc[motorId].data.push(dataPoint);
+            acc[motorId] = { id: `Motor${motorId}`, data: [] };
+          }
+
+          // 마지막 10개의 dataPoint만 유지합니다.
+          acc[motorId].data.push(dataPoint);
+          if (acc[motorId].data.length > 10) {
+            acc[motorId].data.shift();
           }
 
           return acc;
         }, {});
 
-        // 데이터를 모두 추가한 후 motorData 배열에 값을 넣어줍니다.
         setMotorData(Object.values(motorData));
       })
       .catch((error) => {
@@ -63,6 +66,8 @@ const MotorPage = () => {
         }, 1000);
       });
   };
+
+  // console.log(motorData, "zzzzzzzzzzz");
   const updateCycle = localStorage.getItem("updateCycle");
   const time = updateCycle ? parseInt(updateCycle) : 10000;
   useEffect(() => {

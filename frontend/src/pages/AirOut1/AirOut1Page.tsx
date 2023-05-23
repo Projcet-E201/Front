@@ -39,10 +39,12 @@ const AirOut1Page = () => {
           if (!acc[airOutKpaId]) {
             acc[airOutKpaId] = {
               id: `AirOutKpa${airOutKpaId}`,
-              data: [dataPoint],
+              data: [],
             };
-          } else {
-            acc[airOutKpaId].data.push(dataPoint);
+          }
+          acc[airOutKpaId].data.push(dataPoint);
+          if (acc[airOutKpaId].data.length > 10) {
+            acc[airOutKpaId].data.shift();
           }
 
           return acc;

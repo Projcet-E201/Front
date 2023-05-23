@@ -44,10 +44,12 @@ const AbrasionPage = () => {
           if (!acc[abrasionId]) {
             acc[abrasionId] = {
               id: `Abrasion${abrasionId}`,
-              data: [dataPoint],
+              data: [],
             };
-          } else {
-            acc[abrasionId].data.push(dataPoint);
+          }
+          acc[abrasionId].data.push(dataPoint);
+          if (acc[abrasionId].data.length > 10) {
+            acc[abrasionId].data.shift();
           }
 
           return acc;

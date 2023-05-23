@@ -37,9 +37,11 @@ const WaterPage = () => {
           const dataPoint = { x: time.split("/")[1], y: value };
 
           if (!acc[waterId]) {
-            acc[waterId] = { id: `Water${waterId}`, data: [dataPoint] };
-          } else {
-            acc[waterId].data.push(dataPoint);
+            acc[waterId] = { id: `Water${waterId}`, data: [] };
+          }
+          acc[waterId].data.push(dataPoint);
+          if (acc[waterId].data.length > 10) {
+            acc[waterId].data.shift();
           }
 
           return acc;

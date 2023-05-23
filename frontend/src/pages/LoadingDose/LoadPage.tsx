@@ -40,9 +40,11 @@ const LoadPage = () => {
           const dataPoint = { x: time.split("/")[1], y: value };
 
           if (!acc[loadId]) {
-            acc[loadId] = { id: `Load${loadId}`, data: [dataPoint] };
-          } else {
-            acc[loadId].data.push(dataPoint);
+            acc[loadId] = { id: `Load${loadId}`, data: [] };
+          }
+          acc[loadId].data.push(dataPoint);
+          if (acc[loadId].data.length > 10) {
+            acc[loadId].data.shift();
           }
 
           return acc;

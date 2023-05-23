@@ -40,9 +40,11 @@ const RpmPage = () => {
           const dataPoint = { x: time.split("/")[1], y: value };
 
           if (!acc[rpmId]) {
-            acc[rpmId] = { id: `Rpm${rpmId}`, data: [dataPoint] };
-          } else {
-            acc[rpmId].data.push(dataPoint);
+            acc[rpmId] = { id: `Rpm${rpmId}`, data: [] };
+          }
+          acc[rpmId].data.push(dataPoint);
+          if (acc[rpmId].data.length > 10) {
+            acc[rpmId].data.shift();
           }
 
           return acc;

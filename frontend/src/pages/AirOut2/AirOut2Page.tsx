@@ -41,8 +41,10 @@ const AirOut2Page = () => {
               id: `AirOutMpa${airOutMpaId}`,
               data: [dataPoint],
             };
-          } else {
-            acc[airOutMpaId].data.push(dataPoint);
+          }
+          acc[airOutMpaId].data.push(dataPoint);
+          if (acc[airOutMpaId].data.length > 10) {
+            acc[airOutMpaId].data.shift();
           }
 
           return acc;

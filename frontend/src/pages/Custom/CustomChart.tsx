@@ -60,7 +60,6 @@ const CustomChart = ({ chart }: any) => {
 
   const getData = () => {
     axios
-
       .get(customurl)
       .then((response) => {
         setData(response.data);
@@ -110,12 +109,13 @@ const CustomChart = ({ chart }: any) => {
           if (!acc[customId]) {
             acc[customId] = {
               id: `${chart.sensor}${customId}`,
-              data: [dataPoint],
+              data: [],
             };
-          } else {
-            acc[customId].data.push(dataPoint);
           }
-
+          acc[customId].data.push(dataPoint);
+          if (acc[customId].data.length > 10) {
+            acc[customId].data.shift();
+          }
           return acc;
         }, {});
         setCustomData(Object.values(customData));
