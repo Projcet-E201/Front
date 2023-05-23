@@ -4,10 +4,12 @@ import { useNavigate, useLocation, useParams } from "react-router";
 import { ResponsiveLine } from "@nivo/line";
 
 const CardMotorChart = ({ motorData }: any) => {
+  const limitedData = motorData.slice(-10); // 마지막 10개의 데이터만 가져옵니다.
+
   const datasets = [
     {
       id: "min",
-      data: motorData.map((d: any) => {
+      data: limitedData.map((d: any) => {
         let minVal = d.min_value;
 
         const time = d.time.split("/")[1]; // '/'를 기준으로 문자열을 분할하고 두 번째 요소를 선택합니다.
@@ -18,7 +20,7 @@ const CardMotorChart = ({ motorData }: any) => {
     },
     {
       id: "max",
-      data: motorData.map((d: any) => {
+      data: limitedData.map((d: any) => {
         const maxVal = d.max_value;
         const time = d.time.split("/")[1]; // '/'를 기준으로 문자열을 분할하고 두 번째 요소를 선택합니다.
 

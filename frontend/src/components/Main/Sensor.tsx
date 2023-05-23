@@ -59,6 +59,7 @@ const Sensor = () => {
       .get(`https://semse.info/api/machine/${machine}/sensor`)
 
       .then((response) => {
+        console.log(response.data);
         setData(response.data);
         setMotorData(response.data[0].MOTOR);
         setVacuumData(response.data[0].VACUUM);

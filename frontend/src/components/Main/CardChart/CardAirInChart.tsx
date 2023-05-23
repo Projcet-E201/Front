@@ -7,7 +7,7 @@ const CardAirInChart = ({ airInData }: any) => {
   const data = [
     {
       id: "avg",
-      data: airInData.map((item: any) => ({
+      data: airInData.slice(-10).map((item: any) => ({
         x: item.time.split("/")[1],
         y: item.avg,
       })),
