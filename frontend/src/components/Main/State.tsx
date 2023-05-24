@@ -35,7 +35,7 @@ const State = () => {
 
     eventSource.onmessage = (event) => {
       const allStateData = JSON.parse(event.data);
-      console.log(allStateData);
+      // console.log(allStateData);
       setError("");
       const booleanDataArray = new Array(10).fill({ id: "error", value: 0 });
 
