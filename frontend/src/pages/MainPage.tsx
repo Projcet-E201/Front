@@ -54,6 +54,7 @@ const MainPage: React.FC = () => {
 
       // .get("http://localhost8091/api/main/machine")
       .then((response) => {
+        // console.log(response.data);
         const sortedData: { [key: string]: any } = Object.entries(
           response.data[0]
         )
